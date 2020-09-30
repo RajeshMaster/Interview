@@ -683,7 +683,7 @@ body {
 									{{ trans('messages.lbl_home') }}</a>
 								</li>
 								<li class="btn_employee jop_btn" style="">
-									<a class="pageload" href="{{ url('House/index?mainmenu=menu_house&time='.date('Ymdhis')) }}" 
+									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}" 
 									style="text-decoration: none !important;">
 									{{ trans('messages.lbl_employee') }}</a>
 								</li>
@@ -728,56 +728,6 @@ body {
 							@endif
 						</div>
 						<div id="AssetDiv" class="CMN_sub_gmenu">
-							@if(isset($request->mainmenu) && $request->mainmenu == "home")
-								<div id="home_sub_1">
-									<a class="pageload" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}">
-									{{ trans('messages.lbl_home') }}</a>
-								</div>
-							@endif
-							@if(isset($request->mainmenu) && $request->mainmenu == "menu_house" || $request->mainmenu == "menu_expenses" || $request->mainmenu == "menu_yetTopay" || $request->mainmenu == "menu_income")
-							<div id="house_sub_1">
-								<a class="pageload" href="{{ url('House/index?mainmenu=menu_house&time='.date('Ymdhis')) }}">
-								{{ trans('messages.lbl_house') }}</a>
-							</div>
-							<div id="house_sub_4">
-								<a class="pageload" href="{{ url('Expenses/listview?mainmenu=menu_expenses&time='.date('Ymdhis')) }}">
-								{{ trans('messages.lbl_expenses') }}</a>
-							</div>
-							<div id="house_sub_3">
-								<a class="pageload" href="{{ url('YetToPayExpenses/listview?mainmenu=menu_yetTopay&time='.date('Ymdhis')) }}">
-								{{ trans('messages.lbl_yetTopayexpenses') }}</a>
-							</div>
-							<div id="house_sub_2">
-								<a class="pageload" href="{{ url('Income/listview?mainmenu=menu_income&time='.date('Ymdhis')) }}">
-								{{ trans('messages.lbl_income') }}</a>
-							</div>
-							@endif
-							@if(isset($request->mainmenu) && $request->mainmenu == "menu_loan" || $request->mainmenu == "menu_loanDetails" || $request->mainmenu == "menu_loanChart")
-								<div id="loan_sub_1">
-									<a class="pageload" href="{{ url('Loan/index?mainmenu=menu_loan&time='.date('Ymdhis')) }}">
-									{{ trans('messages.lbl_loan') }}</a>
-								</div>
-								<div id="loan_sub_2">
-									<a class="pageload" href="{{ url('LoanDetails/listview?mainmenu=menu_loanDetails&time='.date('Ymdhis')) }}">
-									{{ trans('messages.lbl_loanDetails') }}</a>
-								</div>
-								<div id="loan_sub_3">
-									<a class="pageload" href="{{ url('LoanChart/index?mainmenu=menu_loanChart&time='.date('Ymdhis')) }}">
-									{{ trans('messages.lbl_loan_chart') }}</a>
-								</div>
-							@endif
-							@if(isset($request->mainmenu) && $request->mainmenu == "menu_bank" || $request->mainmenu == "menu_othbank")
-								<div id="bank_sub_1">
-									<a class="pageload" href="{{ url('Bank/listview?mainmenu=menu_bank&time='.date('Ymdhis')) }}" 
-										style="text-decoration: none !important;">
-									{{ trans('messages.lbl_bank') }}</a>
-								</div>
-								<div id="bank_sub_2">
-									<a class="pageload" href="{{ url('Bank/othbanklistview?mainmenu=menu_othbank&time='.date('Ymdhis')) }}"
-									style="text-decoration: none !important;">
-									{{ trans('messages.lbl_otherbank') }}</a>
-								</div>
-							@endif
 							@if(isset($request->mainmenu) && $request->mainmenu == "menu_mail")
 							<div id="mail_sub_1">
 								<a class="pageload" href="{{ url('Mail/mailcontent?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
