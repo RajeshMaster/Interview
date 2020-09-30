@@ -647,19 +647,6 @@ body {
 								@endif
 							</button>
 							<ul class="dropdown-menu mob_border">
-								<li class="mob_underline pull-right">
-									<a class="btn btn-default mob_line pageload" 
-										href = "{{ url('User/profile?mainmenu=menu_user&time='.date('Ymdhis')) }}">
-										{{ trans('messages.lbl_profile') }}
-									</a>
-								</li>
-								<li class="mob_underline pull-right" 
-									style="text-align: right !important;text-decoration: none !important;">
-									<a class = "btn btn-default mob_line pageload" 
-										href = "{{ url('Auth/changepassword?mainmenu=menu_passwordchange&time='.date('Ymdhis')) }}">
-										{{ trans('messages.lbl_pwdchange') }}
-									</a>
-								</li>
 								<li class="mob_underline pull-right" 
 									style = "text-align: right !important;text-decoration: none !important;">
 									<a class = "btn btn-default mob_line pageload" 
