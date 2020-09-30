@@ -36,9 +36,10 @@ $(document).ready(function() {
 						},
 						function(isConfirm) {
 							if (isConfirm) {
-							   pageload();
-								$('#mail_reg').attr('action', 'mailcontentregprocess'+'?menuid=menu_mail&time='+datetime);
-								$("#mail_reg").submit();
+								alert('Under Construction');
+							   /*pageload();
+								$('#mail_reg').attr('action', 'mailContentAddEditProcess'+'?menuid=menu_mail&time='+datetime);
+								$("#mail_reg").submit();*/
 							} else {
 								 $("#addedit").attr("disabled", false);
 							}
@@ -54,9 +55,10 @@ $(document).ready(function() {
 						},
 						function(isConfirm) {
 							if (isConfirm) {
-							  pageload();
-								$('#mail_reg').attr('action', 'mailcontentregprocess'+'?menuid=menu_mail&time='+datetime);
-								$("#mail_reg").submit();
+							 /* pageload();
+								$('#mail_reg').attr('action', 'mailContentAddEditProcess'+'?menuid=menu_mail&time='+datetime);
+								$("#mail_reg").submit();*/
+								alert('Under Construction');
 							} else {
 								$("#addedit").attr("disabled", false);
 							}
@@ -114,7 +116,62 @@ function fnback() {
 
 function fngotoregister(){
 	pageload();
-	$('#editflg').val('2');
-	$('#mailcontentindx').attr('action','addedit'+'?mainmenu='+mainmenu+'&time='+datetime); 
+	$('#editflg').val(2);
+	$('#mailcontentindx').attr('action','mailContentAddEdit'+'?mainmenu='+mainmenu+'&time='+datetime); 
     $("#mailcontentindx").submit();
+}
+function fndisablecharge(id) {
+	if (id==999) {
+		$("#mailother").css("display", "inline-block");
+	} else {
+		$("#mailother").css("display", "none");
+	}
+}
+
+function gotoeditpage(mailId){
+	pageload();
+	$('#emailid').val(mailId);
+	$('#editflg').val(1);
+	$('#mailcontentView').attr('action', '../Mail/mailContentAddEdit'+'?mainmenu=menu_mail&time='+datetime);
+	$("#mailcontentView").submit();
+}
+//  Mail Content Add Edit Cancel
+function fngotoback() {
+	if($('#whichprocess').val() == 1) {
+		swal({
+			title: msg_cancel,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+			   pageload();
+			$('#mail_reg').attr('action', '../Mail/mailContentView'+'?mainmenu=menu_mail&time='+datetime); 
+			$("#mail_reg").submit();
+			} else {
+				 $("#addedit").attr("disabled", false);
+			}
+		});
+	}else{ 
+		swal({
+			title: msg_cancel,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+			pageload();
+			$('#mail_reg').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime); 
+			$("#mail_reg").submit();
+			} else {
+				$("#addedit").attr("disabled", false);
+			}
+		});
+	}
 }

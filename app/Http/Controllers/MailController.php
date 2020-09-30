@@ -64,10 +64,10 @@ class MailController extends Controller {
 		if (!isset($request->editflg)) {
 			return Redirect::to('Mail/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
-		$getmailtypes=Mailcontent::fnfetchmailtypes($request);
+		$getmailtypes=Mail::fnfetchmailtypes($request);
 		$getdataforupdate=array();
 		if ($request->editflg == 1) {
-			$getdataforupdate=Mailcontent::fnfetchupdatedata($request);
+			$getdataforupdate=Mail::fnfetchupdatedata($request);
 		} 
 		return view('mail.mailcontentaddedit',[
 											'getmailtypes' => $getmailtypes,
@@ -75,4 +75,28 @@ class MailController extends Controller {
 											'request' => $request]);
 	}
 
+	public function mailContentAddEditProcess(Request $request){
+		
+	}
+
+	public function mailregvalidation(Request $request) {
+		$commonrules=array();
+		$commonrules = array(
+			'mailName' => 'required',
+			'subject'=>'required',
+			'mailtype'=>'required',
+			'content'=>'required',
+			//'mailother' => 'required',
+			// 'mailsignature'=>'required',
+		);
+		
+		$rules = $commonrules;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+	}
 }

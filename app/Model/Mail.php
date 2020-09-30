@@ -26,11 +26,27 @@ class Mail extends Model {
 	}
 	
 	public static function getMailcontentview($request){
-		$result= DB::table('mailContent')
+		$sql= DB::table('mailContent')
 				->SELECT('mailContent.*','mailType.typeName')
 				->leftjoin('mailType', 'mailContent.mailType', '=', 'mailType.id')
 				->WHERE('mailContent.mailId', '=', $request->mailid)
 			  	->get();
-		return $result;
+		return $sql;
+	}
+
+	public static function fnfetchmailtypes($request) {
+		$sql= DB::table('mailType')
+						->SELECT('*')
+						->WHERE('delFlg', '=', 0)
+						->lists('typeName','id');
+			return $sql;
+	}
+
+	public static function fnfetchupdatedata($request){
+		$sql= DB::table('mailContent')
+						->SELECT('*')
+						->WHERE('mailId', '=', $request->mailid)
+						->get();
+		return $sql;
 	}
 }

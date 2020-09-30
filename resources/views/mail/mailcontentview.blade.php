@@ -43,6 +43,7 @@
 	{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
 	{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
 	{{ Form::hidden('filvalhdn', $request->filvalhdn , array('id' => 'filvalhdn')) }}
+	{{ Form::hidden('editflg', '', array('id' => 'editflg')) }}
 	<fieldset class="mt2">
 		<div class="col-xs-12">
 			<div class="col-xs-9 mt10">

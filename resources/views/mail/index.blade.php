@@ -86,13 +86,7 @@
 							</h4>
 						</div>
 					</div>
-					<!-- <span class="pull-left col-xs-12 pm0 ml10">
-						<span class="col-xs-11 pm0" style="">
-							<span class="pm0">
-								{{ $content->mailName }}
-							</span>
-						</span>
-					</span> -->
+					
 					<div class="pull-left col-xs-12 pm0">
 						<div class="inb col-xs-9 pm0 ml10">
 							<span class="pm0">
