@@ -1,6 +1,6 @@
 <?php
 return [
-	/*  Common Module  */
+	/* Common Module  */
 	'lbl_assets' => 'Assets',
 	'lbl_assetsys' => 'Interview Management System',
 	'lbl_assetstypes' => 'Assets Types',
@@ -24,8 +24,9 @@ return [
 	'lbl_sno' => 'S.No',
 	'lbl_belongsTo' => 'Belongs To',
 	'lbl_search' => 'Search',
+	'lbl_multi_search' => 'Multi Search',
 	
-	/*  Change Password Module  */
+	/* Change Password Module  */
 	'lbl_pwdchange' => 'Password Change',
 	'lbl_changePassword' => 'Change Password',
 	'lbl_currentpassword' => 'Current Password',
@@ -33,7 +34,7 @@ return [
 	'lbl_confirmnewpassword' => 'Confirm New Password',
 	'lbl_resetpassword' =>'Reset Password',
 
-	/*  Mail Content Module  */
+	/* Mail Content Module  */
 	'lbl_mail' => 'Mail',
 	'lbl_mailid' => 'Mail Id',
 	'lbl_mailname' => 'Mail Name',
@@ -47,7 +48,7 @@ return [
 	'lbl_senddatetime' => 'Send Date Time',
 	'lbl_to' => 'To',
 
-	/*  Register Module  */
+	/* Register Module  */
 	'lbl_usrregister' => 'User Register',
 	'lbl_surname' => 'Sur Name',
 	'lbl_givenname' => 'Given Name',
@@ -64,12 +65,12 @@ return [
 	'lbl_passhere' => 'You can reset your password here.',
 	'lbl_emailalreadyexists' => 'Email Is Already Exists',
 
-	/*  Mail Module  */
+	/* Mail Module  */
 	'lbl_mailsubject' => 'Mail Subject',
 	'lbl_subject' => 'Subject',
 	'lbl_mailtype' => 'Mail Type',
 
-	/*  Setting Module  */
+	/* Setting Module  */
 	'lbl_settings' => 'Settings',
 	'lbl_categorytypes' => 'Category Type',
 	'lbl_main_category' => 'Main Category',
@@ -84,7 +85,7 @@ return [
 	'lbl_houseimgmain' => 'House Images Main',
 	'lbl_houseimgsub' => 'House Images Sub',
 
-	/* Start Menu Module */
+	/* Menu Module */
     'lbl_home' => 'Home',
 	'lbl_employee' => 'Employee',
 	'lbl_customer' => 'Customer',
@@ -95,5 +96,53 @@ return [
 	'lbl_user' => 'User',
 	'lbl_ourdetails' => 'Our Details',
     'lbl_japanese_skills' => 'Japanese Skills',
+
+	/* Employee */
+	'lbl_avgage' => 'Avg Age',
+	'lbl_nonMB' => 'Not In Mb',
+	'lbl_resigned' => 'Resigned',
+	'lbl_empid' => 'Emp Id',
+	'lbl_empName' => 'Employee Name',
+	'lbl_dateofjoining' => 'Date of joining',
+	'lbl_age' => 'Age',
+	'lbl_empdetails' => 'Employee Details',
+	
+	/* Start Setting Module */
+	'lbl_userdesignation' => 'User Designation',
+    'lbl_userdesignationinenglish' => 'Designation in English',
+    'lbl_userdesignationinjapanese' => 'Designation in Japanese',
+	'lbl_userdesignationtype' => 'User Designation Type',
+	'lbl_Unfixed_reason' => 'Un Fixed Reason',
+	'lbl_reason' => 'Reason',
+	'lbl_skills' => 'Skill Setting',
+	'lbl_roletype' => 'Role',
+	'lbl_sysostypes' => 'Operating System',
+	'lbl_Os' => 'OS',
+	'lbl_sysprogramlangtypes' => 'Programming Language',
+	'lbl_sysdbtypes' => 'Data Base',
+	'lbl_systooltypes' => 'Software Tool',
+	'lbl_sysguitypes' => 'GUI',
+	'lbl_syswebservertypes' => 'Web Server',
+	'lbl_sysmiddlewaretypes' => 'Middle Ware',
+	'lbl_syswebtooltypes' => 'Web Tools',
+	'lbl_RoleTypeNM' => 'RoleTypeName',
+	'lbl_RoleTypeEN' => 'English Role Name',
+	'lbl_RoleTypeJP' => 'Japanese Role Name',
+	'lbl_OSTypeNM' => 'OSTypeName',
+	'lbl_PLTypeNM' => 'PLTypeName',
+	'lbl_DBTypeNM' => 'DBTypeName',
+	'lbl_ToolTypeNM' => 'ToolTypeName',
+	'lbl_GUITypeNM' => 'GUITypeName',
+	'lbl_WSTypeNM' => 'WSTypeName',
+	'lbl_MWTypeNM' => 'MWTypeName',
+	'lbl_WTTypeNM' => 'WTTypeName',
+	'lbl_languageskill' => 'Language Skill',
+	'lbl_skill' => 'Skills',
+	'lbl_skillname' => 'Skill Name',
+	'lbl_group' => 'Group',
+	'lbl_groupName' => 'Group Name',
+	'lbl_groupMembers' =>'Group Member',
+	'lbl_grouplist' =>'Group List',
+	/* End Setting Module */
 
 ];

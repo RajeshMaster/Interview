@@ -16,7 +16,7 @@ table thead tr th {text-align: center ! important;}
 	background-color: #dce3f4;
 }
 .table-striped-new>tbody>tr:nth-of-type(odd) {
-	background-color: #72afff;
+	background-color: ##70a6ff52;
 }
 .h100 {
 	height: 110px !important;
@@ -77,3 +77,6 @@ footer {
 	appearance: none;
 	background: none; 
 }
+
+
+

@@ -224,7 +224,7 @@ table thead tr th {text-align: center ! important;}
   height: 20px;width: 19px;
 }
 .tablealternateclr tr:nth-child(even){ 
-    background:#fff0e7e8;
+    background:#70a6ff73;
 }
 .tablealternateclr tr:nth-child(odd){
     background: white !important;

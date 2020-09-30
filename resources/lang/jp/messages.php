@@ -1,6 +1,6 @@
 <?php
 return [
-	/*  Start Common Module  */
+	/* Common Module  */
 	'lbl_assets' => '資産',
 	'lbl_assetsys' => 'Asset Management System',
 	'lbl_assetstypes' => '資産種別',
@@ -24,8 +24,9 @@ return [
 	'lbl_sno' => '連番',
 	'lbl_belongsTo' => '名義',
 	'lbl_search' => '検索',
+	'lbl_multi_search' => '複数検索',
 
-	/*  Change Password */
+	/* Change Password */
 	'lbl_pwdchange' => 'パスワード変更',
 	'lbl_changePassword' => 'パスワード変更',
 	'lbl_currentpassword' => '現在パスワード',
@@ -33,7 +34,7 @@ return [
 	'lbl_confirmnewpassword' => '確認パスワード',
 	'lbl_resetpassword' =>'Reset Password',
 
-	/*  Start Mail Module  */
+	/* Mail Content Module  */
 	'lbl_mail' => 'メール',
 	'lbl_mailid' => 'メールId',
 	'lbl_mailname' => 'メール名',
@@ -47,21 +48,7 @@ return [
 	'lbl_senddatetime' => '時日送信',
 	'lbl_to' => '受信者',
 
-	/*  Start Bank Module  */
-	'lbl_bankId' => '銀行', 
-	'lbl_bank' => '銀行',
-	'lbl_otherbank' => 'Other Bank', 
-	'lbl_bankdetails' => '銀行詳細',
-	'lbl_account_no' => '口座番号',
-	'lbl_account_type' => '口座種類',
-	'lbl_bank_name' => '銀行名',
-	'lbl_bank_nickname' => 'Bank Nick Name',
-	'lbl_branch_name' => '支店名',
-	'lbl_branch_number' => '支店番号',
-	'lbl_bank_username' => '名',
-	'lbl_registerDate' => 'Register Date',
-
-	/*  Start Register Module  */
+	/* Register Module  */
 	'lbl_usrregister' => 'ユーザ登録',
 	'lbl_surname' => '姓',
 	'lbl_givenname' => '名',
@@ -78,12 +65,12 @@ return [
 	'lbl_passhere' => 'You can reset your password here.',
 	'lbl_emailalreadyexists' => 'このメールアドレスはすでに登録されています。',
 
-	/*  Start Mail Module  */
+	/* Mail Module  */
 	'lbl_mailsubject' => 'メール標記',
 	'lbl_subject' => '件名',
 	'lbl_mailtype' => 'メールタイプ',
 
-	/* Start Setting Module */
+	/* Setting Module */
 	'lbl_settings' => '設定',
 	'lbl_categorytypes' => 'Category Types',
 	'lbl_main_category' => 'メインカテゴリー',
@@ -98,7 +85,7 @@ return [
 	'lbl_houseimgmain' => 'House Images Main',
 	'lbl_houseimgsub' => 'House Images Sub',
 
-	/* Start Menu Module */
+	/* Menu Module */
     'lbl_home' => 'ホーム',
 	'lbl_employee' => '社員',
 	'lbl_customer' => '取引先',
@@ -110,4 +97,51 @@ return [
 	'lbl_ourdetails' => '当社詳細',
     'lbl_japanese_skills' => '日本語のスキル',
 
+    /* Employee */
+    'lbl_avgage' => '平均年齢',
+	'lbl_nonMB' => 'MBにはいない',
+	'lbl_resigned' => '退社社員',
+	'lbl_empid' => '社員ID',
+	'lbl_empName' => '社員名',
+	'lbl_dateofjoining' => '入社日',
+	'lbl_age' => '年齢',
+	'lbl_empdetails' => '社員詳細',
+
+	/* Start Setting Module */
+	'lbl_userdesignation' => 'ユーザー指定',
+    'lbl_userdesignationinenglish' => '英語での指定',
+    'lbl_userdesignationinjapanese' => '日本語での指定',
+	'lbl_userdesignationtype' => 'ユーザー指定タイプ',
+	'lbl_Unfixed_reason' => 'Un Fixed Reason',
+	'lbl_reason' => 'Reason',
+	'lbl_skills' => 'スキルの 設定',
+	'lbl_roletype' => '役割',
+	'lbl_sysostypes' => 'Operating System',
+	'lbl_Os' => 'OS',
+	'lbl_sysprogramlangtypes' => 'プログラミング言語',
+	'lbl_sysdbtypes' => 'データベース',
+	'lbl_systooltypes' => 'ツール',
+	'lbl_sysguitypes' => 'GUI',
+	'lbl_syswebservertypes' => 'ウェブサーバー',
+	'lbl_sysmiddlewaretypes' => 'ミドルウェア',
+	'lbl_syswebtooltypes' => 'ウェブツール',
+	'lbl_RoleTypeNM' => 'RoleTypeNM',
+	'lbl_RoleTypeEN' => 'English Role Name',
+	'lbl_RoleTypeJP' => 'Japanese Role Name',
+	'lbl_OSTypeNM' => 'OSTypeNM',
+	'lbl_PLTypeNM' => 'PLTypeNM',
+	'lbl_DBTypeNM' => 'DBTypeNM',
+	'lbl_ToolTypeNM' => 'ToolTypeNM',
+	'lbl_GUITypeNM' => 'GUITypeNM',
+	'lbl_WSTypeNM' => 'WSTypeNM',
+	'lbl_MWTypeNM' => 'MWTypeNM',
+	'lbl_WTTypeNM' => 'WTTypeNM',
+	'lbl_languageskill' => '言語スキル',
+	'lbl_skill'=>'スキル',
+	'lbl_skillname'=>'Skill Name',
+	'lbl_group' => 'Group',
+	'lbl_groupName' => 'Group Name',
+	'lbl_groupMembers' =>'Group Member',
+	'lbl_grouplist' =>'Group List',
+	/* End Setting Module */
 ];
