@@ -26,13 +26,36 @@ class MailController extends Controller {
 	*
 	*/
 	public function index(Request $request) {
-		if (empty($request->plimit)) {
+		$contenttotal = 0;
+		// Filter Process
+		$disabledall = "";
+		$disableduse = "";
+		$disablednotuse = "";
+		if (!isset($request->filvalhdn) || $request->filvalhdn == "") {
+			$request->filvalhdn = 1;
+		}
+		if($request->filvalhdn == 1) {
+			$disabledall = "disabled fb";
+		} else if($request->filvalhdn == 2) {
+			$disableduse = "disabled fb";
+		} else if($request->filvalhdn == 3) {
+			$disablednotuse = "disabled fb";
+		}
+		// Pagination
+		if ($request->plimit == "") {
 			$request->plimit = 50;
 		}
-		$mailContent = Mail::getMailContent($request);
-		return view('mail.index',['request' => $request,
-								'mailContent' => $mailContent,
-								]);
+	
+		$mailcontent = Mail::getMailcontent($request);
+		return view('mail.index' ,compact('request',
+											'mailcontent',
+											'disabledall',
+											'disableduse',
+											'disablednotuse',
+											'contenttotal'));
+	}
+	public function mailContentView(Request $request){
+		print_r($request->all()); exit();
 	}
 
 }

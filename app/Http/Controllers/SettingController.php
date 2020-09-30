@@ -1,112 +1,61 @@
 <?php
 namespace App\Http\Controllers;
-use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use App\Model\Setting;
-use App\Http\Common\settingcommon;
+use session;
 use Redirect;
-use Session;
+use App\Http\Common\settingscommon;
+use Excel;
+use Auth;
+use PHPExcel_Worksheet_PageSetup;
+use PHPExcel_Style_Fill;
+use PHPExcel_IOFactory;
+use PHPExcel_Shared_Date;
+use ExcelToPHPCal;
+use PHPExcel_Reader_Excel5;
 use Input;
-use Validator;
+use Config;
+use DB;
 class SettingController extends Controller {
-
-	/**
-	*  For Setting Index
-	*  @author Sarath 
-	*  @param $request
-	*  Created At 2020/08/25
-	*/
-	public function index(Request $request) {
-		return view('setting.index',compact('request'));
+	public static function index(Request $request) { 
+		return view('Setting.index',['request'=> $request]);
 	}
-
-	/** View Single Text Popup
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/25
-	*/
-	public function singletextpopup(Request $request) {
-		$getTableFields = settingcommon::getDbFieldsforProcess();
+	public static function singletextpopup(Request $request) {
+		$getTableFields = settingscommon::getDbFieldsforProcess();
 		$tablename = $request->tablename;
-		$getdetails = Setting::selectOnefieldDatas($getTableFields[$tablename]['selectfields'],
-											  $getTableFields[$tablename]['commitfields'][0],
-											  $request);
+	 	$query = setting::selectOnefieldDatas($getTableFields[$tablename]['selectfields'],
+	 										  $getTableFields[$tablename]['commitfields'][0],
+	 										  $request);
 		$requestAsJSONArray = json_encode($request->all());
 		$headinglbl = $getTableFields[$tablename]['labels']['heading'];
 		$field1lbl = $getTableFields[$tablename]['labels']['field1lbl'];
 		$selectfiled  = $getTableFields[$tablename]['selectfields'];
-		return view('setting.singletextpopup',compact('getdetails',
-														'headinglbl',
-														'field1lbl',
-														'selectfiled',
-														'getTableFields',
-														'requestAsJSONArray',
-														'request'));
+		return view('Setting.singletextpopup',['getdetails' => $query,
+												'request'=>$request,
+												'headinglbl'=>$headinglbl,
+												'field1lbl' => $field1lbl,
+												'selectfiled' => $selectfiled,
+												'getTableFields'=> $getTableFields,
+												'requestAsJSONArray' => $requestAsJSONArray]);
 	}
-
-	/**  
-	*  Exists check For Single field popup
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/25
-	**/
-	public function Already_Exists(Request $request) {
-		$Already_Exists = Setting::chkNameExists($request);
-		// echo json_encode($Already_Exists);exit();
-		if ($Already_Exists != array()) {
-			$existsChk = 1;
-		} else {
-			$existsChk = 0;
-		}
-		print_r($existsChk);exit();
-	}
-
-	/**
-	*  For Use and Notuse for single field popup
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/25
-	**/
-	public function useNotuse(Request $request) {
-		$usenotuse = setting::updateUseNotUse($request);
-	}
-	
-	/**
-	*  For Insert Process for single field popup
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/25
-	**/
-	public function SingleFieldaddedit(Request $request) {
+	public static function SingleFieldaddedit(Request $request) {
 		if ($request->flag == 2) {
-			echo $update_query = Setting::updateSingleField($request);
-			exit();
+	 		echo $update_query=Setting::updateSingleField($request);
+	 		exit();
 		} 
 		$tbl_name = $request->tablename;
 		$orderidval = Setting::Orderidgenerate($tbl_name);
-		$orderidarray['orderid'] = $orderidval;
-		$ins_query = Setting::insertquery($tbl_name,$request,$orderidval);
-		$actualId = "";
-		$actualVal = Setting::selectOrderId($request);
-		foreach ($actualVal as $key => $value) {
-			$actualId .=  $value->orderId.",";
-		}
-		$orderidarray['actualid'] = rtrim($actualId, ",");
-		$location = "";
-		$orderidval = Setting::Orderidgeneratefortotal($location,$tbl_name);
-		$orderidarray['totalid'] = $orderidval;
-		echo json_encode($orderidarray);
+ 		$orderidarray['orderid'] = $orderidval;
+ 		$ins_query = Setting::insertquery($tbl_name,$request,$orderidval);
+ 		$location = "";
+ 		$orderidval = Setting::Orderidgenerateforbranchtotal($location,$tbl_name);
+ 		$orderidarray['totalid'] = $orderidval;
+ 		echo json_encode($orderidarray);
 	}
-
-	/**
-	*  For View Two field popup
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/27
-	**/
-	public function twotextpopup(Request $request) {
+	public static function twotextpopup(Request $request) {
 		$tbl_name = $request->tablename;
-		$getTableFields = settingcommon::getDbFieldsforProcess();
+		$getTableFields = settingscommon::getDbFieldsforProcess();
 		$query = setting::selectOnefieldDatas($getTableFields[$tbl_name]['selectfields'],
 											  $getTableFields[$tbl_name]['commitfields'][0],
 											  $request);
@@ -115,7 +64,7 @@ class SettingController extends Controller {
 		$field1lbl = $getTableFields[$tbl_name]['labels']['field1lbl'];
 		$field2lbl = $getTableFields[$tbl_name]['labels']['field2lbl'];
 		$selectfiled  = $getTableFields[$tbl_name]['selectfields'];
-		return view('setting.twofieldpopup',['query' => $query,
+		return view('Setting.twofieldpopup',['query' => $query,
 												'request'=>$request,
 												'headinglbl'=>$headinglbl,
 												'field1lbl' => $field1lbl,
@@ -124,150 +73,144 @@ class SettingController extends Controller {
 												'getTableFields'=> $getTableFields,
 												'requestAsJSONArray' => $requestAsJSONArray]);
 	}
-
-	/**
-	*  For Insert Process for single field popup
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/27
-	**/
-	public function twoFieldaddedit(Request $request) {
+	public static function twoFieldaddedit(Request $request) {
 		if ($request->flag == 2) {
-			echo $update_query = Setting::updatetwoField($request);
-			exit();
+	 		echo $update_query = Setting::updatetwoField($request);
+	 		exit();
 		}
 		$tbl_name = $request->tablename;
 		$orderidval = Setting::Orderidgenerate($tbl_name);
-		$orderid = $orderidval;
-		$orderidarray['orderid'] = $orderidval;
-		$ins_query = Setting::insertquerytwofield($tbl_name,$request,$orderid);
-		$actualId = "";
-		$actualVal = Setting::selectOrderId($request);
-		foreach ($actualVal as $key => $value) {
-			$actualId .=  $value->orderId.",";
-		}
-		$orderidarray['actualid'] = rtrim($actualId, ",");
-		$location = "";
-		$orderidval = Setting::Orderidgeneratefortotal($location,$tbl_name);
-		$orderidarray['totalid'] = $orderidval;
-		echo json_encode($orderidarray);
+	 	echo $orderid = $orderidval;
+	 	$ins_query = Setting::insertquerytwofield($tbl_name,$request,$orderid);
 	}
-
-	/** Single Text & Select Popup
-	 *  @author Sastha.C 
-	 *  @param $request
-	 *  Created At 2020/08/28
-	*/
-	public function selecttextpopup(Request $request) {
-		$getTableFields = settingcommon::getDbFieldsforProcess();
-		$tablename = $request->tablename;
-		if (isset($request->tableselect)) {
-			$getdetails = Setting::selectTwofieldDatas(
-						$getTableFields[$tablename]['selectfields'],
-						$getTableFields[$tablename]['commitfields'][0],
-						$getTableFields[$tablename]['selectboxfields'][1],
-						$request);
-		}
-		$requestAsJSONArray = json_encode($request->all());
-		$headinglbl = $getTableFields[$tablename]['labels']['heading'];
-		$field1lbl = $getTableFields[$tablename]['labels']['field1lbl'];
-		$field2lbl = $getTableFields[$tablename]['labels']['field2lbl'];
-		$selectfiled  = $getTableFields[$tablename]['selectfields'];
-		$selectboxval = "";
-		if ($request->tableselect != "" && $request->tableselect != "text") {
-			$selectboxval = Setting::selectboxDatas(
-							$getTableFields[$tablename]['selectboxfields'],
-							$getTableFields[$request->tablename]['commitfields'][0],
-							$request);
-		}
-		return view('setting.selecttextpopup',compact('getdetails',
-														'headinglbl',
-														'field1lbl',
-														'field2lbl',
-														'selectfiled',
-														'getTableFields',
-														'selectboxval',
-														'requestAsJSONArray',
-														'request'));
+	public static function useNotuse(Request $request) {
+		$usenotuse = setting::updateUseNotUse($request);
 	}
-
-	/**  
-	 *  Form Validation For Select Text
-	 *  @author Sastha.C 
-	 *  @param $request
-	 *  Created At 2018/03/22
-	 **/
-	public function formValidationforsingletext(Request $request) {
-		// print_r(json_encode($request->all()));exit;
-		$rules = array(
-			'selectbox1' => 'required',
-			'textbox1' => 'required');
-		$customizedNames = array(
-								'textbox1' => 'Textbox1'
-								);
-		$validator = Validator::make($request->all(), $rules);
-		$validator->setAttributeNames($customizedNames);
-		if ($validator->fails()) {
-			// If validation falis redirect back to Register Screen.
-			return response()->json($validator->messages(), 200);exit;
+	public static function getExtension($str) {
+	    $i = strrpos($str,".");
+	    if (!$i) { return ""; }
+	    $l = strlen($str) - $i;
+	    $ext = substr($str,$i+1,$l);
+	    return $ext;
+	}
+	public static function grouppopup(Request $request) {  
+		$groupname = Setting::fnGetgroup();
+		$Selgroupname = array();
+		$i = 0;
+		$j = 0;
+		foreach ($groupname as $key => $value) {
+			$Selgroupname[$i]['id'] = $value->id;
+			$Selgroupname[$i]['groupId'] = $value->groupId;
+			$Selgroupname[$i]['groupName'] = $value->groupName;
+			$Selgroupname[$i]['delFlg'] = $value->delFlg;
+			$SelCustomer = Setting::fnGetCus($value->groupId);
+			foreach($SelCustomer as $key => $val) {
+				$Selgroupname[$i]['customer'][$j]['cusId'] = $val->customer_id;
+				$Selgroupname[$i]['customer'][$j]['cusName'] = $val->customer_name;
+				$j++;
+			}
+			$i++;
+		}
+		return view('Setting.grouppopup',['groupname' => $groupname,'Selgroupname' => $Selgroupname]);
+	}
+	public static function groupaddprocess(Request $request) {  
+		$groupid = Setting::getmaxid();
+		if($groupid == "") {
+			$group = "GRP00001";
 		} else {
-			$success = true;
-			echo json_encode($success);exit;
+			$id = $groupid;
+			$groups = substr($id, 3,5);
+			$group = (int)$groups + 1;
+			$group = str_pad($group,5,"0",STR_PAD_LEFT);
+			$group = "GRP" . $group;
 		}
-	}
-
-	/**  
-	 *  Exist Check For Select Text
-	 *  @author Sastha.C 
-	 *  @param $request
-	 *  Created At 2018/03/23
-	 **/
-	function existforselecttext(Request $request){
-		$dateexistcheck = Setting::checkforselecttext($request);
-		$dateexistcheck = count($dateexistcheck);
-		echo $dateexistcheck;exit();
-	}
-
-	/**  
-	*  For Insert Process for Three field
-	*  @author Sastha.C 
-	*  @param $request
-	*  Created At 2018/03/14
-	**/
-	public function SelecttextFieldaddedit(Request $request) {
-		if ($request->flag == 2) {
-			echo $update_query=Setting::updateselecttextField($request);
-			exit();
-		}
-		$tbl_name = $request->tablename;
-		$orderidval = Setting::Orderidgenerate($tbl_name);
-		if ($orderidval == "") {
-			$orderidval = 1;
+		if ($request->flag != "edit") {
+			$insertGroupdetails = Setting::insGrpDtls($group,$request);
+			$maxId = Setting::getonlymaxid();
+			$orderidarray['orderid'] = $maxId;
+			$orderidarray['totalid'] = $maxId;
+			$orderidarray['group'] = $group;
+			echo json_encode($orderidarray);
 		} else {
-			$orderidval = $orderidval;
+			$updateGroupdetails = Setting::updGrpDtls($request);
+			print_r($updateGroupdetails);exit();
 		}
-		$orderidarray['orderid'] = $orderidval;
-		$ins_query = Setting::insertqueryforselecttextfield($tbl_name,$request,$orderidval);
-		$actualId = "";
-		$actualVal = Setting::selectOrderId($request);
-		foreach ($actualVal as $key => $value) {
-			$actualId .=  $value->orderId.",";
-		}
-		$orderidarray['actualid'] = rtrim($actualId, ",");
-		$location = "";
-		$orderidval = Setting::Orderidgeneratefortotal($location,$tbl_name);
-		$orderidarray['totalid'] = $orderidval;
-		echo json_encode($orderidarray);exit();
 	}
-
-	/**  
-	*  For Commit Process for All popup
-	*  @author Sarath 
-	*  @param $request
-	*  Created At 2020/09/21
-	**/
-	public function commitProcess(Request $request) {
-		$commit = Setting::fngetcommitProcess($request);
+	public static function useNotuses(Request $request) {
+		$usenotuse = setting::flagchange($request);
+		print_r($usenotuse);exit();
+	}
+	public static function requirmentSetting(Request $request) {  
+		$requirmentSetting =array();
+		$requirmentSetting = Setting::fnGetrequirment();
+		$Selgroupname = array();
+		$i = 0;
+		return view('Setting.requirmentSettingpopup',[
+														'request' => $request,
+														'requirmentSetting' => $requirmentSetting
+													]);
+	}
+	public static function reqirmentaddprocess(Request $request) {
+		$data['id'] = $request->id;
+		$data['Requirment'] = $request->requirTxt;
+		$data['commShow'] = $request->checkbox;
+		$data['UpdatedBy'] = Auth::user()->username;
+		if ($request->flag != "edit") {
+			$data['CreatedBy'] = Auth::user()->username;
+			$data['delFlg'] = 0;
+		}
+		$requimentdtl = Setting::insreqDtls($data);
+		if ($request->flag != "edit") {
+			$maxId = Setting::getonlymaxidrequirment();
+			$orderidarray['orderid'] = $maxId;
+			$orderidarray['totalid'] = $maxId;
+			$orderidarray['Requirment'] = $request->requirTxt;
+			echo json_encode($orderidarray);
+		} else {
+			$updateGroupdetails = Setting::updGrpDtls($request);
+			print_r($requimentdtl);exit();
+		}
+	}
+	public static function useNotusesrequirment(Request $request) {
+		$usenotuse = Setting::delflgforrrquirment($request);
+		print_r($usenotuse);exit();
+	}
+	public static function importpopup(Request $request){
+		//For Get The DataBase List
+		$getOldDbDetails = Setting::fnOldDbDetails();
+		return view('Setting.importpopup',['getOldDbDetails'=> $getOldDbDetails,
+										'request' => $request]);
+	}
+	public static function importprocess(Request $request) {
+		//Get The New DataBase Details
+		$getConnectionQuery = Setting::fnGetConnectionQuery($request);
+		$dbName = $getConnectionQuery[0]->DBName;
+		$dbUser = $getConnectionQuery[0]->UserName;
+		$dbPass = $getConnectionQuery[0]->Password;
+		Config::set('database.connections.otherdb.database', $dbName);
+		Config::set('database.connections.otherdb.username', $dbUser);
+		Config::set('database.connections.otherdb.password', $dbPass);
+		try {
+			$db = DB::connection('otherdb');
+			$db->getPdo();
+			if($db->getDatabaseName()){
+				$tables = array('emp_sysostypes','emp_sysprogramlangtypes','emp_systooltypes','emp_sysdbtypes');
+				foreach ($tables as $key => $tableName) {
+					$oldRecords = array();
+					$oldRecords = Setting::fnGetOldRecords($tableName);
+					foreach ($oldRecords as $key1 => $record) {
+						$oldRecordAsArray = (array)$record;
+						$result = Setting::fnUpdateOrInsert($tableName,$oldRecordAsArray);               
+					}
+				}
+			} else {
+				Session::flash('success', 'Invalid Db Connection'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		} catch (\Exception $e) {
+			Session::flash('success', 'Invalid Db Connection.'); 
+			Session::flash('type', 'alert-danger'); 
+		}
+		return Redirect::to('Setting/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 	}
 }
-?>

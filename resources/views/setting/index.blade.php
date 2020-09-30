@@ -23,6 +23,9 @@
 <script type="text/javascript">
 	var mainmenu = '@php echo $request->mainmenu; @endphp';
 	var datetime = '@php echo date("Ymdhis") @endphp';
+	function underconst() {
+		alert("Under Construction");
+	}
 </script>
 <div class="" id="main_contents">
 	<!-- article to select the main&sub menu -->
@@ -42,7 +45,7 @@
 				<div class="box50per pull-left table">
 					<div class="box80per pull-left">
 						<div class="col-xs-12 fwb headlbl headlbl1 settingdesign">
-							<div class="mt3 designtab" style="padding-left: 15px;">{{ trans('messages.lbl_expenses') }}</div>
+							<div class="mt3 designtab" style="padding-left: 15px;">{{ trans('messages.lbl_userdesignation') }}</div>
 						</div>
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 lbldessetcat settingsubdesignfamily">
@@ -50,35 +53,26 @@
 									$tbl_name = 'ams_master_expenses_main';
 								@endphp
 							 	<a name="mainCategory" style="color: #33AFFF !important;" 
-							 	id="mainCategory" href="javascript:settingpopupsinglefield('singletextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_main_category') }}</a>
-							</span>
-							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
-								@php
-									$tbl_name = 'ams_master_expenses_sub';
-									$tbl_select = 'ams_master_expenses_main';
-								@endphp
-							 	<!-- <a name="category" style="color: #33AFFF !important;" id="category" href="javascript:settingpopupsinglefield('singletextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_sub_category') }}</a> -->
-								<a name="subCategory" style="color: #33AFFF !important;" 
-								id="subCategory" href="javascript:settingpopupsinglefield('selecttextpopup','{{ $tbl_name }}','{{ $tbl_select }}');">{{ trans('messages.lbl_sub_category') }}</a>
+							 	id="mainCategory" href="javascript:underconst();">{{ trans('messages.lbl_userdesignation') }}</a>
 							</span>
 						</div>
 					</div>
 					<div class="box80per pull-left mt40">
 						<div class="col-xs-12 fwb headlbl headlbl1 settingdesign">
-							<div class="mt3" style="padding-left: 15px;">{{ trans('messages.lbl_family') }}</div>
+							<div class="mt3" style="padding-left: 15px;">{{ trans('messages.lbl_Unfixed_reason') }}</div>
 						</div>
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 lbldessetcat settingsubdesignfamily">
 								@php
 									$tbl_name = 'ams_family_master';
 								@endphp
-								<a name="family" style="color:#33AFFF !important;" id="family" href="javascript:settingpopupsinglefield('singletextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_familymember') }}</a>
+								<a name="family" style="color:#33AFFF !important;" id="family" href="javascript:underconst();">{{ trans('messages.lbl_Unfixed_reason') }}</a>
 							</span>
 						</div>
 					</div>
 					<div class="box80per pull-left mt40">
 						<div class="col-xs-12 fwb headlbl headlbl1 settingdesign">
-							<div class="mt3" style="padding-left: 15px;">{{ trans('messages.lbl_assets') }}</div>
+							<div class="mt3" style="padding-left: 15px;">{{ trans('messages.lbl_skills') }}</div>
 						</div>
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 lbldessetcat settingsubdesignfamily">
@@ -86,7 +80,63 @@
 									$tbl_name = 'ams_master_assetstypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:settingpopupsinglefield('singletextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_assetstypes') }}</a>
+								href="javascript:underconst();">{{ trans('messages.lbl_roletype') }}</a>
+							</span>
+							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
+								@php
+									$tbl_name = 'ams_master_assetstypes';
+								@endphp
+								<a name="assets" style="color:#33AFFF !important;" id="assets" 
+								href="javascript:underconst();">{{ trans('messages.lbl_sysostypes') }}</a>
+							</span>
+							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
+								@php
+									$tbl_name = 'ams_master_assetstypes';
+								@endphp
+								<a name="assets" style="color:#33AFFF !important;" id="assets" 
+								href="javascript:underconst();">{{ trans('messages.lbl_sysprogramlangtypes') }}</a>
+							</span>
+							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
+								@php
+									$tbl_name = 'ams_master_assetstypes';
+								@endphp
+								<a name="assets" style="color:#33AFFF !important;" id="assets" 
+								href="javascript:underconst();">{{ trans('messages.lbl_sysdbtypes') }}</a>
+							</span>
+							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
+								@php
+									$tbl_name = 'ams_master_assetstypes';
+								@endphp
+								<a name="assets" style="color:#33AFFF !important;" id="assets" 
+								href="javascript:underconst();">{{ trans('messages.lbl_systooltypes') }}</a>
+							</span>
+							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
+								@php
+									$tbl_name = 'ams_master_assetstypes';
+								@endphp
+								<a name="assets" style="color:#33AFFF !important;" id="assets" 
+								href="javascript:underconst();">{{ trans('messages.lbl_sysguitypes') }}</a>
+							</span>
+							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
+								@php
+									$tbl_name = 'ams_master_assetstypes';
+								@endphp
+								<a name="assets" style="color:#33AFFF !important;" id="assets" 
+								href="javascript:underconst();">{{ trans('messages.lbl_syswebservertypes') }}</a>
+							</span>
+							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
+								@php
+									$tbl_name = 'ams_master_assetstypes';
+								@endphp
+								<a name="assets" style="color:#33AFFF !important;" id="assets" 
+								href="javascript:underconst();">{{ trans('messages.lbl_sysmiddlewaretypes') }}</a>
+							</span>
+							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
+								@php
+									$tbl_name = 'ams_master_assetstypes';
+								@endphp
+								<a name="assets" style="color:#33AFFF !important;" id="assets" 
+								href="javascript:underconst();">{{ trans('messages.lbl_syswebtooltypes') }}</a>
 							</span>
 						</div>
 					</div>
@@ -96,7 +146,7 @@
 				<div class="box50per pull-left buildingalign">
 					<div class="box80per pull-left">
 						<div class="col-xs-12 fwb headlbl headlbl2 settingdesignright">
-							<div class="mt3" style="padding-left: 15px;">{{ trans('messages.lbl_house') }}</div>
+							<div class="mt3" style="padding-left: 15px;">{{ trans('messages.lbl_group') }}</div>
 						</div>
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 mt5 lbldesset settingsubdesignright">
@@ -104,27 +154,14 @@
 									$tbl_name = 'ams_master_buildingname';
 								@endphp
 							 	<a name="houseName" style="color: #33AFFF !important;" 
-						 		id="houseName" href="javascript:settingpopupsinglefield('singletextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_building_name') }}</a>
-							</span>
-							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
-								@php
-									$tbl_name = 'ams_master_houseimg_main';
-								@endphp
-								<a name="houseImg" id="houseImg" style="color:#33AFFF !important;" href="javascript:settingpopupsinglefield('singletextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_houseimgmain') }}</a>
-							</span>
-							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
-								@php
-									$tbl_name = 'ams_master_houseimg_sub';
-									$tbl_select = 'ams_master_houseimg_main';
-								@endphp
-								<a name="houseImg" id="houseImg" style="color:#33AFFF !important;" href="javascript:settingpopupsinglefield('selecttextpopup','{{ $tbl_name }}','{{ $tbl_select }}');">{{ trans('messages.lbl_houseimgsub') }}</a>
+						 		id="houseName" href="javascript:underconst();">{{ trans('messages.lbl_group') }}</a>
 							</span>
 						</div>
 					</div>
 					<div class="box80per pull-left mt10">
 						<div class="col-xs-12 fwb headlbl headlbl2 settingdesignright">
 							<div class="mt3" style="padding-left: 15px;">
-								{{ trans('messages.lbl_bank') }}
+								{{ trans('Requirment Setting') }}
 							</div>
 						</div>
 						<div class="pull-left mt10 mb10 box100per">
@@ -132,7 +169,7 @@
 								@php
 									$tbl_name = 'ams_bankname_master';
 								@endphp
-								<a name="bank" id="bank" style="color:#33AFFF !important;" href="javascript:settingpopupsinglefield('twotextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_bankdetails') }}</a></span>
+								<a name="bank" id="bank" style="color:#33AFFF !important;" href="javascript:underconst();">{{ trans('Requirment Setting') }}</a></span>
 						</div>
 					</div>
 				</div>
