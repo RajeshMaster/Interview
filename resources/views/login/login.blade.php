@@ -128,9 +128,6 @@
 								Login
 							</button>
 						</form>
-						<div class="help-action pm0">
-							<p><i class="fa fa-arrow-left" aria-hidden="true"></i>Not a member yet? <a href="{{ url('User/register?time='.date('Ymdhis')) }}">Register Now</a></p>
-						</div>
 						<!-- Session msg -->
 						@if(Session::has('error'))
 						<div align="center" class="" style="color: red;height: 50px;">

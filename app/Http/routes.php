@@ -55,13 +55,10 @@ Route::group(['prefix'=>'Auth', 'middleware' => 'auth'], function() {
 	Route::any('changePasswordprocess','LoginController@changePassword');
 });
 
-// Income - ADDED By Sastha --2020/09/04
-Route::group(['prefix'=>'Income', 'middleware' => 'auth'], function() {
+// Employee - ADDED By Rajesh --2020/09/30
+Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 	Route::get('changelanguage', 'AjaxController@index');
-	Route::any('listview', 'IncomeController@listview');
-	Route::any('addEdit', 'IncomeController@addedit');
-	Route::any('addeditprocess', 'IncomeController@addeditprocess');
-	Route::any('checkmonth', 'IncomeController@checkmonth');
+	Route::any('index', 'EmployeeController@index');
 });
 
 // Mail - ADDED By Sathish --2020/09/30

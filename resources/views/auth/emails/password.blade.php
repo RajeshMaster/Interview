@@ -33,7 +33,7 @@
 </head>
 <body>
 	<div style="height: 80px !important;width: auto;background-color: #D6E6F5;">
-		<h1 style="vertical-align: middle;padding-left: 330px !important;padding-top: 25px !important;">Asset MANAGEMENT SYSTEM</h1>
+		<h1 style="vertical-align: middle;padding-left: 330px !important;padding-top: 25px !important;">INTERVIEW MANAGEMENT SYSTEM</h1>
 	</div>
 	<div style="height: 50px !important;">
 		<h2 style="padding-left: 300px !important;">
