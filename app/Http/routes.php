@@ -64,6 +64,12 @@ Route::group(['prefix'=>'Income', 'middleware' => 'auth'], function() {
 	Route::any('checkmonth', 'IncomeController@checkmonth');
 });
 
+// Mail - ADDED By Sathish --2020/09/30
+Route::group(['prefix'=>'Mail', 'middleware' => 'auth'], function() {
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('index', 'MailController@index');
+});
+
 // LOGOUT PROCESS
 Route::get('logout', 'Auth\AuthController@logout');
 
