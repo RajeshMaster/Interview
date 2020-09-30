@@ -65,6 +65,7 @@ Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 Route::group(['prefix'=>'Mail', 'middleware' => 'auth'], function() {
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'MailController@index');
+	Route::any('mailContentView','MailController@mailContentView');
 });
 
 // LOGOUT PROCESS
