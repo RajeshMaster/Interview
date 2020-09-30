@@ -343,7 +343,7 @@ body {
 								</a>
 							@else
 								 <a class="" href="{{ url('House/index?mainmenu=menu_house&time='.date('Ymdhis')) }}">
-									<img class="vam mt20 box80per pl50" 
+									<img class="vam mt20 box80per pl10" 
 										src="{{ URL::asset('public/images/Microbit_logo.jpg') }}" />
 								</a>
 							@endif
