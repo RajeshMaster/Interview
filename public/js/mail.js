@@ -105,3 +105,16 @@ function fncontentview(mailId) {
 	$('#mailcontentindx').attr('action', '../Mail/mailContentView'+'?mainmenu=menu_mail&time='+datetime);
 	$("#mailcontentindx").submit();
 }
+// To Mail Content Index Back
+function fnback() {
+	pageload();
+	$('#mailcontentView').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime);
+	$("#mailcontentView").submit();
+}
+
+function fngotoregister(){
+	pageload();
+	$('#editflg').val('2');
+	$('#mailcontentindx').attr('action','addedit'+'?mainmenu='+mainmenu+'&time='+datetime); 
+    $("#mailcontentindx").submit();
+}

@@ -34,6 +34,7 @@
 {{ Form::hidden('mailid', $request->mailid, array('id' => 'mailid')) }}
 {{ Form::hidden('delflg', $request->delflg, array('id' => 'delflg')) }}
 {{ Form::hidden('mailcontentreg', '', array('id' => 'mailcontentreg')) }}
+{{ Form::hidden('editflg', '', array('id' => 'editflg')) }}
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
 <article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_1">
@@ -45,7 +46,7 @@
 	</fieldset>
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
-			<button type="button" onclick="fnContentRegister(1);" 
+			<button type="button" onclick="fngotoregister('{{ $request->mainmenu }}');"
 					class="button button-green pull-right">
 				<span class="fa fa-plus"></span> {{ trans('messages.lbl_mail')}}
 			</button>
@@ -106,7 +107,7 @@
 					<div class="pull-left col-xs-12 pm0">
 						<div class="inb col-xs-9 pm0 ml10">
 							<span class="pm0">
-								<span class="vam fwb">MailType :</span>
+								<span class="vam fwb">{{ trans('messages.lbl_mailtype') }} :</span>
 								<span class="pm0">
 									{{ $content->typeName }}
 								</span>

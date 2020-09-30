@@ -55,7 +55,24 @@ class MailController extends Controller {
 											'contenttotal'));
 	}
 	public function mailContentView(Request $request){
-		print_r($request->all()); exit();
+		$mailContentView = Mail::getMailcontentview($request);
+		return view('mail.mailcontentview' ,compact('request',
+											'mailContentView'
+											));
+	}
+	public function mailContentAddEdit(Request $request){
+		if (!isset($request->editflg)) {
+			return Redirect::to('Mail/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
+		$getmailtypes=Mailcontent::fnfetchmailtypes($request);
+		$getdataforupdate=array();
+		if ($request->editflg == 1) {
+			$getdataforupdate=Mailcontent::fnfetchupdatedata($request);
+		} 
+		return view('mail.mailcontentaddedit',[
+											'getmailtypes' => $getmailtypes,
+											'getdataforupdate' => $getdataforupdate,
+											'request' => $request]);
 	}
 
 }

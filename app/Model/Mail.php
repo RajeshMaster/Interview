@@ -25,4 +25,12 @@ class Mail extends Model {
 		return $sql;
 	}
 	
+	public static function getMailcontentview($request){
+		$result= DB::table('mailContent')
+				->SELECT('mailContent.*','mailType.typeName')
+				->leftjoin('mailType', 'mailContent.mailType', '=', 'mailType.id')
+				->WHERE('mailContent.mailId', '=', $request->mailid)
+			  	->get();
+		return $result;
+	}
 }
