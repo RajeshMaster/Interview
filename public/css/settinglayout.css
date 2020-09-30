@@ -1,0 +1,213 @@
+/*Start Table and Popup Design in settings page*/
+.table>tbody>tr>td,.table>tbody>tr>th,.table>tfoot>tr>td,.table>tfoot>tr>th,.table>thead>tr>td,.table>thead>tr>th{
+	padding:3px;
+	line-height:1.42857143;
+	vertical-align:top;
+	border-top:1px solid #ddd
+}
+.colortds {
+	padding:0.8px !important;
+	line-height:1.42857143;
+	vertical-align:top;
+	border-top:1px solid #ddd
+}
+.alertboxalign {
+	margin-bottom: -50px !important;
+}
+.alert {
+	display:inline-block !important;
+	height:30px !important;
+	padding:5px !important;
+}
+.modal {
+	position: fixed;
+	top: 10% !important;
+	left: 20% !important;
+}
+.change {
+	color: brown;
+	padding-left: 1%;
+}
+/*End Table and Popup Design in settings page*/
+
+/*Start index settings page*/
+table thead tr th {text-align: center ! important;}
+.disabled {
+	cursor: none;
+	pointer-events: none;
+	color: black;
+}
+.pm0 {
+	padding: 0;
+	margin: 0;
+}
+/*ul li:hover {background: #f9f9f7;}*/
+.headlbl {
+	background-color: #03A9F4 !important;
+	color: white ! important;
+	border-radius: 6px !important;
+	height: 29px;
+}
+/*End index settings page*/
+
+/*Start Mobile layout Setting Index Page design */
+@media all and (max-width: 1200px) {
+	.buildingalign{
+		margin-left:1%!important;
+		margin-top: -50%!important;
+	}
+	.headlbl1{
+		width: 242%!important;
+	}
+	.headlbl2{
+		width: 239%!important;
+	}
+	.lbldessetcat{
+		font-size: 90%;
+		float: left;
+		width: 15em;
+	}
+	.lbldesset{
+		font-size: 90%;
+		float: left;
+		width: 15em;
+		margin-left: 22%!important;
+	}
+	.designtab{
+		margin-top: 50%;
+	}
+}
+/*End Mobile layout Setting Index Page design */
+
+/*Start Mobile layout Setting  single Popup Page design */
+@media all and (max-width: 1200px) {
+	.modal {
+		position: fixed;
+		top: 2% !important;
+		left: -5% !important;
+	}
+	.popupsize {
+		margin:auto 18%;
+		width:332px;
+		height:10%!important;
+		margin-left: 4%;
+	}
+	.fs14{
+		font-size: 80%;
+	}
+	.labeltext{
+		font-size: 80%;
+		float: left;
+		margin-left:-20%!important;
+	}
+	.heading{
+		font-size: 150%;
+	}
+	.btnsize{
+		font-size: 80%;
+	}
+	.btnsizeedit{
+		font-size: 80%;
+		margin-right: -19%;
+	}
+	.regdes{
+		margin-left: -10%;
+		width:180%!important;
+	}
+	.vam{
+		font-size: 80%;
+	}
+	.alertboxalign{
+		font-size: 80%;
+		margin-right: 25%!important;
+	}
+	.registernamecolor{
+		font-size: 80%;
+	}
+	.select{
+		width: 15%;
+	}
+	.sno{
+		width: 10%;
+	}
+	.category{
+		width: 50%;
+	}
+	.use{
+		width: 26%;
+	}
+	.table-striped {
+		width:97%!important;
+	}
+}
+/*Start Mobile layout Setting two field Popup Page design */
+@media all and (max-width: 1200px) {
+	.regdestwo{
+		margin-left: -10%;
+		width:180%!important;
+	}
+	.labeltexttwo{
+		font-size: 80%;
+		float: left;
+		margin-left:-20%!important;
+	}
+	.labeltexttwos{
+		font-size: 80%;
+		float: left;
+		margin-left:-10%!important;
+	}
+	.selecttwo{
+		width: 25%;
+	}
+	.snotwo{
+		width: 18%;
+	}
+	.categorytwo{
+		width: 45%;
+	}
+	.subtwo{
+		width: 40%;
+	}
+	.usetwo{
+		width: 45%;
+	}
+}
+/*End Mobile layout Setting two field Popup Page design */
+
+/*Start Mobile layout Setting select field Popup Page design */
+@media all and (max-width: 1200px) {
+	.regdesselect{
+		margin-left: -3%;
+		width:170%!important;
+	}
+	.regdesselects{
+		margin-left: -1%;
+		width:80%!important;
+	}
+	.labeltextselect{
+		font-size: 80%;
+		float: left;
+		margin-left:-17%!important;
+	}
+	.labeltextselects{
+		font-size: 80%;
+		float: left;
+		margin-left:-20%!important;
+	}
+	.selectselect{
+		width: 25%;
+	}
+	.snoselect{
+		width: 18%;
+	}
+	.categoryselect{
+		width: 45%;
+	}
+	.subselect{
+		width: 40%;
+	}
+	.useselect{
+		width: 45%;
+	}
+}
+/*End Mobile layout Setting select field Popup Page design */

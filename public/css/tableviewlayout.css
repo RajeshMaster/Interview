@@ -1,0 +1,90 @@
+/*Start Mobile layout table design and Pagination,Nodata Found*/
+@media all and (max-width: 1200px) {
+	.pagintion2 {
+		margin-left:-10%;
+		font-size: 83%;
+	}
+	.pagination {
+		font-size: 85%;
+	}
+	.pagination1 {
+		font-size:88%;
+	}
+	.pagealign {
+		min-width: 30px;
+	}
+	.colschanges {
+		display: none!important;
+	}
+	.nodatades1 {
+		display: none!important;
+	}
+}
+@media all and (min-width:1205px) {
+	.colschange {
+		display: none!important;
+	}
+	.nodatades {
+		display: none!important;
+	}
+}
+/*@media all and (min-height:1024px) {
+	.colschange{
+		display: none!important;
+	}
+	.nodatades{
+		display: none!important;
+	}
+	.tal {
+		font-size: 80%;
+	}
+	.tac {
+		font-size: 80%;
+	}
+	.vam {
+		font-size: 80%;
+		margin-bottom:-20%;
+	}
+}*/
+/*End Mobile layout table design and Pagination,Nodata Found*/
+
+/*Start Mobile layout View Page design*/
+@media all and (max-width: 1200px) {
+	.col-xs-4 {
+		font-size: 82%;
+		display: left;
+		padding: 2px 0;
+		padding-left: 1%;
+		width: 50%;
+	}
+	.col-xs-8 {
+		font-size: 82%;
+		display: flex;
+		padding: 2px 0;
+		padding-left: 10%;
+		width: 50%;
+	}
+	.textDecNone{
+		font-size: 80%;
+	}
+	.h2cnt{
+		font-size: 160%;
+	}
+}
+/*End Mobile layout View Page design*/
+/*Table design in bank index page*/
+.mnheight {
+	min-height: 200px !important;
+}
+.pr0 {
+	padding-right: 0px !important;
+}
+.disabled {
+	cursor: none;
+	pointer-events: none;
+	color: black;
+	text-decoration: none;
+}
+.textDecNone:hover {
+	text-decoration: none !important;
+}

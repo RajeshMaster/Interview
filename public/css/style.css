@@ -1,0 +1,190 @@
+/*
+Template Name: HTML Education Template
+Author: yaminncco
+
+Colors:
+	Body 		: #798696
+	Headers 	: #374050
+	Primary 	: #FF6700
+	Grey 		: #EBEBEB
+
+Fonts: Lato & Montserrat
+
+Table OF Contents
+------------------------------------
+1 > General
+2 > Logo
+3 > Navigation
+4 > Hero Area
+5 > About & Why Us (Feature)
+6 > Courses
+7 > Footer
+8 > Contact Page
+9 > Blog Page
+10 > Blog Page Sidebar
+11 > Single Post Page
+12 > Responsive
+13 > Preloader
+------------------------------------*/
+
+/*------------------------------------*\
+	General
+\*------------------------------------*/
+/* --- typography --- */
+
+/* --- Section --- */
+
+
+/* --- Buttons --- */
+
+
+/* --  Input  -- */
+
+
+/*------------------------------------*\
+	Navigation
+\*------------------------------------*/
+
+
+/* -- Mobile Nav -- */
+@media only screen and (max-width: 1200px) {
+	#nav {
+		position: fixed;
+		top: 75px;
+		right: 0;
+		width: 0%;
+		max-width:250px;
+		height: 100vh;
+		background: #efefef;
+		-webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+		        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+		/*padding-top: 80px;*/
+		padding-bottom: 80px;
+		-webkit-transform: translateX(100%);
+		    -ms-transform: translateX(100%);
+		        transform: translateX(100%);
+		-webkit-transition: 0.4s all cubic-bezier(.77,0,.18,1);
+		transition: 0.4s all cubic-bezier(.77,0,.18,1);
+		z-index:9;
+		overflow: scroll !important;
+	}
+
+	/*nav a {
+        width: 80% !important;
+        background-color: #efefef !important;
+        text-align: right !important;
+    }*/
+
+    nav .mob_line {
+    	border: none !important;
+        /*border-bottom: 1px solid #828282 !important;*/
+    }
+
+/*    nav .mob_border {
+    	margin-left: 10px !important;
+    	border: 2px solid #b1b1b1 !important;
+    	margin-bottom: 5px !important;
+    }*/
+    nav .mob_underline {
+    	border-bottom: 1px solid #d0d0d0;
+    	margin-bottom: 5px;
+    }
+
+	#header.nav-collapse #nav{
+		width:100%;
+		-webkit-transform: translateX(0%);
+		    -ms-transform: translateX(0%);
+		        transform: translateX(0%);
+	}
+	
+	.main-menu {
+		margin:0;
+	}
+	
+	.main-menu li a {
+		color: #374050 !important;
+		display: inline-block;
+		margin-left: 27px;
+	}
+}
+
+/* -- Mobile Toggle Btn -- */
+.navbar-toggle {
+	position:fixed;
+	right:0;
+	padding: 0;
+	height: 40px;
+	width: 40px;
+	margin-top: 5px;
+	z-index:99;
+}
+
+.navbar-toggle > span {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+    -webkit-transform: translate(-50% , -50%);
+        -ms-transform: translate(-50% , -50%);
+            transform: translate(-50% , -50%);
+	-webkit-transition: 0.2s background;
+	transition: 0.2s background;
+}
+
+.navbar-toggle > span:before, .navbar-toggle > span:after {
+	content: '';
+	position:absolute;
+	left:0;
+	-webkit-transition: 0.2s -webkit-transform;
+	transition: 0.2s -webkit-transform;
+	transition: 0.2s transform;
+	transition: 0.2s transform, 0.2s -webkit-transform;
+}
+
+.navbar-toggle > span , .navbar-toggle > span:before , .navbar-toggle > span:after {
+	height: 2px;
+	width: 25px;
+	background-color:#374050;
+}
+
+.navbar-toggle > span:before {
+	top: -10px;
+}
+
+.navbar-toggle > span:after {
+	top: 10px;
+}
+
+#header.nav-collapse .navbar-toggle > span {
+	background: transparent;
+}
+
+#header.nav-collapse .navbar-toggle > span:before {
+    -webkit-transform: translateY(10px) rotate(45deg);
+        -ms-transform: translateY(10px) rotate(45deg);
+            transform: translateY(10px) rotate(45deg);
+}
+
+#header.nav-collapse .navbar-toggle > span:after {
+    -webkit-transform: translateY(-10px) rotate(-45deg);
+        -ms-transform: translateY(-10px) rotate(-45deg);
+            transform: translateY(-10px) rotate(-45deg);
+}
+
+.navbar-brand {
+    padding: 0;
+}
+
+.navbar-brand .logo {
+	margin-top: 10px;
+	display: inline-block;
+}
+
+.navbar-brand .logo > img {
+	max-height:30px;
+}
+
+@media only screen and (max-width: 1200px) {
+	.navbar-brand {
+		margin-left:15px;
+	}
+}

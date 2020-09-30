@@ -1,0 +1,10 @@
+var msg_register = "登録しますか？";
+var msg_update = "更新しますか？";
+var msg_cancel = "キャンセルしますか？";
+var msg_passwordmatch = "同じパスワードを入力してください";
+var msg_changelanguage = "Do  You Want To Change Language？";
+var msg_resetpassword = "パスワードを変更しますか？";
+var msg_add = "追加しますか？";
+var msg_flagchange = "Do You Want To Change flg?";
+var msg_upload = "Do You Want To Upload?";
+var msg_download = "Do You Want To Download?";

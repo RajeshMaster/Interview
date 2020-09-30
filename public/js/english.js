@@ -1,0 +1,10 @@
+var msg_register = "Do You Want To Register?";
+var msg_update = "Do You Want To Update?";
+var msg_cancel = "Do You Want To Cancel?";
+var msg_passwordmatch = "Password and Conform password must be same";
+var msg_changelanguage = "言語を変更しますか？";
+var msg_resetpassword = "Do You Want To Reset Password？";
+var msg_add = "Do You Want To Add?";
+var msg_flagchange = "Do You Want To Change flg?";
+var msg_upload = "Do You Want To Upload?";
+var msg_download = "Do You Want To Download?";

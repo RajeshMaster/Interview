@@ -1,0 +1,108 @@
+/*Start Mobile layout Addedit Page design Mailcontent*/
+@media all and (max-width: 1200px) {
+	.mailname {
+		width:110%!important;
+		margin-left:-10%;
+	}
+	.mailSubject {
+		width:120%!important;
+		margin-left:-10%;
+		margin-bottom:-30%;
+	}
+	.mailheader {
+		width:69%!important;
+		margin-left:-10%;
+	}
+	.textareaResizeNone {
+		width: 115%!important;
+		margin-left:-10%;
+	}
+	.h2cnt {
+		font-size: 150%!important;
+		margin-top: 5%!important;
+	}
+	.buttondes {
+		font-size: 80%!important;
+	}
+	.col-xs-3 {
+		width:45.66666667%;
+		 font-size:80%;
+		 margin-left:-10%;
+	}
+	.col-xs-6 {
+		width:58.33333333%;
+	}
+	.col-xs-8 {
+		width:58.33333333%;
+	}
+	.col-xs-7 {
+		width:58.33333333%;
+	}
+	.mailhead {
+		display: none;
+	}
+}
+@media all and (min-height:1024px) {
+	.mailhead{
+		font-size: 80%;
+	}
+}
+/*End Mobile layout Addedit Page design Mailcontent*/
+/*Start Mobile layout Addedit Page design User Register*/
+@media all and (max-width: 1200px) {
+	.regdes{
+		width:128%!important;
+	}
+	.dob{
+		width: 81%!important;
+		font-size: 73%;
+	}
+	.h2cnt {
+		font-size: 150%!important;
+		margin-top: 5%!important;
+	}
+	.buttondes{
+		font-size: 80%!important;
+	}
+	.col-xs-3{
+		 width:50%;
+		 font-size:80%;
+		 margin-left:-10%;
+	}
+	.col-xs-9{
+		width:50%
+	}
+	.calenderdes{
+		size: 5px!important;
+		width: 10%!important;
+	}
+	.gender1{
+		font-size: 70%;
+	}
+}
+@media all and (max-width: 330px) {
+	.gender1{
+		font-size: 65%;
+	}
+	.lblnamecon{
+		font-size: 85%;
+	}
+	.changeln{
+		padding-left: 0px!important;
+	}
+}
+@media all and (min-height:1024px) {
+	.col-xs-9{
+		width:66.66666667%
+	}
+	.col-xs-3{
+		width:33.33333333%
+	}
+	.regdes{
+		width:80%!important;
+	}
+	.dob{
+		width: 50%!important;
+	}
+}
+/*End Mobile layout Addedit Page design User register*/

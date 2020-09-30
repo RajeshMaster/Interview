@@ -1,0 +1,136 @@
+/*Start Mobile layout Index Page design User*/
+@media all and (max-width: 1200px) {
+	.filteruser {
+		margin-left: -5.5%!important;
+	}
+	.fil1 {
+		font-size: 80%;
+	}
+	.pagealign {
+		min-width: 30px;
+	}
+	#nodatafound {
+		margin-top: 5%!important;
+	}
+	.imagedes {
+		margin-left: 10%!important;
+	}
+	.userdes {
+		margin-right:30%;
+		font-size: 85%;
+	}
+	.userdes1 {
+		padding-left:8px!important;
+		padding-bottom: 4%;
+		font-size: 85%;
+	}
+	.searchpos1 {
+		margin-top: 30%!important;
+		margin-right: 0.5%!important;
+	}
+	.CMN_sortings {
+		width:116%!important;
+	}
+	.clearpositions {
+		margin-bottom:-30%!important;
+		margin-left: 90%!important;
+		width: 9%;
+	}
+	.sortpositions {
+		margin-bottom:-37%!important;
+		margin-right: 33%!important;
+	}
+	.userdesname {
+		font-size: 85%!important;
+		margin-top:48%!important;
+		margin-left: -12%!important;
+	}
+	.pagintion2 {
+		margin-left:-2%;
+		font-size: 83%;
+	}
+	.pagination {
+		font-size: 85%;
+	}
+	.pagination1{
+		font-size:88%;
+	}
+}
+@media all and (min-height:1024px) {
+	.imagedes {
+		margin-left: 10%!important;
+	}
+	.userdes {
+		margin-right:30%;
+	}
+	.userdes1 {
+		padding-left:-1px!important;
+	}
+	.userdesname {
+		font-size: 85%!important;
+		margin-top:20%!important;
+		margin-left: -11%!important;
+	}
+}
+@media all and (max-width: 330px) {
+	.clearposition {
+		padding-top: -149%!important;
+		margin-left: 93%!important;
+		width: 10%;
+	}
+	.userdes1 {
+		padding-left:5%!important;
+		padding-bottom: 2%;
+		font-size: 83%!important;
+	}
+	.userdes {
+		font-size: 83%!important;
+	}
+	.searchpos {
+		margin-top: 63%!important;
+		margin-right: 2%!important;
+	}
+	.CMN_sorting {
+		width:100%!important;
+	}
+	.sortposition {
+		margin-right: 20%!important;
+	}
+	.fil1 {
+		font-size: 80%;
+	}
+	.pagealign {
+		min-width: 30px;
+	}
+}
+/*End Mobile layout Index Page design User*/
+/*Start Mobile layout Index Page design Mailcontent*/
+@media all and (max-width: 1200px) {
+	.searchpos {
+		margin-top: 45%!important;
+		margin-right: 2%!important;
+	}
+	.filtermail {
+		margin-left: -5.5%!important;
+	}
+	.filmail {
+		/*margin-left: -6%!important;*/
+		font-size: 80%;
+	}
+	.sortposition {
+		margin-bottom: -18%;
+		margin-right: 13%!important;
+		width: 10%;
+	}
+	.CMN_sorting {
+		width:35%!important;
+	}
+	.clearposition{
+
+		padding-top: -36%!important;
+		margin-right: 1%!important;
+		width: 10%;
+	}
+
+}
+/*End Mobile layout Index Page design MailContent*/

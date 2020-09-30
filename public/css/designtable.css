@@ -1,0 +1,79 @@
+/*Table Sorting Design process*/
+table thead tr th {text-align: center ! important;}
+.CMN_tbltheadcolor {
+	background: #70a6ff !important;
+}
+.disabled {
+	cursor: none;
+	pointer-events: none;
+	color: black;
+}
+.pm0 {
+	padding: 0;
+	margin: 0;
+}
+.table-striped>tbody>tr:nth-of-type(even) {
+	background-color: #dce3f4;
+}
+.table-striped-new>tbody>tr:nth-of-type(odd) {
+	background-color: #72afff;
+}
+.h100 {
+	height: 110px !important;
+	width: 105px;
+}
+
+.CMN_sorting {
+	width: 135px  !important;
+	height: 34.5px ! important;
+	line-height: 14px !important;
+	font-size: 12px !important;
+	padding: 0px !important;
+	padding-left: 10px !important; 
+	background-repeat: no-repeat; 
+	background-position:right;
+	background-color: white !important;
+	background-position: right; 
+	-webkit-appearance: none !important;
+	-moz-appearance: none !important;
+	appearance: none !important; 
+}
+.fb{
+	color: gray !important;
+}
+/*End Sorting Design process*/
+
+/*Button link disable process*/
+.textDecNone:hover {
+	text-decoration: none !important;
+	color: white !important;
+}
+/*End Button link disable process*/
+/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+.row.content {height: 500px}
+/* Set gray background color and 100% height */
+.sidenav {
+	background-color: #fcfcfc;
+	height: auto;
+	min-height: 100%;
+	border-radius: 3px;
+	border: 1px solid #DDDDDD;
+}
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
+}
+.rowdiv{
+	margin-right:-45px;
+	margin-left:-29px;
+}
+/* Bank addedit page bachnick name field disabled process */
+#bankNickName {
+	pointer-events: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: none; 
+}

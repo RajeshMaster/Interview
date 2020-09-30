@@ -1,0 +1,100 @@
+
+.bold{font-weight:bold;}
+.smgry{font:normal 10px verdana,arial; color:#606060}
+.link1{font:normal 12px arial; color:#000}
+.link1 a{font:normal 12px arial; text-decoration:none; color:#0000ff}
+.link1 a:hover{font:normal 12px arial; text-decoration:underline; color:#0000ff}
+
+.logo{float:left;}
+.banner{float:right; padding:3px;}
+.bannerLogout{padding:3px 0; position:relative; width:731px; overflow:hidden}
+.bannerLogoutIn{position:relative; left:-3px;}
+
+.nav{font:normal 11px verdana,arial; color:#acacac; padding:5px 0 0 2px;}
+.nav a{font:bold 11px verdana,arial; color:#FFFFFF; text-decoration:none; }
+.nav a:hover{font:bold 11px verdana,arial; color:#FFFFFF; text-decoration:underline}
+.navact{font:bold 11px verdana,arial; color:#000000; padding:5px 0 0 2px;}
+.navact a{font:bold 12px verdana,arial; color:#000000; text-decoration:none}
+.navact a:hover{font:bold 12px verdana,arial; color:#000000; text-decoration:underline}
+.line{line-height:7px; background:#2375c2; clear:both}
+.linebg{ background:url(../i/search_mbg.gif) top repeat-x}
+.spacer{clear: both;line-height:5px;}
+.spacer{clear: both;line-height:5px;}
+
+.textbox {font:normal 10px Verdana,Arial;}
+.textsr {font:normal 11px Verdana,Arial;float:left;padding:8px 0 0 3px;}
+.textsr1 {font:normal 11px Verdana,Arial;float:left;padding:8px 0 0 4px;}
+#eo optgroup{font:bold 11px verdana; color:#000000; background-color:#FFFFFF; }
+.hd{font:bold 17px arial}
+.t12n{font:normal 12px arial,verdana; color:#000}
+.t12n a{font:normal 12px arial,verdana; color:#4886eb; text-decoration:none}
+.t10n {font:normal 10px arial,verdana; color:#4886eb; text-decoration:none}
+.t10n a{font:normal 10px arial,verdana; color:#4886eb; text-decoration:none}
+.grbnd{clear:both; line-height:20px; background:#ececec; padding:0 0 0 10px}
+.lf{float:left}
+.rf{float:right}
+body{margin:0px; font:normal 11px verdana}
+div.row select{text-align: left;width: auto;padding: 0; margin: 0;font:normal 11px Verdana,Arial;color:#000;}
+.mn{margin:5px 0px 5px 5px; width:99.5%}
+
+.mainNav, .topbg, .featuredJobs, .alertbg2, .midbg, .presumebg, .pResumeTP, .pResumeBT, .pResumebg, .searchtop, .searchbg, .searchBot, .midft, .linebg1, .alertbg1, .modallink:link, .modallink:visited, .modallink:hover,.blueBut button b{background:transparent url("../i/bgs1.png") repeat 0px -26px;}
+.mainNav{height:33px; font:bold 11px Verdana, Arial, Helvetica, sans-serif; color:#fff;}
+.mainNav ul{margin:0; padding:0; list-style-type:none;}
+.mainNav ul li{float:left; width:auto;}
+.selMainNav, .headLeft, .newuser1, .loginaaply1, .aaplyar1, .buttonSubmitL, .exclaim, .postresumeIcon, .midlf, .midrf{background:transparent url("../i/buttonsL.png") no-repeat 0 0;}
+.selMainNavR, .headLeftR, .buttonSubmitR{background:transparent url("../i/buttonsR.png") no-repeat right 0;}
+.selMainNavR{padding:0 10px; height:30px; padding-top:3px; display:block; line-height:30px; float:left;}
+
+.mainNav ul li .selMainNav a:link, .mainNav ul li .selMainNav a:visited {padding:0 10px; text-decoration:none; color:#fff; line-height:30px; display:block; color:#000;float:left;}
+.mainNav ul li a:link, .mainNav ul li a:visited{padding:0 10px; text-decoration:none; color:#fff; line-height:30px;display:block; margin-top:3px;}
+.mainNav ul li a:hover{text-decoration:underline}
+.mainNav ul li sup{color:#f9f920; text-decoration:none;}
+.img1, .img2, .img3, .img4, .searchTLt, .searchTRt, .searchBLt, .searchBRt, .rss, .external, .help, .arrow1, .bulletArrow, .sepMainNav, .pResumeTL, .pResumeTR, .pResumeBL, .pResumeBR, .searchLt, .searchRt, .javascript, .mail, .mobile{
+	background:transparent url("../i/optimized1.png") no-repeat -30px -110px; display:block; width:20px;
+}
+.sepMainNav{background-position:-45px -68px;}
+.linebg1{background-position:0 -72px;}
+.topbg{background-position:0 0; height:20px;height:22px;}
+
+/*   For CSS Sprites  */ 
+.topbar, .botbar, .headbg, .activeicon, .greenarrow, .blogger, .mobile, .toolbar, .resumeserv, .redarrow, .blocked, .preupbt, .greentick, .errorstatus, .btnleftSubmit, .nchat, .salcal, .regCommTp, .regCommBtm, .blueBut button p, .blueBut button em{background:transparent url("../i/activeprofilesprite4.png") no-repeat 0px 2px;}
+.salcal{background-position: right -56px;}
+.preupbt{background-position: -132px -64px; border:0px; text-align:center; background-color:#eaeaea;}
+.activeicon{background-position: 0px -33px;}
+.greenarrow{background-position: -54px -45px;}
+.blogger{background-position: -95px -71px;}
+.mobile{background-position: -56px -163px;}
+.toolbar{background-position: 0px -76px;}
+.resumeserv{background-position: -56px -70px;}
+.redarrow{background-position: 0px 0px;}
+.blocked{background-position: -55px -30px;}
+.greentick{background-position: -132px -48px;}
+.errorstatus{background-position: -180px -48px;}
+.nchat{background-position: -56px -194px;}
+.cls{clear:both;}
+ 
+.headbg, .hdbx, .barin, .btnrightSubmit{background:transparent url("../i/bgrepeatx.png") repeat-x 0 0; padding:5px 0 5px 10px; font:bold 12px verdana,arial; color:#FFF}
+.hdbx{background-position: 0px 0px; background-color:#99CC00;}
+.barin{background-position: 0px -69px; background-color:#99CC00; padding:0px 0 0px 0;}
+.btnrightSubmit{background:transparent url("../i/bgrepeatx.png") no-repeat right 0; }
+.btnleftSubmit{background-position: -221px -45px;  float:left; display:block; height:33px; height: 33px; line-height:35px; text-align:center;padding:0; margin:0; padding-left:8px;}
+.btnrightSubmit{background-position:right -30px; height: 33px; float:left; display:block; padding:0 8px 0 0; margin:0;} 
+.w250{width:250px;}
+.regCommTp{background-position:0 -234px; height:26px; width:583px; overflow:hidden;}
+
+.regCommBtm{background-position:0 -272px; height:26px;width:583px; overflow:hidden;}
+.regComm{border-left:#dbeef3 solid 2px; border-right:#dbeef3 solid 2px; width:559px; padding:0 10px;}
+
+.blueBut{text-align:center; margin:20px 0 0;}
+
+.blueBut button{margin:0; padding:0; height:40px; border:0; width:233px;cursor:pointer; background:none;}
+
+.blueBut button div{color: #423E01;cursor: pointer;font: 18px/33px Arial,Helvetica,sans-serif;margin: 0;padding: 0;}
+
+.blueBut button p, .blueBut button em, .blueBut button b{cursor: pointer;display: block;float: left;height: 41px;margin: 0;padding: 0; background-position: -625px -234px;width: 20px;}
+
+.blueBut button em{background-position:-644px -234px}
+
+.blueBut button b{width:auto;color: #FFF;font-size: 15px;font-weight: bold;line-height: 34px; background-position:0 -1259px;}
+
+.goM{padding:3px 5px 5px 5px; background-color:#1580cb; color:#fff; font-weight:bold; margin-right:130px; }
