@@ -44,10 +44,6 @@ Route::any('User/getEmailExists', 'UserController@mailexistcheck');
 Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
 Route::post('password/reset', 'Auth\PasswordController@reset');
 
-//User Profile
-Route::any('User/profile', 'UserController@userprofile');
-Route::any('User/edit', 'UserController@useredit');
-
 // Password Change 
 Route::group(['prefix'=>'Auth', 'middleware' => 'auth'], function() {
 	Route::get('changelanguage', 'AjaxController@index');
