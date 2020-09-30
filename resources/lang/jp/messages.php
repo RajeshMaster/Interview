@@ -102,9 +102,11 @@ return [
 	'lbl_resigned' => '退社社員',
 	'lbl_empid' => '社員ID',
 	'lbl_empName' => '社員名',
-	'lbl_dateofjoining' => '入社日',
+	'lbl_doj' => '入社日',
 	'lbl_age' => '年齢',
 	'lbl_empdetails' => '社員詳細',
+	'lbl_streetaddress' => '住所',
+	'lbl_work_date' => '仕事終了日',
 
 	/* Start Setting Module */
 	'lbl_userdesignation' => 'ユーザー指定',

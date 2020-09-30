@@ -113,9 +113,9 @@ class LoginController extends Controller
 	}
 	// For Logout Process
 	public static function logout(Request $request) {
-		Auth::logout();
-		Session::flush();
-		Cookie::queue(Cookie::forget('cookieArrayList'));
+	/*	Auth::logout();
+		Session::flush();*/
+		/*Cookie::queue(Cookie::forget('cookieArrayList'));*/
 		return Redirect::to('/');
 	}
 

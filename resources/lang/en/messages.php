@@ -102,9 +102,11 @@ return [
 	'lbl_resigned' => 'Resigned',
 	'lbl_empid' => 'Emp Id',
 	'lbl_empName' => 'Employee Name',
-	'lbl_dateofjoining' => 'Date of joining',
+	'lbl_doj' => 'Date of joining',
 	'lbl_age' => 'Age',
 	'lbl_empdetails' => 'Employee Details',
+	'lbl_streetaddress' => 'Street Address',
+	'lbl_work_date' => 'Work End Date',
 	
 	/* Start Setting Module */
 	'lbl_userdesignation' => 'User Designation',

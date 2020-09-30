@@ -67,7 +67,7 @@ class EmployeeController extends Controller
 
         $array = array("Emp_Id"=>trans('messages.lbl_empid'),
 						"FirstName"=>trans('messages.lbl_empName'),
-						"DOJ"=>trans('messages.lbl_dateofjoining'),
+						"DOJ"=>trans('messages.lbl_doj'),
 						"DOB"=>trans('messages.lbl_age')
 						);
 

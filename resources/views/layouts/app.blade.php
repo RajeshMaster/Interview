@@ -608,7 +608,7 @@ body {
 									{{ trans('messages.lbl_mail') }}</a>
 								</li>
 								<li class="btn_customer jop_btn">
-									<a class="pageload" href="{{ url('User/index?mainmenu=menu_userlist&time='.date('Ymdhis')) }}"
+									<a class="" href="#"
 										style="text-decoration: none !important;">
 										{{ trans('messages.lbl_customer') }}
 									</a>
@@ -645,15 +645,15 @@ body {
 						<div id="AssetDiv" class="CMN_sub_gmenu">
 							@if(isset($request->mainmenu) && $request->mainmenu == "menu_employee")
 								<div id="emp_sub_1">
-									<a class="pageload" href="{{ url('Employee/idex?mainmenu=menu_employee&time='.date('Ymdhis')) }}">
+									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_employee') }}</a>
 								</div>
 								<div id="emp_sub_2">
-									<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
+									<a class="" href="#">
 									{{ trans('messages.lbl_nonEmployee') }}</a>
 								</div>
 								<div id="emp_sub_3">
-									<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
+									<a class="" href="#">
 									{{ trans('messages.lbl_emphistory') }}</a>
 								</div>
 							@endif

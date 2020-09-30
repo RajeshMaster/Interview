@@ -19,7 +19,7 @@ use Config;
 use DB;
 class SettingController extends Controller {
 	public static function index(Request $request) { 
-		return view('Setting.index',['request'=> $request]);
+		return view('setting.index',['request'=> $request]);
 	}
 	public static function singletextpopup(Request $request) {
 		$getTableFields = settingscommon::getDbFieldsforProcess();

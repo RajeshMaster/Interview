@@ -4,6 +4,7 @@
 {{ HTML::style(asset('public/css/footable.core.css')) }}
 {{ HTML::style(asset('public/css/tableviewlayout.css')) }}
 {{ HTML::script(asset('public/js/footable.js')) }}
+{{ HTML::script(asset('public/js/employment.js')) }}
 <style type="text/css">
 .sort_asc {
 	background-image:url({{ URL::asset('public/images/upArrow.png') }}) !important;
@@ -35,9 +36,9 @@
 		}
 	}
 </script>
-{{ Form::open(array('name'=>'mailcontentindx',
-		'id'=>'mailcontentindx',
-		'url' => 'Mail/mailcontent?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
+{{ Form::open(array('name'=>'employeefrm',
+		'id'=>'employeefrm',
+		'url' => 'Employee/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 		'method' => 'POST')) }}
 		{{ Form::hidden('resignid', '' , array('id' => 'resignid')) }}
 		{{ Form::hidden('sorting', '' , array('id' => 'sorting')) }}
@@ -110,16 +111,15 @@
 				{{ trans('messages.lbl_resigned') }}
 			</a>
 		</div>
-						
-			<a href="javascript:clearsearch()" title="Clear Search">
-				<img class="pull-right box35 mr10 pageload clearposition" src="{{ URL::asset('public/images/clearsearch.png')  }}">
-			</a>
-				{{ Form::select('staffsort', $array, $request->staffsort,
-								array('class' => 'form-control'.' ' .$request->sortstyle.' '.'CMN_sorting pull-right',
-							   'id' => 'staffsort',
-							   'style' => $sortMargin,
-							   'name' => 'staffsort'))
-					}}
+		<a href="javascript:clearsearch()" title="Clear Search">
+			<img class="pull-right box35 mr10 pageload clearposition" src="{{ URL::asset('public/images/clearsearch.png')  }}">
+		</a>
+		{{ Form::select('staffsort', $array, $request->staffsort,
+						array('class' => 'form-control'.' ' .$request->sortstyle.' '.'CMN_sorting pull-right',
+					   'id' => 'staffsort',
+					   'name' => 'staffsort'))
+		}}
+
 	</div>
 	<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
 	 id="styleSelector">
@@ -142,7 +142,7 @@
 					array('class'=>'ml5 mt2 pull-left search box15per btn btn-info btn-sm', 
 					'type'=>'button',
 					'name' => 'advsearch',
-					'onclick' => 'javascript:usinglesearch();',
+					'onclick' => 'javascript:fnSingleSearch();',
 					'style'=>'border: none;' 
 					)) }}
 				<div>
@@ -180,7 +180,7 @@
 						 {{ Form::button(
 							 '<i class="fa fa-search" aria-hidden="true"></i> '.trans('messages.lbl_search'),
 							 array('class'=>'mt10 btn btn-info btn-sm ',
-									'onclick' => 'javascript:return umultiplesearch()',
+									'onclick' => 'javascript:return fnMultiSearch()',
 									'type'=>'button')) 
 						 }}
 					</div>
@@ -216,8 +216,8 @@
 			<table class="table-striped table footable table-bordered mt10 mb10" >
 				<colgroup>
 					<col width="4%">
-					<col width="20%">
-					<col width="65%">
+					<col width="10%">
+					<col width="70%">
 				</colgroup>
 				<thead class="CMN_tbltheadcolor" >
 					<tr class="CMN_tbltheadcolor">
@@ -230,10 +230,10 @@
 						<th data-hide="phone" class="tac fs10">
 							{{ trans('messages.lbl_empdetails') }}
 						</th>
-						<!-- <th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_subject') }}
-						</th>
 						<th data-hide="phone" class="tac fs10">
+							{{ trans('messages.lbl_doj') }}
+						</th>
+<!-- 						<th data-hide="phone" class="tac fs10">
 							{{ trans('messages.lbl_mailsendby') }}
 						</th>
 						<th data-hide="phone" class="tac fs10">
@@ -248,13 +248,133 @@
 						@for ($i = 0; $i < count($empdetailsdet); $i++)
 						<tr>
 							<td class="text-center vam">
-							{{ $i + 1 }}
+								{{ $i + 1 }}
 							</td>
 							<td>
-								
+								<div class="tac">
+									<label>
+										<a href="javascript:employeeview();" style="color:blue;" class="vam ml18">
+											{{ $empdetailsdet[$i]['Emp_ID'] }}
+										</a>
+									<br>
+									{{--*/ $file_exist = "../../uploads/profile/original/" . $empdetailsdet[$i]['Picture']; /*--}}
+									{{--*/ $filename = $disPath . $empdetailsdet[$i]['Picture']; /*--}}
+									@if (!file_exists($filename))
+										{{--*/ $empdetailsdet[$i]['Picture'] = ""; /*--}}
+									@endif
+
+									@if($empdetailsdet[$i]['Picture'] != "")
+										{{--*/ $src = $file_exist; /*--}}
+									@else
+										@if($empdetailsdet[$i]['Gender'] == 1)
+											{{--*/ $src = $noimage . '/no-prof-male.JPG'; /*--}}
+										@else
+											{{--*/ $src = $noimage . '/no-prof-female.jpg'; /*--}}
+										@endif
+									@endif
+									<!-- <div style="border: 2px solid red;text-align: center;"> -->
+										<img class="pull-left box70 ml20 tac" src="{{ $src }}" width="90" height = "70"></img>
+									<!-- </div> -->
+									</label>
+								</div>
 							</td>
+
 							<td>
-								
+								<div class="ml5">
+									<div>　
+										<span class="fll">
+											{{ $empdetailsdet[$i]['FirstName'] }}
+										</span>
+										<span class="fwb" style="margin-left: -10px">
+											{{ $empdetailsdet[$i]['LastName'] }}
+										</span>
+										<span class="">
+											@if($empdetailsdet[$i]['nickname'] != "" )
+												({{ $empdetailsdet[$i]['nickname'] }} )
+											@endif
+										</span>
+										<span class="" style="float: right">
+
+										</span>
+										@if($empdetailsdet[$i]['KanaFirstName'] != "" && $empdetailsdet[$i]['KanaLastName'] != "")
+											<div>　
+												<span class="fll">
+													{{ $empdetailsdet[$i]['KanaFirstName'] }}
+												</span>
+												<span class="fwb" style="margin-left: -10px">
+													{{ $empdetailsdet[$i]['KanaLastName'] }}
+												</span>
+											</div>
+										@endif
+
+										<div>
+											<span class="f28 clr_blue"> 
+												{{ trans('messages.lbl_dob') }} :
+											</span>
+											<span class="f12"> 
+
+											</span>
+											<span class="f28 clr_blue">
+												{{ trans('messages.lbl_mobileno') }} :
+											</span>
+											<span class="f12"> 
+												{{ (!empty($empdetailsdet[$i]['Mobile1']) ?  $empdetailsdet[$i]['Mobile1'] : "Nill")  }}
+											</span>
+											<span class="f18 clr_blue">
+												{{ trans('messages.lbl_email') }} :
+											</span>
+											<span class="f12"> 
+												{{ $empdetailsdet[$i]['Emailpersonal'] }}
+											</span>
+										</div>
+
+										<div>
+											<span class="clr_blue">{{ trans('messages.lbl_streetaddress') }}</span> :
+											<span class="f12"> 
+												{{ (!empty($empdetailsdet[$i]['Address1']) ?  $empdetailsdet[$i]['Address1'] : "Nill")  }}
+											</span>
+										</div>
+
+										<div>
+											<span class="clr_blue">{{ trans('messages.lbl_customer') }}</span> :
+											<span class="f12"> 
+											{{ (!empty($empdetailsdet[$i]['customer_name']) ?  $empdetailsdet[$i]['customer_name'] : "Nill")  }}
+											</span>
+										</div>
+
+										<div class="mb4 CMN_display_block mt4">
+											<div class="CMN_display_block">
+												<a style="color:blue;" href="javascript:cushistory();">{{ trans('messages.lbl_customer') }}</a>
+											</div>
+											&nbsp;|
+											<div class="CMN_display_block">
+													<a style="color:blue;" href="javascript:workend();">{{ trans('messages.lbl_work_date') }}</a>&nbsp;|
+											</div>
+
+											<div class="CMN_display_block">
+												<a style="color:blue;" href="javascript:gotoResume();">Resume</a>&nbsp;
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</td>
+
+							<td class="tac">
+								<div class="45px">
+									<span>{{ $empdetailsdet[$i]['DOJ'] }}</span>
+								</div>
+								<div class="mt55">
+									<span class="clr_blue">
+										@if($empdetailsdet[$i]['experience'] > 1 )
+											{{ $empdetailsdet[$i]['experience'] }} Yrs
+										@elseif($empdetailsdet[$i]['experience'] <= 1 )
+											{{ $empdetailsdet[$i]['experience'] }} Yr
+										@else
+											{{ 0 }} Yr
+										@endif		
+									</span>
+								</div>
 							</td>
 						</tr>
 						@endfor

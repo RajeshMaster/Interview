@@ -26,6 +26,20 @@ class Employee extends Model
 		if($resignid == 0){
 			$query = $query->where('Title', '=', $title);
 		}
+
+		if ($request->searchmethod == 1) {
+			$query = $query->where(function($joincont) use ($request) {
+                                    $joincont->where('Emp_ID', 'LIKE', '%' . $request->singlesearch . '%')
+                                    		 ->orwhere('nickname', 'LIKE', '%' . $request->singlesearch . '%');
+                            });
+		} elseif ($request->searchmethod == 2) {
+			$query = $query->where(function($joincont) use ($request) {
+                                $joincont->where([['Emp_ID', 'LIKE', '%' . $request->employeeno . '%'],
+                                				 ['nickname', 'LIKE', '%' . $request->employeename . '%']]);
+                            });
+		}
+
+
 		$query = $query	->orderBy($request->staffsort, $request->sortOrder)
 						->paginate($request->plimit);
 					// dd($query);
