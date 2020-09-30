@@ -715,6 +715,14 @@ body {
 							@endif
 						</div>
 						<div id="AssetDiv" class="CMN_sub_gmenu">
+							@if(isset($request->mainmenu) && 
+								$request->mainmenu == "home")
+								<div id="home_sub_1">
+									<a class="pageload" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}" 
+										style="text-decoration: none !important;">
+									{{ trans('messages.lbl_home') }}</a>
+								</div>
+							@endif
 							@if(isset($request->mainmenu) && $request->mainmenu == "menu_mail")
 							<div id="mail_sub_1">
 								<a class="pageload" href="{{ url('Mail/mailcontent?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
