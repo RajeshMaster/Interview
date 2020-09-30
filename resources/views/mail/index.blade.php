@@ -6,165 +6,94 @@
 {{ HTML::style(asset('public/css/footable.core.css')) }}
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_2">
+<article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_1">
 	<fieldset class="mt20">
 		<div class="header">
 			<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/mail.png')  }}">
 			<h2 class="h2cnt">
-				{{trans('messages.lbl_mailstatus')}}
+				{{ trans('messages.lbl_mailcontent') }}
 			</h2>
 		</div>
 	</fieldset>
-	{{ Form::open(array('name'=>'mailstatus',
-						 'id'=>'mailstatus', 
-						 'url' => 'Mail/index?menuid='.$request->menuid.'&time='.date('YmdHis'), 
-						 'method' => 'POST')) }}
-	{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
-	{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
-	{{ Form::hidden('mailid', '' , array('id' => 'mailid')) }}
-	{{ Form::hidden('filval', '' , array('id' => 'filval')) }}
-		<div class="box100per tableShrink pt10 mnheight mb0">
-			<table class="table-striped table footable table-bordered mt10 mb10" >
+	{{ Form::open(array('name'=>'frmcontentmindex', 
+						'id'=>'frmcontentmindex', 
+						'url' => 'Mailcontent/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),
+						'files'=>true,
+						'method' => 'POST')) }}
+		{{ Form::hidden('plimit', $request->plimit, array('id' => 'plimit')) }}
+	<div class="col-xs-12 pm0 mt10 mb10 pull-left">
+		<!-- Session msg -->
+	@if(Session::has('success'))
+		<div align="center" class="alertboxalign" role="alert">
+			<p class="alert {{ Session::get('alert', Session::get('type') ) }}">
+            {{ Session::get('success') }}
+          	</p>
+		</div>
+	@endif
+	@php Session::forget('success'); @endphp
+<!-- Session msg -->
+		<div class="col-xs-6 ml10 pm0 pull-left">
+			<a href="javascript:fngotoregister('{{ $request->mainmenu }}');"  class="btn btn-success box125"><span class="fa fa-plus"></span> {{ trans('messages.lbl_register') }}</a>
+		</div>
+	</div>
+	<div class="mr10 ml10 mt10">
+		<div class="minh400">
+			<table class="tablealternate box100per">
 				<colgroup>
-					<col width="5%">
-					<col width="16%">
-					<col width="">
-					<col width="20%">
-					<col width="16%">
-					<col width="16%">
-					<col width="5%">
+				   <col width="4%">
+				   <col width="8%">
+				   <col width="22%">
+				   <col width="22%">
+				   <col width="">
 				</colgroup>
-				<thead class="CMN_tbltheadcolor" >
-					<tr class="CMN_tbltheadcolor">
-						<th class="tac fs10 sno">
-							{{ trans('messages.lbl_sno') }}
-						</th>
-						<th class="tac fs10">
-							{{ trans('messages.lbl_username') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_email') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_subject') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_mailsendby') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_senddatetime') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-						</th>
-					</tr>
-				</thead>
-				<tbody class="tablealternateclr">
-					{{ $temp = ""}}
-					{{--*/ $row = '0' /*--}}
-					{{ $tempcomp = ""}}
-					{{--*/ $rowcomp = '0' /*--}}
-					@forelse ($mailStatus as $count => $data)
-						@php $cdata = $data ->lastName @endphp
-						{{--*/ $loc = $cdata /*--}}
-						{{--*/ $loccomp = $data->toMail /*--}}
-						@if($loc != $temp) 
-						@if($row==1)
-						{{--*/ $row = '0' /*--}}
-						@else
-						{{--*/ $row = '1' /*--}}
-						@endif
-						{{--*/ $style_td = 'border-bottom: none;' /*--}}
-						@else
-						{{--*/ $style_td = 'border-top: none;border-bottom: none;' /*--}}
-						@endif
-						@if($loccomp != $tempcomp) 
-						@if($rowcomp==1)
-						{{--*/ $row = '0' /*--}}
-						@else
-						{{--*/ $row = '1' /*--}}
-						@endif
-						{{--*/ $style_tdcomp = 'border-bottom: none;' /*--}}
-						@else
-						{{--*/ $style_tdcomp = 'border-top: none;border-bottom: none;' /*--}}
-					@endif
-					<tr>
-						<td class="text-center vam">
-							{{ ($mailStatus->currentpage()-1) * $mailStatus->perpage() + $count + 1 }}
-						</td>
-						<td class="tal" style="{{$style_td}}" 
-							title="{{ singlefieldtitle($data ->lastName, 18) }}">
-							@php 
-							$lastName = ucwords(strtolower($data ->lastName));
-							if($lastName != "") {
-								if($loc != $temp) {
-									if(strlen($lastName) > 18) {
-										echo singlefieldlength($lastName,18);
-									} else {
-										echo $lastName;
-									}
-								}
-							}
-							@endphp
-
-						</td>
-						<td class="tal" style="{{$style_tdcomp}}" 
-							title="{{ singlefieldtitle($data ->toMail, 28) }}">
-								@if(strlen($data->toMail) > 28)
-									{{ singlefieldlength($data ->toMail,28) }}
-								@else
-									{{ $data ->toMail }}
-								@endif
-						</td>
-						<td class="tal">
-							@if($data ->subject =="")
-								<span>{{ trans('messages.lbl_nil')}}</span>
-							@else
-								{{ $data ->subject }}
-							@endif
-						</td>
-						<td class="tal">
-							{{ $data ->createdBy }}
-						</td>
-						<td class="tac vam">
-							{{ substr($data->createdDateTime,0,10) }} {{ substr($data->createdDateTime,11) }}
-						</td>
-						<td class="tac vam">
-							<a href="javascript:mailview('<?php echo $data->id ?>');"><img title="{{ trans('messages.lbl_view') }}" class=" box15" src="{{ URL::asset('public/images/ourdetails.png')}}"></a>
-						</td>
-					</tr>
-					{{--*/ $temp = $loc /*--}}
-						@empty
-						<tr class="nodata">
-							<th class="text-center red nodatades" colspan="2">
-								{{ trans('messages.lbl_nodatafound') }}
-							</th>
-						</tr>
-						<tr class="nodata">
-							<td class="text-center red nodatades1" colspan="7">
-								{{ trans('messages.lbl_nodatafound') }}
-							</td>
+				<thead class="CMN_tbltheadcolor">
+			   		<tr class="tableheader fwb tac"> 
+				  		<th class="tac">{{ trans('messages.lbl_sno') }}</th>
+				  		<th class="tac">{{ trans('messages.lbl_mailid') }}</th>
+				  		<th class="tac">{{ trans('messages.lbl_mailname') }}</th>
+				  		<th class="tac">{{ trans('messages.lbl_mailtype') }}</th>
+				  		<th class="tac">{{ trans('messages.lbl_subject') }}</th>
+			   		</tr>
+			   	</thead>
+			   	<tbody>
+			   		@forelse($mailContent as $key => $data)
+			   			<tr>
+			   				<td class="text-center">
+			   					{{ ($mailContent->currentpage()-1) * $mailContent->perpage()+$key+1 }}
+			   				</td>
+			   				<td class="text-center">
+			   					<a class="anchorstyle" href="javascript:gotomailview('{{ $data->id }}');">{{ $data->mailId }}</a>
+			   				</td>
+			   				<td>
+			   					{{ $data->mailName }}
+			   				</td>
+			   				<td class="">
+			   					{{ $data->typeName }}
+			   				</td>
+			   				<td class="">
+			   					{{ $data->subject }}
+			   				</td>
+			   			</tr>
+			   		@empty
+						<tr>
+							<td class="text-center" colspan="3" style="color: red;">{{ trans('messages.lbl_nodatafound') }}</td>
 						</tr>
 					@endforelse
-				</tbody>
+			   	</tbody>
 			</table>
 		</div>
-		<a id="back2Top" title="Back to top" href="#">&#10148;</a>
-		@if($mailStatus->total())
-			<div class="text-center col-xs-12 pagealign" style="padding: 0px;">
-				@if(!empty($mailStatus->total()))
-					<span class="pull-left mt24 pl0 pagination1">{{ $mailStatus->firstItem() }}
-						<span class="mt5">～</span>
-						{{ $mailStatus->lastItem() }} / {{ $mailStatus->total() }}
-					</span>
-				　@endif 
-				<span class ="pagintion2">
-				{{ $mailStatus->links() }}
-				</span>
-				<span class="pull-right pagination mt0">
-					{{ $mailStatus->linkspagelimit() }}
-				</span>
-			</div>
-		@endif
+	</div>
+	<div class="text-center ml10">
+		@if(!empty($mailContent->total()))
+			<span class="pull-left mt24">
+				{{ $mailContent->firstItem() }} ~ {{ $mailContent->lastItem() }} / {{ $mailContent->total() }}
+			</span>
+		@endif 
+		{{ $mailContent->links() }}
+		<div class="CMN_display_block flr pr10">
+			{{ $mailContent->linkspagelimit() }}
+		</div>
+	</div>
 	{{ Form::close() }}
 	<script>
 	  $('.footable').footable({

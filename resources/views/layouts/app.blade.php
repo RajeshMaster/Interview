@@ -675,7 +675,7 @@ body {
 									{{ trans('messages.lbl_employee') }}</a>
 								</li>
 								<li class="btn_mail jop_btn" style="">
-									<a class="pageload" href="{{ url('Loan/index?mainmenu=menu_loan&time='.date('Ymdhis')) }}" 
+									<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}" 
 									style="text-decoration: none !important;">
 									{{ trans('messages.lbl_mail') }}</a>
 								</li>
