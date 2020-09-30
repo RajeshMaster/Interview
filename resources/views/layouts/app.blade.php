@@ -480,35 +480,35 @@ body {
 								</ul>
 							</li>
 							<li @if(isset($request->mainmenu) && 
-									$request->mainmenu == "menu_mail") 
+									$request->mainmenu == "menu_setting") 
 									class="dropdown active" 
 								@endif>
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="text-decoration: none !important;">{{ trans('messages.lbl_settings') }}<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li class="dropdown-header">&nbsp;&nbsp;{{ trans('messages.lbl_dropdown') }}</li>
 									<li @if(isset($request->mainmenu) && 
-											$request->mainmenu == "menu_mail") 
+											$request->mainmenu == "menu_setting") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Mail/mailcontent?mainmenu=menu_mail&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_settings') }}</a>
+										<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_settings') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
 											$request->mainmenu == "menu_mailstatus") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_user') }}</a>
+										<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_user') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
 											$request->mainmenu == "menu_mailstatus") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_ourdetails') }}</a>
+										<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_ourdetails') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
 											$request->mainmenu == "menu_mailstatus") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_japanese_skills') }}</a>
+										<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_japanese_skills') }}</a>
 									</li>
 								</ul>
 							</li>
@@ -614,7 +614,7 @@ body {
 									</a>
 								</li>
 								<li class="btn_settings jop_btn">
-									<a class="pageload" href="{{ url('Setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}"
+									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}"
 										style="text-decoration: none !important;">
 										{{ trans('messages.lbl_settings') }}
 									</a>
@@ -676,9 +676,24 @@ body {
 							@if(isset($request->mainmenu) && 
 								$request->mainmenu == "menu_setting")
 								<div id="setting_sub_1">
-									<a class="pageload" href="{{ url('Setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" 
+									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" 
 										style="text-decoration: none !important;">
 									{{ trans('messages.lbl_settings') }}</a>
+								</div>
+								<div id="setting_sub_1">
+									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" 
+										style="text-decoration: none !important;">
+									{{ trans('messages.lbl_user') }}</a>
+								</div>
+								<div id="setting_sub_1">
+									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" 
+										style="text-decoration: none !important;">
+									{{ trans('messages.lbl_ourdetails') }}</a>
+								</div>
+								<div id="setting_sub_1">
+									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" 
+										style="text-decoration: none !important;">
+									{{ trans('messages.lbl_japanese_skills') }}</a>
 								</div>
 							@endif
 						</div>
