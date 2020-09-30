@@ -14,6 +14,12 @@ use Config;
 use Cookie;
 class LoginController extends Controller
 {
+	/**  
+	 *  Login Page
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/09/30
+	 **/
 	public function index(Request $request) {
 		/*if (!empty(Auth::user())) {
 			Session::put('userId',Auth::user()->userId);
@@ -72,7 +78,6 @@ class LoginController extends Controller
 		} else {
 			if (Auth::validate($userdata)) {
 				if (Auth::attempt($userdata,$remember_me)) {
-					print_r($_REQUEST);
 					$getscreenname=User::fnfetchscreenname();
 					Session::put('userid',Auth::user()->userid);
 					Session::put('username',Auth::user()->username);
@@ -113,11 +118,12 @@ class LoginController extends Controller
 		Cookie::queue(Cookie::forget('cookieArrayList'));
 		return Redirect::to('/');
 	}
+
 	/**  
 	 *  Redirect to Password Change
 	 *  @author Easa
 	 *  @param $request
-	 *  Created At 2020/08/19
+	 *  Created At 2020/09/30
 	 **/
 	public function showChangePasswordForm(Request $request){
 		return view('auth.changepassword',compact('request'));
@@ -126,7 +132,7 @@ class LoginController extends Controller
 	 *  Password Change process
 	 *  @author Easa
 	 *  @param $request
-	 *  Created At 2020/08/19
+	 *  Created At 2020/09/30
 	 **/
 	public function changePassword(Request $request){
 		if (!(Common::checkpassword($request->get('current-password'), Auth::user()->password))) {
