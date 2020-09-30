@@ -68,6 +68,7 @@ return [
 	/* Mail Module  */
 	'lbl_mailsubject' => 'Mail Subject',
 	'lbl_subject' => 'Subject',
+	'lbl_mailtype' => 'Mail Type',
 
 	/* Setting Module  */
 	'lbl_settings' => 'Settings',

@@ -55,7 +55,48 @@ class MailController extends Controller {
 											'contenttotal'));
 	}
 	public function mailContentView(Request $request){
-		print_r($request->all()); exit();
+		$mailContentView = Mail::getMailcontentview($request);
+		return view('mail.mailcontentview' ,compact('request',
+											'mailContentView'
+											));
+	}
+	public function mailContentAddEdit(Request $request){
+		if (!isset($request->editflg)) {
+			return Redirect::to('Mail/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
+		$getmailtypes=Mail::fnfetchmailtypes($request);
+		$getdataforupdate=array();
+		if ($request->editflg == 1) {
+			$getdataforupdate=Mail::fnfetchupdatedata($request);
+		} 
+		return view('mail.mailcontentaddedit',[
+											'getmailtypes' => $getmailtypes,
+											'getdataforupdate' => $getdataforupdate,
+											'request' => $request]);
 	}
 
+	public function mailContentAddEditProcess(Request $request){
+		
+	}
+
+	public function mailregvalidation(Request $request) {
+		$commonrules=array();
+		$commonrules = array(
+			'mailName' => 'required',
+			'subject'=>'required',
+			'mailtype'=>'required',
+			'content'=>'required',
+			//'mailother' => 'required',
+			// 'mailsignature'=>'required',
+		);
+		
+		$rules = $commonrules;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+	}
 }

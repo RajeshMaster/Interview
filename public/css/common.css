@@ -250,7 +250,7 @@ table thead tr th {text-align: center ! important;}
   border-bottom: 3px solid white !important;
 }
 .rowlist li:nth-child(even) {
-  background-color: #fff0e7e8;
+  background-color: #70a6ff73;
 }
 .rowlist li:nth-child(odd) {
   background-color: #ffff;

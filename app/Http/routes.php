@@ -62,6 +62,9 @@ Route::group(['prefix'=>'Mail', 'middleware' => 'auth'], function() {
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'MailController@index');
 	Route::any('mailContentView','MailController@mailContentView');
+	Route::any('mailContentAddEdit','MailController@mailContentAddEdit');
+	Route::any('mailContentAddEditProcess','MailController@mailContentAddEditProcess');
+	Route::any('mailregvalidation','MailController@mailregvalidation');
 });
 
 // Setting
