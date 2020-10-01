@@ -38,7 +38,7 @@
 			</h2>
 		</div>
 	</fieldset>
-	{{ Form::open(array('name'=>'indexform', 'id'=>'indexform', 'url' => 'Setting/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'method' => 'POST')) }}
+	{{ Form::open(array('name'=>'indexform', 'id'=>'indexform', 'url' => 'setting/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'method' => 'POST')) }}
 		<fieldset class="mt10 mb20">
 			<div class="box100per pr10 pt35 pl10">
 			  	<div id="divPopup" class="color popup_position"></div>
@@ -50,10 +50,11 @@
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_expenses_main';
+									$tbl_name = 'sysdesignationtypes';
 								@endphp
 							 	<a name="mainCategory" style="color: #33AFFF !important;" 
-							 	id="mainCategory" href="javascript:underconst();">{{ trans('messages.lbl_userdesignation') }}</a>
+							 	id="mainCategory" href="javascript:settingpopupsinglefield('twotextpopup',
+	        				'{{ $tbl_name}}','')">{{ trans('messages.lbl_userdesignation') }}</a>
 							</span>
 						</div>
 					</div>
@@ -64,9 +65,9 @@
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_family_master';
+									$tbl_name = 'sysunfixedreason';
 								@endphp
-								<a name="family" style="color:#33AFFF !important;" id="family" href="javascript:underconst();">{{ trans('messages.lbl_Unfixed_reason') }}</a>
+								<a name="family" style="color:#33AFFF !important;" id="family" href="javascript:settingpopupsinglefield('singletextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_Unfixed_reason') }}</a>
 							</span>
 						</div>
 					</div>
@@ -77,66 +78,75 @@
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_roletypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_roletype') }}</a>
+								href="javascript:settingpopupsinglefield('twotextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_roletype') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_sysostypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_sysostypes') }}</a>
+								href="javascript:settingpopupsinglefield('singletextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_sysostypes') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_sysprogramlangtypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_sysprogramlangtypes') }}</a>
+								href="javascript:settingpopupsinglefield('singletextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_sysprogramlangtypes') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_sysdbtypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_sysdbtypes') }}</a>
+								href="javascript:settingpopupsinglefield('singletextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_sysdbtypes') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_systooltypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_systooltypes') }}</a>
+								href="javascript:settingpopupsinglefield('singletextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_systooltypes') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_sysguitypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_sysguitypes') }}</a>
+								href="javascript:settingpopupsinglefield('singletextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_sysguitypes') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_syswebservertypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_syswebservertypes') }}</a>
+								href="javascript:settingpopupsinglefield('singletextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_syswebservertypes') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_sysmiddlewaretypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_sysmiddlewaretypes') }}</a>
+								href="javascript:settingpopupsinglefield('singletextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_sysmiddlewaretypes') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								@php
-									$tbl_name = 'ams_master_assetstypes';
+									$tbl_name = 'emp_syswebtooltypes';
 								@endphp
 								<a name="assets" style="color:#33AFFF !important;" id="assets" 
-								href="javascript:underconst();">{{ trans('messages.lbl_syswebtooltypes') }}</a>
+								href="javascript:settingpopupsinglefield('singletextpopup',
+	        				'{{ $tbl_name}}','');">{{ trans('messages.lbl_syswebtooltypes') }}</a>
 							</span>
 						</div>
 					</div>
@@ -175,6 +185,13 @@
 				</div>
 			</div>
 		</fieldset>
+		<div id="grouppop" class="modal fade" style="width: 775px;">
+			<div id="login-overlay">
+				<div class="modal-content">
+					<!-- Popup will be loaded here -->
+				</div>
+			</div>
+		</div>
 		<div id="showpopup" class="modal fade" style="width: 775px;">
 			<div id="login-overlay">
 				<div class="modal-content">

@@ -1,26 +1,62 @@
 <?php
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Model\Setting;
+use App\Http\Common\settingscommon;
 use session;
 use Redirect;
-use App\Http\Common\settingscommon;
-use Excel;
 use Auth;
-use PHPExcel_Worksheet_PageSetup;
-use PHPExcel_Style_Fill;
-use PHPExcel_IOFactory;
-use PHPExcel_Shared_Date;
-use ExcelToPHPCal;
-use PHPExcel_Reader_Excel5;
 use Input;
 use Config;
 use DB;
+
 class SettingController extends Controller {
+	/**  
+	*  Exists check For Single field popup
+	*  @author Easa 
+	*  @param $request
+	*  Created At 2020/09/30
+	**/
 	public static function index(Request $request) { 
 		return view('setting.index',['request'=> $request]);
 	}
+
+	/**  
+	*  Exists check For Single field popup
+	*  @author Easa 
+	*  @param $request
+	*  Created At 2020/10/01
+	**/
+	public function Already_Exists(Request $request) {
+		$getTableFields = settingscommon::getDbFieldsforProcess();
+		$Already_Exists = Setting::chkNameExists($request,$getTableFields);
+		 //echo json_encode($Already_Exists);exit();
+		if ($Already_Exists != array()) {
+			$existsChk = 1;
+		} else {
+			$existsChk = 0;
+		}
+		print_r($existsChk);exit();
+	}
+
+	/**  
+	*  For Commit Process for All popup
+	*  @author Easa 
+	*  @param $request
+	*  Created At 2020/10/01
+	**/
+	public function commitProcess(Request $request) {
+		$getTableFields = settingscommon::getDbFieldsforProcess();
+		$commit = Setting::fngetcommitProcess($request,$getTableFields);
+	}
+
+	/**  
+	*  Single Text Popup Data Fetch
+	*  @author Easa 
+	*  @param $request
+	*  Created At 2020/10/01
+	**/
 	public static function singletextpopup(Request $request) {
 		$getTableFields = settingscommon::getDbFieldsforProcess();
 		$tablename = $request->tablename;
@@ -31,7 +67,7 @@ class SettingController extends Controller {
 		$headinglbl = $getTableFields[$tablename]['labels']['heading'];
 		$field1lbl = $getTableFields[$tablename]['labels']['field1lbl'];
 		$selectfiled  = $getTableFields[$tablename]['selectfields'];
-		return view('Setting.singletextpopup',['getdetails' => $query,
+		return view('setting.singletextpopup',['getdetails' => $query,
 												'request'=>$request,
 												'headinglbl'=>$headinglbl,
 												'field1lbl' => $field1lbl,
@@ -39,6 +75,13 @@ class SettingController extends Controller {
 												'getTableFields'=> $getTableFields,
 												'requestAsJSONArray' => $requestAsJSONArray]);
 	}
+
+	/**  
+	 *  Single Add & Update Process
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/01
+	 **/
 	public static function SingleFieldaddedit(Request $request) {
 		if ($request->flag == 2) {
 	 		echo $update_query=Setting::updateSingleField($request);
@@ -53,10 +96,17 @@ class SettingController extends Controller {
  		$orderidarray['totalid'] = $orderidval;
  		echo json_encode($orderidarray);
 	}
+
+	/**  
+	 *  Two TextPopup Data Fetch
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/01
+	 **/
 	public static function twotextpopup(Request $request) {
 		$tbl_name = $request->tablename;
 		$getTableFields = settingscommon::getDbFieldsforProcess();
-		$query = setting::selectOnefieldDatas($getTableFields[$tbl_name]['selectfields'],
+		$query = Setting::selectOnefieldDatas($getTableFields[$tbl_name]['selectfields'],
 											  $getTableFields[$tbl_name]['commitfields'][0],
 											  $request);
 		$requestAsJSONArray = json_encode($request->all());
@@ -64,7 +114,7 @@ class SettingController extends Controller {
 		$field1lbl = $getTableFields[$tbl_name]['labels']['field1lbl'];
 		$field2lbl = $getTableFields[$tbl_name]['labels']['field2lbl'];
 		$selectfiled  = $getTableFields[$tbl_name]['selectfields'];
-		return view('Setting.twofieldpopup',['query' => $query,
+		return view('setting.twofieldpopup',['query' => $query,
 												'request'=>$request,
 												'headinglbl'=>$headinglbl,
 												'field1lbl' => $field1lbl,
@@ -73,6 +123,13 @@ class SettingController extends Controller {
 												'getTableFields'=> $getTableFields,
 												'requestAsJSONArray' => $requestAsJSONArray]);
 	}
+
+	/**  
+	 *  Two Text Add & Update Process
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/01
+	 **/
 	public static function twoFieldaddedit(Request $request) {
 		if ($request->flag == 2) {
 	 		echo $update_query = Setting::updatetwoField($request);
@@ -80,12 +137,31 @@ class SettingController extends Controller {
 		}
 		$tbl_name = $request->tablename;
 		$orderidval = Setting::Orderidgenerate($tbl_name);
-	 	echo $orderid = $orderidval;
+	 	$orderid = $orderidval;
+	 	$orderidarray['orderid'] = $orderidval;
 	 	$ins_query = Setting::insertquerytwofield($tbl_name,$request,$orderid);
+	 	$actualId = "";
+		$actualVal = Setting::selectOrderId($request);
+		foreach ($actualVal as $key => $value) {
+			$actualId .=  $value->orderId.",";
+		}
+		$orderidarray['actualid'] = rtrim($actualId, ",");
+		$location = "";
+		$orderidval = Setting::Orderidgeneratefortotal($location,$tbl_name);
+		$orderidarray['totalid'] = $orderidval;
+		echo json_encode($orderidarray);
 	}
+
+	/**  
+	 *  Use/Not Use Process
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/01
+	 **/
 	public static function useNotuse(Request $request) {
 		$usenotuse = setting::updateUseNotUse($request);
 	}
+
 	public static function getExtension($str) {
 	    $i = strrpos($str,".");
 	    if (!$i) { return ""; }
@@ -93,6 +169,13 @@ class SettingController extends Controller {
 	    $ext = substr($str,$i+1,$l);
 	    return $ext;
 	}
+
+	/**  
+	 *  Group Data Fetch Process
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/01
+	 **/
 	public static function grouppopup(Request $request) {  
 		$groupname = Setting::fnGetgroup();
 		$Selgroupname = array();
@@ -111,8 +194,15 @@ class SettingController extends Controller {
 			}
 			$i++;
 		}
-		return view('Setting.grouppopup',['groupname' => $groupname,'Selgroupname' => $Selgroupname]);
+		return view('setting.grouppopup',['groupname' => $groupname,'Selgroupname' => $Selgroupname]);
 	}
+
+	/**  
+	 *  Group Register & Update Process
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/01
+	 **/
 	public static function groupaddprocess(Request $request) {  
 		$groupid = Setting::getmaxid();
 		if($groupid == "") {
@@ -136,6 +226,13 @@ class SettingController extends Controller {
 			print_r($updateGroupdetails);exit();
 		}
 	}
+
+	/**  
+	 *  Group Use/Not Use Process
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/01
+	 **/
 	public static function useNotuses(Request $request) {
 		$usenotuse = setting::flagchange($request);
 		print_r($usenotuse);exit();

@@ -5,21 +5,21 @@ function settingpopupsinglefield(screen_name,tablename,tableselect) {
 	var req = "?screen_name="+screen_name+
 				"&tablename="+tablename;
 	if (screen_name == "singletextpopup") {
-		$('#showpopup').load('../Setting/singletextpopup?screen_name='+screen_name+'&tablename='+tablename);
+		$('#showpopup').load('../setting/singletextpopup?screen_name='+screen_name+'&tablename='+tablename);
 		$("#showpopup").modal({
 			backdrop: 'static',
 			keyboard: false
 		});
 		$('#showpopup').modal('show');
 	} else if (screen_name == "selecttextpopup") {
-		$('#showpopup').load('../Setting/selecttextpopup?screen_name='+screen_name+'&tablename='+tablename+'&tableselect='+tableselect);
+		$('#showpopup').load('../setting/selecttextpopup?screen_name='+screen_name+'&tablename='+tablename+'&tableselect='+tableselect);
 		$("#showpopup").modal({
 			backdrop: 'static',
 			keyboard: false
 		});
 		$('#showpopup').modal('show');
 	} else {
-		$('#showpopup').load('../Setting/twotextpopup?screen_name='+screen_name+'&tablename='+tablename);
+		$('#showpopup').load('../setting/twotextpopup?screen_name='+screen_name+'&tablename='+tablename);
 		$("#showpopup").modal({
 		   backdrop: 'static',
 			keyboard: false
@@ -53,6 +53,145 @@ function divpopupclose() {
 		$( '#showpopup' ).empty();
 		$('#showpopup').modal('toggle');
 	}
+}
+
+function divpopupclose_grp() {
+	if (!cancel_check) {
+		swal({
+			title: msg_cancel,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+				$( "body div" ).removeClass( "modalOverlay" );
+				$( '#grouppop' ).empty();
+				$('#grouppop').modal('toggle');
+			} else {
+				return false;
+			}
+		});
+	} else {
+		$( "body div" ).removeClass( "modalOverlay" );
+		$( '#grouppop' ).empty();
+		$('#grouppop').modal('toggle');
+	}
+}
+
+function groupcheck(groupname,editid) {
+	$('#hid_txtval').val(groupname);
+	$('#radioid').val(editid);
+	document.getElementById("editlbl").disabled = false;
+	$("#rdoedit"+editid).attr("checked", true);
+	$("#editlbl").css("background-color","#FF8C00");
+}
+
+function checkvalidate(flag) {
+	var mainmenu = "menu_setting";
+	if($("#grpName").val() == "") {
+		$("#empty_textbox1").show(); 
+		$("#grpName").focus();
+		return false;
+	} else {
+		$("#empty_textbox1").hide(); 
+		$('#flag').val(flag);
+		var grpId = $("input[name='rdoedit']:checked").val();
+		$('#groupId').val(grpId);
+		if (flag != "edit") {
+			var err_cnfirm = confirm(msg_add);
+		} else {
+			var err_cnfirm = confirm(msg_update);
+		}
+		if(err_cnfirm) {   
+			var groupId = $('#groupId').val();
+			var grpName = $('#grpName').val();
+			var flag = $('#flag').val();
+            var editid = $('#radioid').val();
+            var textbox1 = $('#grpName').val();
+			$.ajax({
+				type: 'GET',
+				url: 'groupaddprocess',
+				data: { "flag": flag,"groupId": groupId,"grpName": grpName },
+				success: function(data) {
+                    if (data != "") {
+                        var res = $.parseJSON(data);
+                        var orderid=res.orderid;
+                        var totalid=res.totalid;
+                        var group=res.group;
+                        var data=orderid;
+                        $('#grpName').val('');
+                        if(flag != "edit") {
+                            var tempdata= parseInt(data)+1;
+                            var forusenotuse = parseInt(data)-1;
+                            var data='<tr class="h37" onclick="groupcheck(\''+textbox1+'\',\''+totalid+'\')"><td class="text-center" title="Select"><input type = "radio" name="rdoedit" id="rdoedit'+data+'" class="h13 w13" onclick="groupcheck(\''+textbox1+'\',\''+data+'\');"><input id="radioid" name="radioid" type="hidden" value="'+data+'"></td><td class="">'+data+'</td><td>'+group+'</td><td class="" id="datavar'+totalid+'">'+textbox1+'</td><td></td><td class="tac pt7" title="Use/Not Use"><a href="javascript:useNotuses(\''+forusenotuse+'\');" class="btn-link" style="cursor: pointer;color:blue;"><label class="btn-link" id="usenotuselabel'+forusenotuse+'" style="color: blue;">Use</label></a><input id="editid'+forusenotuse+'" name="editid'+forusenotuse+'" type="hidden" value="'+totalid+'"></td></tr>';
+                            $('#swaptable1 tr:last').after(data);
+                            $("#grppopupsessionreg").css("display", "block");
+                            $("#grppopupsessionupd").css("display", "none");
+                        } else {
+                            $("#datavar"+editid).text(textbox1);
+                            $("#add_vargrp").show();
+                            $("#update_vargrp").hide();
+                            $('#process').val(1);
+                            $("#datavar"+editid).text(grpName);
+                            $("#grppopupsessionupd").css("display", "block");
+                            $("#grppopupsessionreg").css("display", "none");
+                        }
+                        if ($('#swaptable1 tr').hasClass('nodata')) {
+                            $('#swaptable1 tr:first').remove();
+                        }
+                    }
+				},
+				error: function(data){
+					//alert("Error");
+				}
+			});
+		} else {
+			return false;
+		}
+	}
+}
+
+ function useNotuses(i) {
+	var curtFlg =  $("#usenotuselabel"+i).attr('data-type');
+	var editid =  $('#editid'+i).val();
+	var url = 'useNotuses';
+	$.ajax({
+		async: true,
+		type: 'GET',
+		url: url,
+		data: { "curtFlg": curtFlg , "editid": editid },
+		success: function(data) {
+			if(curtFlg == 1) {
+				$("#usenotuselabel"+i).text('Use');
+				$("#usenotuselabel"+i).css('color','blue');
+				$("#usenotuselabel"+i).attr('data-type','0');
+				$("#usenotuseanchor"+i).css('text-decoration', 'none');
+			} else {
+				$("#usenotuselabel"+i).text('Not Use');
+				$("#usenotuselabel"+i).css('color','red');
+				$("#usenotuselabel"+i).attr('data-type','1');
+				$("#usenotuseanchor"+i).css('text-decoration', 'none');
+			}
+		},
+		error: function(data) {
+		}
+	});
+}
+
+function editgroupcheck() {
+    var editid = $('#radioid').val();
+	$("#editlbl").addClass("CMN_cursor_default");
+	$('#flag').val('edit');
+	document.getElementById("editlbl").disabled = true;
+	$("#add_vargrp").hide();
+	$("#update_vargrp").show();
+	var datavar = $('#datavar'+editid).text();
+	var hid_txtval = $('#hid_txtval').val();
+	$('#grpName').val(hid_txtval);
+	return false;
 }
 
 // Single text popup Add edit process
@@ -321,7 +460,7 @@ function fnrdochecktwofield(textbox1,textbox2,editid,scroolid,totalcount,val) {
 }
 // Two field popup Addedit process
 function fnaddedittwofield(location,mainmenu,tablename,flag) {
-	mainmenu = "Setting";
+	mainmenu = "menu_setting";
 	var opr=$('#process').val();
 	$("#popupsessionnotuse").css("display", "none");
 	$("#popupsessionuse").css("display", "none");
@@ -422,7 +561,7 @@ function fnaddedittwofield(location,mainmenu,tablename,flag) {
 													var tempdata = res.orderid + 1;
 													var valid = totalid-1;
 													var data = orderid;
-													var data='<tr class="h37"><td class="tac" title="Select"><input type = "radio" name="rdoedit" id="rdoedit'+totalid+'" class="h13 w13" onclick="fnrdochecktwofield(\''+textbox1+'\',\''+textbox2+'\',\''+totalid+'\',\''+totalid+'\',\''+totalid+'\',\''+valid+'\');"><input id="rdoid" name="rdoid" type="hidden" value="'+data+'"><input id="idOriginalOrder" name="idOriginalOrder" type="hidden" value="'+actualid+'"><input id="id" name="id" type="hidden" value="'+totalid+'"></td><td class="text-center pt7" title="S.No">'+data+'</td><td class="pl7 pt7" id="dataname1'+data+'">'+textbox1+'</td><td class="pl7 pt7" id="dataname2'+data+'">'+textbox2+'</td><td class="tac pt7" title="Use/Not Use"><a href="javascript:useNotuse(\''+data+'\',\''+tempdata+'\');" class="btn-link" style="color:blue;"><label class="btn-link" id="usenotuselabel'+tempdata+'" data-type="0" style="color: blue;">Use</label></a><input id="curtFlg'+tempdata+'" name="curtFlg'+tempdata+'" type="hidden" value="1"><input id="editid'+tempdata+'" name="editid'+tempdata+'" type="hidden" value="'+data+'"></td></tr>';
+													var data='<tr class="h37"><td class="text-center" title="Select"><input type = "radio" name="rdoedit" id="rdoedit'+totalid+'" class="h13 w13" onclick="fnrdochecktwofield(\''+textbox1+'\',\''+textbox2+'\',\''+totalid+'\',\''+totalid+'\',\''+totalid+'\',\''+valid+'\');"><input id="rdoid" name="rdoid" type="hidden" value="'+data+'"><input id="idOriginalOrder" name="idOriginalOrder" type="hidden" value="'+actualid+'"><input id="id" name="id" type="hidden" value="'+totalid+'"></td><td class="text-center pt7" title="S.No">'+data+'</td><td class="pl7 pt7" id="dataname1'+data+'">'+textbox1+'</td><td class="pl7 pt7" id="dataname2'+data+'">'+textbox2+'</td><td class="tac pt7" title="Use/Not Use"><a href="javascript:useNotuse(\''+data+'\',\''+tempdata+'\');" class="btn-link" style="color:blue;"><label class="btn-link" id="usenotuselabel'+tempdata+'" data-type="0" style="color: blue;">Use</label></a><input id="curtFlg'+tempdata+'" name="curtFlg'+tempdata+'" type="hidden" value="1"><input id="editid'+tempdata+'" name="editid'+tempdata+'" type="hidden" value="'+data+'"></td></tr>';
 													$('#swaptable1 tr:last').after(data);
 													$("#popupsessionreg").css("display", "block");
 													$("#popupsessionupd").css("display", "none");
@@ -826,7 +965,18 @@ function fnsettingcommitajax(actualId,idnew,tablename,screenname,tableselect){
 			settingpopupsinglefield(screenname,tablename,tableselect);
 		},
 		error: function(data) {
-			// alert(data.status);
+			 alert(data.status);
 		}
 	});
+}
+
+function groupselectpopup(datetime) {
+	//popupopenclose(1);
+	var mainmenu = "menu_setting";
+	$('#grouppop').load('../setting/grouppopup?mainmenu='+mainmenu+'&time='+datetime);
+	$("#grouppop").modal({
+		backdrop: 'static',
+		keyboard: false
+	});
+	$('#grouppop').modal('show');
 }

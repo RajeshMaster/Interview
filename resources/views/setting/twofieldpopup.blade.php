@@ -38,6 +38,12 @@
 	.designchange{
 		margin-right:4%!important;
 	}
+	.text1 {
+		margin-left: 8px !important;
+	}
+	.text2 {
+		margin-left: 28px !important;
+	}
 }	
 </style>
 {{ Form::open(array('name'=>'settingform','class'=>'focusFields',
@@ -162,8 +168,8 @@
 						@forelse($query as $count => $data)
 						{{--*/ $j = $count /*--}}
 						{{--*/ $id = $data->$getTableFields[$request->tablename]['displayfields'][0] /*--}}
-				   		{{--*/ $orderid = $data->$getTableFields[$request->tablename]['displayfields'][5] /*--}}
-				   		{{--*/ $delflg = $data->$getTableFields[$request->tablename]['displayfields'][4] /*--}}
+				   		{{--*/ $orderid = $data->$getTableFields[$request->tablename]['displayfields'][4] /*--}}
+				   		{{--*/ $delflg = $data->$getTableFields[$request->tablename]['displayfields'][3] /*--}}
 							<tr>
 								<td class="text-center" title="Select">
 								<input type="radio" name="rdoedit" id="rdoedit{{ $data->$selectfiled['0'] }}"
@@ -202,12 +208,12 @@
 										 <input type="hidden" name="hdnNewOrderid" 
 													id="hdnNewOrderid_<?php echo $j;?>" value="<?php echo $j;?>"/>
 									</a>
-									 {{ Form::hidden('curtFlg'.$i, $data->$selectfiled['4'] , array('id' => 'curtFlg'.$i)) }} 
+									 {{ Form::hidden('curtFlg'.$i, $data->$selectfiled['5'] , array('id' => 'curtFlg'.$i)) }} 
 									{{ Form::hidden('editid'.$i, $data->$selectfiled['0'], array('id' => 'editid'.$i)) }} 
 								</td>
 							</tr>
 							@php $i++; @endphp
-							{{--*/ $idOrder .= $data->$getTableFields[$request->tablename]['displayfields'][5]."," /*--}}
+							{{--*/ $idOrder .= $data->$getTableFields[$request->tablename]['displayfields'][4]."," /*--}}
 							@empty
 							<tr class="nodata">
 								<td class="text-center red" colspan="6">
@@ -222,8 +228,8 @@
 			{{ Form::hidden('idOriginalOrder', $idOrder, array('id' => 'idOriginalOrder')) }}
 			<div class="box100per">
 				<fieldset class="h50 mr7 ml7">
-					<div class="dispinline col-md-12 mt10 mb5 ml50">
-						<div class="pull-left text-right clr_blue fwb mt5 labeltexttwos ml100">
+					<div class="dispinline col-md-12 mt10 mb5 ml17 text1">
+						<div class="pull-left text-right clr_blue fwb mt5 labeltexttwos ml50">
 							{{ $field1lbl }}
 							<span style="color:red;"> * 
 							</span>
@@ -243,8 +249,8 @@
 								This Value is already exists.
 							</label>
 					</div>  
-					<div class="dispinline col-md-12 mt5 mb5 ml50">
-						<div class="pull-left text-right clr_blue fwb mt5 labeltexttwo ml53">
+					<div class="dispinline col-md-12 mt5 mb5 ml2 text2">
+						<div class="pull-left text-right clr_blue fwb mt5 labeltexttwo ml50">
 							{{ $field2lbl }}
 							<span style="color:red;"> * 
 							</span>

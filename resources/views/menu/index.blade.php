@@ -98,7 +98,7 @@
 						</div>
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
-								<a name="bank" id="bank" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_settings') }}</a>
+								<a name="bank" id="bank" style="color:#33AFFF !important;" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}">{{ trans('messages.lbl_settings') }}</a>
 							</span>
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
 								<a name="bank" id="bank" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_user') }}</a>

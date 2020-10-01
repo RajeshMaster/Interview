@@ -8,6 +8,12 @@ use App;
 use Auth;
 use App\Http\Common\settingscommon;
 class Setting extends Model { 
+    /**  
+    *  Get Record From DataBase
+    *  @author Easa 
+    *  @param $fieldArray,$orderid,$request
+    *  Created At 2020/10/01
+    **/
     public static function selectOnefieldDatas($fieldArray,$orderid,$request) {
         $db = DB::connection('mysql');
         $fieldNames="";
@@ -28,6 +34,57 @@ class Setting extends Model {
         }
         return $query;
     }
+
+    /**  
+    *  Exists check For Single field popup
+    *  @author Easa 
+    *  @param $request,$getTableFields
+    *  Created At 2020/10/01
+    **/
+    public static function chkNameExists($request,$getTableFields) {
+        $db = DB::connection('mysql');
+        $table_name = $request->tablename;
+        if (isset($request->textbox1) && $request->textbox1 != "") {
+            $field = $getTableFields[$table_name]['selectfields'][1];
+            $value = $request->textbox1;
+        } else if (isset($request->textbox2) && $request->textbox2 != "") {
+            $field = $getTableFields[$table_name]['selectfields'][2];
+            $value = $request->textbox2;
+        } else {
+            $field = "";
+            $value = "";
+        }
+        $id = $getTableFields[$table_name]['selectfields'][0];
+        $value = "'".$value."'";
+        $concat = "WHERE mergeall".".".$field." IN($value)";
+        if ($request->flag != 2) {
+            $query = DB::select("SELECT * FROM(SELECT ".$field." FROM ".$table_name.") AS mergeall $concat");
+        } else {
+            $query = DB::select("SELECT * FROM(SELECT ".$field." FROM ".$table_name." WHERE ".$id." != ".$request->id.") AS mergeall $concat");
+        }
+        return $query;
+    }
+
+    /**  
+    *  For Commit Process for All popup
+    *  @author Easa 
+    *  @param $request,$getTableFields
+    *  Created At 2020/09/21
+    **/
+    public static function fngetcommitProcess($request,$getTableFields) {
+        $tablename = $request->tablename;
+        $cmtfield = $getTableFields[$tablename]['commitfields'][0];
+        $splitactualid = explode(",", $request->actualId);
+        $splitidnew = explode(",", $request->idnew);
+        $db = DB::connection('mysql');
+        for ($i = 0; $i < count($splitactualid); $i++) {
+            $update = $db->table($tablename)
+                        ->where('id', $splitidnew[$i])
+                        ->update([ $cmtfield => $splitactualid[$i] ]);
+        }
+        return true;
+    }
+
 	public static function Orderidgenerateforbank($location,$tbl_name) {
         $db = DB::connection('mysql');
         $query = $db->TABLE($tbl_name)
@@ -35,23 +92,65 @@ class Setting extends Model {
                     ->count('id');
         return $query;            
     }
+
+    /** Get OrderId
+    *  @author Easa 
+    *  @param $request
+    *  Created At 2020/10/01
+    */
+    public static function selectOrderId($request) {
+        $db = DB::connection('mysql');
+        $query = $db->table($request->tablename);
+        if ($request->tablename == "emp_roletypes") {
+            $query =$query->select('orderId AS orderId')
+            ->orderBy('orderId','ASC');
+        } else {
+            $query =$query->select('Order_id AS orderId')
+            ->orderBy('Order_id','ASC');  
+        }
+                    
+        $query =$query->get();
+        return $query;
+    }
+
+    /** Get maximum ID Count
+    *  @author Easa 
+    *  @param $location,$tbl_name
+    *  Created At 2020/10/01
+    */
     public static function Orderidgeneratefortotal($location,$tbl_name) {
         $db = DB::connection('mysql');
-        $query = $db->TABLE($tbl_name)
-                    ->WHERE('location','=', $location)
-                    ->max('id');
+        $query = $db->TABLE($tbl_name);
+            if ($location != '') {
+                $query =$query->WHERE('location','=', $location);
+            }
+            $query =$query->max('id');
         return $query;            
     }
+
+    /**  
+     *  Get Maximum ID
+     *  @author Easa
+     *  @param $location,$tbl_name
+     *  Created At 2020/10/01
+     **/
     public static function Orderidgenerateforbranchtotal($location,$tbl_name) {
         $db = DB::connection('mysql');
         $query = $db->TABLE($tbl_name)
                     ->max('id');
         return $query;            
     }
+
+    /** Order ID Generate
+    *  @author Easa 
+    *  @param $tbl_name
+    *  Created At 2020/10/01
+    */
     public static function Orderidgenerate($tbl_name) {
         $statement = DB::select("show table status like '$tbl_name'");
         return $statement[0]->Auto_increment;
     }
+
     public static function insertqueryforbranch($tbl_name,$request) { 
         $db = DB::connection('mysql');
         $getTableFields = settingscommon::getDbFieldsforProcess();
@@ -77,6 +176,13 @@ class Setting extends Model {
         );
         return  $sql;
     }
+
+    /**  
+     *  Single Text Insert Process
+     *  @author Easa
+     *  @param $tbl_name,$request,$order_id
+     *  Created At 2020/10/01
+     **/
     public static function insertquery($tbl_name,$request,$order_id) {
         $db = DB::connection('mysql');
         $getTableFields = settingscommon::getDbFieldsforProcess();
@@ -109,6 +215,13 @@ class Setting extends Model {
         }
         return  $sql;
     }
+
+    /**  
+     *  Two Text Insert Process
+     *  @author Easa
+     *  @param $tbl_name,$request,$order_id
+     *  Created At 2020/10/01
+     **/
     public static function insertquerytwofield($tbl_name,$request,$order_id) {
         $db = DB::connection('mysql');
         $getTableFields = settingscommon::getDbFieldsforProcess();
@@ -135,6 +248,13 @@ class Setting extends Model {
                 );
         return  $sql;
     }
+
+    /**  
+     *  Single Text Update Process
+     *  @author Easa
+     *  @param $request
+     *  Created At 2020/10/01
+     **/
     public static function updateSingleField($request) {
         $getTableFields = settingscommon::getDbFieldsforProcess();
         $Typename = $getTableFields[$request->tablename]['updatefields'][0];
@@ -163,6 +283,13 @@ class Setting extends Model {
         }*/
         return $update;            
     }
+
+    /**  
+     *  Two Text Update Process
+     *  @author Easa
+     *  @param $request
+     *  Created At 2020/10/01
+     **/
     public static function updatetwoField($request) {
         $getTableFields = settingscommon::getDbFieldsforProcess();
         $Typename1 = $getTableFields[$request->tablename]['updatefields'][0];
@@ -200,7 +327,14 @@ class Setting extends Model {
                 $UpdatedBy => $CreatedByname]
         );
         return $update;            
-     }
+    }
+
+    /**  
+     *  Use/Not Use Process
+     *  @author Easa
+     *  @param $request
+     *  Created At 2020/10/01
+     **/
     public static function updateUseNotUse($request) {
         $db = DB::connection('mysql');
         $getTableFields = settingscommon::getDbFieldsforProcess();
@@ -336,6 +470,12 @@ class Setting extends Model {
                     ->lists($textvalue,$idvalue);
         return $query;
     }
+
+    /**  
+     *  Get Customer Group Details
+     *  @author Easa
+     *  Created At 2020/10/01
+     **/
     public static function fnGetgroup(){
 		$db = DB::connection('mysql');
 		$result = DB::TABLE('mst_cus_group')
@@ -343,12 +483,25 @@ class Setting extends Model {
 				->get();
 		return $result;
 	}
+
+    /**  
+     *  Get Maximum Group ID
+     *  @author Easa
+     *  Created At 2020/10/01
+     **/
 	public static function getmaxid() {
 		$db = DB::connection('mysql');
 		$maxid = DB::table('mst_cus_group')
 				->max('groupId');
 		return $maxid;
 	}
+
+    /**  
+     *  Insert Customer Group
+     *  @author Easa
+     *  @param $newgroupId,$request
+     *  Created At 2020/10/01
+     **/
 	public static function insGrpDtls($newgroupId,$request) {
 		$insert = DB::table('mst_cus_group')
 					->insert([
@@ -359,6 +512,13 @@ class Setting extends Model {
 					]);
 		return $insert; 
 	}
+
+    /**  
+     *  Update Customer Group
+     *  @author Easa
+     *  @param $request
+     *  Created At 2020/10/01
+     **/
 	public static function updGrpDtls($request) {
 		$db = DB::connection('mysql');
 		$update = DB::table('mst_cus_group')
@@ -366,6 +526,13 @@ class Setting extends Model {
 			->update(['groupName' => $request->grpName]);
 		return $update;
 	}
+
+    /**  
+     *  Flag Change Process
+     *  @author Easa
+     *  @param $request
+     *  Created At 2020/10/01
+     **/
 	public static function flagchange($request) {
 		$db = DB::connection('mysql');
 		if ($request->curtFlg == 0) {
@@ -378,6 +545,7 @@ class Setting extends Model {
 				->update(['delFlg' => $upvalue]);
 		return $result;
 	}
+    
 	public static function fnGetCus($groupId){
 		$db = DB::connection('mysql');
 		$result = DB::TABLE('mst_customerdetail')

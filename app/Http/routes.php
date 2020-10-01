@@ -81,6 +81,8 @@ Route::group(['prefix'=>'Mail', 'middleware' => 'auth'], function() {
 Route::group(['prefix'=>'MailSignature','middleware' => 'auth'], function() {
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'MailSignatureController@index');
+	Route::any('mailSignatureFlg','MailSignatureController@mailSignatureFlg');
+	Route::any('mailSignatureView','MailSignatureController@mailSignatureView');
 });
 // Setting
 Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
@@ -94,18 +96,17 @@ Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('commitProcess', 'SettingController@commitProcess');
 	Route::any('useNotuse', 'SettingController@useNotuse');
 	Route::any('grouppopup', 'SettingController@grouppopup');
-
-
-	Route::any('uploadpopup', 'SettingController@uploadpopup');
-	Route::any('settingpopupupload', 'SettingController@settingpopupupload');
-	Route::any('grouppopup', 'SettingController@grouppopup');
 	Route::any('groupaddprocess', 'SettingController@groupaddprocess');
 	Route::any('useNotuses', 'SettingController@useNotuses');
+
+
+	/*Route::any('uploadpopup', 'SettingController@uploadpopup');
+	Route::any('settingpopupupload', 'SettingController@settingpopupupload');
 	Route::any('requirmentSetting', 'SettingController@requirmentSetting');
 	Route::any('reqirmentaddprocess', 'SettingController@reqirmentaddprocess');
 	Route::any('useNotusesrequirment', 'SettingController@useNotusesrequirment');
 	Route::any('importpopup', 'SettingController@importpopup');
-	Route::any('importprocess', 'SettingController@importprocess');
+	Route::any('importprocess', 'SettingController@importprocess');*/
 });
 
 // LOGOUT PROCESS
