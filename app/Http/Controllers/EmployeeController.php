@@ -72,9 +72,9 @@ class EmployeeController extends Controller
 						);
 
         $src = "";
-		$noimage = "../resources/assets/images";
-		$file = "../resources/assets/images/upload/";
-		$disPath = "./resources/assets/images/upload/";
+		$noimage = "../public/images";
+		$file = "../public/images/upload/";
+		$disPath = "../public/images/upload/";
 		$filename = "";
         
 		$empdetailsdet=array();

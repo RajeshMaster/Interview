@@ -18,13 +18,12 @@
 	var datetime = '@php echo date("Ymdhis") @endphp';
 	function pageClick(pageval) {
 		$('#page').val(pageval);
-		$("#mailcontentindx").submit();
+		$("#employeefrm").submit();
 	}
-
 	function pageLimitClick(pagelimitval) {
 		$('#page').val('');
 		$('#plimit').val(pagelimitval);
-		$("#mailcontentindx").submit();
+		$("#employeefrm").submit();
 	}
 
 	function mulclick(divid){
@@ -248,7 +247,7 @@
 						@for ($i = 0; $i < count($empdetailsdet); $i++)
 						<tr>
 							<td class="text-center vam">
-								{{ $i + 1 }}
+								{{ ($empdetails->currentpage()-1) * $empdetails->perpage() + $i + 1 }}
 							</td>
 							<td>
 								<div class="tac">
@@ -392,8 +391,21 @@
 					@endif
 				</tbody>
 			</table>
+		</div>
 
-	</div>
+		<div class="text-center">
+
+			@if(!empty($empdetails->total()))
+				<span class="pull-left mt24">
+					{{ $empdetails->firstItem() }} ~ {{ $empdetails->lastItem() }} / {{ $empdetails->total() }}
+				</span>
+			@endif 
+			{{ $empdetails->links() }}
+			<div class="CMN_display_block flr">
+          		{{ $empdetails->linkspagelimit() }}
+        	</div>
+		</div>
+
 	<div class="container bbgrey pm0">
 		<ul class="list-group pm0 rowlist">
 			
