@@ -1,3 +1,64 @@
+
+var data = {};
+$(document).ready(function() {
+	$('.empRegister').on('click', function() {
+		resetErrors();
+		var url ='AddEditregvalidation';
+		$.each($('form input, form select, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+			}
+		}); 
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				if(resp == true){
+					swal({
+						title: msg_update,
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						closeOnConfirm: true,
+						closeOnCancel: true
+					},
+					function(isConfirm) {
+						if (isConfirm) {
+						   pageload();
+							$('#employee_reg').attr('action', 'employeeEditProcess'+'?menuid=menu_mail&time='+datetime);
+							$("#employee_reg").submit();
+						} 
+					});
+				} else {
+				  $.each(resp, function(i, v) {
+						// alert(i + " => " + v); // view in console for error messages
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						// If for different Messages
+						// Else for Directy Message by Name
+						if ($('input[name="' + i + '"]').hasClass('opd')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.doj_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('Surname')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.Surname_err').append(msg)
+						} else {
+							$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError').after(msg);
+						}
+					});
+				}
+			},
+			error: function(data) {
+				// alert(data.status);
+				// alert('there was a problem checking the fields');
+			}
+		});
+
+	});
+});
+
 /*
 フリタ処理
 */
@@ -89,8 +150,12 @@ function fnMultiSearch() {
 	}
 }
 
-function employeeview(){
-	alert("Under Construction");
+// Employee Single View
+function employeeview(id){
+	$('#empid').val(id);
+	// $('#title').val('2');
+	$('#employeefrm').attr('action', 'view?mainmenu='+mainmenu+'&time='+datetime);
+	$("#employeefrm").submit();
 }
 
 function cushistory(){
@@ -102,5 +167,39 @@ function workend(){
 }
 
 function gotoResume(){
+	alert("Under Construction");
+}
+
+// Bakc to Employee Index
+function fnredirectemployee(){
+	$('#employeeView').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+	$("#employeeView").submit();
+}
+
+// Edit Screen Show
+function employeEdit(type,id){
+	pageload();
+	$('#editflg').val(type);
+	$('#empid').val(id);
+	$('#editid').val(id);
+	$('#employeeView').attr('action', 'empAddEdit?mainmenu='+mainmenu+'&time='+datetime);
+	$("#employeeView").submit();
+}
+
+// Bakc to Employee View
+function fnbackEmpView(){
+	pageload();
+	$('#frmaddeditcancel').attr('action', 'view?mainmenu='+mainmenu+'&time='+datetime);
+	$("#frmaddeditcancel").submit();
+}
+
+// To reset Error
+function resetErrors() {
+	$('form input, form select, form radio, form textarea').css("border-color", "");
+	$('form input').removeClass('inputTxtError');
+	$('label.error').remove();
+}
+// Resign Employee
+function fnresignemployee() {
 	alert("Under Construction");
 }

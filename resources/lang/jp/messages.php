@@ -108,6 +108,15 @@ return [
 	'lbl_empdetails' => '社員詳細',
 	'lbl_streetaddress' => '住所',
 	'lbl_work_date' => '仕事終了日',
+	'lbl_staffusersurname' => 'ユーザ名（日英）：姓',
+	'lbl_staffusername' => 'ユーザ名（日英）：姓',
+    'lbl_nickname' => 'ニック名',
+	'lbl_resigneddate' => '退社社員 締め日',
+	'lbl_bankName' => '銀行名',
+	'lbl_branchName' => '支店名',
+	'lbl_accountno' => '口座番号',
+	'lbl_branchnumber' => '支店番号',
+	'lbl_resign' => '退社',
 
 	/* Start Setting Module */
 	'lbl_userdesignation' => 'ユーザー指定',

@@ -397,10 +397,10 @@ body {
 											{{ trans('messages.lbl_employee') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
-											$request->mainmenu == "menu_expenses") 
+											$request->mainmenu == "menu_nonemployee") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;
+										<a class="pageload" href="{{ url('NonEmployee/index?mainmenu=menu_nonemployee&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;
 											{{ trans('messages.lbl_nonEmployee') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
@@ -649,13 +649,13 @@ body {
 									{{ trans('messages.lbl_home') }}</a>
 								</div>
 							@endif
-							@if(isset($request->mainmenu) && $request->mainmenu == "menu_employee")
+							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_employee" || $request->mainmenu == "menu_nonemployee"))
 								<div id="emp_sub_1">
 									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_employee') }}</a>
 								</div>
 								<div id="emp_sub_2">
-									<a class="" href="#">
+									<a class="" href="{{ url('NonEmployee/index?mainmenu=menu_nonemployee&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_nonEmployee') }}</a>
 								</div>
 								<div id="emp_sub_3">
