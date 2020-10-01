@@ -36,10 +36,9 @@ $(document).ready(function() {
 						},
 						function(isConfirm) {
 							if (isConfirm) {
-								alert('Under Construction');
-							   /*pageload();
+							   pageload();
 								$('#mail_reg').attr('action', 'mailContentAddEditProcess'+'?menuid=menu_mail&time='+datetime);
-								$("#mail_reg").submit();*/
+								$("#mail_reg").submit();
 							} else {
 								 $("#addedit").attr("disabled", false);
 							}
@@ -55,10 +54,9 @@ $(document).ready(function() {
 						},
 						function(isConfirm) {
 							if (isConfirm) {
-							 /* pageload();
+							  pageload();
 								$('#mail_reg').attr('action', 'mailContentAddEditProcess'+'?menuid=menu_mail&time='+datetime);
-								$("#mail_reg").submit();*/
-								alert('Under Construction');
+								$("#mail_reg").submit();
 							} else {
 								$("#addedit").attr("disabled", false);
 							}

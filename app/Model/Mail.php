@@ -9,9 +9,9 @@ class Mail extends Model {
 
 	/**
 	*
-	* To view MailStatus index
-	* @author Mayandi
-	* Created At 26/08/2020
+	* To view MailContent index
+	* @author Sathish
+	* Created At 01/10/2020
 	* 
 	* 
 	*/
@@ -29,10 +29,17 @@ class Mail extends Model {
 									});
 						} 
 					$sql = $sql->orderBy('mailContent.mailId', 'ASC')
-					  	->paginate($request->plimit);
+					->paginate($request->plimit);
 		return $sql;
 	}
-	
+	/**
+	*
+	* To view MailContent View
+	* @author Sathish
+	* Created At 01/10/2020
+	* 
+	* 
+	*/
 	public static function getMailcontentview($request){
 		$sql= DB::table('mailContent')
 				->SELECT('mailContent.*','mailType.typeName')
@@ -41,7 +48,14 @@ class Mail extends Model {
 			  	->get();
 		return $sql;
 	}
-
+	/**
+	*
+	* To Fetch MailType 
+	* @author Sathish
+	* Created At 01/10/2020
+	* 
+	* 
+	*/
 	public static function fnfetchmailtypes($request) {
 		$sql= DB::table('mailType')
 						->SELECT('*')
@@ -49,7 +63,14 @@ class Mail extends Model {
 						->lists('typeName','id');
 			return $sql;
 	}
-
+	/**
+	*
+	* To Fetch After Update Record
+	* @author Sathish
+	* Created At 01/10/2020
+	* 
+	* 
+	*/
 	public static function fnfetchupdatedata($request){
 		$sql= DB::table('mailContent')
 						->SELECT('*')
@@ -57,12 +78,28 @@ class Mail extends Model {
 						->get();
 		return $sql;
 	}
+	/**
+	*
+	* To Update Delflg Value for use and non-use process
+	* @author Sathish
+	* Created At 01/10/2020
+	* 
+	* 
+	*/
 	public static function fnUpdateDelflg($request){
 		$sql = DB::TABLE('mailContent')
 				->WHERE('mailId', $request->mailid)
 				->UPDATE(['delFlg' => $request->delflg]);
 		return $sql;
 	}
+	/**
+	*
+	* To Fetch MaidId 
+	* @author Sathish
+	* Created At 01/10/2020
+	* 
+	* 
+	*/
 	public static function getcount(){
 		   $query = DB::table('mailContent')
 				->select('mailId',DB::RAW("IF(mailId=(SELECT mailId FROM mailContent
@@ -72,5 +109,85 @@ class Mail extends Model {
 				->get();
 				// ->toSql();dd($query);
 			  return $query;
+	}
+	/**
+	*
+	* To Insert MailType Process
+	* @author Sathish
+	* Created At 01/10/2020
+	* 
+	* 
+	*/
+	public static function fninsertnewmailtype($request) {
+			$name = Session::get('FirstName').' '.Session::get('LastName');
+			$insert=DB::table('mailType')
+			->insert(
+				[
+				'typeName' => $request->mailother,
+				'delFlg' => 0,
+				'createdDate' => date('Y-m-d'),
+				'updatedDate' => date('Y-m-d'),
+				'createdBy' => $name,
+				'updatedBy' => $name]
+		);
+			$id = DB::getPdo()->lastInsertId();;
+		return $id;
+	}
+	/**
+	*
+	* To Update MailContent Process
+	* @author Sathish
+	* Created At 01/10/2020
+	* 
+	* 
+	*/
+	public static function updMailcontent($request,$mailid,$mailTypeId) {
+		$name = Session::get('FirstName').' '.Session::get('LastName');
+			if ($request->mailtype == 999) {
+				$mailtype = $mailTypeId;
+			} else {
+				$mailtype = $request->mailtype;
+			}
+			$update=DB::table('mailContent')
+            ->where('mailId', $mailid)
+            ->update(
+            	['mailName' => $request->mailName,
+				'mailType' => $mailtype,
+				'content' => $request->content,
+				'subject' => $request->subject,
+				'defaultMail' => 0,
+				'delFlg' => 0,
+				'updatedDate' => date('Y-m-d'),
+				'updatedBy' => $name]);
+    	return $update;
+	}
+	/**
+	*
+	* To Insert MailContent Process
+	* @author Sathish
+	* Created At 01/10/2020
+	* 
+	* 
+	*/
+	public static function insMailcontent($request,$newmailId,$mailTypeId){
+		$name = Session::get('FirstName').' '.Session::get('LastName');
+		if ($request->mailtype == 999) {
+				$mailtype = $mailTypeId;
+			} else {
+				$mailtype = $request->mailtype;
+			}
+		$sql = 	DB::table('mailContent')
+					->insert(['mailId' => 	$newmailId,
+						'mailName' 		=> 	$request->mailName,
+						'mailType'		=> 	$mailtype,
+						'subject'		=> 	$request->subject,							
+						'content' 		=> 	$request->content,
+						'defaultMail' 	=>  0,
+						'createdBy'		=> 	$name,
+						'createdDate'	=> 	date('Y-m-d H:m:s'),
+						'updatedBy' 	=> 	$name,
+						'updatedDate' 	=> 	date('Y-m-d H:m:s'),
+						'delFlg' 		=>  0]);
+		return $sql;
 	}
 }

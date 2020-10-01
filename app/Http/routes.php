@@ -67,7 +67,11 @@ Route::group(['prefix'=>'Mail', 'middleware' => 'auth'], function() {
 	Route::any('mailregvalidation','MailController@mailregvalidation');
 	Route::any('mailContentFlg','MailController@mailContentFlg');
 });
-
+// MailSignature
+Route::group(['prefix'=>'MailSignature','middleware' => 'auth'], function() {
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('index', 'MailSignatureController@index');
+});
 // Setting
 Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('index', 'SettingController@index');
