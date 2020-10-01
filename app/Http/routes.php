@@ -65,6 +65,7 @@ Route::group(['prefix'=>'Mail', 'middleware' => 'auth'], function() {
 	Route::any('mailContentAddEdit','MailController@mailContentAddEdit');
 	Route::any('mailContentAddEditProcess','MailController@mailContentAddEditProcess');
 	Route::any('mailregvalidation','MailController@mailregvalidation');
+	Route::any('mailContentFlg','MailController@mailContentFlg');
 });
 
 // Setting

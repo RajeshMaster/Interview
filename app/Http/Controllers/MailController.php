@@ -76,7 +76,25 @@ class MailController extends Controller {
 	}
 
 	public function mailContentAddEditProcess(Request $request){
-		
+		/*$mailid = $request->mailid;
+		$newmailId = "MAIL0001";
+		$generateUserId = Mail::getcount();
+		if ($request->mailtype == 999) {
+			$insertnewmailtype=Mailcontent::fninsertnewmailtype($request);
+			$getmailtypeid=Mailcontent::fnfetchlastmailtypeid();
+		}
+		if(!empty($generateUserId)){
+			$newmailId = $generateUserId[0]->newmailId;
+		}
+		if(!empty($mailid)){
+			$mailContentedit = Mail::updMailcontent($request,$mailid);
+  			if ($mailContentedit) {
+				Session::flash('message', 'Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}
+  			Session::flash('mailid', $request->mailid);
+		}
+		print_r($generateUserId); exit();*/
 	}
 
 	public function mailregvalidation(Request $request) {
@@ -87,8 +105,6 @@ class MailController extends Controller {
 			'subject'=>'required',
 			'mailtype'=>'required',
 			'content'=>'required',
-			//'mailother' => 'required',
-			// 'mailsignature'=>'required',
 		);
 		if($request->mailtype == 999){
 			$common2 = array('mailother' => 'required');
@@ -102,5 +118,10 @@ class MailController extends Controller {
             $success = true;
             echo json_encode($success);
         }
+	}
+
+	public function mailContentFlg(Request $request) {
+		$contentdelflg = Mail::fnUpdateDelflg($request);
+		return Redirect::to('Mail/index?mainmenu=menu_mail&time='.date('YmdHis'));
 	}
 }

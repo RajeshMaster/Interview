@@ -181,3 +181,26 @@ function fnfilter(filterval){
 	$('#mailcontentindx').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime);
 	$("#mailcontentindx").submit();
 }
+
+// Change Use or Not Use Flag in Mail Content
+function fndelflg(flg,mailid) {
+	swal({
+		title: msg_flagchange,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+	},
+	function(isConfirm) {
+		if (isConfirm) {
+			pageload();
+			$('#delflg').val(flg);
+			$('#mailid').val(mailid);
+			$('#mailcontentindx').attr('action', '../Mail/mailContentFlg'+'?mainmenu=menu_mail&time='+datetime);
+			$("#mailcontentindx").submit();
+		} else {
+			return false;
+		}
+	});
+}

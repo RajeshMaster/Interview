@@ -57,4 +57,20 @@ class Mail extends Model {
 						->get();
 		return $sql;
 	}
+	public static function fnUpdateDelflg($request){
+		$sql = DB::TABLE('mailContent')
+				->WHERE('mailId', $request->mailid)
+				->UPDATE(['delFlg' => $request->delflg]);
+		return $sql;
+	}
+	public static function getcount(){
+		   $query = DB::table('mailContent')
+				->select('mailId',DB::RAW("IF(mailId=(SELECT mailId FROM mailContent
+						ORDER BY id DESC LIMIT 1), CONCAT('MAIL', LPAD(SUBSTRING(mailId,5, 8)+1, 4, 0)),mailId) AS newmailId"))
+				->orderby('mailId','DESC')
+				->limit(1)
+				->get();
+				// ->toSql();dd($query);
+			  return $query;
+	}
 }
