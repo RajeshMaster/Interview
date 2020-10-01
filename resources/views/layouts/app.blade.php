@@ -337,12 +337,12 @@ body {
 					<div class="navbar-brand" style="display: inline-block;">
 						@if(!empty(Auth::user()))
 							@if(Auth::user()->userType == 1)
-								<a class="" href="{{ url('House/index?mainmenu=menu_house&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">
+								<a class="" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">
 									<img class="vam pl25 mt20 box80per" 
 									src="{{ URL::asset('public/images/Microbit_logo.jpg') }}" />
 								</a>
 							@else
-								 <a class="" href="{{ url('House/index?mainmenu=menu_house&time='.date('Ymdhis')) }}">
+								 <a class="" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}">
 									<img class="vam mt20 box80per pl10" 
 										src="{{ URL::asset('public/images/Microbit_logo.jpg') }}" />
 								</a>
