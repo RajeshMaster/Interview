@@ -18,9 +18,17 @@ class Mail extends Model {
 	public static function getMailContent($request) {
 		$sql= DB::table('mailContent')
 						->SELECT('mailContent.*','mailType.typeName')
-						->leftjoin('mailType', 'mailContent.mailType', '=', 'mailType.id')
-						->WHERE('mailContent.delFlg', '=', 0)
-						->orderBy('mailContent.mailId', 'ASC')
+						->leftjoin('mailType', 'mailContent.mailType', '=', 'mailType.id');
+						if ($request->filvalhdn == 2) {
+							$sql = $sql->where(function($joincont) use ($request) {
+									$joincont->where('mailContent.delFlg', '=', '0');
+									});
+						}else if ($request->filvalhdn == 3) {
+						$sql = $sql->where(function($joincont) use ($request) {
+									$joincont->where('delflg', '=', '1');
+									});
+						} 
+					$sql = $sql->orderBy('mailContent.mailId', 'ASC')
 					  	->paginate($request->plimit);
 		return $sql;
 	}

@@ -175,3 +175,9 @@ function fngotoback() {
 		});
 	}
 }
+function fnfilter(filterval){
+	pageload();
+	$('#filvalhdn').val(filterval);
+	$('#mailcontentindx').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime);
+	$("#mailcontentindx").submit();
+}

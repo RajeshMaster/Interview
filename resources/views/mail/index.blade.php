@@ -16,11 +16,13 @@
 	var datetime = '@php echo date("Ymdhis") @endphp';
 	function pageClick(pageval) {
 		$('#page').val(pageval);
+		$('#mailcontentindx').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime);
 		$("#mailcontentindx").submit();
 	}
 	function pageLimitClick(pagelimitval) {
 		$('#page').val('');
 		$('#plimit').val(pagelimitval);
+		$('#mailcontentindx').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime);
 		$("#mailcontentindx").submit();
 	}
 </script>
@@ -33,7 +35,7 @@
 {{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
 {{ Form::hidden('mailid', $request->mailid, array('id' => 'mailid')) }}
 {{ Form::hidden('delflg', $request->delflg, array('id' => 'delflg')) }}
-{{ Form::hidden('mailcontentreg', '', array('id' => 'mailcontentreg')) }}
+{{ Form::hidden('filvalhdn', '', array('id' => 'filvalhdn')) }}
 {{ Form::hidden('editflg', '', array('id' => 'editflg')) }}
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
