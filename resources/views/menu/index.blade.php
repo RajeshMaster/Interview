@@ -27,16 +27,8 @@
 <div class="" id="main_contents">
 	<!-- article to select the main&sub menu -->
 	<article id="home" class="DEC_flex_wrapper" data-category="home home_sub_1">
-	<fieldset class="mt20">
-		<div class="header">
-			<img class="headerimg box40 imgviewheight" style="padding-left: 0px!important;" src="{{ URL::asset('public/images/menu.png')  }}">
-			<h2 class="h2cnt">
-				{{ trans('Menu')}}
-			</h2>
-		</div>
-	</fieldset>
 	{{ Form::open(array('name'=>'indexform', 'id'=>'indexform', 'url' => 'Setting/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'method' => 'POST')) }}
-		<fieldset class="mt10 mb20">
+		<fieldset class="mt15 mb20">
 			<div class="box100per pr10 pt35 pl10">
 			  	<div id="divPopup" class="color popup_position"></div>
 				<div class="box50per pull-left table">
