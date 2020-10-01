@@ -109,7 +109,16 @@ return [
 	'lbl_empdetails' => 'Employee Details',
 	'lbl_streetaddress' => 'Street Address',
 	'lbl_work_date' => 'Work End Date',
-	
+	'lbl_staffusersurname' => 'User Name (Jp & Eng): Surname',
+	'lbl_staffusername' => 'User Name (Jp & Eng): Name',
+    'lbl_nickname' => 'Nick Name',
+	'lbl_resigneddate' => 'Resigned Date',
+	'lbl_bankName' => 'Bank Name',
+	'lbl_branchName' => 'Branch Name',
+	'lbl_accountno' => 'Account No',
+	'lbl_branchnumber' => 'Branch Number',
+	'lbl_resign' => 'Resign',
+
 	/* Start Setting Module */
 	'lbl_userdesignation' => 'User Designation',
     'lbl_userdesignationinenglish' => 'Designation in English',

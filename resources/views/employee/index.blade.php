@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<?php use App\Http\Helpers;?>
 {{ HTML::style(asset('public/css/designtable.css')) }}
 {{ HTML::style(asset('public/css/footable.core.css')) }}
 {{ HTML::style(asset('public/css/tableviewlayout.css')) }}
@@ -25,7 +26,6 @@
 		$('#plimit').val(pagelimitval);
 		$("#employeefrm").submit();
 	}
-
 	function mulclick(divid){
 		if($('#'+divid).css('display') == 'block'){
 		document.getElementById(divid).style.display = 'none';
@@ -188,228 +188,191 @@
 		</div>
 	</div>
 
+	<div class="box100per tableShrink pt10 mnheight mb0">
+		<table class="table-striped table footable table-bordered mt10 mb10" >
+			<colgroup>
+				<col width="4%">
+				<col width="10%">
+				<col width="70%">
+			</colgroup>
+			<thead class="CMN_tbltheadcolor" >
+				<tr class="CMN_tbltheadcolor">
+					<th class="tac fs10 sno">
+						{{ trans('messages.lbl_sno') }}
+					</th>
+					<th class="tac fs10">
+						{{ trans('messages.lbl_empid') }}
+					</th>
+					<th data-hide="phone" class="tac fs10">
+						{{ trans('messages.lbl_empdetails') }}
+					</th>
+					<th data-hide="phone" class="tac fs10">
+						{{ trans('messages.lbl_doj') }}
+					</th>
+				</tr>
+			</thead>
+			<tbody class="tablealternateclr">
+				@if(count($empdetailsdet)!="")
+					@for ($i = 0; $i < count($empdetailsdet); $i++)
+					<tr>
+						<td class="text-center vam">
+							{{ ($empdetails->currentpage()-1) * $empdetails->perpage() + $i + 1 }}
+						</td>
+						<td>
+							<div class="tac">
+								<label>
+									<a href="javascript:employeeview('{{ $empdetailsdet[$i]['Emp_ID'] }}');" style="color:blue;" class="vam ml18">
+										{{ $empdetailsdet[$i]['Emp_ID'] }}
+									</a>
+								<br>
+								{{--*/ $file_exist = "../../uploads/profile/original/" . $empdetailsdet[$i]['Picture']; /*--}}
+								{{--*/ $filename = $disPath . $empdetailsdet[$i]['Picture']; /*--}}
+								@if (!file_exists($filename))
+									{{--*/ $empdetailsdet[$i]['Picture'] = ""; /*--}}
+								@endif
 
-		<!-- <div class="dispinline pull-right input-group mt4" style="margin-bottom: 1%;">
-			<button class="btn btn-info btn-default dispinline mr1" type="button"
-				onclick="fnSingleSearch();" style="height:35px;" title="Search">
-			<span class="glyphicon glyphicon-search"></span>
-			</button>
-		</div>
-		<div class="pull-right input-group mt5" style = "border-radius: 4px;" 
-				onKeyPress="return checkSubmitsingle(event)">
-			{{ Form::text('singlesearch',null, array('id'=>'singlesearch', 
-										'name' => 'singlesearch',
-										'placeholder' =>trans('messages.lbl_placeholdermail'),
-										'class'=>'form-control txt dispinline pull-right   singlesearch',
-										'style' =>'width:100%;border-radius: 4px;position: static !important;'
-										)) }}
-		</div> -->
-		
-		<div class="pull-left input-group mt6 filtermail">
-	
-		</div>
-
-
-
-		<div class="box100per tableShrink pt10 mnheight mb0">
-			<table class="table-striped table footable table-bordered mt10 mb10" >
-				<colgroup>
-					<col width="4%">
-					<col width="10%">
-					<col width="70%">
-				</colgroup>
-				<thead class="CMN_tbltheadcolor" >
-					<tr class="CMN_tbltheadcolor">
-						<th class="tac fs10 sno">
-							{{ trans('messages.lbl_sno') }}
-						</th>
-						<th class="tac fs10">
-							{{ trans('messages.lbl_empid') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_empdetails') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_doj') }}
-						</th>
-<!-- 						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_mailsendby') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_senddatetime') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-						</th> -->
-					</tr>
-				</thead>
-				<tbody class="tablealternateclr">
-					@if(count($empdetailsdet)!="")
-						@for ($i = 0; $i < count($empdetailsdet); $i++)
-						<tr>
-							<td class="text-center vam">
-								{{ ($empdetails->currentpage()-1) * $empdetails->perpage() + $i + 1 }}
-							</td>
-							<td>
-								<div class="tac">
-									<label>
-										<a href="javascript:employeeview();" style="color:blue;" class="vam ml18">
-											{{ $empdetailsdet[$i]['Emp_ID'] }}
-										</a>
-									<br>
-									{{--*/ $file_exist = "../../uploads/profile/original/" . $empdetailsdet[$i]['Picture']; /*--}}
-									{{--*/ $filename = $disPath . $empdetailsdet[$i]['Picture']; /*--}}
-									@if (!file_exists($filename))
-										{{--*/ $empdetailsdet[$i]['Picture'] = ""; /*--}}
-									@endif
-
-									@if($empdetailsdet[$i]['Picture'] != "")
-										{{--*/ $src = $file_exist; /*--}}
+								@if($empdetailsdet[$i]['Picture'] != "")
+									{{--*/ $src = $file_exist; /*--}}
+								@else
+									@if($empdetailsdet[$i]['Gender'] == 1)
+										{{--*/ $src = $noimage . '/no-prof-male.JPG'; /*--}}
 									@else
-										@if($empdetailsdet[$i]['Gender'] == 1)
-											{{--*/ $src = $noimage . '/no-prof-male.JPG'; /*--}}
-										@else
-											{{--*/ $src = $noimage . '/no-prof-female.jpg'; /*--}}
-										@endif
+										{{--*/ $src = $noimage . '/no-prof-female.jpg'; /*--}}
 									@endif
-									<!-- <div style="border: 2px solid red;text-align: center;"> -->
-										<img class="pull-left box70 ml20 tac" src="{{ $src }}" width="90" height = "70"></img>
-									<!-- </div> -->
-									</label>
-								</div>
-							</td>
+								@endif
+								<!-- <div style="border: 2px solid red;text-align: center;"> -->
+									<img class="pull-left box70 ml20 tac" src="{{ $src }}" width="90" height = "70"></img>
+								<!-- </div> -->
+								</label>
+							</div>
+						</td>
 
-							<td>
-								<div class="ml5">
-									<div>　
-										<span class="fll">
-											{{ $empdetailsdet[$i]['FirstName'] }}
-										</span>
-										<span class="fwb" style="margin-left: -10px">
-											{{ $empdetailsdet[$i]['LastName'] }}
-										</span>
-										<span class="">
-											@if($empdetailsdet[$i]['nickname'] != "" )
-												({{ $empdetailsdet[$i]['nickname'] }} )
-											@endif
-										</span>
-										<span class="" style="float: right">
-
-										</span>
-										@if($empdetailsdet[$i]['KanaFirstName'] != "" && $empdetailsdet[$i]['KanaLastName'] != "")
-											<div>　
-												<span class="fll">
-													{{ $empdetailsdet[$i]['KanaFirstName'] }}
-												</span>
-												<span class="fwb" style="margin-left: -10px">
-													{{ $empdetailsdet[$i]['KanaLastName'] }}
-												</span>
-											</div>
-										@endif
-
-										<div>
-											<span class="f28 clr_blue"> 
-												{{ trans('messages.lbl_dob') }} :
-											</span>
-											<span class="f12"> 
-
-											</span>
-											<span class="f28 clr_blue">
-												{{ trans('messages.lbl_mobileno') }} :
-											</span>
-											<span class="f12"> 
-												{{ (!empty($empdetailsdet[$i]['Mobile1']) ?  $empdetailsdet[$i]['Mobile1'] : "Nill")  }}
-											</span>
-											<span class="f18 clr_blue">
-												{{ trans('messages.lbl_email') }} :
-											</span>
-											<span class="f12"> 
-												{{ $empdetailsdet[$i]['Emailpersonal'] }}
-											</span>
-										</div>
-
-										<div>
-											<span class="clr_blue">{{ trans('messages.lbl_streetaddress') }}</span> :
-											<span class="f12"> 
-												{{ (!empty($empdetailsdet[$i]['Address1']) ?  $empdetailsdet[$i]['Address1'] : "Nill")  }}
-											</span>
-										</div>
-
-										<div>
-											<span class="clr_blue">{{ trans('messages.lbl_customer') }}</span> :
-											<span class="f12"> 
-											{{ (!empty($empdetailsdet[$i]['customer_name']) ?  $empdetailsdet[$i]['customer_name'] : "Nill")  }}
-											</span>
-										</div>
-
-										<div class="mb4 CMN_display_block mt4">
-											<div class="CMN_display_block">
-												<a style="color:blue;" href="javascript:cushistory();">{{ trans('messages.lbl_customer') }}</a>
-											</div>
-											&nbsp;|
-											<div class="CMN_display_block">
-													<a style="color:blue;" href="javascript:workend();">{{ trans('messages.lbl_work_date') }}</a>&nbsp;|
-											</div>
-
-											<div class="CMN_display_block">
-												<a style="color:blue;" href="javascript:gotoResume();">Resume</a>&nbsp;
-											</div>
-										</div>
-
-									</div>
-								</div>
-							</td>
-
-							<td class="tac">
-								<div class="45px">
-									<span>{{ $empdetailsdet[$i]['DOJ'] }}</span>
-								</div>
-								<div class="mt55">
-									<span class="clr_blue">
-										@if($empdetailsdet[$i]['experience'] > 1 )
-											{{ $empdetailsdet[$i]['experience'] }} Yrs
-										@elseif($empdetailsdet[$i]['experience'] <= 1 )
-											{{ $empdetailsdet[$i]['experience'] }} Yr
-										@else
-											{{ 0 }} Yr
-										@endif		
+						<td>
+							<div class="ml5">
+								<div>　
+									<span class="fll">
+										{{ $empdetailsdet[$i]['FirstName'] }}
 									</span>
+									<span class="fwb" style="margin-left: -10px">
+										{{ $empdetailsdet[$i]['LastName'] }}
+									</span>
+									<span class="">
+										@if($empdetailsdet[$i]['nickname'] != "" )
+											({{ $empdetailsdet[$i]['nickname'] }} )
+										@endif
+									</span>
+									<span class="" style="float: right">
+
+									</span>
+									@if($empdetailsdet[$i]['KanaFirstName'] != "" && $empdetailsdet[$i]['KanaLastName'] != "")
+										<div>　
+											<span class="fll">
+												{{ $empdetailsdet[$i]['KanaFirstName'] }}
+											</span>
+											<span class="fwb" style="margin-left: -10px">
+												{{ $empdetailsdet[$i]['KanaLastName'] }}
+											</span>
+										</div>
+									@endif
+
+									<div>
+										<span class="f28 clr_blue"> 
+											{{ trans('messages.lbl_dob') }} :
+										</span>
+										<span class="f12"> 
+											{{ $empdetailsdet[$i]['DOB'] }} <b>
+											@if(!empty($empdetailsdet[$i]['DOB']))({{ birthday($empdetailsdet[$i]['DOB']) }})@endif</b>
+										</span>
+										<span class="f28 clr_blue">
+											{{ trans('messages.lbl_mobileno') }} :
+										</span>
+										<span class="f12"> 
+											{{ (!empty($empdetailsdet[$i]['Mobile1']) ?  $empdetailsdet[$i]['Mobile1'] : "Nill")  }}
+										</span>
+										<span class="f18 clr_blue">
+											{{ trans('messages.lbl_email') }} :
+										</span>
+										<span class="f12"> 
+											{{ $empdetailsdet[$i]['Emailpersonal'] }}
+										</span>
+									</div>
+
+									<div>
+										<span class="clr_blue">{{ trans('messages.lbl_streetaddress') }}</span> :
+										<span class="f12"> 
+											{{ (!empty($empdetailsdet[$i]['Address1']) ?  $empdetailsdet[$i]['Address1'] : "Nill")  }}
+										</span>
+									</div>
+
+									<div>
+										<span class="clr_blue">{{ trans('messages.lbl_customer') }}</span> :
+										<span class="f12"> 
+										{{ (!empty($empdetailsdet[$i]['customer_name']) ?  $empdetailsdet[$i]['customer_name'] : "Nill")  }}
+										</span>
+									</div>
+
+									<div class="mb4 CMN_display_block mt4">
+										<div class="CMN_display_block">
+											<a style="color:blue;" href="javascript:cushistory();">{{ trans('messages.lbl_customer') }}</a>
+										</div>
+										&nbsp;|
+										<div class="CMN_display_block">
+												<a style="color:blue;" href="javascript:workend();">{{ trans('messages.lbl_work_date') }}</a>&nbsp;|
+										</div>
+
+										<div class="CMN_display_block">
+											<a style="color:blue;" href="javascript:gotoResume();">Resume</a>&nbsp;
+										</div>
+									</div>
+
 								</div>
-							</td>
-						</tr>
-						@endfor
-					@else
-					<tr class="nodata">
-						<th class="text-center red nodatades" colspan="2">
-							{{ trans('messages.lbl_nodatafound') }}
-						</th>
-					</tr>
-					<tr class="nodata">
-						<td class="text-center red nodatades1" colspan="7">
-							{{ trans('messages.lbl_nodatafound') }}
+							</div>
+						</td>
+
+						<td class="tac">
+							<div class="45px">
+								<span>{{ $empdetailsdet[$i]['DOJ'] }}</span>
+							</div>
+							<div class="mt55">
+								<span class="clr_blue">
+									@if($empdetailsdet[$i]['experience'] > 1 )
+										{{ $empdetailsdet[$i]['experience'] }} Yrs
+									@elseif($empdetailsdet[$i]['experience'] <= 1 )
+										{{ $empdetailsdet[$i]['experience'] }} Yr
+									@else
+										{{ 0 }} Yr
+									@endif		
+								</span>
+							</div>
 						</td>
 					</tr>
-					@endif
-				</tbody>
-			</table>
+					@endfor
+				@else
+				<tr class="nodata">
+					<th class="text-center red nodatades" colspan="2">
+						{{ trans('messages.lbl_nodatafound') }}
+					</th>
+				</tr>
+				<tr class="nodata">
+					<td class="text-center red nodatades1" colspan="7">
+						{{ trans('messages.lbl_nodatafound') }}
+					</td>
+				</tr>
+				@endif
+			</tbody>
+		</table>
+	</div>
+
+	<div class="text-center">
+		@if(!empty($empdetails->total()))
+			<span class="pull-left mt24">
+				{{ $empdetails->firstItem() }} ~ {{ $empdetails->lastItem() }} / {{ $empdetails->total() }}
+			</span>
+		@endif 
+		{{ $empdetails->links() }}
+		<div class="CMN_display_block flr">
+				{{ $empdetails->linkspagelimit() }}
 		</div>
-
-		<div class="text-center">
-
-			@if(!empty($empdetails->total()))
-				<span class="pull-left mt24">
-					{{ $empdetails->firstItem() }} ~ {{ $empdetails->lastItem() }} / {{ $empdetails->total() }}
-				</span>
-			@endif 
-			{{ $empdetails->links() }}
-			<div class="CMN_display_block flr">
-          		{{ $empdetails->linkspagelimit() }}
-        	</div>
-		</div>
-
-	<div class="container bbgrey pm0">
-		<ul class="list-group pm0 rowlist">
-			
-		</ul>
 	</div>
 
 	{{ Form::close() }}

@@ -55,6 +55,16 @@ Route::group(['prefix'=>'Auth', 'middleware' => 'auth'], function() {
 Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'EmployeeController@index');
+	Route::any('view', 'EmployeeController@view');
+	Route::any('empAddEdit', 'EmployeeController@empAddEdit');
+	Route::any('AddEditregvalidation','EmployeeController@AddEditregvalidation');
+	Route::any('employeeEditProcess','EmployeeController@employeeEditProcess');
+});
+
+// Non Employee - ADDED By Rajesh --2020/10/01
+Route::group(['prefix'=>'NonEmployee', 'middleware' => 'auth'], function() {
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('index', 'NonEmployeeController@index');
 });
 
 // Mail - ADDED By Sathish --2020/09/30

@@ -7,7 +7,7 @@ use Auth;
 use Session;
 use Carbon\Carbon ;
 
-class Employee extends Model
+class NonEmployee extends Model
 {
 
 	/**  
@@ -16,7 +16,7 @@ class Employee extends Model
 	*  @param $request,$resignid,title
 	*  Created At 2020/09/30
 	**/
-	public static function fnGetEmployeeDetails($request, $resignid, $title){
+	public static function fnGetNonEmployeeDetails($request, $resignid, $title){
 		$db = DB::connection('mysql_invoice');
 		$query = $db->table('emp_mstemployees')
 					->select('*')
@@ -94,86 +94,6 @@ class Employee extends Model
 		$query = $db->SELECT($sql);
 		return $query;
 	}
-
-	/**  
-	*  Get Resume Details
-	*  @author Rajesh 
-	*  @param $request
-	*  Created At 2020/10/01
-	**/
-	public static function fnGetResume($empId){
-		$db = DB::connection('mysql');
-		$query = $db->table('mst_resume')
-					->select('*')
-					->where([['empId', '=', $empId]])
-					->get();
-		return $query;
-	}
-
-	/**  
-	*  Get Resume Details
-	*  @author Rajesh 
-	*  @param $request
-	*  Created At 2020/10/01
-	**/
-	public static function fnGetClientTemp($empId){
-		$db = DB::connection('mysql');
-		$query = $db->table('inv_clientemp_dtl')
-					->select('*')
-					->where([['emp_id', '=', $empId]])
-					->get();
-		return $query;
-	}
-
-	/**  
-	*  Get Employee Details for Single year
-	*  @author Rajesh 
-	*  @param $request
-	*  Created At 2020/10/01
-	**/
-	public static function fnGetstaffDetail($request){
-		if (!empty($request->empid)) {
-		$db = DB::connection('mysql_invoice');
-		$query = $db->table('emp_mstemployees')
-					->select('*')
-					->leftJoin('mstaddress AS mst', 'mst.id', '=', 'emp_mstemployees.Address1')
-					->where([['Emp_ID', '=', $request->empid]])
-					->get();
-		} else {
-			$query = "";
-		}
-		return $query;
-	}
-
-	/**  
-	*  Employee update process
-	*  @author Rajesh 
-	*  @param $startDT,$endDT
-	*  Created At 2020/10/1
-	**/
-	public static function updateprocess($request) {
-		$name = Session::get('FirstName').' '.Session::get('LastName');
-		$db = DB::connection('mysql_invoice');
-		$update = $db->table('emp_mstemployees')
-		->where('Emp_ID', $request->empid)
-		->update(
-			[
-			'DOJ' => $request->OpenDate,
-			'FirstName' => $request->Surname,
-			'LastName' => $request->Name,
-			'nickname' => $request->nickName,
-			'Gender' => $request->Gender,
-			'DOB' => $request->DateofBirth,
-			'Mobile1' => $request->MobileNo,
-			'Emailpersonal' => $request->Email,
-			'Address1' => $request->StreetAddress,
-			'Up_DT' => date('Y-m-d'),
-			'Up_TM' => date('h:i:s'),
-			'UpdatedBy' => $name]
-		);
-		return $update;
-	}
-
 
 	/**  
 	*  Year counnt Between dates Details(Common Function)

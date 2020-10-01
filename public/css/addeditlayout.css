@@ -79,6 +79,11 @@
 	.gender1{
 		font-size: 70%;
 	}
+
+	.mlength {
+	    width: 81%!important;
+	    font-size: 73%;
+	}
 }
 @media all and (max-width: 330px) {
 	.gender1{
@@ -102,7 +107,11 @@
 		width:80%!important;
 	}
 	.dob{
-		width: 50%!important;
+		width: 40%!important;
+	}
+	.mlength {
+    	width: 40%!important;
 	}
 }
+
 /*End Mobile layout Addedit Page design User register*/
