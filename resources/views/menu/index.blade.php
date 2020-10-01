@@ -60,10 +60,10 @@
 								<a name="family" style="color:#33AFFF !important;" id="family" href="">{{ trans('messages.lbl_mailstatus') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
-								<a name="family" style="color:#33AFFF !important;" id="family" href="">{{ trans('messages.lbl_mailcontent') }}</a>
+								<a name="family" style="color:#33AFFF !important;" id="family" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">{{ trans('messages.lbl_mailcontent') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
-								<a name="family" style="color:#33AFFF !important;" id="family" href="">{{ trans('messages.lbl_mailsignature') }}</a>
+								<a name="family" style="color:#33AFFF !important;" id="family" href="{{ url('MailSignature/index?mainmenu=menu_mailsignature&time='.date('Ymdhis')) }}">{{ trans('messages.lbl_mailsignature') }}</a>
 							</span>
 						</div>
 					</div>

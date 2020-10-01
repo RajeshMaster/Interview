@@ -36,10 +36,9 @@ $(document).ready(function() {
 						},
 						function(isConfirm) {
 							if (isConfirm) {
-								alert('Under Construction');
-							   /*pageload();
+							   pageload();
 								$('#mail_reg').attr('action', 'mailContentAddEditProcess'+'?menuid=menu_mail&time='+datetime);
-								$("#mail_reg").submit();*/
+								$("#mail_reg").submit();
 							} else {
 								 $("#addedit").attr("disabled", false);
 							}
@@ -55,10 +54,9 @@ $(document).ready(function() {
 						},
 						function(isConfirm) {
 							if (isConfirm) {
-							 /* pageload();
+							  pageload();
 								$('#mail_reg').attr('action', 'mailContentAddEditProcess'+'?menuid=menu_mail&time='+datetime);
-								$("#mail_reg").submit();*/
-								alert('Under Construction');
+								$("#mail_reg").submit();
 							} else {
 								$("#addedit").attr("disabled", false);
 							}
@@ -180,4 +178,27 @@ function fnfilter(filterval){
 	$('#filvalhdn').val(filterval);
 	$('#mailcontentindx').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime);
 	$("#mailcontentindx").submit();
+}
+
+// Change Use or Not Use Flag in Mail Content
+function fndelflg(flg,mailid) {
+	swal({
+		title: msg_flagchange,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+	},
+	function(isConfirm) {
+		if (isConfirm) {
+			pageload();
+			$('#delflg').val(flg);
+			$('#mailid').val(mailid);
+			$('#mailcontentindx').attr('action', '../Mail/mailContentFlg'+'?mainmenu=menu_mail&time='+datetime);
+			$("#mailcontentindx").submit();
+		} else {
+			return false;
+		}
+	});
 }

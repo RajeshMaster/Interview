@@ -67,7 +67,7 @@
 					{{ Form::label('mailsub', trans('messages.lbl_subject'), array('class' => 'mailsub clr_blue')) }}
 				</div>
 				<div class="col-xs-8 mw clr_black">
-					{{ (!empty($getmaildetails[0]->subject) ? $getmaildetails[0]->subject : "Nill")}}
+					{{ (!empty($mailContentView[0]->subject) ? $mailContentView[0]->subject : "Nill")}}
 				</div>
 			</div>
 			<div class="col-xs-9 mt10">

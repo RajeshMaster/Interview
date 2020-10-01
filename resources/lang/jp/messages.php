@@ -41,6 +41,7 @@ return [
 	'lbl_mailstatus' => 'メールステータス',
 	'lbl_mailcontent' => 'メール内容',
 	'lbl_mailsignature' => 'メール 署名',
+	'lbl_mailsignatureid' => '署名ID',
 	'lbl_header' => 'ヘッダー',
 	'lbl_content ' => '内容',
 	'lbl_placeholdermail' => 'メールId(OR)メール名',
@@ -155,4 +156,8 @@ return [
 	'lbl_groupMembers' =>'Group Member',
 	'lbl_grouplist' =>'Group List',
 	/* End Setting Module */
+	/* User */
+	'lbl_userid' => 'ユーザーID',
+	'lbl_username' => 'ユーザー名',
+	/* End User */
 ];

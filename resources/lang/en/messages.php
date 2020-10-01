@@ -41,6 +41,7 @@ return [
 	'lbl_mailstatus' => 'Mail Status',
 	'lbl_mailcontent' => 'Mail Content',
 	'lbl_mailsignature' => 'Mail Signature',
+	'lbl_mailsignatureid' => 'Signature ID',
 	'lbl_header' => 'Header',
 	'lbl_content' => 'Content',
 	'lbl_placeholdermail' => 'MailId(OR)MailName',
@@ -155,5 +156,8 @@ return [
 	'lbl_groupMembers' =>'Group Member',
 	'lbl_grouplist' =>'Group List',
 	/* End Setting Module */
-
+	/* User */
+	'lbl_userid' => 'User ID',
+	'lbl_username' => 'User Name',
+	/* End User */
 ];

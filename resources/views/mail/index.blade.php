@@ -56,21 +56,21 @@
 		<div class="pull-left input-group mt6 filtermail">
 			{{ Form::button(
 							trans('messages.lbl_all'),
-							array('class'=>'pageload btn btn-link filmail'.$disabledall,
+							array('class'=>'pageload btn btn-link filmail '.$disabledall,
 							'type'=>'button',
 							'onclick' => 'javascript:return fnfilter(1)')) 
 			}}
 			<span class = "filmail">|</span>
 			{{ Form::button(
 							trans('messages.lbl_use'),
-							array('class'=>'pageload btn btn-link filmail'.$disableduse,
+							array('class'=>'pageload btn btn-link filmail '.$disableduse,
 							'type'=>'button',
 							'onclick' => 'javascript:return fnfilter(2)')) 
 			}}
 			<span class = "filmail">|</span>
 			{{ Form::button(
 							trans('messages.lbl_notuse'),
-							array('class'=>'pageload btn btn-link filmail'.$disablednotuse,
+							array('class'=>'pageload btn btn-link filmail '.$disablednotuse,
 							'type'=>'button',
 							'onclick' => 'javascript:return fnfilter(3)')) 
 			}}

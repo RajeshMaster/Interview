@@ -19,10 +19,10 @@ class MailController extends Controller {
 
 	/**
 	*
-	* To view Mail Status Index Page
-	* @author Sastha
+	* To view MailContent Index Page
+	* @author Sathish
 	* @return object to particular view page
-	* Created At 26/08/2020
+	* Created At 01/10/2020
 	*
 	*/
 	public function index(Request $request) {
@@ -54,12 +54,33 @@ class MailController extends Controller {
 											'disablednotuse',
 											'contenttotal'));
 	}
+	/**
+	*
+	* To view MailContent View Page
+	* @author Sathish
+	* @return object to particular view page
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailContentView(Request $request){
+		if(Session::get('mailid') != ""){
+			$request->mailid = Session::get('mailid');
+		}
+		if(!isset($request->mailid)){
+			return Redirect::to('Mail/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
 		$mailContentView = Mail::getMailcontentview($request);
 		return view('mail.mailcontentview' ,compact('request',
 											'mailContentView'
 											));
 	}
+	/**
+	*
+	* To view MailContent AddEdit page
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailContentAddEdit(Request $request){
 		if (!isset($request->editflg)) {
 			return Redirect::to('Mail/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
@@ -74,11 +95,48 @@ class MailController extends Controller {
 											'getdataforupdate' => $getdataforupdate,
 											'request' => $request]);
 	}
-
+	/**
+	*
+	* To view MailContent AddEdit Process
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailContentAddEditProcess(Request $request){
-		
+		$mailid = $request->mailid;
+		$newmailId = "MAIL0001";
+		$generateUserId = Mail::getcount();
+		$getmailtypeid = "";
+		if ($request->mailtype == 999) {
+			$getmailtypeid=Mail::fninsertnewmailtype($request);
+		}
+		if(!empty($generateUserId)){
+			$newmailId = $generateUserId[0]->newmailId;
+		}
+		if(!empty($mailid)){
+			$mailContentedit = Mail::updMailcontent($request,$mailid,$getmailtypeid);
+  			if ($mailContentedit) {
+				Session::flash('message', 'Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}
+  			Session::flash('mailid', $request->mailid);
+		}else{
+			$mailContentreg = Mail::insMailcontent($request,$newmailId,$getmailtypeid);
+			if ($mailContentreg) {
+				Session::flash('message', 'Registered Successfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}
+			Session::flash('mailid', $newmailId);
+		}
+		return Redirect::to('Mail/mailContentView?mainmenu=menu_mail&time='.date('YmdHis'));
 	}
-
+	/**
+	*
+	* To view MailContent AddEdit Validation Process
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailregvalidation(Request $request) {
 		$commonrules=array();
 		$common2 = array();
@@ -87,8 +145,6 @@ class MailController extends Controller {
 			'subject'=>'required',
 			'mailtype'=>'required',
 			'content'=>'required',
-			//'mailother' => 'required',
-			// 'mailsignature'=>'required',
 		);
 		if($request->mailtype == 999){
 			$common2 = array('mailother' => 'required');
@@ -102,5 +158,16 @@ class MailController extends Controller {
             $success = true;
             echo json_encode($success);
         }
+	}
+	/**
+	*
+	* To view MailContent update Delflg
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
+	public function mailContentFlg(Request $request) {
+		$contentdelflg = Mail::fnUpdateDelflg($request);
+		return Redirect::to('Mail/index?mainmenu=menu_mail&time='.date('YmdHis'));
 	}
 }
