@@ -81,7 +81,8 @@ class MailController extends Controller {
 
 	public function mailregvalidation(Request $request) {
 		$commonrules=array();
-		$commonrules = array(
+		$common2 = array();
+		$common1 = array(
 			'mailName' => 'required',
 			'subject'=>'required',
 			'mailtype'=>'required',
@@ -89,7 +90,10 @@ class MailController extends Controller {
 			//'mailother' => 'required',
 			// 'mailsignature'=>'required',
 		);
-		
+		if($request->mailtype == 999){
+			$common2 = array('mailother' => 'required');
+		}
+		$commonrules = $common1 + $common2;
 		$rules = $commonrules;
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {

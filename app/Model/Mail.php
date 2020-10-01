@@ -25,7 +25,7 @@ class Mail extends Model {
 									});
 						}else if ($request->filvalhdn == 3) {
 						$sql = $sql->where(function($joincont) use ($request) {
-									$joincont->where('delflg', '=', '1');
+									$joincont->where('mailContent.delFlg', '=', '1');
 									});
 						} 
 					$sql = $sql->orderBy('mailContent.mailId', 'ASC')
