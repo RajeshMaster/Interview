@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>{{ trans('messages.lbl_assetsys') }}</title>
+	<title>{{ trans('messages.lbl_interviewsys') }}</title>
 	<link rel="icon" type="image/gif/png" href="{{ URL::asset('public/images/MB2.png') }}">
 	{{ HTML::script(asset('public/js/jquery.min.js')) }}
 	{{ HTML::script(asset('public/js/jquery.plugin.js')) }}
@@ -365,7 +365,7 @@ body {
 						<ul class="nav sidebar-nav">
 							<li class="sidebar-brand">
 								<a href="#" style="font-size: 25px;text-decoration: none !important;">
-								  {{ trans('messages.lbl_assets') }}
+								  {{ trans('messages.lbl_interview') }}
 								</a>
 							</li>
 							<li @if(isset($request->mainmenu) && 
@@ -643,6 +643,12 @@ body {
 							@endif
 						</div>
 						<div id="AssetDiv" class="CMN_sub_gmenu">
+							@if(isset($request->mainmenu) && $request->mainmenu == "home")
+								<div id="home_sub_1">
+									<a class="pageload" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}">
+									{{ trans('messages.lbl_home') }}</a>
+								</div>
+							@endif
 							@if(isset($request->mainmenu) && $request->mainmenu == "menu_employee")
 								<div id="emp_sub_1">
 									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}">

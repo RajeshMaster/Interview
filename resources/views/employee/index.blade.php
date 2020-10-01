@@ -99,15 +99,15 @@
 
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
-			<a class="btn btn-linkemp {{ $disabledEmp }}" href="javascript:selectActive(0,2);" style="color:blue;" class="pl10 pb5">
+			<a class="btn btn-linkemp {{ $disabledEmp }}" href="javascript:selectActive(0,2);" class="pl10 pb5">
 					{{ trans('messages.lbl_employee') }}
 			</a>
 			<span>|</span>
-			<a class="btn btn-linkemp {{ $disabledNotEmp }}" href="javascript:selectActive(0,3);" style="color:blue;" class="pl10 pb5">
+			<a class="btn btn-linkemp {{ $disabledNotEmp }}" href="javascript:selectActive(0,3);" class="pl10 pb5">
 				{{ trans('messages.lbl_nonMB') }}
 			</a>
 			<span>|</span>
-			<a class="btn btn-linkemp {{ $disabledRes }}" href="javascript:selectActive(1,3);" style="color:blue;" class="pl10 pb5">
+			<a class="btn btn-linkemp {{ $disabledRes }}" href="javascript:selectActive(1,3);" class="pl10 pb5">
 				{{ trans('messages.lbl_resigned') }}
 			</a>
 		</div>

@@ -1,8 +1,8 @@
 <?php
 return [
 	/* Common Module  */
-	'lbl_assets' => 'Assets',
-	'lbl_assetsys' => 'Interview Management System',
+	'lbl_interview' => 'Interview',
+	'lbl_interviewsys' => 'Interview Management System',
 	'lbl_assetstypes' => 'Assets Types',
 	'lbl_login' => 'Login',
 	'lbl_logout' => 'Logout',
