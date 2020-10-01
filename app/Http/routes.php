@@ -76,16 +76,17 @@ Route::group(['prefix'=>'MailSignature','middleware' => 'auth'], function() {
 Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('index', 'SettingController@index');
 	Route::get('changelanguage', 'AjaxController@index');
-	Route::get('singletextpopup', 'SettingController@singletextpopup');
+	Route::any('Already_Exists', 'SettingController@Already_Exists');
+	Route::any('singletextpopup', 'SettingController@singletextpopup');
 	Route::any('SingleFieldaddedit', 'SettingController@SingleFieldaddedit');
-	Route::get('twotextpopup', 'SettingController@twotextpopup');
-	Route::get('twoFieldaddedit', 'SettingController@twoFieldaddedit');
-	Route::get('selectthreefieldDatasforbank', 'SettingController@selectthreefieldDatas');
-	Route::get('selectthreefieldDatas', 'SettingController@selectthreefieldDatas');
-	Route::get('threeFieldaddeditforbank', 'SettingController@threeFieldaddeditforbank');
-	Route::get('threeFieldaddedit', 'SettingController@threeFieldaddedit');
-	Route::any('uploadpopup', 'SettingController@uploadpopup');
+	Route::any('twotextpopup', 'SettingController@twotextpopup');
+	Route::any('twoFieldaddedit', 'SettingController@twoFieldaddedit');
+	Route::any('commitProcess', 'SettingController@commitProcess');
 	Route::any('useNotuse', 'SettingController@useNotuse');
+	Route::any('grouppopup', 'SettingController@grouppopup');
+
+
+	Route::any('uploadpopup', 'SettingController@uploadpopup');
 	Route::any('settingpopupupload', 'SettingController@settingpopupupload');
 	Route::any('grouppopup', 'SettingController@grouppopup');
 	Route::any('groupaddprocess', 'SettingController@groupaddprocess');
