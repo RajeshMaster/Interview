@@ -49,3 +49,9 @@ function fnback() {
 	$('#mailSignatureView').attr('action', '../MailSignature/index'+'?mainmenu=menu_mail&time='+datetime);
 	$("#mailSignatureView").submit();
 }
+function gotoeditpage(){
+	alert('Under Construction');
+}
+function fngotoregister(){
+	alert('Under Construction');
+}
