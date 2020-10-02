@@ -38,4 +38,67 @@ class MailSignature extends Model {
 					  	->get();
 		return $query;
 	}
+	public static function fnGetUserDetails($request) {
+		$query= DB::table('dev_mstuser')
+					->SELECT('usercode','userid','username','givenname','nickName')
+					->WHERE('delflg', '=', 0)
+					->orderBy('usercode', 'ASC')
+				  	->get();
+		return $query;
+	}
+	public static function fnFetchMailSigdata($request){
+		$query= DB::table('mailsignature')
+						->SELECT('user_ID',
+								'content')
+						->WHERE('user_ID', '=', $request->userid)
+					  	->get();
+		return $query;
+	}
+	public static function signIdGenerate($request){
+		$query = DB::select("SELECT CONCAT('SIGN', LPAD(MAX(SUBSTRING(signID,5))+1,5,0)) AS signid FROM mailsignature WHERE signID LIKE '%SIGN%'");
+		return $query;
+	}
+	public static function fnInsertMailSignature($request,$signatureId) {
+		$name = Session::get('FirstName').' '.Session::get('LastName');
+		$insert=DB::table('mailsignature')
+		->insert(
+			[
+			'signID' => $signatureId,
+			'user_ID' => $request->userid,
+			'content' => $request->content,
+			'delFlg' => 0,
+			'Ins_DT' => date('Y-m-d'),
+			'UP_DT' => date('Y-m-d'),
+			'createdBy' => $name,
+			'updatedBy' => $name]);
+		$id = DB::getPdo()->lastInsertId();;
+		return $id;
+	}
+	public static function fnFetchUpdateData($request){
+		$result= DB::table('mailsignature')
+						->SELECT('mailsignature.*','user.nickName','user.usercode','user.givenname','user.username')
+						->LEFTJOIN('dev_mstuser as user','user.usercode','=','mailsignature.user_ID')
+						->WHERE('mailsignature.id', '=', $request->signatureId)
+						->get();
+		return $result;
+	}
+	public static function fnFetchViewData($request,$id){
+		$query= DB::table('mailsignature')
+						->SELECT('*')
+						->WHERE('user_ID', '=', $id)
+					  	->get();
+		return $query;
+	}
+	public static function fnUpdateMailSignature($request,$id){
+		$name = Session::get('FirstName').' '.Session::get('LastName');
+		$update=DB::table('mailsignature')
+				->where('id', $id)
+				->update(
+				[
+				'content' => $request->content,
+				'delFlg' => 0,
+				'UP_DT' => date('Y-m-d'),
+				'updatedBy' => $name]);
+	return $update;
+	}
 }

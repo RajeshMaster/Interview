@@ -47,6 +47,7 @@
 		{{ Form::hidden('filvalhdn', '', array('id' => 'filvalhdn')) }}
 		{{ Form::hidden('delflg', '', array('id' => 'delflg')) }}
 		{{ Form::hidden('signatureId', '', array('id' => 'signatureId')) }}
+		{{ Form::hidden('editflg', '', array('id' => 'editflg')) }}
 <div class="" id="main_contents">
 	<!-- article to select the main&sub menu -->
 	<article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_2">
