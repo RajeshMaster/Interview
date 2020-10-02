@@ -64,6 +64,7 @@ Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 	Route::any('incharge_ajax','EmployeeController@incharge_ajax');
 	Route::any('customerSelpopup','EmployeeController@customerSelpopup');
 	Route::any('wrkEndValidation','EmployeeController@wrkEndValidation');
+	Route::any('wrkEndProcess','EmployeeController@wrkEndProcess');
 });
 
 // Non Employee - ADDED By Rajesh --2020/10/01
@@ -112,20 +113,13 @@ Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('useNotuses', 'SettingController@useNotuses');
 	Route::any('requirmentSetting', 'SettingController@requirmentSetting');
 	Route::any('twoFieldaddeditgrp', 'SettingController@twoFieldaddeditgrp');
-
-	/*Route::any('uploadpopup', 'SettingController@uploadpopup');
-	Route::any('settingpopupupload', 'SettingController@settingpopupupload');
-	Route::any('requirmentSetting', 'SettingController@requirmentSetting');
-	Route::any('reqirmentaddprocess', 'SettingController@reqirmentaddprocess');
-	Route::any('useNotusesrequirment', 'SettingController@useNotusesrequirment');
-	Route::any('importpopup', 'SettingController@importpopup');
-	Route::any('importprocess', 'SettingController@importprocess');*/
 });
 
 // User
 Route::group(['prefix'=>'user', 'middleware' => 'auth'], function() {
 	Route::any('index', 'UserController@index');
 	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('view', 'UserController@view');
 });
 
 // LOGOUT PROCESS

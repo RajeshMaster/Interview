@@ -183,6 +183,7 @@ return [
 	'lbl_username' => 'User Name',
 	'lbl_browse' => 'Browse',
 	'lbl_alluserlist' => 'User List',
+	'lbl_superadmin' => 'Super Admin',
 	'lbl_unused' => 'Unused',
 	'lbl_staff' => 'Staff',
 	'lbl_nonstaff' => 'Non Staff',
@@ -190,5 +191,8 @@ return [
 	'lbl_getprevdetail' => 'Get Previous Details',
 	'lbl_subEmployee' => 'Sub Contract',
 	'lbl_pvtPerson' => 'Private Person',
+	'lbl_usercode' => 'User Code',
+	'lbl_Details' => 'Details',
+	'lbl_Creater' => 'Creater',
 	/* End User Module */
 ];

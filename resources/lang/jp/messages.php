@@ -183,6 +183,7 @@ return [
 	'lbl_username' => 'ユーザー名',
 	'lbl_browse' => 'Browse',
 	'lbl_alluserlist' => 'ユーザ一覧',
+	'lbl_superadmin' => 'スーパー管理者',
 	'lbl_unused' => '未使用',
 	'lbl_staff' => '社員',
 	'lbl_nonstaff' => '非社員',
@@ -190,5 +191,8 @@ return [
 	'lbl_getprevdetail' => '以前の詳細を取得',
 	'lbl_subEmployee' => '下請',
 	'lbl_pvtPerson' => '個人',
+	'lbl_usercode' => 'ユーザコード',
+	'lbl_Details' => '詳細',
+	'lbl_Creater' => '作成者',
 	/* End User Module */
 ];
