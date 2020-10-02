@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 {{ HTML::script(asset('public/js/user.js')) }}
+<script type="text/javascript">
+	var datetime = '<?php echo date('Ymdhis'); ?>';
+	var mainmenu = '<?php echo $request->mainmenu; ?>';
+</script>
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
 <article id="settings" class="DEC_flex_wrapper" data-category="settings setting_sub_2">
@@ -23,7 +27,7 @@
 		</div>
 	@endif
 	<div class="col-xs-12 pull-left mt10 mb10">
-		<a href="javascript:fnback();" class="button button-blue textDecNone" 
+		<a href="javascript:goindexpage('{{ $request->mainmenu }}');" class="button button-blue textDecNone" 
 			style="text-decoration: none !important;">
 			<span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}
 		</a>
@@ -38,15 +42,22 @@
 			<span class="fa fa-key"></span> {{ trans('messages.lbl_passwordchange') }}
 		</a>
 	</div>
-	{{ Form::open(array('name'=>'mailcontentView',
-			'id'=>'mailcontentView',
-			'url' => 'mail/mailcontentView?time='.date('YmdHis'), 
+	{{ Form::open(array('name'=>'frmuserview',
+			'id'=>'frmuserview',
+			'url' => 'user/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),
+			'files'=>true,
 			'method' => 'POST')) }}
-	{{ Form::hidden('mailid', $request->mailid , array('id' => 'mailid')) }}
-	{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
-	{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
-	{{ Form::hidden('filvalhdn', $request->filvalhdn , array('id' => 'filvalhdn')) }}
-	{{ Form::hidden('editflg', '', array('id' => 'editflg')) }}
+		{{ Form::hidden('filterval', $request->filterval, array('id' => 'filterval')) }}
+		{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
+		{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
+		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+		{{ Form::hidden('sortOptn',$request->usersort , array('id' => 'sortOptn')) }}
+		{{ Form::hidden('sortOrder', $request->sortOrder , array('id' => 'sortOrder')) }}
+		{{ Form::hidden('searchmethod', $request->searchmethod, array('id' => 'searchmethod')) }}
+		{{ Form::hidden('editflg', '', array('id' => 'editflg')) }}
+		{{ Form::hidden('id', $userview[0]->id , array('id' => 'id')) }}
+		{{ Form::hidden('viewid', $request->viewid , array('id' => 'viewid')) }}
+		{{ Form::hidden('editid', $userview[0]->id , array('id' => 'editid')) }}
 	<fieldset class="mt2">
 		<div class="col-xs-12">
 			<div class="col-xs-9 mt10">
