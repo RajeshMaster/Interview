@@ -92,6 +92,7 @@ Route::group(['prefix'=>'MailSignature','middleware' => 'auth'], function() {
 	Route::any('mailSignaturePopup','MailSignatureController@mailSignaturePopup');
 	Route::any('getDataExist','MailSignatureController@getDataExist');
 	Route::any('mailSignatureRegValidation','MailSignatureController@mailSignatureRegValidation');
+	Route::any('mailSignatureAddEditProcess','MailSignatureController@mailSignatureAddEditProcess');
 });
 
 // Setting
