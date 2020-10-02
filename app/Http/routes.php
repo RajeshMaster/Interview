@@ -21,13 +21,13 @@ Route::post('login', 'LoginController@authenticate');
 Route::get('Login/forgetpassword', 'Auth\PasswordController@showLinkRequestForm');
 Route::post('Login/forgetprocess', 'Auth\PasswordController@sendResetLinkEmail');
 
-Route::get('User/changelanguage','AjaxController@index');
+/*Route::get('User/changelanguage','AjaxController@index');
 
 // Login Verify
 Route::any('User/verifyLogin', 'UserController@verifyLoginCheck');
 
 //User Index
-Route::any('User/index', 'UserController@userindex');
+Route::any('User/index', 'UserController@userindex');*/
 
 // Home
 Route::group(['prefix'=>'menu', 'middleware' => 'auth'], function() {
@@ -117,6 +117,12 @@ Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('useNotusesrequirment', 'SettingController@useNotusesrequirment');
 	Route::any('importpopup', 'SettingController@importpopup');
 	Route::any('importprocess', 'SettingController@importprocess');*/
+});
+
+// User
+Route::group(['prefix'=>'user', 'middleware' => 'auth'], function() {
+	Route::any('index', 'UserController@index');
+	Route::get('changelanguage', 'AjaxController@index');
 });
 
 // LOGOUT PROCESS
