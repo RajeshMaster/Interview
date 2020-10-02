@@ -378,8 +378,6 @@ function fneditcheck() {
 function useNotuse(editid,i) {
 	$("#existsChk_textbox1").hide();
 	$("#empty_textbox1").hide(); 
-	$("#existsChk_textbox2").hide();
-	$("#empty_textbox2").hide(); 
 	$("#popupsessionreg").css("display", "none");
 	$("#popupsessionupd").css("display", "none");
 	var tablename =  $('#tablename').val();
@@ -444,6 +442,43 @@ function fneditchecktwofield() {
 	$('#textbox1').focus();
 	return false;
 }
+
+// Two field popup Edit check
+function fneditchecktwofieldgrp() {
+	$("#existsChk_textbox1").hide();
+	$("#empty_textbox1").hide(); 
+	$("#popupsessionreg").css("display", "none");
+	$("#popupsessionupd").css("display", "none");
+	$("#popupsessionnotuse").css("display", "none");
+	$("#popupsessionuse").css("display", "none");
+	var editid = $('#rdoid').val();
+	$("#edit").addClass("CMN_cursor_default");
+	$('#process').val(2);
+	document.getElementById("edit").disabled = true;
+	document.getElementById("dwnArrow").disabled = true;
+    document.getElementById("upArrow").disabled = true;
+     document.getElementById("commit_button").disabled = true;
+	$("#edit").css("background-color","#bbb5b5");
+	$("#dwnArrow").css("color","#bbb5b5");
+	$("#upArrow").css("color","#bbb5b5");
+	$("#commit_button").css("background-color","#bbb5b5");
+	$("#add_var").hide();
+	$("#update_var").show();
+	var dataname1 = $('#dataname1'+editid).text();
+	var dataname2 = $('#common_chk'+editid).val();
+	$('#textbox1').val($.trim(dataname1));
+	if (dataname2 == 1) {
+		$('#commonCheck').prop('checked', true);
+		$('#checkboxcheckvalue').val(1);
+	} else {
+		$('#commonCheck').prop('checked', false);
+		$('#checkboxcheckvalue').val('0');
+	}
+	$('#hdnprocessid').val(editid);
+	$('#textbox1').focus();
+	return false;
+}
+
 // Two field popup Radio check
 function fnrdochecktwofield(textbox1,textbox2,editid,scroolid,totalcount,val) {
 	var rowCount = $('#swaptable1 tr').length;
@@ -972,7 +1007,11 @@ function fnsettingcommitajax(actualId,idnew,tablename,screenname,tableselect){
 		data: {"actualId": actualId,"idnew": idnew,"tablename": tablename},
 		success: function(data) {
 			$("#popupsessioncommit").css("display", "block");
-			settingpopupsinglefield(screenname,tablename,tableselect);
+			if (tablename == "requirmentSetting") {
+				requirmentSelect(tablename);
+			} else {
+				settingpopupsinglefield(screenname,tablename,tableselect);
+			}
 		},
 		error: function(data) {
 			 alert(data.status);
@@ -981,7 +1020,6 @@ function fnsettingcommitajax(actualId,idnew,tablename,screenname,tableselect){
 }
 
 function groupselectpopup(datetime) {
-	//popupopenclose(1);
 	var mainmenu = "menu_setting";
 	$('#grouppop').load('../setting/grouppopup?mainmenu='+mainmenu+'&time='+datetime);
 	$("#grouppop").modal({
@@ -989,4 +1027,146 @@ function groupselectpopup(datetime) {
 		keyboard: false
 	});
 	$('#grouppop').modal('show');
+}
+
+function requirmentSelect(tablename) {
+    var mainmenu = "menu_setting";
+    $('#showpopup').load('../setting/requirmentSetting?tablename='+tablename);
+	$("#showpopup").modal({
+	   backdrop: 'static',
+		keyboard: false
+	});
+	$('#showpopup').modal('show');
+}
+
+// Two field popup Addedit process
+function fnaddedittwofield_requirement(location,mainmenu,tablename,flag) {
+	mainmenu = "menu_setting";
+	var opr=$('#process').val();
+	$("#popupsessionnotuse").css("display", "none");
+	$("#popupsessionuse").css("display", "none");
+	if($("#textbox1").val()==""){
+		$("#empty_textbox1").show(); 
+		$("#textbox1").focus();
+		$("#existsChk_textbox1").hide();
+		$("#popupsessionreg").css("display", "none");
+		$("#popupsessionupd").css("display", "none");
+	} else {
+		$("#empty_textbox1").hide(); 
+		$("#popupsessionreg").css("display", "none");
+		$("#popupsessionupd").css("display", "none");
+		var textbox1 =  $('#textbox1').val();
+		$('#textbox1').val(textbox1);
+		var textbox2 =  $('#checkboxcheckvalue').val();
+		//$('#textbox2').val(textbox2);
+		$('#location').val(location);
+		$('#tablename').val(tablename);
+		$('#flag').val(flag);
+		var editid = $('#rdoid').val();
+		$.ajax({
+			async: true,
+			type: 'GET',
+			url: "Already_Exists",
+			data: {"textbox1": textbox1,
+					"mainmenu": mainmenu,
+					"tablename": tablename,
+					"id": editid,
+					"flag": flag
+				},
+			success: function(data) {
+				if (data == 0) {
+					/*alert($("#checkboxcheckvalue").val());
+					alert('Success');return false;*/
+					$("#existsChk_textbox1").hide(); 
+					var textbox2 = $("#checkboxcheckvalue").val();
+					if ($('#process').val() == 1) {
+						var err_cnfirm = msg_add;
+					} else {
+						var err_cnfirm = msg_update;
+					}
+					swal({
+						title: err_cnfirm,
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						closeOnConfirm: true,
+						closeOnCancel: true
+					},
+					function(isConfirm) {
+					if(isConfirm) {
+						var url = 'twoFieldaddeditgrp';
+						$.ajax({
+							async: true,
+							type: 'GET',
+							url: url,
+							data: {"textbox1": textbox1,
+									"textbox2": textbox2,
+									"location": location,
+									"mainmenu": mainmenu,
+									"tablename": tablename,
+									"id": editid,
+									"flag": flag
+								},
+							success: function(data) {
+								if (data != "") {
+									// $('#swaptable1 tr:last').remove();
+									$('#textbox1').val('');
+									$('#textbox2').val('');
+
+									if(opr==1) {
+										var tempdata = parseInt(data)+1;
+										var res = $.parseJSON(data);
+										var orderid = res.orderid;
+										var totalid = res.totalid;
+										var actualid = res.actualid;
+										var tempdata = res.orderid + 1;
+										var valid = totalid-1;
+										var data = orderid;
+										if (textbox2 == 1) {
+											textbox2_1 = "Common";
+										} else {
+											textbox2_1 = "";
+										}
+										var data='<tr class="h37"><td class="text-center" title="Select"><input type = "radio" name="rdoedit" id="rdoedit'+totalid+'" class="h13 w13" onclick="fnrdochecktwofield(\''+textbox1+'\',\''+textbox2+'\',\''+totalid+'\',\''+totalid+'\',\''+totalid+'\',\''+valid+'\');"><input id="rdoid" name="rdoid" type="hidden" value="'+data+'"><input id="idOriginalOrder" name="idOriginalOrder" type="hidden" value="'+actualid+'"><input id="id" name="id" type="hidden" value="'+totalid+'"></td><td class="text-center pt7" title="S.No">'+data+'</td><td class="pl7 pt7" id="dataname1'+data+'">'+textbox1+'</td><input id="common_chk'+data+'" name="common_chk'+data+'" type="hidden" value="'+textbox2+'"><td class="pl7 pt7" id="dataname2'+data+'">'+textbox2_1+'</td><td class="tac pt7" title="Use/Not Use"><a href="javascript:useNotuse(\''+data+'\',\''+tempdata+'\');" class="btn-link" style="color:blue;"><label class="btn-link" id="usenotuselabel'+tempdata+'" data-type="0" style="color: blue;">Use</label></a><input id="curtFlg'+tempdata+'" name="curtFlg'+tempdata+'" type="hidden" value="1"><input id="editid'+tempdata+'" name="editid'+tempdata+'" type="hidden" value="'+data+'"></td></tr>';
+										$('#swaptable1 tr:last').after(data);
+										$("#popupsessionreg").css("display", "block");
+										$("#popupsessionupd").css("display", "none");
+										$("#swaptable1 tr:last").css('cursor', 'hand');
+									} else {
+										$("#dataname1"+editid).text(textbox1);
+										if (textbox2 == 1) {
+											textbox2 = "Common";
+										} else {
+											textbox2 = "";
+										}
+										$("#dataname2"+editid).text(textbox2);
+										$("#add_var").show();
+										$("#update_var").hide();
+										$('#process').val(1);
+										$("#popupsessionupd").css("display", "block");
+										$("#popupsessionreg").css("display", "none");
+									}
+									$('#commonCheck').attr('checked', false);
+									var rowCount = $('#swaptable1 tr').length;
+									if ($('#swaptable1 tr').hasClass('nodata')) {
+										$('#swaptable1 tr:first').remove();
+									}
+								}
+							},
+							error: function(data) {
+							}
+						});
+					}
+							});
+				} else {
+					$("#existsChk_textbox1").show(); 
+					$("#textbox1").focus();
+					$("#popupsessionreg").css("display", "none");
+					$("#popupsessionupd").css("display", "none");
+				}
+			},
+			error: function(data) {
+			}
+		});
+	}
 }

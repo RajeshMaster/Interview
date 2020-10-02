@@ -153,13 +153,42 @@ class SettingController extends Controller {
 	}
 
 	/**  
+	 *  Two Text Group Add & Update Process
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/02
+	 **/
+	public static function twoFieldaddeditgrp(Request $request) {
+		if ($request->flag == 2) {
+	 		echo $update_query = Setting::updatetwoField($request);
+	 		exit();
+		}
+		$tbl_name = $request->tablename;
+		$orderidval = Setting::Orderidgenerate($tbl_name);
+	 	$orderid = $orderidval;
+	 	$orderidarray['orderid'] = $orderidval;
+	 	$ins_query = Setting::insertquerytwofieldgrp($tbl_name,$request,$orderid);
+	 	$actualId = "";
+		$actualVal = Setting::selectOrderId($request);
+		foreach ($actualVal as $key => $value) {
+			$actualId .=  $value->orderId.",";
+		}
+		$orderidarray['actualid'] = rtrim($actualId, ",");
+		$location = "";
+		$orderidval = Setting::Orderidgeneratefortotal($location,$tbl_name);
+		$orderidarray['totalid'] = $orderidval;
+		echo json_encode($orderidarray);
+	}
+
+	/**  
 	 *  Use/Not Use Process
 	 *  @author Easa
 	 *  @param $request
 	 *  Created At 2020/10/01
 	 **/
 	public static function useNotuse(Request $request) {
-		$usenotuse = setting::updateUseNotUse($request);
+        $getTableFields = settingscommon::getDbFieldsforProcess();
+		$usenotuse = setting::updateUseNotUse($request,$getTableFields);
 	}
 
 	public static function getExtension($str) {
@@ -237,15 +266,32 @@ class SettingController extends Controller {
 		$usenotuse = setting::flagchange($request);
 		print_r($usenotuse);exit();
 	}
+
+	/**  
+	 *  Requirement Setting Popup
+	 *  @author Easa
+	 *  @param $request
+	 *  Created At 2020/10/02
+	 **/
 	public static function requirmentSetting(Request $request) {  
-		$requirmentSetting =array();
-		$requirmentSetting = Setting::fnGetrequirment();
-		$Selgroupname = array();
-		$i = 0;
-		return view('Setting.requirmentSettingpopup',[
-														'request' => $request,
-														'requirmentSetting' => $requirmentSetting
-													]);
+		$tbl_name = $request->tablename;
+		$getTableFields = settingscommon::getDbFieldsforProcess();
+		$query = Setting::selectOnefieldDatas($getTableFields[$tbl_name]['selectfields'],
+											  $getTableFields[$tbl_name]['commitfields'][0],
+											  $request);
+		$requestAsJSONArray = json_encode($request->all());
+		$headinglbl = $getTableFields[$tbl_name]['labels']['heading'];
+		$field1lbl = $getTableFields[$tbl_name]['labels']['field1lbl'];
+		$field2lbl = $getTableFields[$tbl_name]['labels']['field2lbl'];
+		$selectfiled  = $getTableFields[$tbl_name]['selectfields'];
+		return view('setting.requirmentSettingpopup',['query' => $query,
+												'request'=>$request,
+												'headinglbl'=>$headinglbl,
+												'field1lbl' => $field1lbl,
+												'field2lbl' => $field2lbl,
+												'selectfiled' => $selectfiled,
+												'getTableFields'=> $getTableFields,
+												'requestAsJSONArray' => $requestAsJSONArray]);
 	}
 	public static function reqirmentaddprocess(Request $request) {
 		$data['id'] = $request->id;

@@ -122,6 +122,21 @@ namespace App\Http\Common;
 		 										 	'updatefields'=>array('OSTypeNM','UpdatedBy'),
 												 	'usenotusefields'=>array('DelFlg'),
 		 										 	'commitfields'=>array('Order_id')),
+						// Requirement
+						'requirmentSetting'=>array('labels'=>
+											   array('heading'=>trans('Requirments'),
+												 	'field1lbl'=>trans('Skill Name'),
+													'field2lbl'=>trans('Common Show')),
+			    	  							 	'selectfields'=>array('id','Requirment',
+			    	  							 		'commShow','Ins_DT','delFlg','Order_id'),
+		 										 	'displayfields'=>array('id','Requirment',
+		 										 		'commShow','delFlg','Order_id'),
+		 										 	'insertfields'=>array('Requirment',
+		 										 		'commShow','delFlg','Ins_DT','Upd_DT','CreatedBy','UpdatedBy','Order_id'),
+		 										 	'updatefields'=>array('Requirment',
+		 										 		'commShow','Upd_DT','UpdatedBy'),
+												 	'usenotusefields'=>array('delFlg'),
+		 										 	'commitfields'=>array('Order_id')),
 			    );
 		}
 	}

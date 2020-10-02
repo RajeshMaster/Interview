@@ -129,6 +129,8 @@ return [
 	'lbl_inchargename' => 'Incharge Name',
 	'lbl_workStdate' => 'Work Start Date',
 	'lbl_workEdate' => 'Work End Date',
+	'lbl_CustId' => 'Customer ID',
+	'lbl_kananame' => 'Kana Name',
 	/* End Employee Module */
 
 	/* Start Setting Module */
@@ -169,6 +171,10 @@ return [
 	'lbl_grouplist' =>'Group List',
 	'lbl_custname' =>'Customer Name',
 	'lbl_cusnameselection' => 'Customer Name Selection',
+	'lbl_req_setting' => 'Requirment Setting',
+	'lbl_requirement' => 'Requirments',
+	'lbl_skill_name' => 'Skill Name',
+	'lbl_common_show' => 'Common Show',
 	/* End Setting Module */
 
 	/* Start User Module */

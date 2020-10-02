@@ -163,7 +163,7 @@ class Setting extends Model {
         $CreatedBy = $getTableFields[$tbl_name]['insertfields'][6];
         $UpdatedBy = $getTableFields[$tbl_name]['insertfields'][7];
         $fieldcount = count($getTableFields[$tbl_name]['insertfields']);
-        $CreatedByname = "Sathish Kumar"; //it will fix later
+        $CreatedByname = Session::get('FirstName');
         $sql= $db->table($tbl_name)->insert(
                 [$DBTypeCD => $request->selectbox1,
                 $DBType1 => $request->textbox1,
@@ -193,7 +193,7 @@ class Setting extends Model {
         $CreatedBy = $getTableFields[$tbl_name]['insertfields'][4];
         $UpdatedBy = $getTableFields[$tbl_name]['insertfields'][5];
         $orderId = $getTableFields[$tbl_name]['insertfields'][6];
-        $CreatedByname = "Sathish Kumar"; //it will fix later
+        $CreatedByname = Session::get('FirstName');
         if ($tbl_name == 'sysunfixedreason' || $tbl_name == 'language_skill' || $tbl_name == 'jplanguage_skill') {
             $sql=$db->table($tbl_name)->insert(
                 [$DBType => $request->textbox1,
@@ -234,11 +234,42 @@ class Setting extends Model {
         $UpdatedBy = $getTableFields[$tbl_name]['insertfields'][6];
         $orderId = $getTableFields[$tbl_name]['insertfields'][7];
         $DBTypeCD = $getTableFields[$tbl_name]['insertfields'][8];
-        $CreatedByname = "Sathish Kumar"; //it will fix later
+        $CreatedByname = Session::get('FirstName');
         $sql = $db->table($tbl_name)->insert([
                     $DBType => $request->textbox1,
                     $DBType1 => $request->textbox2,
                     $DBTypeCD => $order_id,
+                    $orderId => $order_id,
+                    $DelFlg =>'0',
+                    $InsDT => date('Y-m-d H-i-s'),
+                    $UpDT => date('Y-m-d H-i-s'),
+                    $CreatedBy => $CreatedByname,
+                    $UpdatedBy => $CreatedByname]
+                );
+        return  $sql;
+    }
+
+    /**  
+     *  Two Text Group Insert Process
+     *  @author Easa
+     *  @param $tbl_name,$request,$order_id
+     *  Created At 2020/10/01
+     **/
+    public static function insertquerytwofieldgrp($tbl_name,$request,$order_id) {
+        $db = DB::connection('mysql');
+        $getTableFields = settingscommon::getDbFieldsforProcess();
+        $DBType = $getTableFields[$tbl_name]['insertfields'][0];
+        $DBType1 = $getTableFields[$tbl_name]['insertfields'][1];
+        $DelFlg = $getTableFields[$tbl_name]['insertfields'][2];
+        $InsDT = $getTableFields[$tbl_name]['insertfields'][3];
+        $UpDT = $getTableFields[$tbl_name]['insertfields'][4];
+        $CreatedBy = $getTableFields[$tbl_name]['insertfields'][5];
+        $UpdatedBy = $getTableFields[$tbl_name]['insertfields'][6];
+        $orderId = $getTableFields[$tbl_name]['insertfields'][7];
+        $CreatedByname = Session::get('FirstName');
+        $sql = $db->table($tbl_name)->insert([
+                    $DBType => $request->textbox1,
+                    $DBType1 => $request->textbox2,
                     $orderId => $order_id,
                     $DelFlg =>'0',
                     $InsDT => date('Y-m-d H-i-s'),
@@ -297,7 +328,7 @@ class Setting extends Model {
         $UpDT = $getTableFields[$request->tablename]['updatefields'][2];
         $UpdatedBy = $getTableFields[$request->tablename]['updatefields'][3];
         $db = DB::connection('mysql');
-        $CreatedByname = "Sathish Kumar"; //it will fix later
+        $CreatedByname = Session::get('FirstName');
         $update = $db->table($request->tablename)
             ->where('id', $request->id)
             ->update(
@@ -316,7 +347,7 @@ class Setting extends Model {
         $UpDT = $getTableFields[$request->tablename]['updatefields'][3];
         $UpdatedBy = $getTableFields[$request->tablename]['updatefields'][4];
         $db = DB::connection('mysql');
-        $CreatedByname = "Sathish Kumar"; //it will fix later
+        $CreatedByname = Session::get('FirstName');
         $update = $db->table($request->tablename)
             ->where('id', $request->id)
             ->update(
@@ -332,12 +363,12 @@ class Setting extends Model {
     /**  
      *  Use/Not Use Process
      *  @author Easa
-     *  @param $request
+     *  @param $request,$getTableFields
      *  Created At 2020/10/01
      **/
-    public static function updateUseNotUse($request) {
+    public static function updateUseNotUse($request,$getTableFields) {
         $db = DB::connection('mysql');
-        $getTableFields = settingscommon::getDbFieldsforProcess();
+        //$getTableFields = settingscommon::getDbFieldsforProcess();
         $tablename = $request->tablename;
         $updfield = $getTableFields[$request->tablename]['usenotusefields'][0];
         if ($request->curtFlg == 0) {

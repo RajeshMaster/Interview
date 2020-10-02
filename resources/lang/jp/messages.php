@@ -129,6 +129,8 @@ return [
 	'lbl_inchargename' => '担当者名',
 	'lbl_workStdate' => '仕事仕始日',
 	'lbl_workEdate' => '仕事終了日',
+	'lbl_CustId' => '取引先 ID',
+	'lbl_kananame' => 'カナ名称',
     /* End Employee Module */
 
 	/* Start Setting Module */
@@ -169,6 +171,10 @@ return [
 	'lbl_grouplist' =>'Group List',
 	'lbl_custname' => '取引先名',
 	'lbl_cusnameselection'=>'顧客名の選択',
+	'lbl_req_setting' => '要件設定',
+	'lbl_requirement' => '要件',
+	'lbl_skill_name' => 'スキル名',
+	'lbl_common_show' => '一般的なショー',
 	/* End Setting Module */
 
 	/* Start User Module */
