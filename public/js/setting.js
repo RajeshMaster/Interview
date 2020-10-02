@@ -101,56 +101,66 @@ function checkvalidate(flag) {
 		var grpId = $("input[name='rdoedit']:checked").val();
 		$('#groupId').val(grpId);
 		if (flag != "edit") {
-			var err_cnfirm = confirm(msg_add);
+			var err_cnfirm = msg_add;
 		} else {
-			var err_cnfirm = confirm(msg_update);
+			var err_cnfirm = msg_update;
 		}
-		if(err_cnfirm) {   
-			var groupId = $('#groupId').val();
-			var grpName = $('#grpName').val();
-			var flag = $('#flag').val();
-            var editid = $('#radioid').val();
-            var textbox1 = $('#grpName').val();
-			$.ajax({
-				type: 'GET',
-				url: 'groupaddprocess',
-				data: { "flag": flag,"groupId": groupId,"grpName": grpName },
-				success: function(data) {
-                    if (data != "") {
-                        var res = $.parseJSON(data);
-                        var orderid=res.orderid;
-                        var totalid=res.totalid;
-                        var group=res.group;
-                        var data=orderid;
-                        $('#grpName').val('');
-                        if(flag != "edit") {
-                            var tempdata= parseInt(data)+1;
-                            var forusenotuse = parseInt(data)-1;
-                            var data='<tr class="h37" onclick="groupcheck(\''+textbox1+'\',\''+totalid+'\')"><td class="text-center" title="Select"><input type = "radio" name="rdoedit" id="rdoedit'+data+'" class="h13 w13" onclick="groupcheck(\''+textbox1+'\',\''+data+'\');"  value="'+group+'"><input id="radioid" name="radioid" type="hidden" value="'+data+'"></td><td class="">'+data+'</td><td>'+group+'</td><td class="" id="datavar'+totalid+'">'+textbox1+'</td><td></td><td class="tac pt7" title="Use/Not Use"><a href="javascript:useNotuses(\''+forusenotuse+'\');" class="btn-link" style="cursor: pointer;color:blue;"><label class="btn-link" id="usenotuselabel'+forusenotuse+'" style="color: blue;">Use</label></a><input id="editid'+forusenotuse+'" name="editid'+forusenotuse+'" type="hidden" value="'+totalid+'"></td></tr>';
-                            $('#swaptable1 tr:last').after(data);
-                            $("#grppopupsessionreg").css("display", "block");
-                            $("#grppopupsessionupd").css("display", "none");
-                        } else {
-                            $("#datavar"+editid).text(textbox1);
-                            $("#add_vargrp").show();
-                            $("#update_vargrp").hide();
-                            $('#process').val(1);
-                            $("#datavar"+editid).text(grpName);
-                            $("#grppopupsessionupd").css("display", "block");
-                            $("#grppopupsessionreg").css("display", "none");
-                        }
-                        if ($('#swaptable1 tr').hasClass('nodata')) {
-                            $('#swaptable1 tr:first').remove();
-                        }
-                    }
-				},
-				error: function(data){
-					//alert("Error");
-				}
-			});
-		} else {
-			return false;
-		}
+		swal({
+			title: err_cnfirm,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		},
+		function(isConfirm) {
+			if(isConfirm) {
+				var groupId = $('#groupId').val();
+				var grpName = $('#grpName').val();
+				var flag = $('#flag').val();
+	            var editid = $('#radioid').val();
+	            var textbox1 = $('#grpName').val();
+				$.ajax({
+					type: 'GET',
+					url: 'groupaddprocess',
+					data: { "flag": flag,"groupId": groupId,"grpName": grpName },
+					success: function(data) {
+	                    if (data != "") {
+	                        var res = $.parseJSON(data);
+	                        var orderid=res.orderid;
+	                        var totalid=res.totalid;
+	                        var group=res.group;
+	                        var data=orderid;
+	                        $('#grpName').val('');
+	                        if(flag != "edit") {
+	                            var tempdata= parseInt(data)+1;
+	                            var forusenotuse = parseInt(data)-1;
+	                            var data='<tr class="h37" onclick="groupcheck(\''+textbox1+'\',\''+totalid+'\')"><td class="text-center" title="Select"><input type = "radio" name="rdoedit" id="rdoedit'+data+'" class="h13 w13" onclick="groupcheck(\''+textbox1+'\',\''+data+'\');"  value="'+group+'"><input id="radioid" name="radioid" type="hidden" value="'+data+'"></td><td class="">'+data+'</td><td>'+group+'</td><td class="" id="datavar'+totalid+'">'+textbox1+'</td><td></td><td class="tac pt7" title="Use/Not Use"><a href="javascript:useNotuses(\''+forusenotuse+'\');" class="btn-link" style="cursor: pointer;color:blue;"><label class="btn-link" id="usenotuselabel'+forusenotuse+'" style="color: blue;">Use</label></a><input id="editid'+forusenotuse+'" name="editid'+forusenotuse+'" type="hidden" value="'+totalid+'"></td></tr>';
+	                            $('#swaptable1 tr:last').after(data);
+	                            $("#grppopupsessionreg").css("display", "block");
+	                            $("#grppopupsessionupd").css("display", "none");
+	                        } else {
+	                            $("#datavar"+editid).text(textbox1);
+	                            $("#add_vargrp").show();
+	                            $("#update_vargrp").hide();
+	                            $('#process').val(1);
+	                            $("#datavar"+editid).text(grpName);
+	                            $("#grppopupsessionupd").css("display", "block");
+	                            $("#grppopupsessionreg").css("display", "none");
+	                        }
+	                        if ($('#swaptable1 tr').hasClass('nodata')) {
+	                            $('#swaptable1 tr:first').remove();
+	                        }
+	                    }
+					},
+					error: function(data){
+						//alert("Error");
+					}
+				});
+			} else {
+				return false;
+			}
+		});
 	}
 }
 

@@ -21,6 +21,9 @@
 	.designchange{
 		margin-right:4%!important;
 	}
+	.width_160 {
+		width: 160% !important;
+	}
 }
 </style>
 <script type="text/javascript">
