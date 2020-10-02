@@ -125,6 +125,10 @@ return [
 	'lbl_accountno' => '口座番号',
 	'lbl_branchnumber' => '支店番号',
 	'lbl_resign' => '退社',
+	'lbl_cusname' => '顧客名',
+	'lbl_inchargename' => '担当者名',
+	'lbl_workStdate' => '仕事仕始日',
+	'lbl_workEdate' => '仕事終了日',
     /* End Employee Module */
 
 	/* Start Setting Module */
@@ -164,10 +168,12 @@ return [
 	'lbl_groupMembers' =>'Group Member',
 	'lbl_grouplist' =>'Group List',
 	'lbl_custname' => '取引先名',
+	'lbl_cusnameselection'=>'顧客名の選択',
 	/* End Setting Module */
 
 	/* Start User Module */
 	'lbl_userid' => 'ユーザーID',
 	'lbl_username' => 'ユーザー名',
+	'lbl_browse' => 'Browse',
 	/* End User Module */
 ];

@@ -125,6 +125,10 @@ return [
 	'lbl_accountno' => 'Account No',
 	'lbl_branchnumber' => 'Branch Number',
 	'lbl_resign' => 'Resign',
+	'lbl_cusname' => 'Customer Name',
+	'lbl_inchargename' => 'Incharge Name',
+	'lbl_workStdate' => 'Work Start Date',
+	'lbl_workEdate' => 'Work End Date',
 	/* End Employee Module */
 
 	/* Start Setting Module */
@@ -164,10 +168,12 @@ return [
 	'lbl_groupMembers' =>'Group Member',
 	'lbl_grouplist' =>'Group List',
 	'lbl_custname' =>'Customer Name',
+	'lbl_cusnameselection' => 'Customer Name Selection',
 	/* End Setting Module */
 
 	/* Start User Module */
 	'lbl_userid' => 'User ID',
 	'lbl_username' => 'User Name',
+	'lbl_browse' => 'Browse',
 	/* End User Module */
 ];

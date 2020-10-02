@@ -300,3 +300,16 @@ function isFloatNumberKey(evt){
     }
 	return true;
 }
+
+function popupopenclose(flg) {
+  if (flg == 1) {
+    // Open
+    $('#fixeddiv').removeClass('CMN_menu_fixed').addClass('CMN_positionabsolute');
+    $('#sectiondiv').attr('style','margin-top:2px;');
+  } else {
+    // Close
+    $('#fixeddiv').removeClass('CMN_positionabsolute').addClass('CMN_menu_fixed');
+    $('#sectiondiv').attr('style','margin-top:125px;');
+  }
+
+}
