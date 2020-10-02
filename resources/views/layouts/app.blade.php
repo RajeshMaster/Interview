@@ -480,7 +480,7 @@ body {
 								</ul>
 							</li>
 							<li @if(isset($request->mainmenu) && 
-									$request->mainmenu == "menu_setting" || $request->mainmenu == "menu_user") 
+									$request->mainmenu == "menu_setting" || $request->mainmenu == "menu_users") 
 									class="dropdown active" 
 								@endif>
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" style="text-decoration: none !important;">{{ trans('messages.lbl_settings') }}<span class="caret"></span></a>
@@ -493,10 +493,10 @@ body {
 										<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_settings') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
-											$request->mainmenu == "menu_user") 
+											$request->mainmenu == "menu_users") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('user/index?mainmenu=menu_user&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_user') }}</a>
+										<a class="pageload" href="{{ url('user/index?mainmenu=menu_users&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_user') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
 											$request->mainmenu == "menu_mailstatus") 
@@ -513,7 +513,7 @@ body {
 								</ul>
 							</li>
 							<li @if(isset($request->mainmenu) && 
-									$request->mainmenu == "menu_users") 
+									$request->mainmenu == "menu_users1") 
 									class="active dropdown"
 								@endif>
 								<a href="#" style="text-decoration: none !important;" class="dropdown-toggle" data-toggle="dropdown" style="text-decoration: none !important;">
@@ -686,14 +686,14 @@ body {
 								</div>
 							@endif
 							@if(isset($request->mainmenu) && 
-								$request->mainmenu == "menu_setting" || $request->mainmenu == "menu_user")
+								$request->mainmenu == "menu_setting" || $request->mainmenu == "menu_users")
 								<div id="setting_sub_1">
 									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" 
 										style="text-decoration: none !important;">
 									{{ trans('messages.lbl_settings') }}</a>
 								</div>
 								<div id="setting_sub_2">
-									<a class="pageload" href="{{ url('user/index?mainmenu=menu_user&time='.date('Ymdhis')) }}" 
+									<a class="pageload" href="{{ url('user/index?mainmenu=menu_users&time='.date('Ymdhis')) }}" 
 										style="text-decoration: none !important;">
 									{{ trans('messages.lbl_user') }}</a>
 								</div>
