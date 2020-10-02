@@ -16,7 +16,13 @@ use Illuminate\Support\Facades\Validator;
 /*Class: MailController
 Some functions related to display the mail list and describing their particular details.*/
 class MailSignatureController extends Controller {
-
+	/**
+	*
+	* To view MailSignature Index Page
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function index(Request $request) {
 		// Filter Process
 		$disabledall = "";
@@ -43,10 +49,25 @@ class MailSignatureController extends Controller {
 											'contenttotal',
 											'getlist'));
 	}
+	/**
+	*
+	* To Update MailSignature DelFlg
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailSignatureFlg(Request $request){
 		$signatureDelflg = MailSignature::fnUpdateDelflg($request);
 		return Redirect::to('MailSignature/index?mainmenu=menu_mailsignature&time='.date('YmdHis'));
 	}
+	/**
+	*
+	* To Display MailSignature
+	* @author Sathish
+	* @return object to particular view page
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailSignatureView(Request $request){
 		if(Session::get('sigid') != ""){
 			$request->signatureId = Session::get('sigid');
@@ -59,7 +80,13 @@ class MailSignatureController extends Controller {
 											'mailSignatureView'
 											));
 	}
-
+	/**
+	*
+	* To Redirect AddEdit Page
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailSignatureAddEdit(Request $request){
 		if (!isset($request->editflg)) {
 			return Redirect::to('MailSignature/index?mainmenu=menu_mailsignature&time='.date('YmdHis'));
@@ -75,11 +102,25 @@ class MailSignatureController extends Controller {
 											'request' => $request,
 											'getname'=> $getname]);
 	}
+	/**
+	*
+	* To MailSignature Popup
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailSignaturePopup(Request $request){
 		$empname = MailSignature::fnGetUserDetails($request);
 		return view('mailsignature.mailsignaturepopup',['request' => $request,
 														'empname' => $empname]);
 	}
+	/**
+	*
+	* To Fetch Exist Data Record
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function getDataExist(Request $request){
 		$dataExistCheck = MailSignature::fnFetchMailSigdata($request);
 		if (!empty($dataExistCheck)) {
@@ -87,6 +128,13 @@ class MailSignatureController extends Controller {
 		}
 		echo json_encode($dataExistCheck);exit();
 	}
+	/**
+	*
+	* To MailSignature AddEdit Validation Process
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailSignatureRegValidation(Request $request){
 		$commonrules=array();
 		$commonrules = array(
@@ -102,6 +150,13 @@ class MailSignatureController extends Controller {
             echo json_encode($success);
         }
 	}
+	/**
+	*
+	* To MailSignature AddEdit Process
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailSignatureAddEditProcess(Request $request){
 		$signatureID = "SIGN00001";
 		$signIdcnt = MailSignature::signIdGenerate($request);
