@@ -90,7 +90,7 @@ class UserController extends Controller {
 		//Query to get data
 		$userdetails=User::getUserDetails($request);
 		//returning to view page
-		return view('User.index',['userdetails' => $userdetails,
+		return view('user.index',['userdetails' => $userdetails,
 								  'disabledall' => $disabledall,
 								  'disabledunused' => $disabledunused,
 								  'disabledstaff' => $disabledstaff,
@@ -143,7 +143,7 @@ class UserController extends Controller {
 
 		}
 
-		return view('User.addedit',['Classificationarray' => $Classificationarray,
+		return view('user.addedit',['Classificationarray' => $Classificationarray,
 
 									'userview' => $userview,
 
@@ -201,7 +201,7 @@ class UserController extends Controller {
 
 		}
 
-		return Redirect::to('User/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		return Redirect::to('user/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 
 	}
 
@@ -243,7 +243,7 @@ class UserController extends Controller {
 		} else if ($userview[0]->userclassification == 4 && $userview[0]->delflg == 0) {
 			$userview[0]->userclassification = trans('messages.lbl_superadmin');
 		} 
-		return view('User.view',['userview' => $userview,
+		return view('user.view',['userview' => $userview,
 								'request' => $request]);
 	}
 
@@ -283,7 +283,7 @@ class UserController extends Controller {
 
 		Session::flash('id', $request->id); 
 
-		return Redirect::to('User/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		return Redirect::to('user/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 
 	}
 
