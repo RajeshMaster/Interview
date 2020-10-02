@@ -411,7 +411,7 @@ body {
 								</ul>
 							</li>
 							<li @if(isset($request->mainmenu) && 
-									$request->mainmenu == "menu_mail") 
+									$request->mainmenu == "menu_mail" || $request->mainmenu == "menu_mailsignature" || $request->mainmenu == "menu_mailstatus" ) 
 									class="dropdown active" 
 								@endif>
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" 
@@ -435,10 +435,10 @@ body {
 										{{ trans('messages.lbl_mailsignature') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
-											$request->mainmenu == "menu_mail1") 
+											$request->mainmenu == "menu_mailstatus") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Mail/mailcontent?mainmenu=menu_mail&time='.date('Ymdhis')) }}"
+										<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mailstatus&time='.date('Ymdhis')) }}"
 										style="text-decoration: none !important;">&nbsp;&nbsp;
 										{{ trans('messages.lbl_mailstatus') }}</a>
 									</li>
@@ -661,7 +661,7 @@ body {
 									{{ trans('messages.lbl_emphistory') }}</a>
 								</div>
 							@endif
-							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_mail" || $request->mainmenu == "menu_mailsignature"))
+							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_mail" || $request->mainmenu == "menu_mailsignature" || $request->mainmenu == "menu_mailstatus"))
 							<div id="mail_sub_1">
 								<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_mailcontent') }}</a>
@@ -671,7 +671,7 @@ body {
 								{{ trans('messages.lbl_mailsignature') }}</a>
 							</div>
 							<div id="mail_sub_3">
-								<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
+								<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_mailstatus') }}</a>
 							</div>
 							@endif

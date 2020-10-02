@@ -97,6 +97,12 @@ Route::group(['prefix'=>'MailSignature','middleware' => 'auth'], function() {
 	Route::any('mailSignatureAddEditProcess','MailSignatureController@mailSignatureAddEditProcess');
 });
 
+// MailStatus
+Route::group(['prefix' => 'MailStatus','middleware' => 'auth'], function(){
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('index', 'MailStatusController@index');
+});
+
 // Setting
 Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('index', 'SettingController@index');
