@@ -206,7 +206,7 @@ class Employee extends Model
 	public static function selectcustomer() {
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('mst_customerdetail')
-					->select('customer_id','customer_name')
+					->select('customer_id','customer_name','romaji')
 					->where('delflg', 0)
 					->get();
 		return $result;

@@ -81,13 +81,18 @@ Route::group(['prefix'=>'Mail', 'middleware' => 'auth'], function() {
 	Route::any('mailregvalidation','MailController@mailregvalidation');
 	Route::any('mailContentFlg','MailController@mailContentFlg');
 });
+
 // MailSignature
 Route::group(['prefix'=>'MailSignature','middleware' => 'auth'], function() {
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'MailSignatureController@index');
 	Route::any('mailSignatureFlg','MailSignatureController@mailSignatureFlg');
 	Route::any('mailSignatureView','MailSignatureController@mailSignatureView');
+	Route::any('mailSignatureAddEdit','MailSignatureController@mailSignatureAddEdit');
+	Route::any('mailSignaturePopup','MailSignatureController@mailSignaturePopup');
+	Route::any('getDataExist','MailSignatureController@getDataExist');
 });
+
 // Setting
 Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('index', 'SettingController@index');

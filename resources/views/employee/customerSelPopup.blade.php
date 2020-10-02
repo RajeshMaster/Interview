@@ -1,74 +1,138 @@
-{{ HTML::script('resources/assets/js/mailsignature.js') }}
-{{ HTML::script('public/js/common.js') }}
 {{ HTML::style(asset('public/css/settinglayout.css')) }}
 <style>
   #dwnArrow,#upArrow {
-    text-decoration:none;
-    font-size:22px;
-    color:#bbb5b5;
-    box-shadow: none;
-    background-color: Transparent;
-    border: none; 
-    padding: 0px;
+	text-decoration:none;
+	font-size:22px;
+	color:#bbb5b5;
+	box-shadow: none;
+	background-color: Transparent;
+	border: none; 
+	padding: 0px;
   }
   @media all and (max-width: 1200px) {
   .messagedisplay{
-    font-size: 80%;
-    margin-top:3%!important;
-    margin-bottom:-6%!important;
-    margin-left:11%!important;
+	font-size: 80%;
+	margin-top:3%!important;
+	margin-bottom:-6%!important;
+	margin-left:11%!important;
   }
   .designchange{
-    margin-right:4%!important;
+	margin-right:4%!important;
   }
 }
 </style>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#data tr").click(function() {
+			var selected = $(this).hasClass("highlight");
+			$("#data tr").removeClass("highlight");
+			if(!selected)
+			$(this).addClass("highlight");
+		});
+		$("#staffsearch").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
+			$("#search tr").filter(function() {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
+		$("#staffsearch").on("focus", function() {
+			var value = $(this).val().toLowerCase();
+			$("#search tr").filter(function() {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
+		checkradio();
+	});
+	/*function fngetempid(id,kananame) {
+		$('#empid').val(id);
+		$('#empKanaName').val(kananame);
+	}*/
+	function checkradio(){
+		if ($('#empid').val() != "") {
+			var getcusId = $('#empid').val();
+			jQuery("#"+getcusId).prop("checked", true);
+		} 
+	}
+</script>
 {{ Form::hidden('mainmenu', $request->mainmenu, array('id' => 'mainmenu')) }}
 <div class="popupstyle popupsize">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" style="color: red;" aria-hidden="true">&#10006;</button>
-            <h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_nameselection') }}</B></h3>
-        </div>
-        <div class="box100per pr5 pt15 pl10">
-            <table class="tablealter  table-bordered table-striped" width="96.95%" style="table-layout: fixed;">
-                <colgroup>
-                    <col width="6%">
-                    <col width="8%">
-                    <col width="15%">
-                    <col width="">
-                </colgroup>
-                <thead class="CMN_tbltheadcolor" >
-                    <th class="tac"></th>
-                    <th class="tac">{{ trans('messages.lbl_sno') }}</th>
-                    <th class="tac">{{ trans('messages.lbl_UserID') }}</th>
-                    <th class="tac">{{ trans('messages.lbl_user') }} {{ trans('messages.lbl_name') }} </th>
-                </thead>
-                <tbody id="search" class="staff">
-                    
-                </tbody>
-            </table>
-        </div>
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" style="color: red;" aria-hidden="true">&#10006;</button>
+			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_nameselection') }}</B></h3>
+		</div>
+		<div>
+			<div style="display: inline-block;float: right;margin-top: 5px;">
+				{!! Form::text('staffsearch', $request->staffsearch, array('','class'=>' form-control box85per pull-left','style'=>'height:30px;','id'=>'staffsearch','placeholder'=>'Search')) !!}
+			</div>
+		</div>
+		<div class="box100per pr5 pt15 pl10">
+			<table class="tablealter  table-bordered table-striped" width="96.95%" style="table-layout: fixed;">
+				<colgroup>
+					<col width="6%">
+					<col width="8%">
+					<col width="15%">
+					<col width="">
+					<col width="">
+				</colgroup>
+				<thead class="CMN_tbltheadcolor" >
+					<th class="tac"></th>
+					<th class="tac">{{ trans('messages.lbl_sno') }}</th>
+					<th class="tac">{{ trans('messages.lbl_CustId') }}</th>
+					<th class="tac">{{ trans('messages.lbl_cusname') }}</th>
+					<th class="tac">{{ trans('messages.lbl_kananame') }}</th>
+				</thead>
+				<tbody id="search" class="staff">
+					<?php $i=0; ?>
+					@forelse($custDtl as $key => $value)
+						<tr>
+							<td align="center">
+							<input  type="radio" id="<?php echo $value->customer_id; ?>" name="empid">
+							</td>
+							<td align="center">
+								{{ $i + 1 }}
+							</td>
+							<td align="center">
+								{{ $value->customer_id }}
+							</td>
+							<td>
+								{{ $value->customer_name }}
+							</td>
+							<td>
+								{{ $value->romaji }}
+							</td>
+						</tr>
+					<?php $i++; ?>
+					@empty
+						<tr>
+							<td class="text-center" colspan="5" style="color: red;">
+							{{ trans('messages.lbl_nodatafound') }}</td>
+						</tr>
+					@endforelse
+				</tbody>
+			</table>
+		</div>
    <div class="modal-footer bg-info mt10">
-      <center>
-         <button id="add" onclick="javascript:fnselect();" class="btn btn-success CMN_display_block box100">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-               {{ trans('messages.lbl_select') }}
-         </button>
-         <button data-dismiss="modal" onclick="javascript:fnclose();" class="btn btn-danger CMN_display_block box100">
-            <i class="fa fa-times" aria-hidden="true"></i>
-               {{ trans('messages.lbl_cancel') }}
-         </button>
-         <!-- onclick="javascript:return cancelpopupclick();" -->
-      </center>
+	  <center>
+		 <button id="add" onclick="javascript:fnselect();" class="btn btn-success CMN_display_block box100">
+			<i class="fa fa-plus" aria-hidden="true"></i>
+			   {{ trans('messages.lbl_select') }}
+		 </button>
+		 <button data-dismiss="modal" onclick="javascript:fnclose();" class="btn btn-danger CMN_display_block box100">
+			<i class="fa fa-times" aria-hidden="true"></i>
+			   {{ trans('messages.lbl_cancel') }}
+		 </button>
+		 <!-- onclick="javascript:return cancelpopupclick();" -->
+	  </center>
    </div>
-      </div>
+	  </div>
    </div>
    </div>
    <script>
-    $('.footable').footable({
-      calculateWidthOverride: function() {
-        return { width: $(window).width() };
-      }
-    }); 
+	$('.footable').footable({
+	  calculateWidthOverride: function() {
+		return { width: $(window).width() };
+	  }
+	}); 
   </script>
