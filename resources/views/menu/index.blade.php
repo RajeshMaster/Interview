@@ -101,7 +101,7 @@
 								<a name="bank" id="bank" style="color:#33AFFF !important;" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}">{{ trans('messages.lbl_settings') }}</a>
 							</span>
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
-								<a name="bank" id="bank" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_user') }}</a>
+								<a name="bank" id="bank" style="color:#33AFFF !important;" href="{{ url('user/index?mainmenu=menu_user&time='.date('Ymdhis')) }}">{{ trans('messages.lbl_user') }}</a>
 							</span>
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
 								<a name="bank" id="bank" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_ourdetails') }}</a>
