@@ -132,6 +132,8 @@ return [
 	'lbl_CustId' => '取引先 ID',
 	'lbl_kananame' => 'カナ名称',
 	'lbl_remarks' => '備考',
+	'lbl_upResume' => '経歴書',
+
     /* End Employee Module */
 
 	/* Start Setting Module */

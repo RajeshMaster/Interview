@@ -116,12 +116,13 @@ class Employee extends Model
 	*  @param $request
 	*  Created At 2020/10/01
 	**/
-	public static function fnGetClientTemp($empId){
+	public static function fnGetClientDtl($empId){
 		$db = DB::connection('mysql');
 		$query = $db->table('inv_clientemp_dtl')
 					->select('*')
 					->where([['emp_id', '=', $empId]])
-					->get();
+					->ORDERBY('Ins_DT', 'DESC')
+					->first();
 		return $query;
 	}
 
@@ -243,6 +244,49 @@ class Employee extends Model
 					->WHERE('branch_name', '=', $branchId)
 					->get();
 		return $result;
+	}
+
+	/**
+	*  End Date Insert Details
+	*  @author Rajesh 
+	*  @param $startDT,$endDT
+	*  Created At 2020/10/2
+	**/
+	public static function insertEnddate($request) {
+		$db = DB::connection('mysql');
+		$result= $insert=DB::table('inv_clientemp_dtl')->insert(
+			[
+				'cust_id' => $request->customerId,
+				'branch_id' => $request->branchId,
+				'emp_id' => $request->empid,
+				'interview_id' => "",
+				'incharge_id' => $request->inchargeDetails,
+				'status' => 1,
+				'start_date' => $request->startDate,
+				'end_date' => $request->endDate,
+				'CreatedBy' => Session::get('FirstName').' '.Session::get('LastName'),
+				'UpdatedBy' => Session::get('FirstName').' '.Session::get('LastName'),
+				'remarks' => $request->remarks,
+				'delFLg' => 0,
+				'reason' => "",
+			]
+		);
+		return $result;
+	}
+
+	/**
+	*  Get Mail Details
+	*  @author Rajesh 
+	*  @param $mailId
+	*  Created At 2020/10/2
+	**/
+	public static function getContentFirst($mailId) {
+		$db = DB::connection('mysql');
+		$query = $db->TABLE('mailContent')
+					->select('*')
+					->WHERE('mailId','=',$mailId)
+					->get();
+		return $query;
 	}
 
 	/**  

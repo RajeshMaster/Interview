@@ -57,7 +57,6 @@ $(document).ready(function() {
 		});
 	});
 
-
 	$('.wrkEndRegister').on('click', function() {
 		resetErrors();
 		var url ='wrkEndValidation';
@@ -73,7 +72,6 @@ $(document).ready(function() {
 			data: data,
 			async: false, //blocks window close
 			success: function(resp) {
-				alert(JSON.stringify(resp));
 				if(resp == true){
 					swal({
 						title: msg_add,
@@ -86,8 +84,8 @@ $(document).ready(function() {
 					function(isConfirm) {
 						if (isConfirm) {
 						   pageload();
-							$('#employee_reg').attr('action', 'employeeEditProcess'+'?menuid=menu_mail&time='+datetime);
-							$("#employee_reg").submit();
+							$('#workEndReg').attr('action', 'wrkEndProcess'+'?menuid=menu_employee&time='+datetime);
+							$("#workEndReg").submit();
 						} 
 					});
 				} else {
@@ -357,7 +355,7 @@ function customerSelectPopup() {
 // Double Click on popup Select tr
 function fndbclick(cusid,cusname,name) {
 	document.getElementById("inchargeDetails").value = "";
-	$("#"+empid).prop("checked", true);
+	$("#"+cusid).prop("checked", true);
 	if($.trim(name) == "" || $.trim(name) == null) {
 		name = cusname;
 	}

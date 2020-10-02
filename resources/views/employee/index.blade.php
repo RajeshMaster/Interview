@@ -317,7 +317,11 @@
 										</div>
 										&nbsp;|
 										<div class="CMN_display_block">
+											@if($empdetailsdet[$i]['clientStatus'] == 0 )
 												<a style="color:blue;" href="javascript:workend('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_work_date') }}</a>&nbsp;|
+											@else
+												{{ trans('messages.lbl_work_date') }}&nbsp;|
+											@endif
 										</div>
 
 										<div class="CMN_display_block">

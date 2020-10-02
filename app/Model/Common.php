@@ -207,4 +207,19 @@ class Common extends Model {
 		return $query;
 	}
 
+	/**
+	* To Get User Information
+	* @author Sastha
+	* Created At 2020/09/15
+	**/
+	public static function fnGetEmployeeInfo($id){
+		$db = DB::connection('mysql_invoice');
+		$result = $db->table('emp_mstemployees')
+						->SELECT('*')
+						->leftJoin('mstaddress AS mst', 'mst.id', '=', 'emp_mstemployees.Address1')
+						->WHERE('Emp_ID', '=', $id)
+						->get();
+		return $result;
+	}
+
 }

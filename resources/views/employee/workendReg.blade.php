@@ -153,9 +153,8 @@
 												'onKeyPress'=>'return event.charCode >= 48 && event.charCode <= 57',
 												'class'=>'ime_mode_disable form-control box40per dispinline stDate startDate mlength',
 												'data-label' => trans('messages.lbl_doj'))) }}
-				
-				<label class="mt10 ml2 fa fa-calendar fa-lg" for="startDate" aria-hidden="true"></label>
 				<div class="startDate_err dispinline"></div>
+				<label class="mt10 ml2 fa fa-calendar fa-lg" for="startDate" aria-hidden="true"></label>
 			</div>
 		</div>
 
@@ -170,9 +169,8 @@
 												'onKeyPress'=>'return event.charCode >= 48 && event.charCode <= 57',
 												'class'=>'ime_mode_disable form-control box40per dispinline enDate endDate mlength' ,
 												'data-label' => trans('messages.lbl_doj'))) }}
-				
-				<label class="mt10 ml2 fa fa-calendar fa-lg" for="endDate" aria-hidden="true"></label>
 				<div class="endDate_err dispinline"></div>
+				<label class="mt10 ml2 fa fa-calendar fa-lg" for="endDate" aria-hidden="true"></label>
 			</div>
 		</div>
 
@@ -182,12 +180,12 @@
 			</div>
 			<div class="col-xs-7 mw" style="">
 			
-				{{ Form::textarea('StreetAddress',"",array('id'=>'StreetAddress', 
-												'name' => 'StreetAddress',
-												'data-label' => trans('messages.lbl_streetaddress'),
-												'class' => 'mlength ntcomp dispinline form-control ime_mode_disable StreetAddress',
+				{{ Form::textarea('remarks',"",array('id'=>'remarks',
+												'name' => 'remarks',
+												'data-label' => trans('messages.lbl_remarks'),
+												'class' => 'mlength ntcomp dispinline form-control ime_mode_disable remarks',
 												'style' => 'height:130px; ')) }}
-				<div class="StreetAddress_err dispinline"></div>
+				<div class="remarks_err dispinline"></div>
 			</div>
 		</div>
 

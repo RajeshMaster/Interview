@@ -12,6 +12,8 @@ use Config;
 use View;
 use Carbon;
 use Illuminate\Support\Facades\Validator;
+use App\Model\SendingMail;
+
 class EmployeeController extends Controller
 {
 	/**
@@ -109,17 +111,25 @@ class EmployeeController extends Controller
 				$empdetailsdet[$i]['experience'] = $cusexpdetails['year'].".".Employee::fnAddZeroSubstring($cusexpdetails['month']);
 			}
 
-			$recentClient =Employee::fnGetClientTemp($empdetailsdet[$i]['Emp_ID']);
+			$recentClient =Employee::fnGetClientDtl($empdetailsdet[$i]['Emp_ID']);
+			/*
+				Point To remember
+				clientStatus = 0 ->able to edit end date
+				clientStatus = 1 ->Unable to edit end date
+			*/
+			if (isset($recentClient->status)) {
+				$empdetailsdet[$i]['clientStatus'] = $recentClient->status;
+			} else {
+				$empdetailsdet[$i]['clientStatus'] = 0;
+			}
 			$recentResume =Employee::fnGetResume($empdetailsdet[$i]['Emp_ID']);
-
-
-
 			$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
 			foreach($cusname as $key=>$value) {
 				$empdetailsdet[$i]['customer_name'] = $value->customer_name;
 			}
 			$i++;
 		}
+
 		$detailage = Employee::GetAvgage($resignid);
 
 		return view('employee.index', ['request' => $request,
@@ -139,6 +149,7 @@ class EmployeeController extends Controller
 										'disabledRes'	=>$disabledRes
 										]);
 	}
+
 	/**
 	*
 	* To view Employee SingleView Page
@@ -178,7 +189,7 @@ class EmployeeController extends Controller
 	* To view Employee Edit Page
 	* @author Rajesh
 	* @return object to particular view page
-	* Created At 2020/10/13
+	* Created At 2020/10/2
 	*
 	*/
 	public function empAddEdit(Request $request){
@@ -205,7 +216,7 @@ class EmployeeController extends Controller
 	* To view Employee Edit Validation
 	* @author Rajesh
 	* @return object to particular view page
-	* Created At 2020/10/13
+	* Created At 2020/10/2
 	*
 	*/
 	public function AddEditregvalidation(Request $request) {
@@ -237,7 +248,7 @@ class EmployeeController extends Controller
 	* Employee Edit Process
 	* @author Rajesh
 	* @return object to particular view page
-	* Created At 2020/10/13
+	* Created At 2020/10/2
 	*
 	*/
 	public function employeeEditProcess(Request $request) {
@@ -258,7 +269,7 @@ class EmployeeController extends Controller
 	* Work End Process
 	* @author Rajesh
 	* @return object to particular view page
-	* Created At 2020/10/13
+	* Created At 2020/10/2
 	*
 	*/
 	public function workend(Request $request) {
@@ -285,7 +296,7 @@ class EmployeeController extends Controller
 	* Get Branch Process
 	* @author Rajesh
 	* @return object to particular view page
-	* Created At 2020/10/13
+	* Created At 2020/10/2
 	*
 	*/
 	public function branch_ajax(Request $request){
@@ -301,7 +312,7 @@ class EmployeeController extends Controller
 	* Get Incharge Process
 	* @author Rajesh
 	* @return object to particular view page
-	* Created At 2020/10/13
+	* Created At 2020/10/2
 	*
 	*/
 	public function incharge_ajax(Request $request) {
@@ -318,7 +329,7 @@ class EmployeeController extends Controller
 	* Get Customer Details For Popup
 	* @author Rajesh
 	* @return object to particular view page
-	* Created At 2020/10/13
+	* Created At 2020/10/2
 	*
 	*/
 	public function customerSelpopup(Request $request) {
@@ -331,20 +342,24 @@ class EmployeeController extends Controller
 	* Validation for work end Date
 	* @author Rajesh
 	* @return object to particular view page
-	* Created At 2020/10/13
+	* Created At 2020/10/02
 	*
 	*/
 	public function wrkEndValidation(Request $request) {
 		$commonrules=array();
 		$common2 = array();
+
+		$after = $request->startDate;
+		$before = $request->endDate;
+
 		$common1 = array(
 			'customerName' => 'required',
 			'branchId'=>'required',
 			'inchargeDetails'=>'required',
-			'startDate'=>'required',
-			'endDate' => 'required',
+			'startDate'=>'required|date_format:"Y-m-d|before:' . $before,
+			'endDate' => 'required|date_format:"Y-m-d|after:' . $after,
 		);
-
+	
 		$commonrules = $common1 + $common2;
 		$rules = $commonrules;
         $validator = Validator::make($request->all(), $rules);
@@ -354,5 +369,37 @@ class EmployeeController extends Controller
             $success = true;
             echo json_encode($success);
         }
+	}
+
+	/**
+	*
+	* Validation for work end Date
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/03
+	*
+	*/
+	public function wrkEndProcess(Request $request) {
+		$updateEnddate = Employee::insertEnddate($request);
+		if ($updateEnddate) {
+			$mailid = "MAIL0014";
+			$cont = Employee::getContentFirst($mailid);
+			$content = "";
+			$content.="\r\n EmployeeID   :".$request->empId;
+			$data[0] =  str_replace('AAAA',$content, $cont[0]->content);
+			$email=Common::fnGetEmployeeInfo($request->empid); 
+			$mail=SendingMail::sendIntimationMail($data,$email[0]->Emailpersonal,"Update Resume");
+			if($mail){
+				Session::flash('success', 'Mail Sent And End Date Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('danger', 'Mail Not Sent But End Date Updated Sucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		} else {
+			Session::flash('danger', 'End Date Updated UnSucessfully!'); 
+			Session::flash('type', 'alert-success'); 
+		}
+		return Redirect::to('Employee/index?mainmenu=menu_employee&time='.date('YmdHis'));
 	}
 }
