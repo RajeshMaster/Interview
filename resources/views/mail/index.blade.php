@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('content')
 {{ HTML::script(asset('public/js/mail.js')) }}
-{{ HTML::style(asset('public/css/ullilayout.css')) }}
-{{ HTML::style(asset('public/css/designtable.css')) }}
 <style type="text/css">
 .sort_asc {
 	background-image:url({{ URL::asset('public/images/upArrow.png') }}) !important;
@@ -127,7 +125,7 @@
 								</span>
 								@else
 								<span class="pm0">
-									<a href="javascript:fndelflg('{{ '0' }}','{{ $content->mailId }}');" class="fwb ftclr" id="notuse">
+									<a href="javascript:fndelflg('{{ '0' }}','{{ $content->mailId }}');" class="fwb ftclr" id="notuse" style="color: red;">
 									{{ trans('messages.lbl_notuse') }}</a>
 								</span>
 								@endif

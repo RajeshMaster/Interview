@@ -150,7 +150,7 @@
 										</span>
 										@else
 										<span class="pm0">
-											<a href="javascript:fndelflg('{{ '0' }}','{{ $data->id }}');" class="fwb ftclr" id="notuse">
+											<a href="javascript:fndelflg('{{ '0' }}','{{ $data->id }}');" class="fwb ftclr" id="notuse" style="color: red;">
 											{{ trans('messages.lbl_notuse') }}</a>
 										</span>
 										@endif
