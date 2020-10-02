@@ -1,6 +1,6 @@
 <?php
 return [
-	/* Common Module  */
+	/* Start Common Module  */
 	'lbl_interview' => '面接',
 	'lbl_interviewsys' => '面接管理システム',
 	'lbl_assetstypes' => '資産種別',
@@ -25,16 +25,18 @@ return [
 	'lbl_belongsTo' => '名義',
 	'lbl_search' => '検索',
 	'lbl_multi_search' => '複数検索',
+	/* End Common Module  */
 
-	/* Change Password */
+	/* Start Change Password */
 	'lbl_pwdchange' => 'パスワード変更',
 	'lbl_changePassword' => 'パスワード変更',
 	'lbl_currentpassword' => '現在パスワード',
 	'lbl_newpassword'=> '新規パスワード',
 	'lbl_confirmnewpassword' => '確認パスワード',
 	'lbl_resetpassword' =>'Reset Password',
+	/* End Change Password */
 
-	/* Mail Content Module  */
+	/* Start Mail Content Module  */
 	'lbl_mail' => 'メール',
 	'lbl_mailid' => 'メールId',
 	'lbl_mailname' => 'メール名',
@@ -48,8 +50,9 @@ return [
 	'lbl_mailsendby' => 'から送信されました',
 	'lbl_senddatetime' => '時日送信',
 	'lbl_to' => '受信者',
+	/* End Mail Content Module  */
 
-	/* Register Module  */
+	/* Start Register Module  */
 	'lbl_usrregister' => 'ユーザ登録',
 	'lbl_surname' => '姓',
 	'lbl_givenname' => '名',
@@ -65,13 +68,15 @@ return [
 	'lbl_sendpwdlink' => 'Send Password Link Reset',
 	'lbl_passhere' => 'You can reset your password here.',
 	'lbl_emailalreadyexists' => 'このメールアドレスはすでに登録されています。',
+	/* End Register Module  */
 
-	/* Mail Module  */
+	/* Start Mail Module  */
 	'lbl_mailsubject' => 'メール標記',
 	'lbl_subject' => '件名',
 	'lbl_mailtype' => 'メールタイプ',
+	/* End Mail Module  */
 
-	/* Setting Module */
+	/* Start Setting Module */
 	'lbl_settings' => '設定',
 	'lbl_categorytypes' => 'Category Types',
 	'lbl_main_category' => 'メインカテゴリー',
@@ -85,8 +90,9 @@ return [
 	'lbl_familymember' => 'Family Member',
 	'lbl_houseimgmain' => 'House Images Main',
 	'lbl_houseimgsub' => 'House Images Sub',
+	/* End Setting Module */
 
-	/* Menu Module */
+	/* Start Menu Module */
     'lbl_home' => 'ホーム',
 	'lbl_employee' => '社員',
 	'lbl_customer' => '取引先',
@@ -97,8 +103,9 @@ return [
 	'lbl_user' => 'ユーザ',
 	'lbl_ourdetails' => '当社詳細',
     'lbl_japanese_skills' => '日本語のスキル',
+	/* End Menu Module */
 
-    /* Employee */
+    /* Start Employee Module */
     'lbl_avgage' => '平均年齢',
 	'lbl_nonMB' => 'MBにはいない',
 	'lbl_resigned' => '退社社員',
@@ -118,6 +125,7 @@ return [
 	'lbl_accountno' => '口座番号',
 	'lbl_branchnumber' => '支店番号',
 	'lbl_resign' => '退社',
+    /* End Employee Module */
 
 	/* Start Setting Module */
 	'lbl_userdesignation' => 'ユーザー指定',
@@ -155,9 +163,11 @@ return [
 	'lbl_groupName' => 'Group Name',
 	'lbl_groupMembers' =>'Group Member',
 	'lbl_grouplist' =>'Group List',
+	'lbl_custname' => '取引先名',
 	/* End Setting Module */
-	/* User */
+
+	/* Start User Module */
 	'lbl_userid' => 'ユーザーID',
 	'lbl_username' => 'ユーザー名',
-	/* End User */
+	/* End User Module */
 ];

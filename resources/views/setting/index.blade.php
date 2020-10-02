@@ -164,7 +164,7 @@
 									$tbl_name = 'ams_master_buildingname';
 								@endphp
 							 	<a name="houseName" style="color: #33AFFF !important;" 
-						 		id="houseName" href="javascript:underconst();">{{ trans('messages.lbl_group') }}</a>
+						 		id="houseName" href="javascript:groupselectpopup();">{{ trans('messages.lbl_group') }}</a>
 							</span>
 						</div>
 					</div>

@@ -1,6 +1,6 @@
 <?php
 return [
-	/* Common Module  */
+	/* Start Common Module  */
 	'lbl_interview' => 'Interview',
 	'lbl_interviewsys' => 'Interview Management System',
 	'lbl_assetstypes' => 'Assets Types',
@@ -25,16 +25,18 @@ return [
 	'lbl_belongsTo' => 'Belongs To',
 	'lbl_search' => 'Search',
 	'lbl_multi_search' => 'Multi Search',
+	/* End Common Module  */
 	
-	/* Change Password Module  */
+	/* Start Change Password Module  */
 	'lbl_pwdchange' => 'Password Change',
 	'lbl_changePassword' => 'Change Password',
 	'lbl_currentpassword' => 'Current Password',
 	'lbl_newpassword'=> 'New Password',
 	'lbl_confirmnewpassword' => 'Confirm New Password',
 	'lbl_resetpassword' =>'Reset Password',
+	/* End Change Password Module  */
 
-	/* Mail Content Module  */
+	/* Start Mail Content Module  */
 	'lbl_mail' => 'Mail',
 	'lbl_mailid' => 'Mail Id',
 	'lbl_mailname' => 'Mail Name',
@@ -48,8 +50,9 @@ return [
 	'lbl_mailsendby' => 'Mail Send By',
 	'lbl_senddatetime' => 'Send Date Time',
 	'lbl_to' => 'To',
+	/* End Mail Content Module  */
 
-	/* Register Module  */
+	/* Start Register Module  */
 	'lbl_usrregister' => 'User Register',
 	'lbl_surname' => 'Sur Name',
 	'lbl_givenname' => 'Given Name',
@@ -65,13 +68,15 @@ return [
 	'lbl_sendpwdlink' => 'Send Password Link Reset',
 	'lbl_passhere' => 'You can reset your password here.',
 	'lbl_emailalreadyexists' => 'Email Is Already Exists',
+	/* End Register Module  */
 
-	/* Mail Module  */
+	/* Start Mail Module  */
 	'lbl_mailsubject' => 'Mail Subject',
 	'lbl_subject' => 'Subject',
 	'lbl_mailtype' => 'Mail Type',
+	/* End Mail Module  */
 
-	/* Setting Module  */
+	/* Start Setting Module  */
 	'lbl_settings' => 'Settings',
 	'lbl_categorytypes' => 'Category Type',
 	'lbl_main_category' => 'Main Category',
@@ -85,8 +90,9 @@ return [
 	'lbl_familymember' => 'Family Members',
 	'lbl_houseimgmain' => 'House Images Main',
 	'lbl_houseimgsub' => 'House Images Sub',
+	/* End Setting Module  */
 
-	/* Menu Module */
+	/* Start Menu Module */
     'lbl_home' => 'Home',
 	'lbl_employee' => 'Employee',
 	'lbl_customer' => 'Customer',
@@ -97,8 +103,9 @@ return [
 	'lbl_user' => 'User',
 	'lbl_ourdetails' => 'Our Details',
     'lbl_japanese_skills' => 'Japanese Skills',
+	/* End Menu Module */
 
-	/* Employee */
+	/* Start Employee Module */
 	'lbl_avgage' => 'Avg Age',
 	'lbl_nonMB' => 'Not In Mb',
 	'lbl_resigned' => 'Resigned',
@@ -118,6 +125,7 @@ return [
 	'lbl_accountno' => 'Account No',
 	'lbl_branchnumber' => 'Branch Number',
 	'lbl_resign' => 'Resign',
+	/* End Employee Module */
 
 	/* Start Setting Module */
 	'lbl_userdesignation' => 'User Designation',
@@ -155,9 +163,11 @@ return [
 	'lbl_groupName' => 'Group Name',
 	'lbl_groupMembers' =>'Group Member',
 	'lbl_grouplist' =>'Group List',
+	'lbl_custname' =>'Customer Name',
 	/* End Setting Module */
-	/* User */
+
+	/* Start User Module */
 	'lbl_userid' => 'User ID',
 	'lbl_username' => 'User Name',
-	/* End User */
+	/* End User Module */
 ];

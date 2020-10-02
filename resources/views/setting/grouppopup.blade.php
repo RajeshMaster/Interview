@@ -204,7 +204,7 @@
 						</div>
 						<div class="dispinline ml15 mb5 pull-left box30per">
 							{{ Form::text('grpName','',array('id'=>'grpName', 
-								'name' => 'grpName','class'=>'box60per form-control ime_mode_active','maxlength' => 40,
+								'name' => 'grpName','class'=>'box70per width_160 form-control ime_mode_active','maxlength' => 40,
 								'onkeypress' =>'return blockSpecialChar(event)',
 								'onblur'=>'this.value=jQuery.trim(this.value);'
 							)) }}
