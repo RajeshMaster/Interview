@@ -131,6 +131,7 @@ return [
 	'lbl_workEdate' => '仕事終了日',
 	'lbl_CustId' => '取引先 ID',
 	'lbl_kananame' => 'カナ名称',
+	'lbl_remarks' => '備考',
     /* End Employee Module */
 
 	/* Start Setting Module */

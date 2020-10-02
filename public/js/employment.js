@@ -55,8 +55,63 @@ $(document).ready(function() {
 				// alert('there was a problem checking the fields');
 			}
 		});
-
 	});
+
+
+	$('.wrkEndRegister').on('click', function() {
+		resetErrors();
+		var url ='wrkEndValidation';
+		$.each($('form input, form select, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+			}
+		}); 
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				alert(JSON.stringify(resp));
+				if(resp == true){
+					swal({
+						title: msg_add,
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						closeOnConfirm: true,
+						closeOnCancel: true
+					},
+					function(isConfirm) {
+						if (isConfirm) {
+						   pageload();
+							$('#employee_reg').attr('action', 'employeeEditProcess'+'?menuid=menu_mail&time='+datetime);
+							$("#employee_reg").submit();
+						} 
+					});
+				} else {
+				  $.each(resp, function(i, v) {
+						// alert(i + " => " + v); // view in console for error messages
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError').after(msg);
+					});
+				}
+			},
+			error: function(data) {
+				// alert(data.status);
+				// alert('there was a problem checking the fields');
+			}
+		});
+	});
+
+
+
+
+
+
+
+
 });
 
 /*
@@ -241,7 +296,6 @@ function fnGetbranchDetail() {
 					url: 'incharge_ajax',
 					data: {"getcusId": getcusId,"getbranchId": getbranchId},
 					success: function(resp) {
-						alert(resp);
 						for (i = 0; i < resp.length; i++) {
 							$('#inchargeDetails').append( '<option value="'+resp[i]["id"]+'">'+resp[i]["incharge_name"]+'</option>' );
 						}
@@ -251,13 +305,13 @@ function fnGetbranchDetail() {
 						} 
 					},
 					error: function(data) {
-						alert(data.status);
+						// alert(data.status);
 					}
 				});
 			}
 		},
 		error: function(data) {
-			alert(data.status);
+			// alert(data.status);
 		}
 	});
 }
@@ -299,4 +353,46 @@ function customerSelectPopup() {
 			keyboard: false
 		});
 	$('#customerSelect').modal('show');
+}
+// Double Click on popup Select tr
+function fndbclick(cusid,cusname,name) {
+	document.getElementById("inchargeDetails").value = "";
+	$("#"+empid).prop("checked", true);
+	if($.trim(name) == "" || $.trim(name) == null) {
+		name = cusname;
+	}
+	$('#customerId').val(cusid);
+	$('#customerName').val(cusname);
+	fnGetbranchDetail();
+	$('#customerSelect').modal('toggle');
+}
+
+// Single Click in tr
+function fnSclkTr(cusid,empname,name) {
+	$("#"+cusid).prop("checked", true);
+	if($.trim(name) == "" || $.trim(name) == null) {
+		name = empname;
+	}
+	$('#hcusId').val(cusid);
+	$('#hName').val(name);
+}
+
+// Select button on Customer Select popup
+function fnselect() {
+	if ($('input[name="cusId"]:checked').length == 0) {
+		alert("Please select atleast one Customer");
+		return false;
+	} else {
+		var confirmcustomer = confirm("Do You Want To Select Customer?");
+		if(confirmcustomer) {
+			document.getElementById("inchargeDetails").value = "";
+			var cusId = $('#hcusId').val();
+			$('#customerId').val(cusId);
+			$('#customerName').val($('#hName').val());
+			fnGetbranchDetail();
+			$('#customerSelect').modal('toggle');
+		} else {
+			return false;
+		}
+	}
 }

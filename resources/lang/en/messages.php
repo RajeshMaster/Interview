@@ -131,6 +131,7 @@ return [
 	'lbl_workEdate' => 'Work End Date',
 	'lbl_CustId' => 'Customer ID',
 	'lbl_kananame' => 'Kana Name',
+	'lbl_remarks' => 'Remarks',
 	/* End Employee Module */
 
 	/* Start Setting Module */

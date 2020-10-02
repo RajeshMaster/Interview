@@ -1,6 +1,7 @@
 {{ HTML::style(asset('public/css/settinglayout.css')) }}
 <style>
-  #dwnArrow,#upArrow {
+	.highlight { background-color: #428eab !important; }
+	#dwnArrow,#upArrow {
 	text-decoration:none;
 	font-size:22px;
 	color:#bbb5b5;
@@ -44,18 +45,18 @@
 		});
 		checkradio();
 	});
-	/*function fngetempid(id,kananame) {
-		$('#empid').val(id);
-		$('#empKanaName').val(kananame);
-	}*/
+
 	function checkradio(){
-		if ($('#empid').val() != "") {
-			var getcusId = $('#empid').val();
+		if ($('#cusId').val() != "") {
+			var getcusId = $('#cusId').val();
 			jQuery("#"+getcusId).prop("checked", true);
 		} 
 	}
 </script>
 {{ Form::hidden('mainmenu', $request->mainmenu, array('id' => 'mainmenu')) }}
+{{ Form::hidden('hcusId', $request->customerId, array('id' => 'hcusId')) }}
+{{ Form::hidden('hName', '', array('id' => 'hName')) }}
+
 <div class="popupstyle popupsize">
 	<div class="modal-content">
 		<div class="modal-header">
@@ -67,8 +68,13 @@
 				{!! Form::text('staffsearch', $request->staffsearch, array('','class'=>' form-control box85per pull-left','style'=>'height:30px;','id'=>'staffsearch','placeholder'=>'Search')) !!}
 			</div>
 		</div>
-		<div class="box100per pr5 pt15 pl10">
-			<table class="tablealter  table-bordered table-striped" width="96.95%" style="table-layout: fixed;">
+
+		{{--*/ $overflow = 'overflow-y: scroll;' /*--}}
+		{{--*/ $tableWidth = 'width:99.5%;' /*--}}
+		{{--*/ $height = 'height:235px;' /*--}}
+		
+		<div class="mt10" style="<?php echo $overflow;?>;<?php echo $height;?>;<?php echo $tableWidth;?>">
+			<table id="data" class="tablealter  table-bordered table-striped mt10" width="99.95%" style="table-layout: fixed;">
 				<colgroup>
 					<col width="6%">
 					<col width="8%">
@@ -86,9 +92,11 @@
 				<tbody id="search" class="staff">
 					<?php $i=0; ?>
 					@forelse($custDtl as $key => $value)
-						<tr>
+						<tr 
+							ondblclick="fndbclick('<?php echo $value->customer_id; ?>','<?php echo $value->customer_name; ?>','<?php echo $value->romaji; ?>');"onclick="fnSclkTr('<?php echo $value->customer_id; ?>','<?php echo $value->customer_name; ?>','<?php echo $value->romaji; ?>');"
+						>
 							<td align="center">
-							<input  type="radio" id="<?php echo $value->customer_id; ?>" name="empid">
+							<input  type="radio" id="<?php echo $value->customer_id; ?>" name="cusId">
 							</td>
 							<td align="center">
 								{{ $i + 1 }}

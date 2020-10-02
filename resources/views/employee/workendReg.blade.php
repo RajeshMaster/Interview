@@ -10,10 +10,10 @@
 <script type="text/javascript">
 	var datetime = '<?php echo date('Ymdhis'); ?>';
 	var mainmenu = '<?php echo $request->mainmenu; ?>';
-/*	$(document).ready(function() {
-		setDatePicker18yearbefore("dob");
-		setDatePicker("opd");
-	});*/
+	$(document).ready(function() {
+		setDatePickerBeforeCurrent("stDate");
+		setDatePickerBeforeCurrent("enDate");
+	});
 </script>
 
 <div class="" id="main_contents">
@@ -50,7 +50,7 @@
 	<fieldset id="hdnfield" class="mt10">
 		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >
-				<label>{{ trans('messages.lbl_empid') }}<span class="fr ml10 red">&nbsp;&#42;</span></label>
+				<label>{{ trans('messages.lbl_empid') }}<span class="fr red">&nbsp;&nbsp;</span></label>
 			</div>
 			<div class="col-xs-7 mw">
 				{{ $request->empid }}
@@ -59,7 +59,7 @@
 
 		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_empName')}}<span class="fr">&nbsp;&#42;</span></label>
+				<label for="name">{{ trans('messages.lbl_empName')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
 			<div class="col-xs-7 mw">
 				{{ $request->empname }}
@@ -147,15 +147,15 @@
 				<label for="name">{{ trans('messages.lbl_workStdate')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				{{ Form::text('DateofBirth',(isset($empview[0]->DOB)) ? $empview[0]->DOB : '',array('id'=>'DateofBirth', 
-												'name' => 'DateofBirth','maxlength' => 10,
+				{{ Form::text('startDate','',array('id'=>'startDate', 
+												'name' => 'startDate','maxlength' => 10,
 												'autocomplete' => 'off',
 												'onKeyPress'=>'return event.charCode >= 48 && event.charCode <= 57',
-												'class'=>'ime_mode_disable form-control box40per dispinline dob DateofBirth',
+												'class'=>'ime_mode_disable form-control box40per dispinline stDate startDate mlength',
 												'data-label' => trans('messages.lbl_doj'))) }}
 				
-				<label class="mt10 ml2 fa fa-calendar fa-lg" for="DateofBirth" aria-hidden="true"></label>
-				<div class="DateofBirth_err dispinline"></div>
+				<label class="mt10 ml2 fa fa-calendar fa-lg" for="startDate" aria-hidden="true"></label>
+				<div class="startDate_err dispinline"></div>
 			</div>
 		</div>
 
@@ -164,21 +164,21 @@
 				<label for="name">{{ trans('messages.lbl_workEdate')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				{{ Form::text('DateofBirth',(isset($empview[0]->DOB)) ? $empview[0]->DOB : '',array('id'=>'DateofBirth', 
-												'name' => 'DateofBirth','maxlength' => 10,
+				{{ Form::text('endDate','',array('id'=>'endDate', 
+												'name' => 'endDate','maxlength' => 10,
 												'autocomplete' => 'off',
 												'onKeyPress'=>'return event.charCode >= 48 && event.charCode <= 57',
-												'class'=>'ime_mode_disable form-control box40per dispinline dob DateofBirth',
+												'class'=>'ime_mode_disable form-control box40per dispinline enDate endDate mlength' ,
 												'data-label' => trans('messages.lbl_doj'))) }}
 				
-				<label class="mt10 ml2 fa fa-calendar fa-lg" for="DateofBirth" aria-hidden="true"></label>
-				<div class="DateofBirth_err dispinline"></div>
+				<label class="mt10 ml2 fa fa-calendar fa-lg" for="endDate" aria-hidden="true"></label>
+				<div class="endDate_err dispinline"></div>
 			</div>
 		</div>
 
 		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_streetaddress')}}<span class="fr">&nbsp;&nbsp;&nbsp;</span></label>
+				<label for="name">{{ trans('messages.lbl_remarks')}}<span class="fr">&nbsp;&nbsp;&nbsp;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
 			
@@ -196,12 +196,12 @@
 		<div class="col-xs-12 mb10 mt10">
 			<div class="col-xs-12 buttondes" style="text-align: center;">
 				@if($request->editflg != "edit")
-					<button type="button" class="button button-green empRegister">
+					<button type="button" class="button button-green wrkEndRegister">
 						<i class="fa fa-plus"></i>&nbsp;{{ trans('messages.lbl_register')}}
 					</button>
 					&emsp;
 				@else
-					<button type="button" class="button button-orange empRegister">
+					<button type="button" class="button button-orange wrkEndRegister">
 						<i class="fa fa-edit"></i>&nbsp;{{ trans('messages.lbl_update') }}
 					</button>
 					&emsp;

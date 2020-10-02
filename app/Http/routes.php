@@ -63,6 +63,7 @@ Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 	Route::any('branch_ajax','EmployeeController@branch_ajax');
 	Route::any('incharge_ajax','EmployeeController@incharge_ajax');
 	Route::any('customerSelpopup','EmployeeController@customerSelpopup');
+	Route::any('wrkEndValidation','EmployeeController@wrkEndValidation');
 });
 
 // Non Employee - ADDED By Rajesh --2020/10/01

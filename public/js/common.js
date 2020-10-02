@@ -206,6 +206,23 @@ function setDatePicker(datefield) {
 		forceParse: 0
 	});
 }
+
+// Rajesh Date Picker For Before Current Date
+function setDatePickerBeforeCurrent (datefield) {
+	$('.'+datefield).datetimepicker({
+		format: 'yyyy-mm-dd',
+		language:  'eng',
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0,
+		endDate : new Date()
+	});
+}
+
 function fncancelcheck(url,frmname) {
 	if (cancel_check == false) {
 	swal({

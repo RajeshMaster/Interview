@@ -212,13 +212,13 @@ class EmployeeController extends Controller
 		$commonrules=array();
 		$common2 = array();
 		$common1 = array(
-			'OpenDate' => 'required',
+			'OpenDate' => 'required|date_format:"Y-m-d"',
 			'Surname'=>'required',
 			'Name'=>'required',
 			'nickName'=>'required',
-			'DateofBirth' => 'required',
-			'MobileNo'=>'required',
-			'Email'=>'required',
+			'DateofBirth' => 'required|date_format:"Y-m-d"',
+			'MobileNo'=>'required|numeric',
+			'Email'=>'required|email',
 		);
 
 		$commonrules = $common1 + $common2;
@@ -324,5 +324,35 @@ class EmployeeController extends Controller
 	public function customerSelpopup(Request $request) {
 		$custDtl = Employee::selectcustomer();
 		return view('employee.customerSelPopup',['custDtl' => $custDtl,'request' => $request]);
+	}
+
+	/**
+	*
+	* Validation for work end Date
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/13
+	*
+	*/
+	public function wrkEndValidation(Request $request) {
+		$commonrules=array();
+		$common2 = array();
+		$common1 = array(
+			'customerName' => 'required',
+			'branchId'=>'required',
+			'inchargeDetails'=>'required',
+			'startDate'=>'required',
+			'endDate' => 'required',
+		);
+
+		$commonrules = $common1 + $common2;
+		$rules = $commonrules;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
 	}
 }
