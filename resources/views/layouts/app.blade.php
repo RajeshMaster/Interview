@@ -183,7 +183,7 @@
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: width -7s;
-    /*ADDED BY Sarath*/
+    /*ADDED BY Easa*/
     overflow-x: hidden;
 }
 @media (min-width:1200px) {
@@ -304,16 +304,16 @@ body {
 	left: 50px;
 }
 
-/*ADDED BY Sarath*/
+/*ADDED BY Easa*/
 #mySidenav .sidebar-nav li > a:hover{
 	background-color:white;
 }
 #mySidenav .sidebar-nav li.active > a { 
-	background-color: #F58142; 
+	background-color: #3caadef0;
 	color: black; 
 } 
 #mySidenav .dropdown-menu li.active > a { 
-	background-color: #fad6c3;  
+	background-color: #03a9f44f;  
 	color: black;
 } 
 </style>
