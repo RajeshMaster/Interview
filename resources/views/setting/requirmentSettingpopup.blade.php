@@ -9,6 +9,16 @@
 			$('#textbox1').val('');
 			$('#textbox2').val('');
 		}
+		/*$('#swaptable1').delegate('tr', 'click' , function(){
+			if (event.target.type !== 'radio') {
+				if (event.target.nodeName != "SPAN") {
+					$(this).find('input[type=radio]').prop('checked', true).trigger("click");
+				}
+			}
+		});*/
+	});
+	
+	$(document).ready(function() {
 		$('#swaptable1').delegate('tr', 'click' , function(){
 			if (event.target.type !== 'radio') {
 				if (event.target.nodeName != "SPAN") {
