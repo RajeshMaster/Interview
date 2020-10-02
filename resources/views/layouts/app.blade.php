@@ -693,7 +693,7 @@ body {
 									{{ trans('messages.lbl_settings') }}</a>
 								</div>
 								<div id="setting_sub_2">
-									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_user&time='.date('Ymdhis')) }}" 
+									<a class="pageload" href="{{ url('user/index?mainmenu=menu_user&time='.date('Ymdhis')) }}" 
 										style="text-decoration: none !important;">
 									{{ trans('messages.lbl_user') }}</a>
 								</div>
