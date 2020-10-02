@@ -35,8 +35,6 @@
 							'files'=>true)) }}
 		{{ Form::hidden('whichprocess',0, array('id' => 'whichprocess')) }}
 	@endif
-	{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
-	{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
 	<fieldset id="hdnfield" class="mt10">
 		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >

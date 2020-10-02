@@ -3,196 +3,288 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Model\User;
+use DB;
 use Input;
 use Redirect;
-use DB;
 use Session;
-use Config;
-use App\Model\Common;
+use Carbon;
 use Illuminate\Support\Facades\Validator;
-use Mail;
-use View;
-use Auth;
-class UserController extends Controller {
 
-	const MAIL_ID = "MAIL0001";
-	/** Userindex Page view process
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/20
-	*/
-	public function userindex(Request $request) {
-		//Filter process
-		$disabledall = "";
-		$disabledverified = "";
-		$disabledunverified = "";
-		if (!isset($request->filterval) || $request->filterval == "") {
-			$request->filterval = 1;
-		}
-		if ($request->filterval == 1) {
-			$disabledall = "disabled fb";
-		} elseif ($request->filterval == 2) {
-			$disabledverified = "disabled fb";
-		} elseif ($request->filterval == 3) {
-			$disabledunverified = "disabled fb";
-		} 
-		// PAGINATION
-		if ($request->plimit == "") {
+class UserController extends Controller {
+	/**  
+    *  List Page Process
+    *  @author Easa 
+    *  @param $request
+    *  Created At 2020/10/02
+    **/
+	function index(Request $request) {
+		//Variable Declaration 
+		$disabledall="";
+		$disabledunused="";
+		$disabledstaff="";
+		$disabledcontract="";
+		$disabledsubcontract="";
+		$disabledprivate="";
+		//Setting page limit
+		if ($request->plimit=="") {
 			$request->plimit = 50;
 		}
-		//SORTING PROCESS
-		if (!isset($request->usersort) || $request->usersort == "") {
-			$request->usersort = "userId";
-		}
-		if (empty($request->sortOrder)) {
-			$request->sortOrder = "desc";
-		}
-		if ($request->sortOrder == "asc") {  
-			$request->sortstyle = "sort_asc";
-		} else {  
-			$request->sortstyle = "sort_desc";
-		}
-		$sortarray = [$request->usersort=>$request->usersort,
-						'userId'=> trans('messages.lbl_userid'),
-						'firstName'=>trans('messages.lbl_givenname'),
-						'dob'=>trans('messages.lbl_dob'),];
-		$userDetails = User::fnGetUserDetails($request);
-		return view('user.userindex',compact('request','userDetails',
-											'sortarray','disabledall',
-											'disabledverified','disabledunverified'));
-
+		//Filter process
+   		if (!isset($request->filterval) || $request->filterval == "") {
+        	$request->filterval = 1;
+      	}
+    	if ($request->filterval == 1) {
+        	$disabledall="disabled fb";
+  		} elseif ($request->filterval == 2) {
+    		$disabledunused="disabled fb";
+  		} elseif ($request->filterval == 3) {
+    		$disabledstaff="disabled fb";
+  		} elseif ($request->filterval == 4) {
+    		$disabledcontract="disabled fb";
+  		} elseif ($request->filterval == 5) {
+    		$disabledsubcontract="disabled fb";
+  		} elseif ($request->filterval == 6) {
+    		$disabledprivate="disabled fb";
+  		}
+    	//SORTING PROCESS
+		if (!isset($request->usersort)) {
+    		$request->usersort = "usercode";
+  		}
+  		if ($request->usersort == "") {
+    		$request->usersort = "usercode";
+  		}
+  		if (empty($request->sortOrder)) {
+    		$request->sortOrder = "asc";
+  		}
+  		if ($request->sortOrder == "asc") {  
+  			$request->sortstyle="sort_asc";
+  		} else {  
+  			$request->sortstyle="sort_desc";
+  		}
+  		$sortarray = [$request->usersort=>$request->usersort,
+                'usercode'=> trans('messages.lbl_usercode'),
+                'usercode'=> trans('messages.lbl_usercode')];
+    	//SORT POSITION
+        if (!empty($request->singlesearch) || $request->searchmethod == 2) {
+          $sortMargin = "margin-right:260px;";
+        } else {
+          $sortMargin = "margin-right:0px;";
+        }
+    	//Changing User status
+        if ($request->userid) {
+        	$changeuserflag=User::fnChnagingTheUserFlag($request);
+        	if($changeuserflag) {
+              Session::flash('success', 'User status changed Sucessfully!'); 
+              Session::flash('type', 'alert-success'); 
+            } else {
+              Session::flash('type', 'User status change is Unsucessfully!'); 
+              Session::flash('type', 'alert-danger'); 
+            }
+        }
+    	//values for multisearch select box
+		$Classificationarray = array("0"=>trans('messages.lbl_staff'),
+									"1"=>trans('messages.lbl_conEmployee'),
+									"2"=>trans('messages.lbl_subEmployee'),
+									"3"=>trans('messages.lbl_pvtPerson'),
+									"4"=>trans('messages.lbl_superadmin'));
+		//Query to get data
+		$userdetails=User::getUserDetails($request);
+		//returning to view page
+		return view('User.index',['userdetails' => $userdetails,
+								  'disabledall' => $disabledall,
+								  'disabledunused' => $disabledunused,
+								  'disabledstaff' => $disabledstaff,
+								  'disabledcontract' => $disabledcontract,
+								  'disabledsubcontract' => $disabledsubcontract,
+								  'disabledprivate' => $disabledprivate,
+								  'sortarray' => $sortarray,
+								  'Classificationarray'=>$Classificationarray,
+								  'sortMargin' => $sortMargin,
+								  'request' => $request]);
 	}
 
-	/** Register Page view process
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/20
-	*/
-	public function register(Request $request) {
-		return view('user.register',compact('request'));
-	}
+	function addedit(Request $request) {
 
-	/** Addedit and Mail send process in Register page
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/20
-	*/
-	public function addeditprocess(Request $request) {
-		//update process
-		if($request->editid != "") {
-			$updateuser = User::Updateuserdetails($request);
-			if($updateuser) {
-				Session::flash('message', 'Updated Sucessfully!');
-				Session::flash('type', 'alert-success');
-			} else {
-				Session::flash('danger', 'Updated Unsucessfully!'); 
-				Session::flash('type', 'alert-danger'); 
-			}
-			return Redirect::to('User/profile?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
-		}
-		//End Update process
-		$Usercode = "AMS0001";
-		$generateUserId = User::getcount();
-		if (!empty($generateUserId)) {
-			$Usercode = $generateUserId[0]->Usercode;
-		}
-		$visiturl = Config::get('constants.CONST_MAIL');
-		$signature = Config::get('constants.CONST_SIGNATURE');
-		// Mail Process
-		$get_mail_content =  Common::get_mail_content(UserController::MAIL_ID);
-		foreach ($get_mail_content as $key => $value) {
-			$mailcontent['name'] = $request->firstname."  ".$request->lastname;
-			$mailcontent['userid'] = $Usercode;
-			$mailcontent['password'] = $request->password;
-			$mailcontent['subject'] = $value->subject;
-			$mailcontent['header'] = $value->header;
-			$value->content = str_replace("LLLLL",$Usercode,$value->content);
-			$value->content = str_replace("PPPPP",$request->password,$value->content);
-			$value->content = str_replace("MMMMM",$request->mobileno,$value->content);
-			$mailcontent['content'] = $value->content;
-			$mailcontent['contactno'] = $request->mobileno;
-		}
-		$content = $mailcontent['subject'];
-		$send = Mail::send('commontemplate/mail',compact('mailcontent','visiturl','signature'), 
-			function($message) use ($request,$content) {	
-				$message->from('staff@microbit.co.jp','MICROBIT');
-				$message->to($request->emailid,$request->firstname)->subject($content);
-		});
-		$candidate_view = View::make('commontemplate/mail',
-							compact('mailcontent',
-									'visiturl',
-									'signature'));
-		$contentsCandidate = $candidate_view->render();
-		$insert = User::insertRec($request,$Usercode,$mailcontent,$contentsCandidate);
-		if($insert) {
-			Session::flash('message', 'Registered and Mail send Sucessfully!');
-			Session::flash('type', 'alert-success'); 
-		} else {
-			Session::flash('danger', 'Registered Unsucessfully!');
-			Session::flash('type', 'alert-danger'); 
-		}
-		return Redirect::to('/');
-	}
-
-	/** Exists check process in register page
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/20
-	*/
-	public function mailexistcheck(Request $request) {
-		$UserMailExist = User::fnGetEmailExistsCheck($request);
-		$countEmail = count($UserMailExist);
-		print_r($countEmail);exit();
-	}
-
-	/** User profile view process
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/21
-	*/
-	public function userprofile(Request $request) {
-		$userId = "";
-		if ($request->mainmenu == "menu_userlist" && isset($request->userId)) {
-			$userId = $request->userId;
-		} else {
-			$userId = Auth::user()->userId;
-		}
-		if ($userId == "") {
-			return Redirect::to('User/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
-		}
-		$profileview = User::viewprofiledetails($userId);
-		if ($profileview[0]->gender == 1) {
-			$profileview[0]->gender = "Male";
-		} else if ($profileview[0]->gender == 2) {
-			$profileview[0]->gender = "Female";
-		}
-		return view('user.userprofileview',compact('request','profileview'));
-	}
-
-	/** User Register page view process in edit
-	*  @author sarath 
-	*  @param $request
-	*  Created At 2020/08/21
-	*/
-	public function useredit(Request $request) {
 		if(!isset($request->editflg)){
-			return Redirect::to('User/profile?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+
+			return $this->index($request);
+
 		}
-		$useredit = User::editview($request->editid);
-		return view('user.register',compact('request','useredit'));
+
+		$userview = User::viewdetails($request->editid);
+
+		$dob_year = Carbon\Carbon::createFromFormat('Y-m-d', date("Y-m-d"));
+
+		$dob_year   = $dob_year->subYears(18);
+
+		$dob_year = $dob_year->format('Y-m-d');
+
+		if (Session::get('userclassification') == "4") {
+
+			$Classificationarray = array("0"=>trans('messages.lbl_staff'),
+
+									"1"=>trans('messages.lbl_conEmployee'),
+
+									"2"=>trans('messages.lbl_subEmployee'),
+
+									"3"=>trans('messages.lbl_pvtPerson'),
+
+									"4"=>trans('messages.lbl_superadmin'),);
+
+		} else {
+
+			$Classificationarray = array("0"=>trans('messages.lbl_staff'),
+
+									"1"=>trans('messages.lbl_conEmployee'),
+
+									"2"=>trans('messages.lbl_subEmployee'),
+
+									"3"=>trans('messages.lbl_pvtPerson'),);
+
+		}
+
+		return view('User.addedit',['Classificationarray' => $Classificationarray,
+
+									'userview' => $userview,
+
+									'request' => $request,
+
+									'dob_year' => $dob_year]);
+
 	}
 
-	/** Verify login check process
-	*  @author sastha 
-	*  @param $request
-	*  Created At 2020/08/24
-	*/
-	public function verifyLoginCheck(Request $request) {
-		$verifyFlg = User::updVerifyFlg($request);
-		Session::flash('message', 'Email Verified Sucessfully!');
-		Session::flash('type', 'alert-success');
-		return Redirect::to('/');
+	function addeditprocess(Request $request) {
+
+		if($request->editid!="") {
+
+			$update = User::UpdateReg($request);
+
+	        Session::flash('viewid', $request->editid); 
+
+			if($update) {
+
+				Session::flash('success', 'Updated Sucessfully!'); 
+
+				Session::flash('type', 'alert-success'); 
+
+			} else {
+
+				Session::flash('type', 'Updated Unsucessfully!'); 
+
+				Session::flash('type', 'alert-danger'); 
+
+			}
+
+		} else {
+
+			$autoincId=User::getautoincrement();
+
+			$Usercode="MBINV".(str_pad($autoincId,'3','0',STR_PAD_LEFT));
+
+			$insert = User::insertRec($request,$Usercode);
+
+	        Session::flash('viewid', $autoincId); 
+
+			if($insert) {
+
+				Session::flash('success', 'Inserted Sucessfully!'); 
+
+				Session::flash('type', 'alert-success'); 
+
+			} else {
+
+				Session::flash('type', 'Inserted Unsucessfully!'); 
+
+				Session::flash('type', 'alert-danger'); 
+
+			}
+
+		}
+
+		return Redirect::to('User/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+
+	}
+
+	/**  
+    *  Single View Page
+    *  @author Easa 
+    *  @param $request
+    *  Created At 2020/10/02
+    **/
+	function view(Request $request) {
+		if(Session::get('viewid') !=""){
+	        $request->viewid = Session::get('viewid');
+	    }
+	    if(Session::get('id') !=""){
+	        $request->viewid = Session::get('viewid');
+			Session::flash('success', 'Password Updated Sucessfully!'); 
+			Session::flash('type', 'alert-success'); 
+	    }
+		//ON URL ENTER REDIRECT TO INDEX PAGE
+		if(!isset($request->viewid)){
+			return $this->index($request);
+		}
+		$userview = User::viewdetails($request->viewid);
+		// For Gender
+		if ($userview[0]->gender == 1) {
+			$userview[0]->gender = "Male";
+		} else if ($userview[0]->gender == 2) {
+			$userview[0]->gender = "Female";
+		}
+		// For User Classification
+		if ($userview[0]->userclassification == 0 && $userview[0]->delflg == 0) {
+			$userview[0]->userclassification = trans('messages.lbl_staff');
+		} else if ($userview[0]->userclassification == 1 && $userview[0]->delflg == 0) {
+			$userview[0]->userclassification = trans('messages.lbl_conEmployee');
+		} else if ($userview[0]->userclassification == 2 && $userview[0]->delflg == 0) {
+			$userview[0]->userclassification = trans('messages.lbl_subEmployee');
+		} else if ($userview[0]->userclassification == 3 && $userview[0]->delflg == 0) {
+			$userview[0]->userclassification = trans('messages.lbl_pvtPerson');
+		} else if ($userview[0]->userclassification == 4 && $userview[0]->delflg == 0) {
+			$userview[0]->userclassification = trans('messages.lbl_superadmin');
+		} 
+		return view('User.view',['userview' => $userview,
+								'request' => $request]);
+	}
+
+	function changepassword(Request $request) {
+
+		if(!isset($request->id)){
+
+			return $this->index($request);
+
+		}
+
+		$view = User::viewdetails($request->id);
+
+		return view('User.changepassword',['view' => $view,'request' => $request]);
+
+	}
+
+	function passwordchangeprocess(Request $request) {
+
+		$update = User::passwordchange($request);
+
+		if($update) {
+
+			Session::flash('message', 'Password Updated Sucessfully!'); 
+
+			Session::flash('type', 'alert-success'); 
+
+		} else {
+
+			Session::flash('type', 'Password Updated Unsucessfully!'); 
+
+			Session::flash('type', 'alert-danger'); 
+
+		}
+
+		Session::flash('viewid', $request->id);
+
+		Session::flash('id', $request->id); 
+
+		return Redirect::to('User/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+
 	}
 
 }
-?>

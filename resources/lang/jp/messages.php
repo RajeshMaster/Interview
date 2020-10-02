@@ -196,5 +196,9 @@ return [
 	'lbl_usercode' => 'ユーザコード',
 	'lbl_Details' => '詳細',
 	'lbl_Creater' => '作成者',
+	'lbl_userclassification' => 'ユーザ区分',
+	'lbl_unamesurname' => 'ユーザ名（英）：姓',
+	'lbl_mobilenumber' => '携帯番号',
+	'lbl_passwordchange' => 'パスワードの変更',
 	/* End User Module */
 ];

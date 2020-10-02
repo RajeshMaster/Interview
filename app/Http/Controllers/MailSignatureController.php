@@ -16,7 +16,13 @@ use Illuminate\Support\Facades\Validator;
 /*Class: MailController
 Some functions related to display the mail list and describing their particular details.*/
 class MailSignatureController extends Controller {
-
+	/**
+	*
+	* To view MailSignature Index Page
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function index(Request $request) {
 		// Filter Process
 		$disabledall = "";
@@ -43,14 +49,149 @@ class MailSignatureController extends Controller {
 											'contenttotal',
 											'getlist'));
 	}
+	/**
+	*
+	* To Update MailSignature DelFlg
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailSignatureFlg(Request $request){
 		$signatureDelflg = MailSignature::fnUpdateDelflg($request);
 		return Redirect::to('MailSignature/index?mainmenu=menu_mailsignature&time='.date('YmdHis'));
 	}
+	/**
+	*
+	* To Display MailSignature
+	* @author Sathish
+	* @return object to particular view page
+	* Created At 01/10/2020
+	*
+	*/
 	public function mailSignatureView(Request $request){
+		if(Session::get('sigid') != ""){
+			$request->signatureId = Session::get('sigid');
+		}
+		if(!isset($request->signatureId)){
+			return Redirect::to('MailSignature/index?mainmenu=menu_mailsignature&time='.date('YmdHis'));
+		}
 		$mailSignatureView = MailSignature::getMailSignatureView($request);
 		return view('mailsignature.mailsignatureview' ,compact('request',
 											'mailSignatureView'
 											));
+	}
+	/**
+	*
+	* To Redirect AddEdit Page
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
+	public function mailSignatureAddEdit(Request $request){
+		if (!isset($request->editflg)) {
+			return Redirect::to('MailSignature/index?mainmenu=menu_mailsignature&time='.date('YmdHis'));
+		}
+		$getdataforupdate=array();
+		$getname = "";
+		if ($request->editflg == 1) {
+			$getdataforupdate=MailSignature::fnFetchUpdateData($request);
+			$getname = $getdataforupdate[0]->username." ".$getdataforupdate[0]->givenname." ".$getdataforupdate[0]->nickName;
+		} 
+		return view('mailsignature.mailsignatureaddedit',[
+											'getdataforupdate' => $getdataforupdate,
+											'request' => $request,
+											'getname'=> $getname]);
+	}
+	/**
+	*
+	* To MailSignature Popup
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
+	public function mailSignaturePopup(Request $request){
+		$empname = MailSignature::fnGetUserDetails($request);
+		return view('mailsignature.mailsignaturepopup',['request' => $request,
+														'empname' => $empname]);
+	}
+	/**
+	*
+	* To Fetch Exist Data Record
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
+	public function getDataExist(Request $request){
+		$dataExistCheck = MailSignature::fnFetchMailSigdata($request);
+		if (!empty($dataExistCheck)) {
+			$dataExistCheck = $dataExistCheck[0];
+		}
+		echo json_encode($dataExistCheck);exit();
+	}
+	/**
+	*
+	* To MailSignature AddEdit Validation Process
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
+	public function mailSignatureRegValidation(Request $request){
+		$commonrules=array();
+		$commonrules = array(
+			'txtuserid' => 'required',
+			'content'=>'required',
+		);
+		$rules = $commonrules;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+	}
+	/**
+	*
+	* To MailSignature AddEdit Process
+	* @author Sathish
+	* Created At 01/10/2020
+	*
+	*/
+	public function mailSignatureAddEditProcess(Request $request){
+		$signatureID = "SIGN00001";
+		$signIdcnt = MailSignature::signIdGenerate($request);
+		if(!empty($signIdcnt)){
+			$signatureID = $signIdcnt[0]->signid;
+		}
+		if($request->editflg == 1){
+			$id = "";
+			if($request->updateprocess ==2){
+				$id = $request->userid;
+				$update=Mailsignature::fnFetchViewData($request,$id);
+				$id = $update[0]->id;
+			}else{
+				$id = $request->signatureId;
+			}
+			$updatmailcontent=Mailsignature::fnUpdateMailSignature($request,$id);
+			if($updatmailcontent){
+				Session::flash('message', 'Inserted Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}else{
+				Session::flash('message', 'Inserted Unsucessfully!'); 
+				Session::flash('type', 'alert-danger');
+			}
+			Session::flash('sigid', $id);
+		}else{
+			$insertmailsignature = MailSignature::fnInsertMailSignature($request,$signatureID);
+			if($insertmailsignature) {
+				Session::flash('message', 'Inserted Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('message', 'Inserted Unsucessfully!'); 
+				Session::flash('type', 'alert-danger');
+			}
+			Session::flash('sigid', $insertmailsignature);
+		}
+		return Redirect::to('MailSignature/mailSignatureView?mainmenu=menu_mail&time='.date('YmdHis'));
 	}
 }

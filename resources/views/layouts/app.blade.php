@@ -372,11 +372,9 @@ body {
 									$request->mainmenu == "home") 
 									class="dropdown active" 
 								@endif>
-								<a href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}" class="dropdown-toggle" data-toggle="dropdown" 
-									style="text-decoration: none !important;">
+								<a class="pageload" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">
 									{{ trans('messages.lbl_home') }}
 								</a>
-							</li>
 							</li>
 							<li @if(isset($request->mainmenu) && 
 									$request->mainmenu == "menu_employee") 
