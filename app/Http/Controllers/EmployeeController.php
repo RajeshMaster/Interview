@@ -173,7 +173,7 @@ class EmployeeController extends Controller
 									]);
 	}
 
-		/**
+	/**
 	*
 	* To view Employee Edit Page
 	* @author Rajesh
@@ -200,6 +200,14 @@ class EmployeeController extends Controller
 									 'dob_year' => $dob_year]);
 	}
 
+	/**
+	*
+	* To view Employee Edit Validation
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/13
+	*
+	*/
 	public function AddEditregvalidation(Request $request) {
 		$commonrules=array();
 		$common2 = array();
@@ -224,6 +232,14 @@ class EmployeeController extends Controller
         }
 	}
 
+	/**
+	*
+	* Employee Edit Process
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/13
+	*
+	*/
 	public function employeeEditProcess(Request $request) {
 		$update = Employee::updateprocess($request);
 		if($update){
@@ -235,5 +251,78 @@ class EmployeeController extends Controller
 		}
 		Session::flash('empid', $request->empid);
 		return Redirect::to('Employee/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+	}
+
+	/**
+	*
+	* Work End Process
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/13
+	*
+	*/
+	public function workend(Request $request) {
+		if(!isset($request->empid) || $request->empid == ""){
+			return $this->index($request);
+		}
+		$customerarray = array();
+		$clientDtl = Employee::clientWorkDetails($request);
+
+		$custDtl = Employee::selectcustomer();
+		foreach ($custDtl as $key => $value) {
+			$customerarray[$value->customer_id] = $value->customer_name;
+		}
+
+		return view('employee.workendReg',[
+											'request' =>$request,
+											'customerarray' => $customerarray,
+											'clientDtl' => $clientDtl,
+										]);
+	}
+
+	/**
+	*
+	* Get Branch Process
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/13
+	*
+	*/
+	public function branch_ajax(Request $request){
+		$customerid = $request->getcustId;
+		$get_sub_query = Employee::fnGetbranchName($customerid);
+		$brancharray = json_encode($get_sub_query);
+		echo $brancharray;
+		exit();
+	}
+
+	/**
+	*
+	* Get Incharge Process
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/13
+	*
+	*/
+	public function incharge_ajax(Request $request) {
+		$customerId = $request->getcusId;
+		$branchId = $request->getbranchId;
+		$getInchargeDtl = Employee::fnGetinchargeName($customerId,$branchId);
+		$inchargearray = json_encode($getInchargeDtl);
+		echo $inchargearray;
+		exit();
+	}
+
+	/**
+	*
+	* Get Customer Details For Popup
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/13
+	*
+	*/
+	public function customerSelpopup(Request $request) {
+		$custDtl = Employee::selectcustomer();
+		return view('employee.customerSelPopup',['custDtl' => $custDtl,'request' => $request]);
 	}
 }

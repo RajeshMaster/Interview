@@ -59,6 +59,10 @@ Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 	Route::any('empAddEdit', 'EmployeeController@empAddEdit');
 	Route::any('AddEditregvalidation','EmployeeController@AddEditregvalidation');
 	Route::any('employeeEditProcess','EmployeeController@employeeEditProcess');
+	Route::any('workend','EmployeeController@workend');
+	Route::any('branch_ajax','EmployeeController@branch_ajax');
+	Route::any('incharge_ajax','EmployeeController@incharge_ajax');
+	Route::any('customerSelpopup','EmployeeController@customerSelpopup');
 });
 
 // Non Employee - ADDED By Rajesh --2020/10/01
@@ -98,7 +102,8 @@ Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('grouppopup', 'SettingController@grouppopup');
 	Route::any('groupaddprocess', 'SettingController@groupaddprocess');
 	Route::any('useNotuses', 'SettingController@useNotuses');
-
+	Route::any('requirmentSetting', 'SettingController@requirmentSetting');
+	Route::any('twoFieldaddeditgrp', 'SettingController@twoFieldaddeditgrp');
 
 	/*Route::any('uploadpopup', 'SettingController@uploadpopup');
 	Route::any('settingpopupupload', 'SettingController@settingpopupupload');

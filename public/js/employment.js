@@ -158,14 +158,20 @@ function employeeview(id){
 	$("#employeefrm").submit();
 }
 
+// View Customer History
 function cushistory(){
 	alert("Under Construction");
 }
 
-function workend(){
-	alert("Under Construction");
+// To register the work end date
+function workend(empid,lastname){
+	$('#empid').val(empid);
+	$('#empname').val(lastname);
+	$('#employeefrm').attr('action', 'workend?mainmenu='+mainmenu+'&time='+datetime);
+	$("#employeefrm").submit();
 }
 
+// 
 function gotoResume(){
 	alert("Under Construction");
 }
@@ -202,4 +208,95 @@ function resetErrors() {
 // Resign Employee
 function fnresignemployee() {
 	alert("Under Construction");
+}
+
+// For to get branch Details And incharge
+function fnGetbranchDetail() {
+	$('#branchId').find('option').not(':first').remove();
+	$('#inchargeDetails').find('option').not(':first').remove();
+	var getcustId = $('#customerId').val();
+	if ($('#customerId').val() != "") {
+		$("#customerdiv").hide();
+	} else {
+		$("#customerdiv").show();
+	}
+	$.ajax({
+		type: 'GET',
+		dataType: "JSON",
+		url: 'branch_ajax',
+		data: {"getcustId": getcustId},
+		success: function(resp) {
+			for (i = 0; i < resp.length; i++) {
+				$('#branchId').append( '<option value="'+resp[i]["branch_id"]+'">'+resp[i]["branch_name"]+'</option>' );
+			}
+			var branchCount = $('#branchId > option').length;
+			if (branchCount <= 2) {
+				$('#branchId').val(resp[0]["branch_id"]);
+				$('#inchargeDetails').find('option').not(':first').remove();
+				var getcusId = $('#customerId').val();
+				var getbranchId = $('#branchId').val();
+				$.ajax({
+					type: 'GET',
+					dataType: "JSON",
+					url: 'incharge_ajax',
+					data: {"getcusId": getcusId,"getbranchId": getbranchId},
+					success: function(resp) {
+						alert(resp);
+						for (i = 0; i < resp.length; i++) {
+							$('#inchargeDetails').append( '<option value="'+resp[i]["id"]+'">'+resp[i]["incharge_name"]+'</option>' );
+						}
+						var incCount = $('#inchargeDetails > option').length;
+						if (incCount == 2) {
+							$('#inchargeDetails').val(resp[0]["id"]);
+						} 
+					},
+					error: function(data) {
+						alert(data.status);
+					}
+				});
+			}
+		},
+		error: function(data) {
+			alert(data.status);
+		}
+	});
+}
+
+// Get incharge details
+function fnGetinchargeDetails() {
+	$('#inchargeDetails').find('option').not(':first').remove();
+	$('#inchargeDetails').val("");
+	var getcusId = $('#customerId').val();
+	var getbranchId = $('#branchId').val();
+	$.ajax({
+		type: 'GET',
+		dataType: "JSON",
+		url: 'incharge_ajax',
+		data: {"getcusId": getcusId,"getbranchId": getbranchId},
+		success: function(resp) {
+			for (i = 0; i < resp.length; i++) {
+				$('#inchargeDetails').append( '<option value="'+resp[i]["id"]+'">'+resp[i]["incharge_name"]+'</option>' );
+				// $('select[name="inchargeDetails"]').val(value);
+			}
+			var incCount = $('#inchargeDetails > option').length;
+			if (incCount == 2) {
+				$('#inchargeDetails').val(resp[0]["id"]);
+			} 
+		},
+		error: function(data) {
+			// alert(data.status);
+		}
+	});
+}
+
+// Show Popup for customer select
+function customerSelectPopup() {
+	var customerId = $('#customerId').val();
+	popupopenclose(1);
+	$('#customerSelect').load('customerSelpopup?mainmenu='+mainmenu+'&time='+datetime+'&customerId='+customerId);
+	$("#customerSelect").modal({
+			backdrop: 'static',
+			keyboard: false
+		});
+	$('#customerSelect').modal('show');
 }

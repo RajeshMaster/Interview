@@ -39,7 +39,7 @@
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 lbldessetcat settingsubdesignfamily">
 							 	<a name="mainCategory" style="color: #33AFFF !important;" 
-							 	id="mainCategory" href="">{{ trans('messages.lbl_employee') }}</a>
+							 	id="mainCategory" class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}">{{ trans('messages.lbl_employee') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								<a name="subCategory" style="color: #33AFFF !important;" 

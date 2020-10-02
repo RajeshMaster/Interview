@@ -148,7 +148,7 @@ class Employee extends Model
 	/**  
 	*  Employee update process
 	*  @author Rajesh 
-	*  @param $startDT,$endDT
+	*  @param $request
 	*  Created At 2020/10/1
 	**/
 	public static function updateprocess($request) {
@@ -174,6 +174,76 @@ class Employee extends Model
 		return $update;
 	}
 
+	/**  
+	*  Get Work Detail
+	*  @author Rajesh 
+	*  @param $request
+	*  Created At 2020/10/1
+	**/
+	public static function clientWorkDetails($request) {
+		$db = DB::connection('mysql');
+		$query = $db->table('inv_clientemp_dtl')
+					->SELECT('inv_clientemp_dtl.*','mst_customerdetail.customer_name','mst_branchdetails.branch_name','mst_cus_inchargedetail.incharge_name')
+					->leftJoin('mst_customerdetail', 'mst_customerdetail.customer_id', '=', 'inv_clientemp_dtl.cust_id')
+					->leftJoin('mst_branchdetails', function($join) {
+						$join->on('mst_branchdetails.customer_id', '=', 'inv_clientemp_dtl.cust_id');
+						$join->on('mst_branchdetails.branch_id', '=', 'inv_clientemp_dtl.branch_id');
+					})
+					->leftJoin('mst_cus_inchargedetail','mst_cus_inchargedetail.id','=','inv_clientemp_dtl.incharge_id')
+					->where('inv_clientemp_dtl.emp_id','=', $request->empid)
+					->where('inv_clientemp_dtl.status','=', 1)
+					->where('inv_clientemp_dtl.delFLg', 0)
+					->get();
+		return $query;
+	}
+
+	/**  
+	*  Get Customer Detail
+	*  @author Rajesh 
+	*  @param 
+	*  Created At 2020/10/2
+	**/
+	public static function selectcustomer() {
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_customerdetail')
+					->select('customer_id','customer_name')
+					->where('delflg', 0)
+					->get();
+		return $result;
+	}
+
+	/**  
+	*  Get Branch Detail
+	*  @author Rajesh 
+	*  @param $customerid
+	*  Created At 2020/10/2
+	**/
+	public static function fnGetbranchName($customerid) {
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_branchdetails')
+					->select('*')
+					->WHERE('delFlg', '=', 0)
+					->WHERE('customer_id', '=', $customerid)
+					->get();
+		return $result;
+	}
+
+	/**  
+	*  Get Incharge Detail
+	*  @author Rajesh 
+	*  @param $startDT,$endDT
+	*  Created At 2020/10/2
+	**/
+	public static function fnGetinchargeName($customerId,$branchId) {
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_cus_inchargedetail')
+					->select('*')
+					->WHERE('delflg', '=', 0)
+					->WHERE('customer_id', '=', $customerId)
+					->WHERE('branch_name', '=', $branchId)
+					->get();
+		return $result;
+	}
 
 	/**  
 	*  Year counnt Between dates Details(Common Function)

@@ -95,7 +95,7 @@
 				<label for="name">{{ trans('messages.lbl_staffusername')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				{{ Form::text('Name',(isset($empview[0]->FirstName)) ? $empview[0]->FirstName : '',array('id'=>'Name', 
+				{{ Form::text('Name',(isset($empview[0]->LastName)) ? $empview[0]->LastName : '',array('id'=>'Name', 
 												'name' => 'Name',
 												'data-label' => trans('messages.lbl_name'),
 												'class'=>'form-control dispinline mlength Name')) }}

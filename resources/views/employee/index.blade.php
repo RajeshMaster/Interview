@@ -317,7 +317,7 @@
 										</div>
 										&nbsp;|
 										<div class="CMN_display_block">
-												<a style="color:blue;" href="javascript:workend();">{{ trans('messages.lbl_work_date') }}</a>&nbsp;|
+												<a style="color:blue;" href="javascript:workend('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_work_date') }}</a>&nbsp;|
 										</div>
 
 										<div class="CMN_display_block">
