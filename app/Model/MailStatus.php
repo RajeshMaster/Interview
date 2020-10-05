@@ -31,4 +31,13 @@ class MailStatus extends Model {
 						}
 						return $result;
 	}
+	public static function getSingleMailStatus($request){
+		$result = db::table('mailStatus')
+						->select('mailStatus.*','mst_customerdetail.customer_name')
+						->leftJoin('mst_customerdetail' , 'mst_customerdetail.customer_id' ,'=','mailStatus.companyId')
+						->WHERE('mailStatus.delFlg',0)
+						->WHERE('mailStatus.id','=',$request->statusid)
+						->get();
+		return $result;
+	}
 }

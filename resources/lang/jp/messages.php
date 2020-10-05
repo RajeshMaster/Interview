@@ -50,6 +50,11 @@ return [
 	'lbl_mailsendby' => 'から送信されました',
 	'lbl_senddatetime' => '時日送信',
 	'lbl_to' => '受信者',
+	'lbl_companyName' => '会社名',
+	'lbl_sent' => '送信済',
+	'lbl_draft' => 'メールドラフト',
+	'lbl_fileName' => 'ファイル名',
+	'lbl_attachmentCnt' => '添付件数',
 	/* End Mail Content Module  */
 
 	/* Start Register Module  */

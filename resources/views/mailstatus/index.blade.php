@@ -47,6 +47,7 @@
 {{ Form::hidden('page', $request->page , array('id' => 'page')) }}
 {{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
 {{ Form::hidden('sendfilter','', array('id' => 'sendfilter')) }}
+{{ Form::hidden('statusid','', array('id' => 'statusid')) }}
 <div class="" id="main_contents">
 	<article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_3">
 		<!-- Start Heading -->
@@ -129,7 +130,7 @@
                         	{{--*/ $style_tdcomp = '' /*--}}
                       	@endif
 		   			<tr style="{{$style_tr}}">
-		   				<td class="tac">{{ $sno }}</td>
+		   				<td class="tac vam">{{ $sno }}</td>
 		   				<td class="tac vam" style="">{{ $data->empId }}</td>
 		   				<td class="tal vam" style="">{{ $data->customer_name }}</td>
 		   				<td class="tal vam" style="">{{ $data->branch_name }}</td>

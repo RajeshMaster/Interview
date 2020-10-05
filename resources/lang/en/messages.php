@@ -53,6 +53,9 @@ return [
 	'lbl_companyName' => 'Company Name',
 	'lbl_sent' => 'Sent',
 	'lbl_draft' => 'Draft',
+	'lbl_cc' => 'CC',
+	'lbl_fileName' => 'File Name',
+	'lbl_attachmentCnt' => 'Attachment Count',
 	/* End Mail Content Module  */
 
 	/* Start Register Module  */

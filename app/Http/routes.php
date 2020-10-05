@@ -103,6 +103,7 @@ Route::group(['prefix'=>'MailSignature','middleware' => 'auth'], function() {
 Route::group(['prefix' => 'MailStatus','middleware' => 'auth'], function(){
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'MailStatusController@index');
+	Route::any('mailStatusView', 'MailStatusController@mailStatusView');
 });
 
 // Setting
