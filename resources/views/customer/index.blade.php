@@ -97,7 +97,7 @@
 		<div class="pull-left">
 			<button type="button" onclick="fngotoregister('{{ $request->mainmenu }}');"
 					class="button button-green pull-right">
-				<span class="fa fa-plus"></span> {{ trans('messages.lbl_mail')}}
+				<span class="fa fa-plus"></span> {{ trans('messages.lbl_register')}}
 			</button>
 		</div>
 	</div>	
@@ -313,7 +313,7 @@
 							@endif
 							<span class="clr_blue">URL</span><span>:</span>  
 							@if($cstviews[$i]['customer_website'])
-								<a class="colbl" title="URL: <?php echo $cstviews[$i]['customer_website']; ?>" href="http://{{ $cstviews[$i]['customer_website'] }}" target="_blank"><img class="search box2per pr5 langimg11" src="{{ URL::asset('resources/assets/images/url.png') }}" style="min-width:20px;cursor:pointer;"></img></a>
+								<a class="colbl" title="URL: <?php echo $cstviews[$i]['customer_website']; ?>" href="http://{{ $cstviews[$i]['customer_website'] }}" target="_blank"><img class="search box2per pr5 langimg11" src="{{ URL::asset('public/images/url.png') }}" style="min-width:20px;cursor:pointer;"></img></a>
 								</span>
 							@else
 								<img class="search box2per pr5 langimg11" src="{{ URL::asset('resources/assets/images/nourl.png') }}" style="min-width:20px;cursor:default;"></img>

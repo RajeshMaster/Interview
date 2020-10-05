@@ -224,5 +224,6 @@ return [
 	'lbl_name' => '名前',
 	'lbl_address' => '住所',
 	'lbl_fax' => 'ファックス',
+	'lbl_daterange'=> '期間',
 	/* End Customer Module*/
 ];

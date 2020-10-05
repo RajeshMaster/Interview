@@ -224,5 +224,6 @@ return [
 	'lbl_name' => 'Name',
 	'lbl_address' => 'Address',
 	'lbl_fax' => 'Fax',
+	'lbl_daterange'=>'Date Range',
 	/* End Customer Module*/
 ];
