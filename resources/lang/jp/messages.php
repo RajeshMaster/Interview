@@ -55,6 +55,7 @@ return [
 	'lbl_draft' => 'メールドラフト',
 	'lbl_fileName' => 'ファイル名',
 	'lbl_attachmentCnt' => '添付件数',
+	'lbl_cc' =>'CC',
 	/* End Mail Content Module  */
 
 	/* Start Register Module  */

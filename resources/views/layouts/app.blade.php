@@ -445,34 +445,34 @@ body {
 								</ul>
 							</li>
 							<li @if(isset($request->mainmenu) && 
-									$request->mainmenu == "menu_bank") 
+									$request->mainmenu == "menu_customer") 
 									class="dropdown active" 
 								@endif>
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" 
+								<a href="{{ url('Customer/index?mainmenu=menu_customer&time='.date('Ymdhis')) }}" class="dropdown-toggle" data-toggle="dropdown" 
 									style="text-decoration: none !important;">
 									{{ trans('messages.lbl_customer') }}
 									<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li class="dropdown-header">&nbsp;&nbsp;{{ trans('messages.lbl_dropdown') }}</li>
 									<li @if(isset($request->mainmenu) && 
-											$request->mainmenu == "menu_bank") 
+											$request->mainmenu == "menu_customer") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Bank/listview?mainmenu=menu_bank&time='.date('Ymdhis')) }}"
+										<a class="pageload" href="{{ url('Customer/index?mainmenu=menu_customer&time='.date('Ymdhis')) }}"
 										style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_customer') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
-											$request->mainmenu == "menu_othbank") 
+											$request->mainmenu == "menu_agent") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Bank/othbanklistview?mainmenu=menu_othbank&time='.date('Ymdhis')) }}"
+										<a href="#"
 										style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_agent') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
-											$request->mainmenu == "menu_othbank") 
+											$request->mainmenu == "menu_oldcustomer") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Bank/othbanklistview?mainmenu=menu_othbank&time='.date('Ymdhis')) }}"
+										<a  href="#"
 										style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_old_customer') }}</a>
 									</li>
 								</ul>
@@ -606,7 +606,7 @@ body {
 									{{ trans('messages.lbl_mail') }}</a>
 								</li>
 								<li class="btn_customer jop_btn">
-									<a class="" href="#"
+									<a class=""  href="{{ url('Customer/index?mainmenu=menu_customer&time='.date('Ymdhis')) }}"
 										style="text-decoration: none !important;">
 										{{ trans('messages.lbl_customer') }}
 									</a>
@@ -673,6 +673,20 @@ body {
 							<div id="mail_sub_3">
 								<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mailstatus&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_mailstatus') }}</a>
+							</div>
+							@endif
+							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_customer"))
+							<div id="cus_sub_1">
+								<a class="pageload" href="{{ url('Customer/index?mainmenu=menu_customer&time='.date('Ymdhis')) }}">
+								{{ trans('messages.lbl_customer') }}</a>
+							</div>
+							<div id="cus_sub_2">
+								<a  href="#">
+								{{ trans('messages.lbl_agent') }}</a>
+							</div>
+							<div id="cus_sub_3">
+								<a  href="#">
+								{{ trans('messages.lbl_old_customer') }}</a>
 							</div>
 							@endif
 							@if(isset($request->mainmenu) && 

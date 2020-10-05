@@ -135,4 +135,10 @@ Route::group(['prefix'=>'user', 'middleware' => 'auth'], function() {
 // LOGOUT PROCESS
 Route::get('logout', 'Auth\AuthController@logout');
 
+//Customer
+Route::group(['prefix'=>'Customer','middleware' => 'auth'], function(){
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('index', 'CustomerController@index');
+});
+
 ?>
