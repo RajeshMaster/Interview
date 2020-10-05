@@ -65,6 +65,8 @@ Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 	Route::any('customerSelpopup','EmployeeController@customerSelpopup');
 	Route::any('wrkEndValidation','EmployeeController@wrkEndValidation');
 	Route::any('wrkEndProcess','EmployeeController@wrkEndProcess');
+	Route::any('uploadResume','EmployeeController@uploadResume');
+	Route::any('popupuploadProcess','EmployeeController@popupuploadProcess');
 });
 
 // Non Employee - ADDED By Rajesh --2020/10/01

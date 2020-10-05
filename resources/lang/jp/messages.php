@@ -133,7 +133,9 @@ return [
 	'lbl_kananame' => 'カナ名称',
 	'lbl_remarks' => '備考',
 	'lbl_upResume' => '経歴書',
-
+	'lbl_customerNameSel' => '取引先名称選択',
+	'lbl_uploadfile' => 'ファイル',
+	'lbl_upload' => 'アップロード',
     /* End Employee Module */
 
 	/* Start Setting Module */

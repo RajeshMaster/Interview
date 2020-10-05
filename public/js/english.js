@@ -8,3 +8,5 @@ var msg_add = "Do You Want To Add?";
 var msg_flagchange = "Do You Want To Change flg?";
 var msg_upload = "Do You Want To Upload?";
 var msg_download = "Do You Want To Download?";
+var msg_fileEmpty = "Please select the upload file";
+var msg_fileformat = "Please select the correct format";

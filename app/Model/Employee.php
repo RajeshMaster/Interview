@@ -249,7 +249,7 @@ class Employee extends Model
 	/**
 	*  End Date Insert Details
 	*  @author Rajesh 
-	*  @param $startDT,$endDT
+	*  @param $request
 	*  Created At 2020/10/2
 	**/
 	public static function insertEnddate($request) {
@@ -271,6 +271,25 @@ class Employee extends Model
 				'reason' => "",
 			]
 		);
+		return $result;
+	}
+
+	/**
+	 * Resume Insert Process
+	 * @author Rajesh 
+	 * @param $request,$filename
+	 *  Created At 2020/10/5
+	 */
+	public static function InsResumeHistory($request,$filename) {
+		
+		$db = DB::connection('mysql');
+		$result = DB::TABLE('mst_resume')
+					->insert([	
+						'empId' => $request->empId,
+						'resume' => $filename,
+						'createdBy' => Auth::user()->username,
+						'updatedBy' => Auth::user()->username 
+					]);
 		return $result;
 	}
 

@@ -402,4 +402,59 @@ class EmployeeController extends Controller
 		}
 		return Redirect::to('Employee/index?mainmenu=menu_employee&time='.date('YmdHis'));
 	}
+
+	/**
+	*
+	* Upload Resume Page
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/05
+	*
+	*/
+	public function uploadResume(Request $request) {
+		
+		return view('employee.uploadResumePopup',['request' => $request]);
+	}
+
+	/**
+	*
+	* Resume Upload Proces
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/05
+	*
+	*/
+	public function popupuploadProcess(Request $request) {
+		if($request->pdffile != "") {
+			$resume_name = $request->empId."resume_".date("Ymdhis");
+			$destinationPath = '../ResumeUpload/employeResume';
+			if(!is_dir($destinationPath)) {
+				mkdir($destinationPath, 0777, true);
+			}
+			$ifile = $resume_name.".". self::getExtension($_FILES["pdffile"]["name"]);
+
+			move_uploaded_file($_FILES["pdffile"]['tmp_name'],$destinationPath ."/".$ifile);
+			
+		/*	if ($request->xlfile != "") {
+				$jfile = $resume_name.".". self::getExtension($_FILES["xlfile"]["name"]);
+				move_uploaded_file($_FILES["xlfile"]['tmp_name'],$destinationPath ."/".$jfile);
+			}*/
+			$empResumeIns = Employee::InsResumeHistory($request,$ifile);
+			if($empResumeIns) {
+				Session::flash('success','Resume Uploaded Sucessfully!'); 
+				Session::flash('type','alert-success'); 
+			} else {
+				Session::flash('type','Resume Updated Unsucessfully!'); 
+				Session::flash('type','alert-danger'); 
+			}
+		}
+	}
+
+	public static function getExtension($str) {
+		$i = strrpos($str,".");
+		if (!$i) { return ""; }
+		$l = strlen($str) - $i;
+		$ext = substr($str,$i+1,$l);
+		return $ext;
+	}
 }

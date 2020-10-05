@@ -132,7 +132,10 @@ return [
 	'lbl_CustId' => 'Customer ID',
 	'lbl_kananame' => 'Kana Name',
 	'lbl_remarks' => 'Remarks',
-	'lbl_upResume' => '経歴書',
+	'lbl_upResume' => 'Upload Cv',
+	'lbl_customerNameSel' => 'Customer Name Select',
+	'lbl_uploadfile' => 'Upload File',
+	'lbl_upload' => 'Upload',
 	/* End Employee Module */
 
 	/* Start Setting Module */

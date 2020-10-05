@@ -61,7 +61,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" style="color: red;" aria-hidden="true">&#10006;</button>
-			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_nameselection') }}</B></h3>
+			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_customerNameSel') }}</B></h3>
 		</div>
 		<div>
 			<div style="display: inline-block;float: right;margin-top: 5px;">

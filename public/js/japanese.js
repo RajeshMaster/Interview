@@ -8,3 +8,5 @@ var msg_add = "追加しますか？";
 var msg_flagchange = "Do You Want To Change flg?";
 var msg_upload = "Do You Want To Upload?";
 var msg_download = "Do You Want To Download?";
+var msg_fileEmpty = "アップロードするファイルを選択してください。";
+var msg_fileformat = "正しいフォーマットのファイルを選択してください。";

@@ -224,11 +224,46 @@ function workend(empid,lastname){
 	$("#employeefrm").submit();
 }
 
-// 
-function gotoResume(){
-	alert("Under Construction");
+// Resume Upload Screen View
+function uploadResume(empid,lastname){
+
+	$('#empid').val(empid);
+	$('#empname').val(lastname);
+	popupopenclose(1);
+	$('#uploadRes').load('uploadResume?mainmenu='+mainmenu+'&time='+datetime+'&empId='+empid+'&lastname='+lastname);
+	$("#uploadRes").modal({
+			backdrop: 'static',
+			keyboard: false
+		});
+	$('#uploadRes').modal('show');
 }
 
+function fnUpload(){
+	var pdf = $('#pdffile').val()
+	if (pdf != "") {
+		pdf = pdf.split(".");
+		if (pdf[pdf.length -1] != "pdf") {
+			alert(msg_fileformat);
+		} else {
+			swal({
+				title: msg_upload,
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				closeOnConfirm: true,
+				closeOnCancel: true
+			},
+			function(isConfirm) {
+				if (isConfirm) {
+				   pageload();
+					$("#uploadpopup").submit();
+				}
+			});
+		}
+	} else {
+		alert(msg_fileEmpty);
+	}
+}
 // Bakc to Employee Index
 function fnredirectemployee(){
 	$('#employeeView').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);

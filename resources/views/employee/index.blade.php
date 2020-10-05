@@ -325,7 +325,7 @@
 										</div>
 
 										<div class="CMN_display_block">
-											<a style="color:blue;" href="javascript:gotoResume();">Resume</a>&nbsp;
+											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a>&nbsp;
 										</div>
 									</div>
 
@@ -390,5 +390,13 @@
 	</script>
 
 </article>
+</div>
+
+<div id="uploadRes" class="modal fade" style="width: 775px;">
+	<div id="login-overlay">
+		<div class="modal-content">
+		<!-- Popup will be loaded here -->
+		</div>
+	</div>
 </div>
 @endsection
