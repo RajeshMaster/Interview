@@ -308,7 +308,7 @@
 
 									<div class="mb4 CMN_display_block mt4">
 										<div class="CMN_display_block">
-											<a style="color:blue;" href="javascript:cushistory();">{{ trans('messages.lbl_customer') }}</a>
+											<a style="color:blue;" href="javascript:cushistory('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_customer') }}</a>
 										</div>
 										&nbsp;|
 										<div class="CMN_display_block">
@@ -366,12 +366,7 @@
 					@endfor
 				@else
 				<tr class="nodata">
-					<th class="text-center red nodatades" colspan="2">
-						{{ trans('messages.lbl_nodatafound') }}
-					</th>
-				</tr>
-				<tr class="nodata">
-					<td class="text-center red nodatades1" colspan="7">
+					<td class="text-center red nodatades1" colspan="5">
 						{{ trans('messages.lbl_nodatafound') }}
 					</td>
 				</tr>
@@ -380,18 +375,19 @@
 		</table>
 	</div>
 
-	<div class="text-center">
-		@if(!empty($empdetails->total()))
-			<span class="pull-left mt24">
-				{{ $empdetails->firstItem() }} ~ {{ $empdetails->lastItem() }} / {{ $empdetails->total() }}
-			</span>
-		@endif 
-		{{ $empdetails->links() }}
-		<div class="CMN_display_block flr">
-				{{ $empdetails->linkspagelimit() }}
+	@if(!empty($empdetailsdet))
+		<div class="text-center">
+			@if(!empty($empdetails->total()))
+				<span class="pull-left mt24">
+					{{ $empdetails->firstItem() }} ~ {{ $empdetails->lastItem() }} / {{ $empdetails->total() }}
+				</span>
+			@endif 
+			{{ $empdetails->links() }}
+			<div class="CMN_display_block flr">
+					{{ $empdetails->linkspagelimit() }}
+			</div>
 		</div>
-	</div>
-
+	@endif 
 	{{ Form::close() }}
 
 	<script>

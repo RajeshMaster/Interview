@@ -143,6 +143,13 @@ return [
 	'lbl_uploadfile' => 'Upload File',
 	'lbl_upload' => 'Upload',
 	'lbl_cvHist' => 'Cv History',
+	'lbl_cvName' => 'Resume Name',
+	'lbl_upDate' => 'Uploaded Date',
+	'lbl_download' => 'Download',
+	'lbl_ResumeHist' => 'Resume History',
+	'lbl_onsitehistory' => 'On Site History',
+	'lbl_yearmonth' => 'Year/Month',
+	'lbl_status' => 'Status',
 	/* End Employee Module */
 
 	/* Start Setting Module */

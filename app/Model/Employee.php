@@ -127,6 +127,31 @@ class Employee extends Model
 		return $select;
 	}
 
+	/** 
+	*  Get On site History Details
+	*  @author Rajesh 
+	*  @param $request
+	*  Created At 2020/10/01
+	**/
+	public static function fnGetOnsiteHistoryDetails($empid,$request) {
+		$db = DB::connection('mysql');
+		$query = $db->table('inv_clientemp_dtl AS cli')->SELECT(
+								'cli.cust_id',
+								'cli.status',
+								'cli.start_date',
+								'cli.end_date',
+								'brn.branch_name',
+								'cus.customer_name')
+					->JOIN('mst_customerdetail AS cus','cli.cust_id','=','cus.customer_id')
+					->JOIN('mst_branchdetails AS brn','cli.branch_id','=','brn.branch_id')
+					->where('cli.emp_id', '=', $empid)
+					->where('cus.delflg',0)
+					->paginate($request->plimit);
+						/*	->tosql();
+					dd($query);*/
+		return $query;
+	}
+
 	/**  
 	*  Get Resume Details
 	*  @author Rajesh 
