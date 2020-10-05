@@ -671,7 +671,7 @@ body {
 								{{ trans('messages.lbl_mailsignature') }}</a>
 							</div>
 							<div id="mail_sub_3">
-								<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
+								<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mailstatus&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_mailstatus') }}</a>
 							</div>
 							@endif

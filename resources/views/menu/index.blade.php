@@ -57,7 +57,7 @@
 						</div>
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 lbldessetcat settingsubdesignfamily">
-								<a name="family" style="color:#33AFFF !important;" id="family" href="">{{ trans('messages.lbl_mailstatus') }}</a>
+								<a name="family" style="color:#33AFFF !important;" id="family" href="{{ url('MailStatus/index?mainmenu=menu_mailstatus&time='.date('Ymdhis')) }}">{{ trans('messages.lbl_mailstatus') }}</a>
 							</span>
 							<span  class="col-xs-10 ml30 mt5 lbldessetcat settingsubdesignfamily">
 								<a name="family" style="color:#33AFFF !important;" id="family" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">{{ trans('messages.lbl_mailcontent') }}</a>

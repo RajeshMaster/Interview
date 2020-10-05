@@ -17,10 +17,22 @@ use Illuminate\Support\Facades\Validator;
 Some functions related to display the mail list and describing their particular details.*/
 class MailStatusController extends Controller {
 	public function index(Request $request) {
+		$disableddraft="";
+		$disabledsent="";
 		if (empty($request->plimit)) {
 			$request->plimit = 50;
 		}
-		$getlist=MailStatus::getMailStausData($request);
-		return view('mailstatus.index',compact('request'));
+		if (!isset($request->sendfilter) || $request->sendfilter=="") {
+			$request->sendfilter = 1;
+		}
+		if(!isset($request->sendfilter) || $request->sendfilter == 1) {
+
+			$disabledsent ="disabled fwb black";
+		}
+		if(!isset($request->sendfilter) || $request->sendfilter == 0) {
+			$disableddraft ="disabled fwb black";
+		}
+		$getMailList=MailStatus::getMailStausData($request);
+		return view('mailstatus.index',compact('request','getMailList','disableddraft','disabledsent'));
 	}
 }
