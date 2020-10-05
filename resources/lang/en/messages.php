@@ -216,5 +216,6 @@ return [
 	'lbl_contractDate' => 'Contract Date',
 	'lbl_name' => 'Name',
 	'lbl_address' => 'Address',
+	'lbl_fax' => 'Fax',
 	/* End Customer Module*/
 ];

@@ -4,6 +4,9 @@
 {{ HTML::style(asset('public/css/footable.core.css')) }}
 {{ HTML::style(asset('public/css/tableviewlayout.css')) }}
 {{ HTML::script(asset('public/js/footable.js')) }}
+{{ HTML::script(asset('public/js/customer.js')) }}
+{{ HTML::script(asset('public/js/lib/bootstrap-datepicker.min.js')) }}
+{{ HTML::style(asset('public/css/lib/bootstrap-datetimepicker.min.css')) }}
 <style type="text/css">
 .sort_asc {
 	background-image:url({{ URL::asset('public/images/upArrow.png') }}) !important;
@@ -15,24 +18,53 @@
 <script type="text/javascript">
 	var mainmenu = '@php echo $request->mainmenu; @endphp';
 	var datetime = '@php echo date("Ymdhis") @endphp';
+	$(document).ready(function() {
+    	setDatePicker("datarange");
+ 	});
 	function pageClick(pageval) {
 		$('#page').val(pageval);
-		$('#mailcontentindx').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime);
-		$("#mailcontentindx").submit();
+		$('#customerindexform').attr('action', '../Customer/index'+'?mainmenu=menu_mail&time='+datetime);
+		$("#customerindexform").submit();
 	}
 	function pageLimitClick(pagelimitval) {
 		$('#page').val('');
 		$('#plimit').val(pagelimitval);
-		$('#mailcontentindx').attr('action', '../Mail/index'+'?mainmenu=menu_mail&time='+datetime);
-		$("#mailcontentindx").submit();
+		$('#customerindexform').attr('action', '../Customer/index'+'?mainmenu=menu_mail&time='+datetime);
+		$("#customerindexform").submit();
+	}
+	function mulclick(divid){
+		if($('#'+divid).css('display') == 'block'){
+		document.getElementById(divid).style.display = 'none';
+		document.getElementById(divid).style.height= "220px";
+		}else {
+		document.getElementById(divid).style.display = 'block';
+		}
 	}
 </script>
 <div class="" id="main_contents">
 	<article id="customer" class="DEC_flex_wrapper" data-category="customer cus_sub_1">
-	{{ Form::open(array('name'=>'mailcontentindx',
-		'id'=>'mailcontentindx',
-		'url' => 'Mail/mailcontent?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
+	{{ Form::open(array('name'=>'customerindexform',
+		'id'=>'customerindexform',
+		'url' => 'Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 		'method' => 'POST')) }}
+		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+	    {{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
+	    {{ Form::hidden('page', $request->page , array('id' => 'page')) }}
+	    {{ Form::hidden('filterval', $request->filterval, array('id' => 'filterval')) }}
+	    {{ Form::hidden('hdnempid', '', array('id' => 'hdnempid')) }}
+	    {{ Form::hidden('hdnempname', '', array('id' => 'hdnempname')) }}
+		{{ Form::hidden('sorting', '' , array('id' => 'sorting')) }}
+		{{ Form::hidden('viewid', '' , array('id' => 'viewid')) }}
+		{{ Form::hidden('searchmethod', $request->searchmethod, array('id' => 'searchmethod')) }}
+		{{ Form::hidden('sortOptn',$request->cussort , array('id' => 'sortOptn')) }}
+	    {{ Form::hidden('sortOrder', $request->sortOrder , array('id' => 'sortOrder')) }}
+	    {{ Form::hidden('useval','',array('id' => 'useval')) }}
+	    {{ Form::hidden('id','',array('id' => 'id')) }}
+	    {{ Form::hidden('custid','',array('id' => 'custid')) }}
+	    {{ Form::hidden('viewflg', '2', array('id' => 'viewflg')) }}
+	    {{ Form::hidden('hid_branch_id','', array('id' => 'hid_branch_id')) }}
+	    {{ Form::hidden('ordervalue', $request->ordervalue, array('id' => 'ordervalue')) }}
+	    {{ Form::hidden('oldfilter', $request->filterval, array('id' => 'oldfilter')) }}
 	<!-- Start Heading -->
 	<fieldset class="pm0 mt20">
 		<div class="header">
@@ -63,6 +95,15 @@
 	<!-- Session msg End-->
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
+			<button type="button" onclick="fngotoregister('{{ $request->mainmenu }}');"
+					class="button button-green pull-right">
+				<span class="fa fa-plus"></span> {{ trans('messages.lbl_mail')}}
+			</button>
+		</div>
+	</div>	
+	<div class="col-xs-12 pm0 pull-left mt5 mt13">
+
+		<div class="pull-left">
 			<a class="btn btn-linkemp {{ $disabledNotGroup }}"  href="javascript:filter('1');" class="pl10 pb5">
 					Not IN Group
 			</a>
@@ -91,10 +132,10 @@
 		<a href="javascript:clearsearch()" title="Clear Search">
 			<img class="pull-right box35 mr10 pageload clearposition" src="{{ URL::asset('public/images/clearsearch.png')  }}">
 		</a>
-		{{ Form::select('staffsort', $customersortarray, $request->staffsort,
+		{{ Form::select('cussort', $customersortarray, $request->cussort,
 						array('class' => 'form-control'.' ' .$request->sortstyle.' '.'CMN_sorting pull-right',
-					   'id' => 'staffsort',
-					   'name' => 'staffsort'))
+					   'id' => 'cussort',
+					   'name' => 'cussort'))
 		}}
 	</div>
 	<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
@@ -111,8 +152,8 @@
 
 			<li class="theme-option ml6">
 				<div class="box100per mt5"  onKeyPress="return checkSubmitsingle(event)">
-					{!! Form::text('singlesearch', $request->singlesearch,
-					array('','class'=>' form-control box80per pull-left','style'=>'height:30px;','id'=>'singlesearch')) !!}
+					{!! Form::text('singlesearchtxt', $request->singlesearchtxt,
+					array('','class'=>' form-control box80per pull-left','style'=>'height:30px;','id'=>'singlesearchtxt')) !!}
 
 					{{ Form::button('<i class="fa fa-search" aria-hidden="true"></i>', 
 					array('class'=>'ml5 mt2 pull-left search box15per btn btn-info btn-sm', 
@@ -125,38 +166,58 @@
 			</li>
 		</ul>
 		<div class="mt5 ml10 pull-left mb5">
-			<a onclick="mulclick('demo');" class="" style="font-family: arial, verdana;cursor: pointer;">
-				{{ trans('messages.lbl_multi_search') }}
-			</a>
+			<a href="#demo" onclick="mulclick('demo');" class="" style="font-family: arial, verdana;" data-toggle="collapse">
+              	  {{ trans('messages.lbl_multi_search') }}
+              </a>
 		</div>
 
-		<div>
+		<div id="multisearch">
 			 <ul id="demo" @if ($request->searchmethod == 2) class="collapse in ml5 pull-left" 
 						  @else class="collapse ml5 pull-left"  @endif>
 				 <li class="theme-option"  onKeyPress="return checkSubmitmulti(event)">
 					<div class="mt5">
 						<span class="pt3" style="font-family: arial, verdana;">
-							{{ trans('messages.lbl_empid') }}
+							{{ trans('messages.lbl_name') }}
 						</span>
 						<div class="mt5 box88per" style="display: inline-block!important;">
-							{!! Form::text('employeeno', $request->employeeno,
-								array('','class'=>' form-control box95per pull-left','style'=>'height:30px;','id'=>'employeeno')) !!}
+							{!! Form::text('name', $request->name,
+								array('','class'=>' form-control box95per pull-left','style'=>'height:30px;','id'=>'name')) !!}
 						</div>
 					</div>
-					<div class="mt5">
-						<span class="pt3" style="font-family: arial, verdana;">
-							{{ trans('messages.lbl_empName') }}
-						</span>
-						<div class="mt5 box88per" style="display: inline-block!important;">
-							{!! Form::text('employeename', $request->employeename,
-								array('','class'=>' form-control box95per pull-left','style'=>'height:30px;','id'=>'employeename')) !!}
-						</div>
-					</div>
+						<div class="mt5">
+                 		<span class="pt3" style="font-family: arial, verdana;">
+                 			{{ trans('messages.lbl_daterange') }}
+                 		</span>
+                 		<div class="mt5 box88per" style="display: inline-block!important;">
+                 			<span class="CMN_display_block box33per " style="display: inline-block!important;">
+                         	{{ Form::text('startdate','',array('id'=>'startdate', 'name' => 'startdate','data-label' => trans('messages.lbl_dob'),'class'=>'box100per datarange','onkeypress' => 'return isNumberKey(event)')) }}
+                         	</span>
+							<label class="mt10 ml2 fa fa-calendar fa-lg CMN_display_block pr5" 
+									for="startdate" aria-hidden="true" style="display: inline-block!important;">
+							</label>
+							<span class="CMN_display_block box33per " style="display: inline-block!important;">
+                         	{{ Form::text('enddate','',array('id'=>'enddate', 'name' => 'enddate','data-label' => trans('messages.lbl_dob'),'class'=>'box100per datarange','onkeypress' => 'return isNumberKey(event)')) }}
+                         	</span>
+							<label class="mt10 ml2 fa fa-calendar fa-lg CMN_display_block" 
+									for="enddate" aria-hidden="true" style="display: inline-block!important;">
+							</label>
+                 		</div>
+                 	</div>
+                 	<div class="mt5">
+                 		<span class="pt3" style="font-family: arial, verdana;">
+                 			{{ trans('messages.lbl_address') }}
+                 		</span>
+                 		<div class="mt5 box88per" style="display: inline-block!important;">
+                 			{!! Form::text('address', $request->address,
+	                         array('','id' => 'address','style'=>'height:30px;','class'=>'box93per 
+	                         ')) !!}
+                 		</div>
+                 	</div>
 					<div class="mt5 mb6">
 						 {{ Form::button(
 							 '<i class="fa fa-search" aria-hidden="true"></i> '.trans('messages.lbl_search'),
 							 array('class'=>'mt10 btn btn-info btn-sm ',
-									'onclick' => 'javascript:return fnMultiSearch()',
+									'onclick' => 'javascript:return umultiplesearch()',
 									'type'=>'button')) 
 						 }}
 					</div>
