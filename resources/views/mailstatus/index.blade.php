@@ -46,6 +46,7 @@
 {{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
 {{ Form::hidden('page', $request->page , array('id' => 'page')) }}
 {{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+{{ Form::hidden('sendfilter','', array('id' => 'sendfilter')) }}
 <div class="" id="main_contents">
 	<article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_3">
 		<!-- Start Heading -->
@@ -147,12 +148,12 @@
 			   		{{--*/ $sno = $sno + 1 /*--}}
 					@empty
 						<tr class="nodata">
-							<th class="text-center red nodatades" colspan="2">
+							<th class="text-center red nodatades" colspan="3">
 								{{ trans('messages.lbl_nodatafound') }}
 							</th>
 						</tr>
 						<tr class="nodata">
-							<td class="text-center red nodatades1" colspan="5">
+							<td class="text-center red nodatades1" colspan="7">
 								{{ trans('messages.lbl_nodatafound') }}
 							</td>
 						</tr>
