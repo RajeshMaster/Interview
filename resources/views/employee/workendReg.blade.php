@@ -204,7 +204,7 @@
 					</button>
 					&emsp;
 				@endif
-				<a href="javascript:fnbackEmpView();" class="button button-red textDecNone">
+				<a href="javascript:fnbackEmpindex();" class="button button-red textDecNone">
 					<span class="fa fa-remove"></span> {{ trans('messages.lbl_cancel') }}
 				</a>
 			</div>

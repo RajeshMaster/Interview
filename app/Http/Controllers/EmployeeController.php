@@ -119,17 +119,41 @@ class EmployeeController extends Controller
 			*/
 			if (isset($recentClient->status)) {
 				$empdetailsdet[$i]['clientStatus'] = $recentClient->status;
+				$empdetailsdet[$i]['clientEndDate'] = $recentClient->Ins_DT;
 			} else {
 				$empdetailsdet[$i]['clientStatus'] = 0;
+				$empdetailsdet[$i]['clientEndDate'] = "";
 			}
+
 			$recentResume =Employee::fnGetResume($empdetailsdet[$i]['Emp_ID']);
+			if(isset($recentResume->resume)) {
+				$empdetailsdet[$i]['recentResume'] = $recentResume->resume;
+				$empdetailsdet[$i]['resumeInsDate'] = $recentResume->createdDate;
+			} else {
+				$empdetailsdet[$i]['recentResume'] = "";
+				$empdetailsdet[$i]['resumeInsDate'] = "";
+			}
+
+			if ($empdetailsdet[$i]['clientEndDate'] != "" && $empdetailsdet[$i]['resumeInsDate'] != "") {
+				if ($empdetailsdet[$i]['resumeInsDate'] > $empdetailsdet[$i]['clientEndDate']) {
+					$empdetailsdet[$i]['presentResume'] = 1;
+				} else {
+					$empdetailsdet[$i]['presentResume'] = 0;
+				}
+			} else {
+				$empdetailsdet[$i]['presentResume'] =0;
+			}
+
+
 			$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
 			foreach($cusname as $key=>$value) {
 				$empdetailsdet[$i]['customer_name'] = $value->customer_name;
 			}
 			$i++;
 		}
-
+// 		echo "<pre>";
+// print_r($empdetailsdet);
+// echo "</pre>";
 		$detailage = Employee::GetAvgage($resignid);
 
 		return view('employee.index', ['request' => $request,
@@ -434,7 +458,7 @@ class EmployeeController extends Controller
 			$ifile = $resume_name.".". self::getExtension($_FILES["pdffile"]["name"]);
 
 			move_uploaded_file($_FILES["pdffile"]['tmp_name'],$destinationPath ."/".$ifile);
-			
+
 		/*	if ($request->xlfile != "") {
 				$jfile = $resume_name.".". self::getExtension($_FILES["xlfile"]["name"]);
 				move_uploaded_file($_FILES["xlfile"]['tmp_name'],$destinationPath ."/".$jfile);
@@ -448,8 +472,41 @@ class EmployeeController extends Controller
 				Session::flash('type','alert-danger'); 
 			}
 		}
+		return Redirect::to('Employee/index?mainmenu=menu_employee&time='.date('YmdHis'));
 	}
 
+	/**
+	*
+	* Resume HistoryScreen
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/05
+	*
+	*/
+	public function resumeHistory(Request $request) {
+		if (!isset($request->empid) || $request->empid == "") {
+			return Redirect::to('Employee/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
+
+		if ($request->plimit == "") {
+			$request->plimit = 50;
+		}
+
+		$viewResumedetails = Employee::viewResumedetails($request);
+		$employeeInfo = Common::fnGetEmployeeInfo($request->empid);
+
+		return view('employee.resumeHistory',['request' => $request,
+										'resumedetails' => $viewResumedetails,
+										'employeDetail' => $employeeInfo]);
+	}
+	/**
+	*
+	* Resume Upload Proces
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/05
+	*
+	*/
 	public static function getExtension($str) {
 		$i = strrpos($str,".");
 		if (!$i) { return ""; }

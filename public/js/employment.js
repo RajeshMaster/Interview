@@ -287,15 +287,24 @@ function fnbackEmpView(){
 	$("#frmaddeditcancel").submit();
 }
 
+// Bakc to Employee View
+function fnbackEmpindex(){
+	pageload();
+	$('#workEndReg').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+	$("#workEndReg").submit();
+}
 // To reset Error
 function resetErrors() {
 	$('form input, form select, form radio, form textarea').css("border-color", "");
 	$('form input').removeClass('inputTxtError');
 	$('label.error').remove();
 }
-// Resign Employee
-function fnresignemployee() {
-	alert("Under Construction");
+// Resume History
+function resumeHistory(id) {
+	pageload();
+	$('#empid').val(id);
+	$('#employeefrm').attr('action', 'resumeHistory?mainmenu='+mainmenu+'&time='+datetime);
+	$("#employeefrm").submit();
 }
 
 // For to get branch Details And incharge

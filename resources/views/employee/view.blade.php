@@ -23,14 +23,10 @@
 				style="text-decoration: none !important;">
 				<span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}
 			</a>
-			<a href="javascript:fnresignemployee();" class="button pull-right button-blue textDecNone ml20" 
-				style="text-decoration: none !important;">
-				<span class="fa fa-close"></span> {{ trans('messages.lbl_resign') }}
-			</a>
-			<a href="javascript:employeEdit('edit','{{ $request->empid }}');" class="button pull-right button-orange textDecNone" 
+			<!-- <a href="javascript:employeEdit('edit','{{ $request->empid }}');" class="button pull-right button-orange textDecNone" 
 				style="text-decoration: none !important;">
 				<span class="fa fa-pencil"></span> {{ trans('messages.lbl_edit') }}
-			</a>
+			</a> -->
 		</div>
 		
 		{{ Form::open(array('name'=>'employeeView',

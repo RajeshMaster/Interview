@@ -75,27 +75,24 @@
 
 	<!-- Session msg Start-->
 	@if(Session::has('success'))
-		<div align="center" class="alertboxalign" role="alert">
-			<p class="alert {{ Session::get('alert', Session::get('type') ) }}">
+		<div align="center" class="alertboxalign col-xs-12 mt10" role="alert" >
+			<span class="alert {{ Session::get('alert', Session::get('type') ) }}">
 			{{ Session::get('success') }}
-			</p>
+			</span>
 		</div>
 	@endif
 
 	@if(Session::has('danger'))
-		<div align="center" class="alertboxalign" role="alert">
-			<p class="alert {{ Session::get('alert', Session::get('type') ) }}">
+		<div align="center" class="alertboxalign col-xs-12 mt10" role="alert">
+			<span class="alert {{ Session::get('alert', Session::get('type') ) }}">
 			{{ Session::get('danger') }}
-			</p>
+			</span>
 		</div>
 	@endif
 
 	@php Session::forget('success'); @endphp
 	@php Session::forget('danger'); @endphp
 	<!-- Session msg End-->
-
-
-
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
 			<a class="btn btn-linkemp {{ $disabledEmp }}" href="javascript:selectActive(0,2);" class="pl10 pb5">
@@ -104,10 +101,6 @@
 			<span>|</span>
 			<a class="btn btn-linkemp {{ $disabledNotEmp }}" href="javascript:selectActive(0,3);" class="pl10 pb5">
 				{{ trans('messages.lbl_nonMB') }}
-			</a>
-			<span>|</span>
-			<a class="btn btn-linkemp {{ $disabledRes }}" href="javascript:selectActive(1,3);" class="pl10 pb5">
-				{{ trans('messages.lbl_resigned') }}
 			</a>
 		</div>
 		<a href="javascript:clearsearch()" title="Clear Search">
@@ -118,8 +111,8 @@
 					   'id' => 'staffsort',
 					   'name' => 'staffsort'))
 		}}
-
 	</div>
+
 	<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
 	 id="styleSelector">
 		<div class="selector-toggle">
@@ -205,6 +198,8 @@
 					</th>
 					<th data-hide="phone" class="tac fs10">
 						{{ trans('messages.lbl_empdetails') }}
+					</th>
+					<th data-hide="phone" class="tac fs10">
 					</th>
 					<th data-hide="phone" class="tac fs10">
 						{{ trans('messages.lbl_doj') }}
@@ -325,12 +320,30 @@
 										</div>
 
 										<div class="CMN_display_block">
-											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a>&nbsp;
+											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a>&nbsp;|
+										</div>
+
+										<div class="CMN_display_block">
+											<a style="color:blue;" href="javascript:resumeHistory('{{ $empdetailsdet[$i]['Emp_ID'] }}')">{{ trans('messages.lbl_cvHist') }}</a>
+											
 										</div>
 									</div>
 
 								</div>
 							</div>
+						</td>
+
+						<td>
+							@if($empdetailsdet[$i]['presentResume'] == 1 )
+								{{--*/ $src = $noimage . '/pdf.png'; /*--}}
+								<a href="javascript:downloadResume()" ><img class="pull-left box30 mr5  ml20" src="{{ $src }}" width="30" height = "30"></img>
+
+								</a>
+							@else
+								{{--*/ $src = $noimage . '/nopdf.png'; /*--}}
+								<img class="pull-left box30 mr5  ml20" src="{{ $src }}" width="30" height = "30"></img>
+							@endif
+
 						</td>
 
 						<td class="tac">

@@ -142,6 +142,7 @@ return [
 	'lbl_customerNameSel' => 'Customer Name Select',
 	'lbl_uploadfile' => 'Upload File',
 	'lbl_upload' => 'Upload',
+	'lbl_cvHist' => 'Cv History',
 	/* End Employee Module */
 
 	/* Start Setting Module */

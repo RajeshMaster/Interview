@@ -22,7 +22,7 @@ class Employee extends Model
 					->select('*')
 					->where([['delFlg', '=', 0],
 							  ['resign_id', '=', $resignid],
-							  ['Emp_ID', 'NOT LIKE', '%NST%']]);
+							  ['Emp_ID', 'LIKE', '%MB%']]);
 		if($resignid == 0){
 			$query = $query->where('Title', '=', $title);
 		}
@@ -106,8 +106,25 @@ class Employee extends Model
 		$query = $db->table('mst_resume')
 					->select('*')
 					->where([['empId', '=', $empId]])
-					->get();
+					->ORDERBY('createdDate', 'DESC')
+					->first();
 		return $query;
+	}
+
+	/** 
+	*  Get Resume History Details
+	*  @author Rajesh 
+	*  @param $request
+	*  Created At 2020/10/01
+	**/
+	public static function viewResumedetails($request) {
+		$db = DB::connection('mysql');
+		$select = $db->table('mst_resume')
+					->SELECT('*')
+					->where([['empId', '=', $request->empid]])
+					->ORDERBY('createdDate', 'ASC')
+					->paginate($request->plimit);
+		return $select;
 	}
 
 	/**  

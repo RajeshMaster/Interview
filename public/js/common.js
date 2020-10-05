@@ -219,7 +219,6 @@ function setDatePickerBeforeCurrent (datefield) {
 		startView: 2,
 		minView: 2,
 		forceParse: 0,
-		endDate : new Date()
 	});
 }
 

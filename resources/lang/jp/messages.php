@@ -141,6 +141,7 @@ return [
 	'lbl_customerNameSel' => '取引先名称選択',
 	'lbl_uploadfile' => 'ファイル',
 	'lbl_upload' => 'アップロード',
+	'lbl_cvHist' => 'Cv History',
     /* End Employee Module */
 
 	/* Start Setting Module */
