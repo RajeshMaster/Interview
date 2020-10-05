@@ -217,4 +217,11 @@ return [
 	'lbl_mobilenumber' => 'Mobile Number',
 	'lbl_passwordchange' => 'Password Change',
 	/* End User Module */
+
+	/* Start Employee Module */
+	'lbl_customerList' => 'Customer List',
+	'lbl_contractDate' => 'Contract Date',
+	'lbl_name' => 'Name',
+	'lbl_address' => 'Address',
+	/* End Customer Module*/
 ];
