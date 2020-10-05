@@ -50,6 +50,9 @@ return [
 	'lbl_mailsendby' => 'Mail Send By',
 	'lbl_senddatetime' => 'Send Date Time',
 	'lbl_to' => 'To',
+	'lbl_companyName' => 'Company Name',
+	'lbl_sent' => 'Sent',
+	'lbl_draft' => 'Draft',
 	/* End Mail Content Module  */
 
 	/* Start Register Module  */
