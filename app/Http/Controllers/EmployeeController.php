@@ -258,13 +258,13 @@ class EmployeeController extends Controller
 
 		$commonrules = $common1 + $common2;
 		$rules = $commonrules;
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json($validator->messages(), 200);exit;
-        } else {
-            $success = true;
-            echo json_encode($success);
-        }
+		$validator = Validator::make($request->all(), $rules);
+		if ($validator->fails()) {
+			return response()->json($validator->messages(), 200);exit;
+		} else {
+			$success = true;
+			echo json_encode($success);
+		}
 	}
 
 	/**
@@ -386,13 +386,13 @@ class EmployeeController extends Controller
 	
 		$commonrules = $common1 + $common2;
 		$rules = $commonrules;
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json($validator->messages(), 200);exit;
-        } else {
-            $success = true;
-            echo json_encode($success);
-        }
+		$validator = Validator::make($request->all(), $rules);
+		if ($validator->fails()) {
+			return response()->json($validator->messages(), 200);exit;
+		} else {
+			$success = true;
+			echo json_encode($success);
+		}
 	}
 
 	/**
@@ -436,7 +436,6 @@ class EmployeeController extends Controller
 	*
 	*/
 	public function uploadResume(Request $request) {
-		
 		return view('employee.uploadResumePopup',['request' => $request]);
 	}
 
@@ -499,6 +498,72 @@ class EmployeeController extends Controller
 										'resumedetails' => $viewResumedetails,
 										'employeDetail' => $employeeInfo]);
 	}
+
+	/**
+	*
+	* Resume HistoryScreen
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/05
+	*
+	*/
+	public function downloadprocess(Request $request) {
+		$fileName = basename($request->filenamePdf);
+		$path = '../ResumeUpload/employeResume/';
+		$filePath = $path.$fileName;
+		if(!empty($fileName) && file_exists($filePath)){
+			header("Cache-Control: public");
+			header("Content-Description: File Transfer");
+			header("Content-Disposition: attachment; filename=$fileName");
+			header("Content-Type: application/zip");
+			header("Content-Transfer-Encoding: binary");
+			// Read the file
+			readfile($filePath);
+			exit;
+		} else {
+			echo 'The file does not exist.';
+		}
+	}
+
+	/**
+	*
+	* Resume HistoryScreen
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/05
+	*
+	*/
+	public function Onsitehistory(Request $request) {
+		$customerhistory = array();
+		if ($request->plimit=="") {
+			$request->plimit = 50;
+		}
+		$cushistory = Employee::fnGetOnsiteHistoryDetails($request->empid,$request);
+		$i = 0;
+		foreach($cushistory as $key=>$chistory) {
+			$customerhistory[$i]['LastName'] = $request->hdnempname;
+			$customerhistory[$i]['start_date'] = $chistory->start_date;
+			$customerhistory[$i]['end_date'] = $chistory->end_date;
+			$customerhistory[$i]['status'] = $chistory->status;
+			$customerhistory[$i]['customer_name'] = $chistory->customer_name;
+			$customerhistory[$i]['branch_name'] = $chistory->branch_name;
+			if($chistory->end_date=="0000-00-00") {
+				$customerhistory[$i]['end_date'] ="";
+			}
+			$cusexpdetails = Employee::getYrMonCountBtwnDates($customerhistory[$i]['start_date'],$customerhistory[$i]['end_date']);
+			if ($cusexpdetails['year'].".".$cusexpdetails['month'] == 0.0) {
+				$customerhistory[$i]['experience'] = "0.0";
+			} else {
+				$customerhistory[$i]['experience'] = $cusexpdetails['year'].".".Employee::fnAddZeroSubstring($cusexpdetails['month']);
+			}
+			$i++;
+		}
+		return view('employee.Onsitehistory',['request' => $request,
+											'cushistory' => $cushistory,
+											'customerhistory' => $customerhistory
+											]);
+	}
+
 	/**
 	*
 	* Resume Upload Proces

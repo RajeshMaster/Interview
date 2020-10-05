@@ -212,8 +212,13 @@ function employeeview(id){
 }
 
 // View Customer History
-function cushistory(){
-	alert("Under Construction");
+function cushistory(empid,lastname){
+	pageload();
+	$('#empid').val(empid);
+	$('#hdnempid').val(empid);
+	$('#hdnempname').val(lastname);
+	$('#employeefrm').attr('action', '../Employee/Onsitehistory?mainmenu='+mainmenu+'&time='+datetime);
+    $("#employeefrm").submit();
 }
 
 // To register the work end date
@@ -293,18 +298,59 @@ function fnbackEmpindex(){
 	$('#workEndReg').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
 	$("#workEndReg").submit();
 }
+
+// Bakc to Employee Index
+function fnredirectindex(){
+	pageload();
+	$('#resHistfrm').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+	$("#resHistfrm").submit();
+}
+
+// Bakc to Employee Index
+function fnindex(){
+	pageload();
+	$('#onsitefrm').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+	$("#onsitefrm").submit();
+}
+
 // To reset Error
 function resetErrors() {
 	$('form input, form select, form radio, form textarea').css("border-color", "");
 	$('form input').removeClass('inputTxtError');
 	$('label.error').remove();
 }
+
 // Resume History
 function resumeHistory(id) {
 	pageload();
 	$('#empid').val(id);
 	$('#employeefrm').attr('action', 'resumeHistory?mainmenu='+mainmenu+'&time='+datetime);
 	$("#employeefrm").submit();
+}
+
+// Resume History
+function downloadResume(resumename,page) {
+	swal({
+		title: msg_download,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+	},
+	function(isConfirm) {
+		if(isConfirm) {
+			if (page == "History") {
+				$('#formpdfdwnld #filenamePdf').val(resumename);
+				$('#formpdfdwnld').attr('action', 'downloadprocess?mainmenu='+mainmenu+'&time='+datetime);
+				$("#formpdfdwnld").submit();
+			} else {
+				$('#frmpdfdwnld #filenamePdf').val(resumename);
+				$('#frmpdfdwnld').attr('action', 'downloadprocess?mainmenu='+mainmenu+'&time='+datetime);
+				$("#frmpdfdwnld").submit();
+			}
+		}
+	});
 }
 
 // For to get branch Details And incharge

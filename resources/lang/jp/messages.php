@@ -143,6 +143,13 @@ return [
 	'lbl_uploadfile' => 'ファイル',
 	'lbl_upload' => 'アップロード',
 	'lbl_cvHist' => 'Cv History',
+	'lbl_cvName' => '経歴書名称',
+	'lbl_upDate' => 'アップロードされた日付',
+	'lbl_download' => 'ダウンロード',
+	'lbl_ResumeHist' => '経歴書履歴',
+	'lbl_onsitehistory' => 'オンサイト履歴',
+	'lbl_yearmonth' => '年/月', 
+	'lbl_status' => 'ステータス',
     /* End Employee Module */
 
 	/* Start Setting Module */
