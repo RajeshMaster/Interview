@@ -6,6 +6,13 @@ use Auth;
 use Session;
 use Config;
 class MailStatus extends Model {
+	/**
+	*
+	* To Mail Status Index View
+	* @author Sathish
+	* Created At 05/10/2020
+	*
+	*/
 	public static function getMailStausData($request)
 	{
 		$result = db::table('mailStatus')
@@ -31,6 +38,13 @@ class MailStatus extends Model {
 						}
 						return $result;
 	}
+	/**
+	*
+	* To Mail Status Single View
+	* @author Sathish
+	* Created At 05/10/2020
+	*
+	*/
 	public static function getSingleMailStatus($request){
 		$result = db::table('mailStatus')
 						->select('mailStatus.*','mst_customerdetail.customer_name')
