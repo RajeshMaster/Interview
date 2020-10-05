@@ -101,7 +101,7 @@
 						<th data-hide="phone" class="tac fs10">
 							{{ trans('messages.lbl_senddatetime') }}
 						</th>
-						<th class="tac"></th>
+						<th data-hide="phone" class="tac"></th>
 					</tr>
 				</thead>
 				<tbody class="tablealternateclr">

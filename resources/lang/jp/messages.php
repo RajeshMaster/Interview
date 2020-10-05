@@ -210,4 +210,11 @@ return [
 	'lbl_mobilenumber' => '携帯番号',
 	'lbl_passwordchange' => 'パスワードの変更',
 	/* End User Module */
+
+	/* Start Employee Module */
+	'lbl_customerList' => '取引先一覧',
+	'lbl_contractDate' => '契約日',
+	'lbl_name' => '名前',
+	'lbl_address' => '住所',
+	/* End Customer Module*/
 ];
