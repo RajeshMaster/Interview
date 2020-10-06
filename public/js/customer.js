@@ -12,6 +12,115 @@ $(function () {
 		cc = -1;
 	}); 
 });
+$(document).ready(function() {
+	$('.addeditprocess').on('click', function() {
+		resetErrors();
+		var url ='CustomerRegValidation';
+		$.each($('form input, form select, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+			}
+		});
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				/*alert(JSON.stringify(resp));*/
+				if(resp == true){
+					var mailId = $('#txt_mailid').val();
+					$.ajax({
+						type: 'GET',
+                    	url: 'getEmailExists',
+                    	data: {"mailId": mailId},
+                    	success: function(resp){
+                    		if(resp > 0){
+                    			document.getElementById('errorSectiondisplay').innerHTML = "";
+	                            err_invalidcer = "Email Id Already Exists";
+	                            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invalidcer+'</label></div>';
+	                            document.getElementById('errorSectiondisplay').style.display = 'inline-block';
+	                            document.getElementById('errorSectiondisplay').innerHTML = error;
+	                            return false;
+                    		}
+                    		else{
+                    			if($('#frmcustaddedit #editid').val() == "") {
+                    				swal({
+									title: msg_register,
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonClass: "btn-danger",
+									closeOnConfirm: true,
+									closeOnCancel: true
+									},
+									function(isConfirm) {
+										if (isConfirm) {
+										   	pageload();
+                                			$("#frmcustaddedit").submit();
+										} else {
+											
+										}
+									});
+                    			}else{
+                    				swal({
+									title: msg_update,
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonClass: "btn-danger",
+									closeOnConfirm: true,
+									closeOnCancel: true
+									},
+									function(isConfirm) {
+										if (isConfirm) {
+										   	pageload();
+                                			form.submit();
+										} else {
+											
+										}
+									});
+                    			}
+
+                    			
+                    		}
+                    	},
+                    	error: function(data){
+
+                    	}
+					});
+				} else{
+					$.each(resp, function(i, v) {
+						// alert(i + " => " + v); // view in console for error messages
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						if ($('input[name="' + i + '"]').hasClass('mailname')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailname_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('mailSubject')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailSubject_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('mailheader')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailheader_err').append(msg)
+						} else if ($('textarea[name="' + i + '"]').hasClass('mailContent')) {
+							$('textarea[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailContent_err').append(msg)
+						} else {
+							$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError').after(msg);
+						}
+					});
+				}
+			},
+			error: function(data) {
+			}
+		}); 
+	});
+});
+function resetErrors() {
+	$('form input, form select, form radio, form textarea').css("border-color", "");
+	$('form input').removeClass('inputTxtError');
+	$('label.error').remove();
+}
+
 function filter(val) {
 	$('#plimit').val(50);
 	$('#page').val('');
@@ -152,9 +261,30 @@ function custview(datetime,id,custid) {
 	$('#customerindexform').attr('action', 'CustomerView?mainmenu='+mainmenu+'&time='+datetime);
 	$("#customerindexform").submit();
 }
-function fngotoregister(datetime) {
+function fngotoregister() {
 	pageload();
 	var mainmenu=$('#customerindexform #mainmenu').val();
 	$('#customerindexform').attr('action', 'CustomerAddedit?mainmenu='+mainmenu+'&time='+datetime);
 	$("#customerindexform").submit();
+}
+function isNumberKey(evt) { 
+  	var charCode = (evt.which) ? evt.which : event.keyCode
+  	if (charCode > 31 && (charCode < 48 || charCode > 57))
+  		return false;
+  	return true;
+}
+function isNumberKeywithminus(evt) { 
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode == 45) {
+      return true;
+    }
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+      return false;
+    return true;
+}
+function addHyphen (element) {
+    var ele = document.getElementById(element.id);
+    ele = ele.value.split('-').join('');    // Remove dash (-) if mistakenly entered.
+    var finalVal = ele.match(/\d{3}(?=\d{2,3})|\d+/g).join('-');
+    document.getElementById(element.id).value = finalVal;
 }

@@ -172,4 +172,69 @@ class CustomerController extends Controller {
 											'maxid' => $custmaxid]);
 		}
 	}
+	public function CustomerRegValidation(Request $request){
+		$commonrules=array();
+		$commonrules = array(
+			'txt_custnamejp' => 'required',
+			'txt_kananame'=>'required',
+			'txt_repname' => 'required',
+			'txt_custagreement' => 'required',
+			'txt_branch_name' => 'required',
+			'txt_mobilenumber' => 'required',
+			'txt_fax' => 'required',
+			'txt_url' => 'required|url',
+			'txt_postal' => 'required|min:8',
+			'kenmei' => 'required',
+			'txt_shimei' => 'required',
+			'txt_streetaddress' => 'required',
+			'txt_incharge_name' => 'required',
+			'txt_mailid' => 'required|email',
+		);
+		$rules = $commonrules;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+	}
+ 	public function getEmailExists(Request $request) {
+		$inchargeMailExist = Customer::fnGetEmailExistsCheck($request);
+		$countEmail = count($inchargeMailExist);
+		print_r($countEmail);exit();
+  	}
+  	public function CustomerAddeditProcess(Request $request){
+  		if($request->editid!="") {
+
+  		}else{
+  			$maxCustID="CST00001";
+  			$custmaxid=Customer::getMaxId();
+  			if(!empty($custmaxid)){
+				$maxCustID = $custmaxid[0]->custid;
+			}
+			if($_REQUEST['hid_branch_id'] == "") {
+				$customer = substr($maxCustID, 3,5);
+				$cus4 = $customer+1;
+				$cus5 = str_pad($cus4,5,"0",STR_PAD_LEFT);
+			    $branchid = "CST" . $cus5;
+			} else {
+				$branchid = $_REQUEST['hid_branch_id'];
+			}  
+			$insertId = Customer::InsertCustomerRec($request,$maxCustID);
+			$insert= Customer::InsertBranchRec($request,$branchid,$maxCustID);
+			$insert=Customer::InsertIncharge($request,$branchid,$maxCustID);
+			if($insert) {
+				Session::flash('success', 'Inserted Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Inserted Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+			Session::flash('id', $insertId );
+			Session::flash('custid', $maxCustID );
+  		}
+  		return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+  		
+  	}
 }

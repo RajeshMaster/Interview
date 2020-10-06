@@ -133,7 +133,79 @@ class Customer extends Model {
 		return $query;	
 	} 
 	public static function getMaxId(){
-		$query = DB::SELECT("SELECT CONCAT('CST', LPAD(MAX(SUBSTRING(customer_id,5))+100,5,0)) AS cusid FROM mst_customerdetail WHERE customer_id LIKE '%CST%'");
+		$query = DB::SELECT("SELECT CONCAT('CST', LPAD(MAX(SUBSTRING(customer_id,5))+100,5,0)) AS custid FROM mst_customerdetail WHERE customer_id LIKE '%CST%'");
 		return $query;
+	}
+	public static function fnGetEmailExistsCheck($request){
+		// $custname = trim(iconv(mb_detect_encoding($customer_name), 'UTF-8', $customer_name));
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_cus_inchargedetail')
+					->select('*')
+					->WHERE('incharge_email_id','=', $request->mailId);
+			if($request->editId != ""){
+				$result	= $result->WHERE('id','!=', $request->editId)->get();
+			} else {
+				$result = $result->get();
+			}
+		return $result;
+	}
+	public static function InsertCustomerRec($request,$cus){
+		$insert=DB::table('mst_customerdetail')->insert([
+			'customer_id' => $cus,
+			'customer_name' => $request->txt_custnamejp,
+			 'contract' => $request->txt_custagreement,
+			 'create_date' => date('Y-m-d'),
+			'create_by' => Auth::user()->username,
+			 'customer_contact_no' => $request->txt_mobilenumber,
+			 'customer_email_id'=> '',
+			 'customer_fax_no'=> $request->txt_fax,
+			 'customer_website' => $request->txt_url,
+			 'customer_address'=>$request->txt_address,
+			 'postalNumber'=>$request->txt_postal,
+			 'kenmei'=>$request->kenmei,
+			 'shimei'=>$request->txt_shimei,
+			 'street_address'=>$request->txt_streetaddress,
+			 'buildingname'=>$request->txt_buildingname,
+			 'romaji'=> $request->txt_kananame,
+			 'delflg'=> 0,
+			 'nickname'=> $request->txt_repname,
+			]);
+		$id = DB::getPdo()->lastInsertId();;
+		return $id;
+	}
+	public static function InsertBranchRec($request,$branchid,$cus) {
+		$insert=DB::table('mst_branchdetails')->insert([
+				'id' => '',
+				'customer_id' => $cus,
+				'branch_id' => $branchid,
+				'branch_name' => $request->txt_branch_name,
+				 'branch_contact_no' => $request->txt_mobilenumber,
+				 'branch_fax_no' => $request->txt_fax,
+				 'postalNumber' => $request->txt_postal,
+				 'kenmei' => $request->kenmei,
+				 'shimei' => $request->txt_shimei,
+				 'street_address' => $request->txt_streetaddress,
+				 'buildingname' => $request->txt_buildingname,
+				 'branch_address' => $request->txt_address,
+				 'create_date' => date('Y-m-d'),
+				'create_by' => Auth::user()->username,
+				'delflg' => 0
+				]);
+	}
+	public static function InsertIncharge($request,$branchid,$cus3) {
+		$insert=DB::table('mst_cus_inchargedetail')->insert([
+				'id' => '',
+				'customer_id' => $cus3,
+				'incharge_name' => $request->txt_incharge_name,
+				'incharge_email_id' => $request->txt_mailid,
+				'password' => md5('mb'),
+				'create_date' => date('Y-m-d'),
+				'create_by' => Auth::user()->username,
+				'delflg' =>0,
+				'designation' =>17,
+				'confirmpassword' =>'',
+				'branch_name' => $branchid
+				]);
+		return $insert;
 	}
 }

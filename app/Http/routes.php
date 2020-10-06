@@ -145,6 +145,9 @@ Route::group(['prefix'=>'Customer','middleware' => 'auth'], function(){
 	Route::any('groupselpopup', 'CustomerController@groupselpopup');
 	Route::any('CustomerView', 'CustomerController@CustomerView');
 	Route::any('CustomerAddedit','CustomerController@CustomerAddedit');
+	Route::any('CustomerRegValidation','CustomerController@CustomerRegValidation');
+	Route::any('getEmailExists','CustomerController@getEmailExists');
+	Route::any('CustomerAddeditProcess','CustomerController@CustomerAddeditProcess');
 });
 
 //Customer

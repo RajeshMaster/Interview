@@ -227,5 +227,14 @@ return [
 	'lbl_address' => '住所',
 	'lbl_fax' => 'ファックス',
 	'lbl_daterange'=> '期間',
+	'lbl_custname(JP & Eng)' =>'取引先名(日英)',
+	'lbl_custname(kana)' =>'取引先名（カナ）',
+	'lbl_repname' =>'代表者名',	
+	'lbl_custagreement' =>'取引先 契約',
+	'lbl_postalCode'=>'郵便番号',
+	'lbl_kenmei'=>'県名',
+	'lbl_shimei'=>'市名',
+	'lbl_incharge_mail'=>'担当メールID',
+	'lbl_buildingname' => 'ビル名',
 	/* End Customer Module*/
 ];
