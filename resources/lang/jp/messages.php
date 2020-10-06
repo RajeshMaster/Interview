@@ -99,20 +99,20 @@ return [
 	/* End Setting Module */
 
 	/* Start Menu Module */
-    'lbl_home' => 'ホーム',
+	'lbl_home' => 'ホーム',
 	'lbl_employee' => '社員',
 	'lbl_customer' => '取引先',
-    'lbl_nonEmployee' => '非社員',
+	'lbl_nonEmployee' => '非社員',
 	'lbl_emphistory' => '従業員の歴史',
 	'lbl_agent' => 'Agent',
 	'lbl_old_customer' => 'Old Customer',
 	'lbl_user' => 'ユーザ',
 	'lbl_ourdetails' => '当社詳細',
-    'lbl_japanese_skills' => '日本語のスキル',
+	'lbl_japanese_skills' => '日本語のスキル',
 	/* End Menu Module */
 
-    /* Start Employee Module */
-    'lbl_avgage' => '平均年齢',
+	/* Start Employee Module */
+	'lbl_avgage' => '平均年齢',
 	'lbl_nonMB' => 'MBにはいない',
 	'lbl_resigned' => '退社社員',
 	'lbl_empid' => '社員ID',
@@ -124,7 +124,7 @@ return [
 	'lbl_work_date' => '仕事終了日',
 	'lbl_staffusersurname' => 'ユーザ名（日英）：姓',
 	'lbl_staffusername' => 'ユーザ名（日英）：姓',
-    'lbl_nickname' => 'ニック名',
+	'lbl_nickname' => 'ニック名',
 	'lbl_resigneddate' => '退社社員 締め日',
 	'lbl_bankName' => '銀行名',
 	'lbl_branchName' => '支店名',
@@ -150,12 +150,14 @@ return [
 	'lbl_onsitehistory' => 'オンサイト履歴',
 	'lbl_yearmonth' => '年/月', 
 	'lbl_status' => 'ステータス',
-    /* End Employee Module */
+	'lbl_active' => '活動',
+	'lbl_inactive' => '非活動',
+	/* End Employee Module */
 
 	/* Start Setting Module */
 	'lbl_userdesignation' => 'ユーザー指定',
-    'lbl_userdesignationinenglish' => '英語での指定',
-    'lbl_userdesignationinjapanese' => '日本語での指定',
+	'lbl_userdesignationinenglish' => '英語での指定',
+	'lbl_userdesignationinjapanese' => '日本語での指定',
 	'lbl_userdesignationtype' => 'ユーザー指定タイプ',
 	'lbl_Unfixed_reason' => 'Un Fixed Reason',
 	'lbl_reason' => 'Reason',

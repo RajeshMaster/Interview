@@ -11,34 +11,9 @@ $(function () {
 		sortingfun();
 		cc = -1;
 	}); 
+	// MOVE SORTING
 });
-function filter(val) {
-	$('#plimit').val(50);
-	$('#page').val('');
-	$("#filter").val('');
-	$('#singlesearchtxt').val('');
-	$('#sorting').val('');
-	$('#startdate').val('');
-	$('#enddate').val('');
-	$('#name').val('');
-	$('#filterval').val(val);
-	$('#cussort').val('');
-	$('#address').val('');
-	$("#customerindexform").submit();
-}
-function clearsearch() {
-	$('#plimit').val(50);
-	$('#page').val('');
-	$("#filter").val('');
-	$('#singlesearchtxt').val('');
-	$('#sorting').val('');
-	$('#cussort').val('');
-	$('#startdate').val('');
-	$('#enddate').val('');
-	$('#name').val('');
-	$('#address').val('');
-	$("#customerindexform").submit();
-}
+
 function sortingfun() {
 	pageload();
 	$('#plimit').val(50);
@@ -54,10 +29,10 @@ function sortingfun() {
 			$('#sortOrder').val('asc');
 		}
 	}
-	$("#customerindexform").submit();
+	$("#Oldcustomerindexform").submit();
 }
+
 function fnSingleSearch() {
-	var mainmenu='Customer';
 	var singlesearchtxt = $("#singlesearchtxt").val();
 	var singlesearchtxt = document.getElementById('singlesearchtxt').value;
 	if (singlesearchtxt == "") {
@@ -76,9 +51,23 @@ function fnSingleSearch() {
 		$('#enddate').val('');
 		$('#name').val('');
 		$('#address').val('');
-		$('#customerindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
-		$("#customerindexform").submit();
+		$('#Oldcustomerindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+		$("#Oldcustomerindexform").submit();
 	}
+}
+
+function clearsearch() {
+	$('#plimit').val(50);
+	$('#page').val('');
+	$("#filter").val('');
+	$('#singlesearchtxt').val('');
+	$('#sorting').val('');
+	$('#cussort').val('');
+	$('#startdate').val('');
+	$('#enddate').val('');
+	$('#name').val('');
+	$('#address').val('');
+	$("#Oldcustomerindexform").submit();
 }
 
 function checkSubmitmulti(e) {
@@ -106,15 +95,17 @@ function umultiplesearch() {
 		 document.getElementById('enddate').focus();
 		return false;
 	} else {
-	$('#plimit').val(50);
-	$('#page').val('');
-	//$('#sortOptn').val('');
-	$("#filterval").val('');
-	//$('#sortOrder').val('DESC');
-   // $('#sortOrder').val('asc'); 
-	$('#singlesearchtxt').val('');
-	$('#searchmethod').val(2);
-	$('#customerindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
-	$("#customerindexform").submit();
-}
+	pageload();
+		
+		$('#plimit').val(50);
+		$('#page').val('');
+		//$('#sortOptn').val('');
+		$("#filterval").val('');
+		//$('#sortOrder').val('DESC');
+	   // $('#sortOrder').val('asc'); 
+		$('#singlesearchtxt').val('');
+		$('#searchmethod').val(2);
+		$('#Oldcustomerindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+		$("#Oldcustomerindexform").submit();
+	}
 }

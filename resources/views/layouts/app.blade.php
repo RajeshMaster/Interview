@@ -675,7 +675,7 @@ body {
 								{{ trans('messages.lbl_mailstatus') }}</a>
 							</div>
 							@endif
-							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_customer"))
+							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_customer" || $request->mainmenu == "menu_oldcustomer"))
 							<div id="cus_sub_1">
 								<a class="pageload" href="{{ url('Customer/index?mainmenu=menu_customer&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_customer') }}</a>
@@ -685,7 +685,7 @@ body {
 								{{ trans('messages.lbl_agent') }}</a>
 							</div>
 							<div id="cus_sub_3">
-								<a  href="#">
+								<a  href="{{ url('OldCustomer/index?mainmenu=menu_oldcustomer&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_old_customer') }}</a>
 							</div>
 							@endif
