@@ -132,7 +132,7 @@ class CustomerController extends Controller {
 	}
 	public function selectGroup(Request $request){
 		$getallGroup = Customer::getGroupName();
-		return view('Customer.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup]);
+		return view('customer.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup]);
 	}
 	public function groupselpopup(Request $request){
 		$updGrpId = Customer::updGrpId($request);
@@ -167,7 +167,7 @@ class CustomerController extends Controller {
 			if($custmaxid == ""){
 				$custmaxid = "CST00001";
 			}
-			return view('Customer.customeraddedit',['request' => $request,
+			return view('customer.customeraddedit',['request' => $request,
 											'getKenname' => $getKenname,
 											'maxid' => $custmaxid]);
 		}

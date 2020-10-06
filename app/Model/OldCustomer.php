@@ -99,9 +99,9 @@ class OldCustomer extends Model {
 									->ORDERBY('customer_id', 'DESC');
 									$request->cussort = "customer_id";
 				}
-				//$query =$query->paginate($request->plimit);
-				$query = $query->tosql();
-						dd($query);
+				$query =$query->paginate($request->plimit);
+				// $query = $query->tosql();
+						// dd($query);
 
 											// ->tosql()
 											// dd($query);
