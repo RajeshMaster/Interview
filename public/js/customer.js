@@ -118,3 +118,43 @@ function umultiplesearch() {
 	$("#customerindexform").submit();
 }
 }
+function custview(datetime,id,custid) {
+	$('#id').val(id);
+	$('#custid').val(custid);
+	var mainmenu=$('#customerindexform #mainmenu').val();
+	$('#customerindexform').attr('action', 'customerView?mainmenu='+mainmenu+'&time='+datetime);
+	$("#customerindexform").submit();
+}
+function selectGroup(custId) {
+	var mainmenu = "menu_customer";
+	popupopenclose(1);
+	$('#selectGroup').load('selectGroup?mainmenu='+mainmenu+'&time='+datetime+'&custId='+custId);
+	$("#selectGroup").modal({
+		backdrop: 'static',
+		keyboard: false
+	});
+	$('#selectGroup').modal('show');
+}
+function divGroupSelPopClose() {
+	var confirmmsg = 'Do You Want To Cancel?';
+	if (confirm(confirmmsg)) {
+		$("body div").removeClass("modalOverlay");
+		$('#selectGroup').empty();
+		$('#selectGroup').modal('toggle');
+	} else {
+		return false;
+	}
+}
+function custview(datetime,id,custid) {
+	$('#id').val(id);
+	$('#custid').val(custid);
+	var mainmenu=$('#customerindexform #mainmenu').val();
+	$('#customerindexform').attr('action', 'CustomerView?mainmenu='+mainmenu+'&time='+datetime);
+	$("#customerindexform").submit();
+}
+function fngotoregister(datetime) {
+	pageload();
+	var mainmenu=$('#customerindexform #mainmenu').val();
+	$('#customerindexform').attr('action', 'CustomerAddedit?mainmenu='+mainmenu+'&time='+datetime);
+	$("#customerindexform").submit();
+}
