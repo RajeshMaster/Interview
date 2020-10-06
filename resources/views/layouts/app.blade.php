@@ -411,7 +411,7 @@ body {
 								</ul>
 							</li>
 							<li @if(isset($request->mainmenu) && 
-									$request->mainmenu == "menu_mail" || $request->mainmenu == "menu_mailsignature" || $request->mainmenu == "menu_mailstatus" ) 
+									$request->mainmenu == "menu_mail" || $request->mainmenu == "menu_mailsignature" || $request->mainmenu == "menu_mailstatus" || $request->mainmenu == "menu_mailsend"  ) 
 									class="dropdown active" 
 								@endif>
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" 
@@ -419,6 +419,22 @@ body {
 									{{ trans('messages.lbl_mail') }}
 									<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
+									<li @if(isset($request->mainmenu) && 
+											$request->mainmenu == "menu_mailsend") 
+											class="active" 
+										@endif>
+										<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}"
+										style="text-decoration: none !important;">&nbsp;&nbsp;
+										{{ trans('messages.lbl_sendMail') }}</a>
+									</li>
+									<li @if(isset($request->mainmenu) && 
+											$request->mainmenu == "menu_mailstatus") 
+											class="active" 
+										@endif>
+										<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mailstatus&time='.date('Ymdhis')) }}"
+										style="text-decoration: none !important;">&nbsp;&nbsp;
+										{{ trans('messages.lbl_mailstatus') }}</a>
+									</li>
 									<li class="dropdown-header">&nbsp;&nbsp;{{ trans('messages.lbl_dropdown') }}</li>
 									<li @if(isset($request->mainmenu) && 
 											$request->mainmenu == "menu_mail") 
@@ -433,14 +449,6 @@ body {
 										@endif>
 										<a class="pageload" href="{{ url('MailSignature/index?mainmenu=menu_mailsignature&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;
 										{{ trans('messages.lbl_mailsignature') }}</a>
-									</li>
-									<li @if(isset($request->mainmenu) && 
-											$request->mainmenu == "menu_mailstatus") 
-											class="active" 
-										@endif>
-										<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mailstatus&time='.date('Ymdhis')) }}"
-										style="text-decoration: none !important;">&nbsp;&nbsp;
-										{{ trans('messages.lbl_mailstatus') }}</a>
 									</li>
 								</ul>
 							</li>
@@ -661,7 +669,11 @@ body {
 									{{ trans('messages.lbl_emphistory') }}</a>
 								</div>
 							@endif
-							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_mail" || $request->mainmenu == "menu_mailsignature" || $request->mainmenu == "menu_mailstatus"))
+							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_mail" || $request->mainmenu == "menu_mailsignature" || $request->mainmenu == "menu_mailstatus" || $request->mainmenu == "menu_mailsend"))
+							<div id="mail_sub_4">
+								<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}">
+								{{ trans('messages.lbl_sendMail') }}</a>
+							</div>
 							<div id="mail_sub_1">
 								<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_mailcontent') }}</a>

@@ -222,4 +222,54 @@ class Common extends Model {
 		return $result;
 	}
 
+	/**  
+	*  Year counnt Between dates Details(Common Function)
+	*  @author Rajesh 
+	*  @param $startDT,$endDT
+	*  Created At 2020/09/30
+	**/
+	public static function getYrMonCountBtwnDates($startDT, $endDT){
+		$retVal['year']=0;
+		$retVal['month']=0;
+		if ($endDT == ""||$endDT=="") {
+			$endDT = date("Y-m-d");
+		}
+		if (($startDT!=""&&$startDT!="0000-00-00")&&($endDT!=""&&$endDT!="0000-00-00")){
+			$diff = abs(strtotime($endDT) - strtotime($startDT));
+			$dys = (int)((strtotime($endDT)-strtotime($startDT))/86400);
+			$retVal['year'] = floor($diff / (365*60*60*24));
+			$retVal['month'] = floor(($diff - $retVal['year'] * 365*60*60*24) / (30*60*60*24));
+		} 
+		return $retVal;
+	}
+	public static function fnAddZeroSubstring($val) {
+		return substr($val, -2);
+	}
+
+
+	/**
+	 * 画面表示
+	 *
+	 *
+	 * @return Get mail content.
+	 */
+	public static function getContentFirst($mailId) {
+		$db = DB::connection('mysql');
+		$query = $db->TABLE('mailContent')
+					->select('*')
+					->WHERE('mailId','=',$mailId)
+					->get();
+		return $query;
+	}
+
+	/**
+	 * 画面表示
+	 *
+	 *
+	 * @return To Get Current System Date and Time  
+	 */
+	public static function getSystemDateTime() {
+		$query = DB::select("SELECT CURRENT_DATE, CURRENT_TIME, CURRENT_TIMESTAMP, NOW() + 1 as NOW");
+		return $query;
+	}
 }

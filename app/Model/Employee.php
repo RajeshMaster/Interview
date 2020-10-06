@@ -349,28 +349,4 @@ class Employee extends Model
 					->get();
 		return $query;
 	}
-
-	/**  
-	*  Year counnt Between dates Details(Common Function)
-	*  @author Rajesh 
-	*  @param $startDT,$endDT
-	*  Created At 2020/09/30
-	**/
-	public static function getYrMonCountBtwnDates($startDT, $endDT){
-		$retVal['year']=0;
-		$retVal['month']=0;
-		if ($endDT == ""||$endDT=="") {
-			$endDT = date("Y-m-d");
-		}
-		if (($startDT!=""&&$startDT!="0000-00-00")&&($endDT!=""&&$endDT!="0000-00-00")){
-			$diff = abs(strtotime($endDT) - strtotime($startDT));
-			$dys = (int)((strtotime($endDT)-strtotime($startDT))/86400);
-			$retVal['year'] = floor($diff / (365*60*60*24));
-			$retVal['month'] = floor(($diff - $retVal['year'] * 365*60*60*24) / (30*60*60*24));
-		} 
-		return $retVal;
-	}
-	public static function fnAddZeroSubstring($val) {
-		return substr($val, -2);
-	}
 }

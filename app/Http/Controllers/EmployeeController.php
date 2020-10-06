@@ -103,12 +103,12 @@ class EmployeeController extends Controller
 			$empdetailsdet[$i]['DOB'] = $data->DOB;
 			$empdetailsdet[$i]['Emp_ID'] = $data->Emp_ID;
 			$empdetailsdet[$i]['Emailpersonal'] = $data->Emailpersonal;
-			$cusexpdetails = Employee::getYrMonCountBtwnDates($empdetailsdet[$i]['DOJ'],'');
+			$cusexpdetails = Common::getYrMonCountBtwnDates($empdetailsdet[$i]['DOJ'],'');
 
 			if ($cusexpdetails['year'].".".$cusexpdetails['month'] == 0.0) {
 				$empdetailsdet[$i]['experience'] = "0.0";
 			} else {
-				$empdetailsdet[$i]['experience'] = $cusexpdetails['year'].".".Employee::fnAddZeroSubstring($cusexpdetails['month']);
+				$empdetailsdet[$i]['experience'] = $cusexpdetails['year'].".".Common::fnAddZeroSubstring($cusexpdetails['month']);
 			}
 
 			$recentClient =Employee::fnGetClientDtl($empdetailsdet[$i]['Emp_ID']);
@@ -151,7 +151,8 @@ class EmployeeController extends Controller
 			}
 			$i++;
 		}
-// 		echo "<pre>";
+
+// 	echo "<pre>";
 // print_r($empdetailsdet);
 // echo "</pre>";
 		$detailage = Employee::GetAvgage($resignid);
@@ -550,11 +551,11 @@ class EmployeeController extends Controller
 			if($chistory->end_date=="0000-00-00") {
 				$customerhistory[$i]['end_date'] ="";
 			}
-			$cusexpdetails = Employee::getYrMonCountBtwnDates($customerhistory[$i]['start_date'],$customerhistory[$i]['end_date']);
+			$cusexpdetails = Common::getYrMonCountBtwnDates($customerhistory[$i]['start_date'],$customerhistory[$i]['end_date']);
 			if ($cusexpdetails['year'].".".$cusexpdetails['month'] == 0.0) {
 				$customerhistory[$i]['experience'] = "0.0";
 			} else {
-				$customerhistory[$i]['experience'] = $cusexpdetails['year'].".".Employee::fnAddZeroSubstring($cusexpdetails['month']);
+				$customerhistory[$i]['experience'] = $cusexpdetails['year'].".".Common::fnAddZeroSubstring($cusexpdetails['month']);
 			}
 			$i++;
 		}

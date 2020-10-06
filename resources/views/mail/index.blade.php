@@ -41,10 +41,10 @@
 	<fieldset class="pm0 mt20">
 		<div class="header">
 			<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/mail.png')  }}">
-			<h2 class="h2cnt">{{ trans('messages.lbl_mailcontent') }}</h2>
+			<h2 class="h2cnt">{{ trans('messages.lbl_sendMail') }}</h2>
 		</div>
 	</fieldset>
-	<div class="col-xs-12 pm0 pull-left mt5 mt13">
+	<!-- <div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
 			<button type="button" onclick="fngotoregister('{{ $request->mainmenu }}');"
 					class="button button-green pull-right">
@@ -73,7 +73,7 @@
 							'onclick' => 'javascript:return fnfilter(3)')) 
 			}}
 		</div>
-	</div>
+	</div> -->
 	<div class="container bbgrey pm0">
 		<ul class="list-group pm0 rowlist">
 			@forelse ($mailcontent as $count => $content)

@@ -14,6 +14,7 @@ $(function () {
 	// MOVE SORTING
 });
 
+// Sorting Event
 function sortingfun() {
 	pageload();
 	$('#plimit').val(50);
@@ -32,6 +33,7 @@ function sortingfun() {
 	$("#Oldcustomerindexform").submit();
 }
 
+// Single Search Event
 function fnSingleSearch() {
 	var singlesearchtxt = $("#singlesearchtxt").val();
 	var singlesearchtxt = document.getElementById('singlesearchtxt').value;
@@ -56,6 +58,7 @@ function fnSingleSearch() {
 	}
 }
 
+// Clear Search Event
 function clearsearch() {
 	$('#plimit').val(50);
 	$('#page').val('');
@@ -70,12 +73,14 @@ function clearsearch() {
 	$("#Oldcustomerindexform").submit();
 }
 
+// Enter Key event
 function checkSubmitmulti(e) {
 	if(e && e.keyCode == 13) {
 		umultiplesearch();
 	}
 }
 
+// Multiple Search Process
 function umultiplesearch() {
 	var mainmenu='Customer';
 	var name = $("#name").val();
@@ -96,16 +101,43 @@ function umultiplesearch() {
 		return false;
 	} else {
 	pageload();
-		
+
 		$('#plimit').val(50);
 		$('#page').val('');
 		//$('#sortOptn').val('');
 		$("#filterval").val('');
 		//$('#sortOrder').val('DESC');
-	   // $('#sortOrder').val('asc'); 
+		// $('#sortOrder').val('asc'); 
 		$('#singlesearchtxt').val('');
 		$('#searchmethod').val(2);
 		$('#Oldcustomerindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
 		$("#Oldcustomerindexform").submit();
 	}
+}
+
+// Filter Event
+function filter(val) {
+	$('#plimit').val(50);
+	$('#page').val('');
+	$("#filter").val('');
+	$('#singlesearchtxt').val('');
+	$('#sorting').val('');
+	$('#startdate').val('');
+	$('#enddate').val('');
+	$('#name').val('');
+	$('#filterval').val(val);
+	$('#cussort').val('');
+	$('#UseNotUseVal').val('');
+	$("#Oldcustomerindexform").submit();
+}
+
+// 
+function custview(id,custid) {
+   //alert(id);
+    //alert(custid);
+    $('#id').val(id);
+    $('#custid').val(custid);
+    
+    $('#Oldcustomerindexform').attr('action', 'view?mainmenu='+mainmenu+'&time='+datetime);
+    $("#Oldcustomerindexform").submit();
 }

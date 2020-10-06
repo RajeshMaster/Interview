@@ -25,6 +25,7 @@ return [
 	'lbl_belongsTo' => '名義',
 	'lbl_search' => '検索',
 	'lbl_multi_search' => '複数検索',
+	'lbl_clear' => 'クリア',
 	/* End Common Module  */
 
 	/* Start Change Password */
@@ -53,9 +54,13 @@ return [
 	'lbl_companyName' => '会社名',
 	'lbl_sent' => '送信済',
 	'lbl_draft' => 'メールドラフト',
+	'lbl_cc' =>'CC',
 	'lbl_fileName' => 'ファイル名',
 	'lbl_attachmentCnt' => '添付件数',
-	'lbl_cc' =>'CC',
+	'lbl_sendMail' => 'メール送信',
+	'lbl_pdffile' => 'Pdf ファイル',
+	'lbl_CC' => 'CC',
+    'lbl_passwordencryption' => 'パスワードの暗号化',
 	/* End Mail Content Module  */
 
 	/* Start Register Module  */

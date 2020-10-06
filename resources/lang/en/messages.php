@@ -25,6 +25,7 @@ return [
 	'lbl_belongsTo' => 'Belongs To',
 	'lbl_search' => 'Search',
 	'lbl_multi_search' => 'Multi Search',
+	'lbl_clear' => 'Clear',
 	/* End Common Module  */
 	
 	/* Start Change Password Module  */
@@ -56,6 +57,10 @@ return [
 	'lbl_cc' => 'CC',
 	'lbl_fileName' => 'File Name',
 	'lbl_attachmentCnt' => 'Attachment Count',
+	'lbl_sendMail' => 'Send Mail',
+	'lbl_pdffile' => 'Pdf File',
+	'lbl_CC' => 'CC',
+    'lbl_passwordencryption' => 'Password Encryption',
 	/* End Mail Content Module  */
 
 	/* Start Register Module  */
@@ -152,6 +157,8 @@ return [
 	'lbl_status' => 'Status',
 	'lbl_active' => 'Active',
 	'lbl_inactive' => 'In Active',
+	'lbl_customerno' => 'Customer No',
+	'lbl_customerno' => '取引先番号',
 	/* End Employee Module */
 
 	/* Start Setting Module */

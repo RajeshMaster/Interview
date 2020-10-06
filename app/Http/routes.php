@@ -109,6 +109,18 @@ Route::group(['prefix' => 'MailStatus','middleware' => 'auth'], function(){
 	Route::any('mailStatusView', 'MailStatusController@mailStatusView');
 });
 
+// Send Mail
+Route::group(['prefix' => 'MailSend','middleware' => 'auth'], function(){
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('index', 'MailSendController@index');
+	Route::any('sendMailPost', 'MailSendController@sendMailPost');
+	Route::any('branch_ajax','EmployeeController@branch_ajax');
+	Route::any('incharge_ajax','EmployeeController@incharge_ajax');
+	Route::any('customerSelpopup','EmployeeController@customerSelpopup');
+	Route::any('sendMialvalidation','MailSendController@sendMialvalidation');
+	Route::any('sendMailpostProcess','MailSendController@sendMailpostProcess');
+});
+
 // Setting
 Route::group(['prefix'=>'setting', 'middleware' => 'auth'], function() {
 	Route::any('index', 'SettingController@index');
@@ -147,6 +159,7 @@ Route::group(['prefix'=>'Customer','middleware' => 'auth'], function(){
 Route::group(['prefix'=>'OldCustomer','middleware' => 'auth'], function(){
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'OldCustomerController@index');
+	Route::any('view', 'OldCustomerController@view');
 });
 
 ?>

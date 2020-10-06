@@ -1,6 +1,7 @@
 var msg_register = "Do You Want To Register?";
 var msg_update = "Do You Want To Update?";
 var msg_cancel = "Do You Want To Cancel?";
+var msg_smail = "Do You Want To Send Mail?";
 var msg_passwordmatch = "Password and Conform password must be same";
 var msg_changelanguage = "言語を変更しますか？";
 var msg_resetpassword = "Do You Want To Reset Password？";

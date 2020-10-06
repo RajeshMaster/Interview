@@ -7,9 +7,6 @@
 {{ HTML::script(asset('public/js/oldcustomer.js')) }}
 {{ HTML::script(asset('public/js/lib/bootstrap-datepicker.min.js')) }}
 {{ HTML::style(asset('public/css/lib/bootstrap-datetimepicker.min.css')) }}
-{{ HTML::style(asset('public/css/addeditlayout.css')) }}
-{{ HTML::style(asset('public/css/lib/jquery.ui.autocomplete.css')) }}
-{{ HTML::script(asset('public/js/lib/jquery-ui.min.js')) }}
 <style type="text/css">
 .sort_asc {
 	background-image:url({{ URL::asset('public/images/upArrow.png') }}) !important;
@@ -206,11 +203,10 @@
 	<div class="box100per tableShrink pt10 mnheight mb0">
 		<table class="table-striped table footable table-bordered mt10 mb10" >
 			<colgroup>
-				<col width="5%">
-				<col width="">
-				<col width="">
-				<col width="">
-				<col width="">
+				<col width="4%">
+				<col width="10%">
+				<col width="10%">
+				<col width="35%">
 				<col>
 			</colgroup>
 
@@ -241,13 +237,13 @@
 					@for ($i = 0; $i < count($cstviews); $i++)
 						<tr>
 							<td>
-								@if($cstviews[$i]['delflg']==0)
+								<!-- @if($cstviews[$i]['delflg']==0) -->
 									{{ ($detailview->currentpage()-1) * $detailview->perpage() + $i + 1 }}<br>
-									<a title="Not Use" class="fr" href="javascript:ChangecutomerUse('1',{{ $cstviews[$i]['id'] }});">x</a>
+								<!-- 	<a title="Not Use" class="fr" href="javascript:ChangecutomerUse('1',{{ $cstviews[$i]['id'] }});">x</a>
 								@else
 									{{ ($detailview->currentpage()-1) * $detailview->perpage() + $i + 1 }}<br>
 									<a title="Use" href="javascript:ChangecutomerUse('0',{{ $cstviews[$i]['id'] }});">○</a>
-								@endif
+								@endif -->
 							</td>
 
 							<td class="text-center">
@@ -259,7 +255,7 @@
 							</td>
 
 							<td>
-								<a class="colbl fwb" href="javascript:custview('{{ date('YmdHis') }}','{{ $cstviews[$i]['id'] }}','{{ $cstviews[$i]['customer_id'] }}');">
+								<a class="colbl fwb" href="javascript:custview('{{ $cstviews[$i]['id'] }}','{{ $cstviews[$i]['customer_id'] }}');">
 								@if($cstviews[$i]['customer_name'])
 									{{ $cstviews[$i]['customer_name'] }}</a>
 								@else
@@ -297,7 +293,7 @@
 									{{ "NILL"}}
 								@endif
 								</span><br>
-								<span class="clr_blue">{{ trans('messages.lbl_url') }}</span><span class="ml39">:</span>
+								<span class="clr_blue">URL</span><span class="ml39">:</span>
 								@if($cstviews[$i]['customer_website'])
 									<span class="ml5 colbl">
 										<a class="colbl" href="http://{{ $cstviews[$i]['customer_website'] }}" target="_blank">{{ $cstviews[$i]['customer_website'] }}</a>

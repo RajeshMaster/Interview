@@ -2,23 +2,21 @@
 @section('content')
 {{ HTML::style(asset('public/css/addeditlayout.css')) }}
 {{ HTML::style(asset('public/css/designtable.css')) }}
-{{ HTML::script(asset('public/js/employment.js')) }}
 {{ HTML::script(asset('public/js/lib/bootstrap-datepicker.min.js')) }}
 {{ HTML::style(asset('public/css/lib/bootstrap-datetimepicker.min.css')) }}
 {{ HTML::style(asset('public/css/lib/jquery.ui.autocomplete.css')) }}
 {{ HTML::script(asset('public/js/lib/jquery-ui.min.js')) }}
+{{ HTML::script(asset('public/js/sendmail.js')) }}
+
 <script type="text/javascript">
 	var datetime = '<?php echo date('Ymdhis'); ?>';
 	var mainmenu = '<?php echo $request->mainmenu; ?>';
-	$(document).ready(function() {
-		setDatePickerBeforeCurrent("stDate");
-		setDatePickerBeforeCurrent("enDate");
-	});
+	
 </script>
 
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
+<article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_4">
 	<fieldset class="mt20">
 		<div class="header">
 			<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/employee.png')  }}">
@@ -36,24 +34,27 @@
 		</div>
 	</fieldset>
 
-		{{ Form::open(array('name'=>'workEndReg',
-							'id'=>'workEndReg',
+		{{ Form::open(array('name'=>'senmailfrm',
+							'id'=>'senmailfrm',
 							'class'=>'focusFields',
 							'method' => 'POST',
 							'files'=>true)) }}
 		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
-		{{ Form::hidden('empid', $request->empid , array('id' => 'empid')) }}
 		{{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
 		{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
 		{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
+		{{ Form::hidden('selectedEmployee', $request->selSendMail , array('id' => 'selectedEmployee')) }}
+		{{ Form::hidden('selectedEmployeeResume', $resuemPdf , array('id' => 'selectedEmployeeResume')) }}
 
-	<fieldset id="hdnfield" class="">
+	<fieldset id="hdnfield" class="mt10">
 		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >
 				<label>{{ trans('messages.lbl_empid') }}<span class="fr red">&nbsp;&nbsp;</span></label>
 			</div>
 			<div class="col-xs-7 mw">
-				{{ $request->empid }}
+				<span  class="CMN_display_block box33per ml2 brown">
+					{{ $SelectedEmpid }}
+				</span>
 			</div>
 		</div>
 
@@ -62,130 +63,157 @@
 				<label for="name">{{ trans('messages.lbl_empName')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
 			<div class="col-xs-7 mw">
-				{{ $request->empname }}
+				<span  class="CMN_display_block box33per blue ml2">
+					{{ $selectedEmpName }}
+				</span>
 			</div>
 		</div>
 
-		<div class="col-xs-12">
+		<div class="col-xs-12 ">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_pdffile')}}<span class="fr">&nbsp;&nbsp;</span></label>
+			</div>
+			<div class="col-xs-7 mw">
+				<span  class="ml2" style="word-wrap: break-word">
+					<?php $attachments = explode(",", $resuemPdf); ?>
+					<?php for ($i=0; $i < count($attachments); $i++) { ?>
+						<a class="csrp" onclick="pdfview('{{  $attachments[$i] }}');">
+							{{ $attachments[$i] }}
+						</a>	
+						<br/>
+					<?php } ?>
+				</span>
+			</div>
+		</div>
+
+		@if($url != "")
+			<div class="col-xs-12 ">
+				<div class="col-xs-3 lb tar" >
+					<label for="name">{{ trans('messages.lbl_pdffile')}}<span class="fr">&nbsp;&nbsp;</span></label>
+				</div>
+				<div class="col-xs-7 mw">
+					<span  class="CMN_display_block box38per ml2" style="word-wrap: break-word">
+						<?php $url = explode(",", $url); ?>
+						<?php for ($i=0; $i < count($url); $i++) { ?>
+							<a class="csrp" onclick="pdfview('{{  $url[$i] }}');">
+								{{ $url[$i] }}
+							</a>	
+							<br/>
+						<?php } ?>
+					</span>
+				</div>
+			</div>
+		@endif
+
+		<div class="col-xs-12 ">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_CC')}}<span class="fr">&nbsp;&nbsp;</span></label>
+			</div>
+			<div class="col-xs-7 mw">
+				<span class="CMN_display_block box34per ml2"> 
+					{{ Form::text('ccemail','',array('id'=>'ccemail', 
+							'name' => 'ccemail',
+							'data-label' => trans('messages.lbl_CC'),
+							'class'=>'box100per form-control pl5',
+							'maxlength'=>'30')) }}
+				</span>
+			</div>
+		</div>
+
+		<div class="col-xs-12 ">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_cusname')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 
 			<div class="col-xs-7 mw">
-				@if(isset($staff[0]->customer_name))
-					<span class="fwb">
-						{{ $staff[0]->customer_name}}
-					</span>
-				@else
-					{{ Form::text('customerName','',array('id'=>'customerName', 
+				<input type="hidden" name="customerid" id="customerid" value=""/>
+				{{ Form::text('customerName','',array('id'=>'customerName', 
 													'name' => 'customerName',
 													'data-label' => trans('Sur Name'),
 													'readonly' => 'true',
 													'class'=>'form-control box50per dispinline mlength customerName')) }}
-			{{ Form::hidden('customerId', "" , array('id' => 'customerId')) }}
-
-			<!-- 		{{ Form::select('customerId',[null=>'']+$customerarray,'', 
-						array('name' => 'customerId',
-								'id'=>'customerId',
-								'onchange'=>'fnGetbranchDetail();',
-								'data-label' => trans('messages.lbl_cusname'),
-								'readonly' => 'true',
-								'class'=>'form-control dispinline ime_mode_disable pl5 mlength'))}} -->
-				@endif
+				{{ Form::hidden('customerId', "" , array('id' => 'customerId')) }}
 				<button data-toggle="modal" type="button" class="btn btn-success add" 
 					style="width: 100px;height: 30px;margin-top: 5px;" 
 					 onclick="return customerSelectPopup();">
 					 <i class="fa fa-plus vat">{{ trans('messages.lbl_browse') }}</i>
 				</button>
+				<a class="btn btn-danger box67 p4" href="javascript:fncusclear();"
+							style="height:30px;width: 70px; margin-top: 5px;" >{{ trans('messages.lbl_clear') }}</a>
 				<div class="customerName_err dispinline"></div>
 			</div>
 		</div>
 
-		<div class="col-xs-12">
+		<div class="col-xs-12 ">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_branchName')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				@if(isset($staff[0]->branch_name))
-					<span class="fwb">
-					{{ $staff[0]->branch_name}}
-					</span>
-				@else
-					{{ Form::select('branchId',[null=>''],'', 
+				{{ Form::select('branchId',[null=>''],'', 
 					array('name' => 'branchId',
 					'id'=>'branchId',
 					'onchange'=>'fnGetinchargeDetails();',
 					'data-label' => trans('messages.lbl_branchname'),
-					'class'=>'form-control dispinline pl5 mlength')) }}
-				@endif 
+					'class'=>'form-control  mlength',
+					'style'=>'width :50% !important;display :inline')) }}
 				<div class="Name_err dispinline"></div>
 			</div>
 		</div>
 
-		<div class="col-xs-12">
+		<div class="col-xs-12 mt6">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_inchargename')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				@if(isset($staff[0]->incharge_name))
-					<span class="fwb">
-						{{ $staff[0]->incharge_name}}
-					</span>
-				@else
-					{{ Form::select('inchargeDetails',[null=>''],'', 
+				{{ Form::select('inchargeDetails',[null=>''],'', 
 						array('name' => 'inchargeDetails',
 							  'id'=>'inchargeDetails',
 							  'data-label' => trans('messages.lbl_inchargename'),
-							  'class'=>'form-control dispinline pl5 mlength')) }}
-				@endif 
-				<div class="nickName_err dispinline"></div>
+							  'class'=>'form-control  pl5 mlength',
+							  'style'=>'width :50% !important;display :inline')) }}
+				<div class="inchargeDetails_err dispinline"></div>
+				<input type="hidden" name="hidincharge" id="hidincharge">
+				<input type="hidden" name="hidcheck" id="hidcheck">
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt10">
+		<div class="col-xs-12 mt6">
 			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_workStdate')}}<span class="fr">&nbsp;&#42;</span></label>
+				<label for="name">{{ trans('messages.lbl_subject')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
-			<div class="col-xs-7 mw" style="">
-				{{ Form::text('startDate','',array('id'=>'startDate', 
-												'name' => 'startDate','maxlength' => 10,
-												'autocomplete' => 'off',
-												'onKeyPress'=>'return event.charCode >= 48 && event.charCode <= 57',
-												'class'=>'ime_mode_disable form-control box40per dispinline stDate startDate mlength',
-												'data-label' => trans('messages.lbl_doj'))) }}
-				<div class="startDate_err dispinline"></div>
-				<label class="mt10 ml2 fa fa-calendar fa-lg" for="startDate" aria-hidden="true"></label>
-			</div>
+			<div class="col-xs-7 mw">
+					{{ Form::text('subject','',array('id'=>'subject', 
+							'name' => 'subject',
+							'data-label' => trans('messages.lbl_subject'),
+							'class'=>'box100per form-control pl5 mlength',
+							'maxlength'=>'30',
+							'style'=>'width :50% !important;display :inline')) }}
+				<div class="tsubject_err dispinline"></div>
 		</div>
+
+		<!-- <div class="col-xs-12 ">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_passwordencryption')}}<span class="fr">&nbsp;&nbsp;</span></label>
+			</div>
+			<div class="col-xs-7 mw">
+				<span class="CMN_display_block box34per ml2"> 
+                  	{{ Form::checkbox('chk_passwordencryption', '1')  }}        
+				</span>
+			</div>
+		</div> -->
 
 		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_workEdate')}}<span class="fr">&nbsp;&#42;</span></label>
-			</div>
-			<div class="col-xs-7 mw" style="">
-				{{ Form::text('endDate','',array('id'=>'endDate', 
-												'name' => 'endDate','maxlength' => 10,
-												'autocomplete' => 'off',
-												'onKeyPress'=>'return event.charCode >= 48 && event.charCode <= 57',
-												'class'=>'ime_mode_disable form-control box40per dispinline enDate endDate mlength' ,
-												'data-label' => trans('messages.lbl_doj'))) }}
-				<div class="endDate_err dispinline"></div>
-				<label class="mt10 ml2 fa fa-calendar fa-lg" for="endDate" aria-hidden="true"></label>
-			</div>
-		</div>
-
-		<div class="col-xs-12 mt10">
-			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_remarks')}}<span class="fr">&nbsp;&nbsp;&nbsp;</span></label>
+				<label for="name">{{ trans('messages.lbl_content')}}<span class="fr">&nbsp;&nbsp;&nbsp;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
 			
-				{{ Form::textarea('remarks',"",array('id'=>'remarks',
-												'name' => 'remarks',
-												'data-label' => trans('messages.lbl_remarks'),
-												'class' => 'mlength ntcomp dispinline form-control ime_mode_disable remarks',
+				{{ Form::textarea('txt_content',"",array('id'=>'txt_content',
+												'name' => 'txt_content',
+												'data-label' => trans('messages.lbl_txt_content'),
+												'class' => 'mlength ntcomp dispinline form-control ime_mode_disable txt_content',
 												'style' => 'height:130px; ')) }}
-				<div class="remarks_err dispinline"></div>
+				<div class="txt_content_err dispinline"></div>
 			</div>
 		</div>
 
@@ -194,12 +222,12 @@
 		<div class="col-xs-12 mb10 mt10">
 			<div class="col-xs-12 buttondes" style="text-align: center;">
 				@if($request->editflg != "edit")
-					<button type="button" class="button button-green wrkEndRegister">
+					<button type="button" class="button button-green sendmailRegister">
 						<i class="fa fa-plus"></i>&nbsp;{{ trans('messages.lbl_register')}}
 					</button>
 					&emsp;
 				@else
-					<button type="button" class="button button-orange wrkEndRegister">
+					<button type="button" class="button button-orange sendmailRegister">
 						<i class="fa fa-edit"></i>&nbsp;{{ trans('messages.lbl_update') }}
 					</button>
 					&emsp;
