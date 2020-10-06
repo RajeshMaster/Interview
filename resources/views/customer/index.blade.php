@@ -369,4 +369,11 @@
 			}
 		}); 
 	</script>
+<div id="selectGroup" class="modal fade" style="width: 775px;">
+	<div id="login-overlay">
+		<div class="modal-content">
+			<!-- Popup will be loaded here -->
+		</div>
+	</div>
+</div>
 @endsection

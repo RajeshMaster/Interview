@@ -141,6 +141,10 @@ Route::get('logout', 'Auth\AuthController@logout');
 Route::group(['prefix'=>'Customer','middleware' => 'auth'], function(){
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'CustomerController@index');
+	Route::any('selectGroup', 'CustomerController@selectGroup');
+	Route::any('groupselpopup', 'CustomerController@groupselpopup');
+	Route::any('CustomerView', 'CustomerController@CustomerView');
+	Route::any('CustomerAddedit','CustomerController@CustomerAddedit');
 });
 
 ?>

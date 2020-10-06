@@ -9,8 +9,8 @@ class Customer extends Model {
 
 	public static function customerChangeFlg($request) {
 		$db = DB::connection('mysql');
-		$update=DB::table('mst_customerdetail')
-			->where('id', $request->id)
+		$update= $db->TABLE('mst_customerdetail')
+			->WHERE('id', $request->id)
 			->update(
 				['update_date' => date('Y-m-dh:i:s'),
 				 'delflg' => $request->useval]
@@ -21,7 +21,7 @@ class Customer extends Model {
 	public static function getGroupName() {
 		$db = DB::connection('mysql');
 		$query = $db->TABLE('mst_cus_group')
-					->select('*')
+					->SELECT('*')
 					->WHERE('delFlg', 0)
 					->ORDERBY('groupId', 'ASC')
 					->get();
@@ -116,6 +116,24 @@ class Customer extends Model {
 					->where('mst_customerdetail.customer_id','=', $id)
 					->ORDERBY('mst_branchdetails.branch_id','ASC')
 					->get();
+		return $query;
+	}
+	public static function updGrpId($request) {
+		$db = DB::connection('mysql');
+		$update = DB::TABLE('mst_customerdetail')
+			->WHERE('customer_id', $request->customerId)
+			->update(['groupId' => $request->grpId]);
+		return $update;
+	}
+	public static function getKendetails() {
+		$query = DB::table('mst_prefecture')
+				->select('id','prefecture_name_jp')
+				->WHERE('delflg', '=', 0)
+				->lists('prefecture_name_jp','id');
+		return $query;	
+	} 
+	public static function getMaxId(){
+		$query = DB::SELECT("SELECT CONCAT('CST', LPAD(MAX(SUBSTRING(customer_id,5))+100,5,0)) AS cusid FROM mst_customerdetail WHERE customer_id LIKE '%CST%'");
 		return $query;
 	}
 }

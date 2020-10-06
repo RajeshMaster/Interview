@@ -130,4 +130,46 @@ class CustomerController extends Controller {
 									'disabledNotGroup' => $disabledNotGroup,
 									'disabledGroup' => $disabledGroup]);
 	}
+	public function selectGroup(Request $request){
+		$getallGroup = Customer::getGroupName();
+		return view('Customer.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup]);
+	}
+	public function groupselpopup(Request $request){
+		$updGrpId = Customer::updGrpId($request);
+		if($updGrpId) {
+			Session::flash('success', 'Group Added Sucessfully!'); 
+			Session::flash('type', 'alert-success'); 
+		} else {
+			Session::flash('type', 'Group Added Unsucessfully!'); 
+			Session::flash('type', 'alert-danger'); 
+		}
+		return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+	}
+	public function CustomerView(Request $request){
+		$inchargeview=array();
+		$branchview=array();
+		$currentview=array();
+		$currentempview=array();
+		$emp_type=array();
+		$emp_type1=array();
+	}
+	public function CustomerAddedit(Request $request){
+		$maxid=array();
+		$getKenname= array();
+		$getKenname=Customer::getKendetails();
+		if(isset($request->flg)){
+
+		}else{
+			if (!isset($request->hdnempid)) {
+				return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+			}
+			$custmaxid=Customer::getMaxId();
+			if($custmaxid == ""){
+				$custmaxid = "CST00001";
+			}
+			return view('Customer.customeraddedit',['request' => $request,
+											'getKenname' => $getKenname,
+											'maxid' => $custmaxid]);
+		}
+	}
 }
