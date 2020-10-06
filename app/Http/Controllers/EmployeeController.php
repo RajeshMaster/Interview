@@ -558,7 +558,7 @@ class EmployeeController extends Controller
 			}
 			$i++;
 		}
-		return view('employee.Onsitehistory',['request' => $request,
+		return view('employee.onsitehistory',['request' => $request,
 											'cushistory' => $cushistory,
 											'customerhistory' => $customerhistory
 											]);

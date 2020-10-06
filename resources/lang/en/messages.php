@@ -150,6 +150,8 @@ return [
 	'lbl_onsitehistory' => 'On Site History',
 	'lbl_yearmonth' => 'Year/Month',
 	'lbl_status' => 'Status',
+	'lbl_active' => 'Active',
+	'lbl_inactive' => 'In Active',
 	/* End Employee Module */
 
 	/* Start Setting Module */
