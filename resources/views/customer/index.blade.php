@@ -336,11 +336,17 @@
 					</tr>
 					@endfor
 				@else
-				<tr>
-	              <td class="text-center fr" colspan="5">
-	                {{ trans('messages.lbl_nodatafound') }}
-	              </td>
-            	</tr>
+				
+            	<tr class="nodata">
+							<th class="text-center red nodatades" colspan="2">
+								{{ trans('messages.lbl_nodatafound') }}
+							</th>
+						</tr>
+						<tr class="nodata">
+							<td class="text-center red nodatades1" colspan="5">
+								{{ trans('messages.lbl_nodatafound') }}
+							</td>
+						</tr>
           		@endif	
 
 			</tbody>
@@ -369,4 +375,11 @@
 			}
 		}); 
 	</script>
+<div id="selectGroup" class="modal fade" style="width: 775px;">
+	<div id="login-overlay">
+		<div class="modal-content">
+			<!-- Popup will be loaded here -->
+		</div>
+	</div>
+</div>
 @endsection

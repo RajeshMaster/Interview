@@ -234,5 +234,14 @@ return [
 	'lbl_address' => 'Address',
 	'lbl_fax' => 'Fax',
 	'lbl_daterange'=>'Date Range',
+	'lbl_custname(JP & Eng)' =>'Cust.Name(JP & Eng)',
+	'lbl_custname(kana)' =>'Cust.Name(Kana)',
+	'lbl_repname' =>'RepresentativeName',
+	'lbl_custagreement' =>'Customer Agreement',
+	'lbl_postalCode'=>'Postal Code',
+	'lbl_kenmei'=>'Prefecture name',
+	'lbl_shimei'=>'City name',
+	'lbl_incharge_mail'=>'Incharge MailID',
+	'lbl_buildingname' => 'Building Name',
 	/* End Customer Module*/
 ];
