@@ -241,5 +241,8 @@ return [
 	'lbl_shimei'=>'市名',
 	'lbl_incharge_mail'=>'担当メールID',
 	'lbl_buildingname' => 'ビル名',
+	'lbl_branchid' => '支店ID',
+	'lbl_branch' => '支店 ',
+	'lbl_designation' => '指定',
 	/* End Customer Module*/
 ];

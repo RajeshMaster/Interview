@@ -243,5 +243,8 @@ return [
 	'lbl_shimei'=>'City name',
 	'lbl_incharge_mail'=>'Incharge MailID',
 	'lbl_buildingname' => 'Building Name',
+	'lbl_branchid' => 'BranchID',
+	'lbl_branch' => 'Branch',
+	'lbl_designation' => 'Designation',
 	/* End Customer Module*/
 ];
