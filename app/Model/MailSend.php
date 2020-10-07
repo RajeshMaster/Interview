@@ -210,4 +210,15 @@ class MailSend extends Model {
 					->get();
 		return $result;
 	}
+
+
+	public static function getpopupincharge($inchargeId){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_cus_inchargedetail')
+				->select('id','customer_id','incharge_name','branch_name','incharge_contact_no','incharge_email_id')
+				->WHERE('branch_name', $inchargeId)
+				->WHERE('delflg',0)
+				->get();
+    	return $result;
+	}
 }

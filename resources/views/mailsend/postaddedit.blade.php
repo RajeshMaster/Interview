@@ -110,17 +110,18 @@
 				<label for="name">{{ trans('messages.lbl_CC')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
 			<div class="col-xs-7 mw">
-				<span class="CMN_display_block box34per ml2"> 
+				<span class="CMN_display_block box34per "> 
+
 					{{ Form::text('ccemail','',array('id'=>'ccemail', 
 							'name' => 'ccemail',
 							'data-label' => trans('messages.lbl_CC'),
-							'class'=>'box100per form-control pl5',
+							'class'=>'box100per form-control ',
 							'maxlength'=>'30')) }}
 				</span>
 			</div>
 		</div>
 
-		<div class="col-xs-12 ">
+		<div class="col-xs-12 mt4">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_cusname')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
@@ -144,7 +145,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 ">
+		<div class="col-xs-12 mt5">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_branchName')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
@@ -160,17 +161,28 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt6">
+		<div class="col-xs-12 mt7">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_inchargename')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				{{ Form::select('inchargeDetails',[null=>''],'', 
-						array('name' => 'inchargeDetails',
-							  'id'=>'inchargeDetails',
-							  'data-label' => trans('messages.lbl_inchargename'),
-							  'class'=>'form-control  pl5 mlength',
-							  'style'=>'width :50% !important;display :inline')) }}
+
+				{{ Form::text('inchargeDetails','', 
+								array('name' => 'inchargeDetails',
+									  'id'=>'inchargeDetails',
+									  'data-label' => trans('messages.lbl_inchargename'),
+									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
+									  'style'=>'width :50% !important;display :inline')) }}
+		
+					<button data-toggle="modal" type="button" class="btn btn-success incadd" 
+					style="width: 100px;height: 30px;margin-top: 5px;display: none" 
+					 onclick="return inchargename();">
+					 <i class="fa fa-plus vat">{{ trans('messages.lbl_browse') }}</i>
+					</button>
+					<a class="btn btn-danger box67 p4 btnclr" href="javascript:fninchclear();"
+							style="height:30px;width: 70px; margin-top: 5px;display: none" >{{ trans('messages.lbl_clear') }}</a>
+				
+				<div class="customerName_err dispinline"></div>
 				<div class="inchargeDetails_err dispinline"></div>
 				<input type="hidden" name="hidincharge" id="hidincharge">
 				<input type="hidden" name="hidcheck" id="hidcheck">

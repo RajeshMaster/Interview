@@ -19,9 +19,7 @@ class SendingMail extends Model {
 	public static function sendIntimationMail($mailformat, $to ,$maildetailssubject,$cc=null ,$protectpath=null,$files=null,$excelpdf=null,$excelfile=null) {
 
 		$msg = $mailformat[0];
-
 		Mail::sendwithoutview($msg, $mailformat, function ($message) use ($to,$maildetailssubject,$cc,$protectpath,$files,$excelpdf,$excelfile) {
-
 
 			$nickname = "MICROBIT";
 			$message->from('staff@microbit.co.jp',$nickname);
@@ -44,10 +42,13 @@ class SendingMail extends Model {
 					$message->attach($protectpath.$excelpdf);
 				}
 			}
+
 			if ($excelfile != "") {
 				$message->attach($protectpath.$excelfile);
 			}
+
 			$message->to($to)->subject($maildetailssubject);
+
 			if($cc != "") {
 				$message->cc($cc);
 			}

@@ -609,7 +609,7 @@ body {
 									{{ trans('messages.lbl_employee') }}</a>
 								</li>
 								<li class="btn_mail jop_btn" style="">
-									<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}" 
+									<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}" 
 									style="text-decoration: none !important;">
 									{{ trans('messages.lbl_mail') }}</a>
 								</li>
@@ -670,22 +670,22 @@ body {
 								</div>
 							@endif
 							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_mail" || $request->mainmenu == "menu_mailsignature" || $request->mainmenu == "menu_mailstatus" || $request->mainmenu == "menu_mailsend"))
-							<div id="mail_sub_4">
-								<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}">
-								{{ trans('messages.lbl_sendMail') }}</a>
-							</div>
-							<div id="mail_sub_1">
-								<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
-								{{ trans('messages.lbl_mailcontent') }}</a>
-							</div>
-							<div id="mail_sub_2">
-								<a class="pageload" href="{{ url('MailSignature/index?mainmenu=menu_mailsignature&time='.date('Ymdhis')) }}">
-								{{ trans('messages.lbl_mailsignature') }}</a>
-							</div>
-							<div id="mail_sub_3">
-								<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mailstatus&time='.date('Ymdhis')) }}">
-								{{ trans('messages.lbl_mailstatus') }}</a>
-							</div>
+								<div id="mail_sub_4">
+									<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}">
+									{{ trans('messages.lbl_sendMail') }}</a>
+								</div>
+								<div id="mail_sub_3">
+									<a class="pageload" href="{{ url('MailStatus/index?mainmenu=menu_mailstatus&time='.date('Ymdhis')) }}">
+									{{ trans('messages.lbl_mailstatus') }}</a>
+								</div>
+								<div id="mail_sub_1">
+									<a class="pageload" href="{{ url('Mail/index?mainmenu=menu_mail&time='.date('Ymdhis')) }}">
+									{{ trans('messages.lbl_mailcontent') }}</a>
+								</div>
+								<div id="mail_sub_2">
+									<a class="pageload" href="{{ url('MailSignature/index?mainmenu=menu_mailsignature&time='.date('Ymdhis')) }}">
+									{{ trans('messages.lbl_mailsignature') }}</a>
+								</div>
 							@endif
 							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_customer" || $request->mainmenu == "menu_oldcustomer"))
 							<div id="cus_sub_1">

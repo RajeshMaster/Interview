@@ -47,51 +47,6 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.wrkEndRegister').on('click', function() {
-		resetErrors();
-		var url ='wrkEndValidation';
-		$.each($('form input, form select, form textarea'), function(i, v) {  
-			if (v.type !== "submit") {
-				data[v.name] = v.value;
-			}
-		}); 
-		$.ajax({
-			dataType: 'json',
-			type: 'POST',
-			url: url,
-			data: data,
-			async: false, //blocks window close
-			success: function(resp) {
-				if(resp == true){
-					swal({
-						title: msg_add,
-						type: "warning",
-						showCancelButton: true,
-						confirmButtonClass: "btn-danger",
-						closeOnConfirm: true,
-						closeOnCancel: true
-					},
-					function(isConfirm) {
-						if (isConfirm) {
-						   pageload();
-							$('#workEndReg').attr('action', 'wrkEndProcess'+'?menuid=menu_employee&time='+datetime);
-							$("#workEndReg").submit();
-						} 
-					});
-				} else {
-				  $.each(resp, function(i, v) {
-						// alert(i + " => " + v); // view in console for error messages
-						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
-						$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError').after(msg);
-					});
-				}
-			},
-			error: function(data) {
-				// alert(data.status);
-				// alert('there was a problem checking the fields');
-			}
-		});
-	});
 
 
 
@@ -161,6 +116,13 @@ function fnGetbranchDetail() {
 				$('#inchargeDetails').find('option').not(':first').remove();
 				var getcusId = $('#customerId').val();
 				var getbranchId = $('#branchId').val();
+				if (getbranchId != "") {
+					$(".incadd").css("display", "inline-block");
+					$(".btnclr").css("display", "inline-block");
+				} else {
+					$(".incadd").css("display", "none");
+					$(".btnclr").css("display", "none");
+				}
 				$.ajax({
 					type: 'GET',
 					dataType: "JSON",
@@ -193,20 +155,28 @@ function fnGetinchargeDetails() {
 	$('#inchargeDetails').val("");
 	var getcusId = $('#customerId').val();
 	var getbranchId = $('#branchId').val();
+	if (getbranchId != "") {
+		$(".incadd").css("display", "inline-block");
+		$(".btnclr").css("display", "inline-block");
+	} else {
+		$(".incadd").css("display", "none");
+		$(".btnclr").css("display", "none");
+	}
 	$.ajax({
 		type: 'GET',
 		dataType: "JSON",
 		url: 'incharge_ajax',
 		data: {"getcusId": getcusId,"getbranchId": getbranchId},
 		success: function(resp) {
-			for (i = 0; i < resp.length; i++) {
+			/*for (i = 0; i < resp.length; i++) {
 				$('#inchargeDetails').append( '<option value="'+resp[i]["id"]+'">'+resp[i]["incharge_name"]+'</option>' );
 				// $('select[name="inchargeDetails"]').val(value);
 			}
 			var incCount = $('#inchargeDetails > option').length;
 			if (incCount == 2) {
+				alert(incCount);
 				$('#inchargeDetails').val(resp[0]["id"]);
-			} 
+			} */
 		},
 		error: function(data) {
 			// alert(data.status);
@@ -266,4 +236,30 @@ function fnselect() {
 			return false;
 		}
 	}
+}
+
+function inchargename(){
+	var branchid = document.getElementById("branchId").value;
+	var check = 1;
+	popupopenclose(1);
+	$('#customerSelect').load('inchargenamepopup?mainmenu='+mainmenu+'&time='+datetime+'&branchid='+branchid+'&check='+check);
+	$("#customerSelect").modal({
+		backdrop: 'static',
+		keyboard: false
+	});
+	$('#customerSelect').modal('show');
+}
+
+function fninchclear(){
+	document.getElementById("inchargeDetails").value = "";
+	document.getElementById("hidincharge").value = "";
+}
+
+function fncusclear(){
+	document.getElementById("customerName").value = "";
+	document.getElementById("inchargeDetails").value = "";
+	document.getElementById("branchId").value = "";
+	$('#branchId').find('option').not(':first').remove();
+	$(".incadd").css("display", "none");
+	$(".btnclr").css("display", "none");
 }

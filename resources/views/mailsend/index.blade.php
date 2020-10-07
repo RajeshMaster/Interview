@@ -63,6 +63,8 @@
 		} 
 	}
 </script>
+
+
 {{ Form::open(array('name'=>'mailSendfrm',
 		'id'=>'mailSendfrm',
 		'url' => 'MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
@@ -90,6 +92,13 @@
 				</h2>
 			</div>
 		</fieldset>
+
+		@if (session('danger'))
+			<div class="col-xs-12 mt10" align="center">
+				<span class="alert-danger">{{ session('danger') }}</span>
+			</div>
+		@endif
+
 		<!-- End Heading -->
 		<a disabled="disabled" class="btn btn-success box70 mt10" id="postBtn" href="javascript:postsendmail(datetime);" style="float: right;" class="pl10 pb5">Post</a>
 
