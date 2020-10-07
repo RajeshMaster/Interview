@@ -246,5 +246,12 @@ return [
 	'lbl_branchid' => 'BranchID',
 	'lbl_branch' => 'Branch',
 	'lbl_designation' => 'Designation',
+	'lbl_currentemployees' => 'Current Employees',
+	'lbl_oldEmployeee' => 'Old Employee',
+	'lbl_updated_by' => 'UpdatedBy',
+	'lbl_newemployees' => 'New Employees',
+	'lbl_branchadd' => 'Branch Add',
+	'lbl_inchargeadd' => 'Incharge Add',
+	'lbl_employeeselection' => "Employee_selection",
 	/* End Customer Module*/
 ];

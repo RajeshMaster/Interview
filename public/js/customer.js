@@ -74,7 +74,7 @@ $(document).ready(function() {
 									function(isConfirm) {
 										if (isConfirm) {
 										   	pageload();
-                                			form.submit();
+                                			$("#frmcustaddedit").submit();
 										} else {
 											
 										}
@@ -287,4 +287,23 @@ function addHyphen (element) {
     ele = ele.value.split('-').join('');    // Remove dash (-) if mistakenly entered.
     var finalVal = ele.match(/\d{3}(?=\d{2,3})|\d+/g).join('-');
     document.getElementById(element.id).value = finalVal;
+}
+function goempindexpage(mainmenu,datetime) {
+    pageload();
+    $('#customerviewform').attr('action', '../Customer/index?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
+function goindexpage(mainmenu,datetime) {
+    pageload();
+    $('#customerviewform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
+function edit(datetime,id,custid) {
+    $('#id').val(id);
+    $('#editid').val(id);
+    $('#flg').val("1");
+    $('#custid').val(custid);
+    var mainmenu="menu_customer";
+    $('#customerviewform').attr('action', 'CustomerAddedit?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
 }

@@ -244,5 +244,12 @@ return [
 	'lbl_branchid' => '支店ID',
 	'lbl_branch' => '支店 ',
 	'lbl_designation' => '指定',
+	'lbl_currentemployees' => '現在社員',
+	'lbl_oldEmployeee' => '古い社員',
+	'lbl_updated_by' => 'UpdatedBy',
+	'lbl_newemployees' => '新規社員',
+	'lbl_branchadd' =>'支店設定',
+	'lbl_inchargeadd' => '担当者設定 ',
+	'lbl_employeeselection' => "従業員選択",
 	/* End Customer Module*/
 ];
