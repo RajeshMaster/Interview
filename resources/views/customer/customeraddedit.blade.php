@@ -94,14 +94,14 @@
 		<fieldset class="mt10 pull-left dispMainMobile">
 		@if(!empty($getdetails))
 			<div class="col-xs-12 mt20">
-			<div class="col-xs-3 lb text-right pm0">
-				<label class="clr_black">{{ trans('messages.lbl_CustId') }}</label>
-				<span class="fr ml2 fs7"> </span>
+				<div class="col-xs-3 lb text-right pm0">
+					<label class="clr_black">{{ trans('messages.lbl_CustId') }}</label>
+					<span class="fr ml2 fs7"> </span>
+				</div>
+				<div class="col-xs-9 mw">
+	               	{{$request->custid}} 
+				</div>
 			</div>
-			<div class="col-xs-9 mw">
-               	{{$request->custid}} 
-			</div>
-		</div>
 		@endif
 		<div class="col-xs-12 mt20">
 			<div class="col-xs-3 lb text-right pm0">
