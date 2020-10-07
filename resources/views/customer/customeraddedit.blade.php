@@ -267,7 +267,12 @@
                                         'onkeypress' => 'return isNumberKeywithminus(event)')) }}
 			</div>
 		</div>
-		<div class="col-xs-12 mt10">
+		@if($request->flg!=1)
+			{{--*/ $style = '' /*--}}
+		@else
+			{{--*/ $style = 'mb50' /*--}}
+		@endif
+		<div class="col-xs-12 mt10 {{$style}} ">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>URL<span class="fr ml2 red"> * </span></label>
 			</div>
