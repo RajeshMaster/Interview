@@ -385,6 +385,16 @@ class CustomerController extends Controller {
 			Session::flash('custid', $maxCustID );
   		}
   		return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
-  		
+  	}
+  	public function Branchaddedit(Request $request){
+  		$kenmeiarray=Customer::getKendetails();
+  		$bdetails = array();
+  		if(isset($request->flg) && $request->flg !="") {
+
+  		}
+  		return view('customer.branchaddedit',['request' => $request,
+											'kenmeiarray'=>$kenmeiarray,
+											'bdetails' => $bdetails
+											]);
   	}
 }

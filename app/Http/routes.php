@@ -160,6 +160,7 @@ Route::group(['prefix'=>'Customer','middleware' => 'auth'], function(){
 	Route::any('CustomerRegValidation','CustomerController@CustomerRegValidation');
 	Route::any('getEmailExists','CustomerController@getEmailExists');
 	Route::any('CustomerAddeditProcess','CustomerController@CustomerAddeditProcess');
+	Route::any('Branchaddedit','CustomerController@Branchaddedit');
 });
 
 //Customer

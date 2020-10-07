@@ -307,3 +307,10 @@ function edit(datetime,id,custid) {
     $('#customerviewform').attr('action', 'CustomerAddedit?mainmenu='+mainmenu+'&time='+datetime);
     $("#customerviewform").submit();
 }
+function branchadd(datetime) {
+    $('#flg').val("");
+    pageload();
+    var mainmenu="menu_customer";
+    $('#customerviewform').attr('action', 'Branchaddedit?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
