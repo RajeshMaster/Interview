@@ -200,6 +200,7 @@ class MailSendController extends Controller {
 		$url = "";
 		$tempdir = '../ResumeUpload/employeResume/temp';
 		$directory = '../ResumeUpload/employeResume';
+
 		foreach ($selSendMail as $key => $value) {
 			$employeDetail = Common::fnGetEmployeeInfo($value);
 
@@ -222,7 +223,11 @@ class MailSendController extends Controller {
 				$selectedEmpName = $selectedEmpName.','.$employeDetail[0]->FirstName;
 				$resuemPdf = $resuemPdf.','.$recentResumeNm;
 			}
-
+			if ($recentResumeNm == "") {
+				Session::flash('danger','Add Cv to all Selected Employee!'); 
+				Session::flash('type','alert-danger');
+				return Redirect::to('MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+			}
 			$Nameletters = strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 		
 	/*		if ($url == "") {
@@ -235,7 +240,6 @@ class MailSendController extends Controller {
 					$url = $url.','. $Nameletters .':'.$employeDetail[0]->videoUrl;
 				}
 			}*/
-
 			$empdetailsdet[$key]['name'] = $employeDetail[0]->FirstName;
 			$empdetailsdet[$key]['resume'] = $recentResumeNm;
 
@@ -244,6 +248,7 @@ class MailSendController extends Controller {
 					if (@mkdir($tempdir)) {
 						$file = $directory ."/".$recentResumeNm;
 						$newfile = $tempdir."/".$recentResumeNm;
+						
 						if(file_exists($file)) {
 							copy($file,$newfile);
 						}
@@ -251,13 +256,12 @@ class MailSendController extends Controller {
 				} else {
 					$file = $directory ."/".$recentResumeNm;
 					$newfile = $tempdir."/".$recentResumeNm;
+
 					if(file_exists($file)) {
 						copy($file,$newfile);
 					}
 				}
 			}
-			
-
 
 			/*$language =  $employeDetail[0]->languageSkill;
 			if ($language != "") {
@@ -301,7 +305,6 @@ class MailSendController extends Controller {
 		foreach ($details as $key => $value) {
 			$customerarray[$value->customer_id] = $value->customer_name;
 		}
-
 		return view('mailsend.postaddedit',['request' => $request,
 										'customerarray' => $customerarray,
 										'SelectedEmpid' => $SelectedEmpid,
@@ -349,10 +352,9 @@ class MailSendController extends Controller {
 	*
 	*/
 	public function sendMailpostProcess(Request $request) {
-
 		$customerId = $request->customerId;
 		$branchId = $request->branchId;
-		$inchargeId = $request->inchargeDetails;
+		$inchargeId = $request->hidincharge;
 		$selectedEmp = $request->selectedEmployee;
 		if ($request->ccemail != "") {
 			$ccemail = $request->ccemail;
@@ -415,7 +417,6 @@ class MailSendController extends Controller {
 			$data[0]->content = str_replace('添付したファイルのパスワードは下記のようです。','',$data[0]->content);
 		}
 
-
 		$dateTime = date("YmdHis");
 		foreach ($selectedEmp as $key => $value) {
 			$getDateTime = Common::getSystemDateTime();
@@ -431,19 +432,18 @@ class MailSendController extends Controller {
 			if(!is_dir($securePath)) {
 				mkdir($securePath, 0777, true);
 			}
-
 			$pdfOldFile = $destinationPath.'/'. $selectedEmployeeResume[$key];
-			$pdfNewFile = $destinationPath.'/'.$request->txt_subject."_".strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
-			$securename = '../ResumeUpload/employeResume/secure/'.$request->txt_subject."_".strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
+			$pdfNewFile = $destinationPath.'/'.$request->subject."_".strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
+			$securename = '../ResumeUpload/employeResume/secure/'.$request->subject."_".strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
 			$tochangesecure = $OlddestinationPath.'/'. $selectedEmployeeResume[$key];
 			if(file_exists($pdfOldFile)) {
-				/*self::pdfEncrypts($tochangesecure,$pdfpassword,$securename,$request);
-				rename($pdfOldFile,$pdfNewFile);*/
-				if (isset($request->chk_passwordencryption) && $request->chk_passwordencryption!="") {
+				// self::pdfEncrypts($tochangesecure,$pdfpassword,$securename,$request);
+				rename($pdfOldFile,$pdfNewFile);
+				/*if (isset($request->chk_passwordencryption) && $request->chk_passwordencryption!="") {
 					array_push($pdf_array, $securename);
-				} else {
+				} else {*/
 					array_push($pdf_array, $pdfNewFile);
-				}
+				// }
 			}
 		}
 
@@ -523,7 +523,7 @@ class MailSendController extends Controller {
 			$email_array = array_unique($cus_array);
 			foreach ($selectedEmp as $key => $value) {
 				if($sendmail) {
-					$subject = $request->txt_subject;
+					$subject = $request->subject;
 					foreach ($email_array as $keys => $customerID) {
 						$getmail = mailsend::fnGetmail($customerID);
 						$getAgentMail = mailsend::getAgentMail($customerID);
@@ -540,21 +540,14 @@ class MailSendController extends Controller {
 		}
 
 
-		$request->hidincharge = $request->inchargeDetails;
-		
-
 		$inchargeId = "";
-    	if ($request->hidincharge!="") {
-    		// $rest = substr($request->hidincharge, 0, -1);  
-
-
-    		$rest = $request->hidincharge;  
+    	if ($request->hidincharge != "") {
+    		$rest = substr($request->hidincharge, 0, -1);  
     		$inchargeId = explode(";", $rest);
     	}
-
 		$getInchargeDetails = mailsend::fngetInchargeDetails($request,$customerId,$branchId,$inchargeId);
-	
 		foreach ($getInchargeDetails as $key1 => $value1) {
+			print_r($value1);echo "<br/>";
 			// if ($value1->sendpasswrodFlg == 1) {
 				$email = $value1->incharge_email_id;
 				$getmailId .= $email.',';
@@ -568,11 +561,10 @@ class MailSendController extends Controller {
 				$bodyrep = str_replace($replace_contents, $real_contents, $body);
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $data[0]->subject);
 				$mailformat = [$bodyrep];
-
-				print_r($mailformat);exit;
-				if(!in_array($customerId,$email_array)){
+				// if(!in_array($customerId,$email_array)){
 					$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
-				}
+				// }
+
 			// } else {
 			// 	$email = $value1->incharge_email_id;
 			// 	$getmailId .= $email.',';
@@ -594,7 +586,6 @@ class MailSendController extends Controller {
 			// 	}
 			// }
 		}
-print_r($getInchargeDetails);exit;
 
 		/*$agentMail = Interview::getAgentMail($customerId);
 		$CustomerName = Interview::getCustomerName($customerId);
@@ -618,7 +609,7 @@ print_r($getInchargeDetails);exit;
 					} else {
 						$allmailId = substr($getmailId,0,-1);
 					}
-					$subject = $request->txt_subject;
+					$subject = $request->subject;
 					if(!in_array($customerId,$email_array)){
 						$mailSendList = SendingMail::mailPostSendList($allmailId,$subject,$value,$custID,$BranchId,$selectedEmployeeResume[$key]);
 					}
@@ -628,8 +619,7 @@ print_r($getInchargeDetails);exit;
 		Session::flash('success','Post Mail Send sucessfully!'); 
 		Session::flash('type','alert-success'); 
 
-		print_r($getInchargeDetails);exit;
-
+		return Redirect::to('MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 	}
 
 	public static function pdfEncrypts ($origFile, $password, $destFile, $request){
@@ -652,4 +642,11 @@ print_r($getInchargeDetails);exit;
 		}
 		$pdf->Output($destFile, 'F');
 	}
+
+	public function inchargenamepopup (Request $request){
+		$getdetails= Mailsend::getpopupincharge($request->branchid);
+		return view('mailsend.inchargeSelPopup',['request' => $request,
+												'getdetails' => $getdetails]);
+	}
+
 }

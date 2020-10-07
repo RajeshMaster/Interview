@@ -158,7 +158,6 @@ return [
 	'lbl_active' => 'Active',
 	'lbl_inactive' => 'In Active',
 	'lbl_customerno' => 'Customer No',
-	'lbl_customerno' => '取引先番号',
 	/* End Employee Module */
 
 	/* Start Setting Module */
