@@ -47,6 +47,14 @@
 		.dispSubMobile {
 			width:48%;
 		}
+		.col-xs-3 {
+			width:50%;
+			font-size:100%;
+			margin-left:-10%;
+		}
+		.col-xs-9 {
+			width:50%;
+		}
 	}
 </style>
 <div class="" id="main_contents">
