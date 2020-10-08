@@ -30,7 +30,7 @@
 			width:100%;
 		}
 		.dispviewSubMobile {
-			width:100%;
+			width:98%;
 		}
 	}
 	/*End Mobile layout*/
@@ -156,7 +156,7 @@
 				</div>
 			</div>
 
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_custname(JP & Eng)') }}</label>
 				</div>
@@ -173,7 +173,7 @@
 				</div>
 			</div>
 
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_custname(kana)') }}</label>
 				</div>
@@ -187,8 +187,7 @@
 					</label>
 				</div>
 			</div>
-
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_repname') }}</label>
 				</div>
@@ -202,8 +201,7 @@
 					</label>
 				</div>
 			</div>
-
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_branchName') }}</label>
 				</div>
@@ -217,8 +215,22 @@
 					</label>
 				</div>
 			</div>
+			<div class="col-xs-12 mt10">
+				<div class="col-xs-4 lb text-right">
+					<label class="clr_blue">{{ trans('messages.lbl_custagreement') }}</label>
+				</div>
+				<div class="col-xs-8 mw">
+					<label class="clr_black">
+						@if(isset($getdetails[0]->txt_custagreement))
+							{{ $getdetails[0]->txt_custagreement}}
+						@else
+							{{ "NILL"}}
+						@endif
+					</label>
+				</div>
+			</div>
 
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_remarks') }}</label>
 				</div>
@@ -251,7 +263,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_fax') }}</label>
 				</div>
@@ -265,7 +277,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">URL</label>
 				</div>
@@ -279,7 +291,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_postalCode') }}</label>
 				</div>
@@ -293,7 +305,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_kenmei') }}</label>
 				</div>
@@ -307,7 +319,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_address') }}</label>
 				</div>
@@ -324,7 +336,7 @@
 		</div>
 	</fieldset>
 	@if(count($branchview)!="")
-	<fieldset class="mt20 mb20 col-xs-12 tac">
+	<fieldset class="mt20 col-xs-12 tac" style="width: 100%">
 		<div class="row hline">
 			<div class="col-sm-12">
 				<h2 class="pl5 pull-left mt15">{{ trans('messages.lbl_branch') }}</h2>
@@ -332,7 +344,7 @@
 		</div>
 		@for ($i = 0; $i < count($branchview); $i++)
 		<div class="col-md-12">
-		<fieldset class="mt20 mb20 dispviewMainMobile pull-left tac">
+		<fieldset class="mt20 mb20 dispviewMainMobile pull-left tac" style="width: 100%">
 			<div class="col-xs-12 mt20">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_branchid') }}</label>
@@ -347,7 +359,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_branchName') }}</label>
 				</div>
@@ -361,7 +373,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_mobilenumber') }}</label>
 				</div>
@@ -375,7 +387,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_fax') }}</label>
 				</div>
@@ -389,7 +401,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_postalCode') }}</label>
 				</div>
@@ -403,7 +415,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_kenmei') }}</label>
 				</div>
@@ -417,7 +429,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_address') }}</label>
 				</div>
@@ -431,7 +443,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_remarks') }}</label>
 				</div>
@@ -445,10 +457,9 @@
 					</label>
 				</div>
 			</div>
-		</fieldset>
 		@for ($j = 0; $j < count($branchview[$i]['incharegdetails']); $j++)
-			<fieldset class="mt15 pull-right dispviewSubMobile">
-				<div class="col-xs-12 mt20">
+			<fieldset class="mt15 mr10 mb10 pull-left dispviewSubMobile">
+				<div class="col-xs-12 mt5">
 					<div class="col-xs-4 lb text-right">
 						<label class="clr_blue">{{ trans('messages.lbl_inchargename') }}</label>
 					</div>
@@ -467,7 +478,7 @@
 						</label>
 					</div>
 				</div>
-				<div class="col-xs-12 mt20">
+				<div class="col-xs-12 mt5">
 					<div class="col-xs-4 lb text-right">
 						<label class="clr_blue">{{ trans('messages.lbl_mobilenumber') }}</label>
 					</div>
@@ -481,7 +492,7 @@
 						</label>
 					</div>
 				</div>
-				<div class="col-xs-12 mt20">
+				<div class="col-xs-12 mt5">
 					<div class="col-xs-4 lb text-right">
 						<label class="clr_blue">{{ trans('messages.lbl_mail') }}</label>
 					</div>
@@ -495,7 +506,7 @@
 						</label>
 					</div>
 				</div>
-				<div class="col-xs-12 mt20">
+				<div class="col-xs-12 mt5">
 					<div class="col-xs-4 lb text-right">
 						<label class="clr_blue">{{ trans('messages.lbl_designation') }}</label>
 					</div>
@@ -511,6 +522,7 @@
 				</div>
 			</fieldset>
 		@endfor
+		</fieldset>
 	</div>
 		@endfor
 	</fieldset>

@@ -268,15 +268,13 @@
 	                        <button type="button" class="btn edit btn-warning box100 Branchaddeditprocess" >
 	                        	<i class="fa fa-edit" aria-hidden="true"></i> {{ trans('messages.lbl_update') }}
 	                    	</button>
-	                        <a onclick="javascript:gotoinpage('{{ $request->mainmenu }}',{{ date('YmdHis') }});" class="btn btn-danger box120 white"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('messages.lbl_cancel') }} 
-	                        </a>
                         @else
 	                        <button type="button" class="btn btn-success add box100 Branchaddeditprocess ml5">
 	                            <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('messages.lbl_register') }}
 	                        </button>
-	                        <a onclick="javascript:gotoinpage('{{ $request->mainmenu }}',{{ date('YmdHis') }});" class="btn btn-danger box120 white"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('messages.lbl_cancel') }} 
-	                        </a>
-                        @endif  
+                        @endif
+                        <a onclick="javascript:gotoinpage('{{ $request->mainmenu }}',{{ date('YmdHis') }});" class="btn btn-danger box120 white"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('messages.lbl_cancel') }} 
+	                        </a>  
                     </div>
                 </div>
             </fieldset>

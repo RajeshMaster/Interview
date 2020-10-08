@@ -487,9 +487,11 @@ echo "</pre>";*/
 			$getbname[$value->branch_id] = $value->branch_name;
 		}
 		$getdesname = Customer::getDesignationList();
+
   		if(isset($request->flg)){
   			if($request->flg!=""){
-
+  				$inchargeid=$request->editid;
+				$indetails=Customer::getInchargeUpdateDetails($request,$inchargeid);
   			}
   			return view('customer.inchargeaddedit',['request' => $request,
 													'getbname' => $getbname,
@@ -498,5 +500,57 @@ echo "</pre>";*/
   		}else{
   			return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
   		}
+  	}
+  	public function InchargeRegValidation(Request $request){
+  		$commonrules = array(
+			'txt_incharge_name' => 'required',
+			'txt_incharge_namekana' => 'required',
+			'bname' => 'required|min:8',
+			'designation' => 'required',
+			'txt_mailid' => 'required|email',
+		);
+		
+		$rules = $commonrules;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+  	}
+  	public function Inchargeaddeditprocess(Request $request){
+  		if($request->editid =="") {
+  			if(Session::get('custid') !=""){
+	          $request->custid = Session::get('custid');
+	     	}
+			if(!isset($request->id)){
+		        return $this->index($request);
+		    }
+			$custid =$request->custid;
+			$insert = Customer::insertInchargeRecord($request,$custid);
+			Session::flash('custid', $request->custid );
+			Session::flash('id', $request->id );
+			if($insert) {
+				Session::flash('success', 'Incharge Added Successfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Inserted Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+  		}else{
+  			$id = $request->editid;
+			$update = Customer::updateInchargeRec($request,$id);
+			Session::flash('custid', $request->custid );
+	    	Session::flash('id', $request->id );
+			if($update) {
+				Session::flash('success', 'Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Updated Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+  		}
+  		return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
   	}
 }

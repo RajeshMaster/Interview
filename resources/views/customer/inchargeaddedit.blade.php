@@ -46,14 +46,7 @@
 		.dispSubMobile {
 			width:48%;
 		}
-		.col-xs-3 {
-			width:50%;
-			font-size:100%;
-			margin-left:-10%;
-		}
-		.col-xs-9 {
-			width:50%;
-		}
+		
 	}
 </style>
 <div class="" id="main_contents">
@@ -174,7 +167,9 @@
 	                                    'class'=>'ime_mode_disable txt dispinline form-control firstname regdes',
 	                                	'style' =>'width:240px;',
 	                                    'data-label' => trans('messages.lbl_mailid'))) }}
+	                                    <div id="errorSectiondisplay" align="center"></div>
 				</div>
+
 			</div>
 		</fieldset>
 		<fieldset style="background-color: #DDF1FA;">
@@ -189,7 +184,7 @@
                         </button>
                     @endif
                     <a onclick="javascript:gotoviewpage('{{ $request->mainmenu }}','{{ date('YmdHis') }}');" class="btn btn-danger box120 white"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('messages.lbl_cancel') }} 
-                        </a>  
+                    </a>  
             </div>
 		</fieldset>
 		{{ Form::close() }}
@@ -200,10 +195,10 @@
                             'files'=>true,
                             'url' => 'Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
                             'method' => 'POST')) }}
-                {{ Form::hidden('custid',$request->custid, array('id' => 'custid')) }}
-                {{ Form::hidden('id',$request->id, array('id' => 'id')) }} 
-                {{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
-            	{{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
-                {{ Form::hidden('inchargeid', '', array('id' => 'inchargeid')) }}
+    {{ Form::hidden('custid',$request->custid, array('id' => 'custid')) }}
+    {{ Form::hidden('id',$request->id, array('id' => 'id')) }} 
+    {{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
+	{{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
+    {{ Form::hidden('inchargeid', '', array('id' => 'inchargeid')) }}
 {{ Form::close() }}                
 @endsection

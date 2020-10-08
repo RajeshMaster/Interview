@@ -83,8 +83,6 @@ class Customer extends Model {
 								$request->cussort = "customer_id";
 			}
 			$query = $query-> paginate($request->plimit);
-					// $query =$query->tosql();
-					// dd($query);
 		return $query;
 	}
 	public static function cntGrpCus($groupId) {
@@ -133,7 +131,6 @@ class Customer extends Model {
 		return $query;
 	}
 	public static function fnGetEmailExistsCheck($request){
-		// $custname = trim(iconv(mb_detect_encoding($customer_name), 'UTF-8', $customer_name));
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('mst_cus_inchargedetail')
 					->select('*')
@@ -390,5 +387,56 @@ class Customer extends Model {
 					   ->ORDERBY('Order_id', 'ASC')
 					   ->lists('DesignationNM','DesignationCD');
 			return $query;
+	}
+	public static function insertInchargeRecord($request,$cus) {
+		$insert=DB::table('mst_cus_inchargedetail')->insert([
+				'id' => '',
+				'customer_id' => $cus,
+				'incharge_name' => $request->txt_incharge_name,
+				'incharge_name_romaji' => $request->txt_incharge_namekana,
+				'incharge_contact_no' => $request->txt_mobilenumber,
+				'incharge_email_id' => $request->txt_mailid,
+				'password' => md5('mb'),
+				'create_date' => date('Y-m-d'),
+				'create_by' => Auth::user()->username,
+				'delflg' =>0,
+				'designation' => $request->designation,
+				'confirmpassword' =>'',
+				'branch_name' => $request->bname
+				]);
+		return $insert;
+	}
+	public static function getInchargeUpdateDetails($request,$inchargeid) { 
+		 $db =DB::connection('mysql');
+		$tbl_name = "mst_cus_inchargedetail";
+		$query= $db->table($tbl_name)
+				   ->select('id AS id',
+							 'incharge_name AS txt_incharge_name',
+							 'incharge_name_romaji AS txt_incharge_namekana',
+							 'incharge_contact_no AS txt_mobilenumber',
+							 'incharge_email_id AS txt_mailid',
+							 'designation AS designation',
+							 'branch_name AS bname'
+							 )
+				   ->where('id','=', $inchargeid)
+				   ->get();
+		return $query;
+	}
+	public static function updateInchargeRec($request,$id) { 
+		$db = DB::connection('mysql');
+		$tbl_name = "mst_cus_inchargedetail";
+		$allupdatequery= $db->table($tbl_name)
+				   ->where('id','=', $id)
+					->update(['customer_id' => $request->custid,
+							'incharge_name' => $request->txt_incharge_name,
+							'incharge_name_romaji' => $request->txt_incharge_namekana,
+							'incharge_contact_no' => $request->txt_mobilenumber,
+							'incharge_email_id' => $request->txt_mailid,
+							'designation' => $request->designation,
+							'branch_name' => $request->bname,
+							'delflg'=> 0,
+							'update_date' => date('Y-m-d'),
+							'update_by' => Auth::user()->username]);
+		  return $allupdatequery;
 	}
 }
