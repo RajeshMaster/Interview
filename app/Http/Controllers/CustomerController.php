@@ -305,7 +305,7 @@ class CustomerController extends Controller {
 			'txt_custnamejp' => 'required',
 			'txt_kananame'=>'required',
 			'txt_repname' => 'required',
-			'txt_custagreement' => 'required',
+			'txt_custagreement' => 'required|date_format:"Y-m-d"',
 			'txt_branch_name' => 'required',
 			'txt_mobilenumber' => 'required',
 			'txt_fax' => 'required',
@@ -390,7 +390,8 @@ class CustomerController extends Controller {
   		$kenmeiarray=Customer::getKendetails();
   		$bdetails = array();
   		if(isset($request->flg) && $request->flg !="") {
-
+  			$bid=$request->branchid;
+			$bdetails=Customer::getBranchdt($request,$bid);
   		}
   		return view('customer.branchaddedit',['request' => $request,
 											'kenmeiarray'=>$kenmeiarray,
@@ -398,6 +399,7 @@ class CustomerController extends Controller {
 											]);
   	}
   	public function BranchRegValidation(Request $request){
+  		$commonrules1 = array();
   		$commonrules = array(
 			'txt_branch_name' => 'required',
 			'txt_mobilenumber' => 'required',
@@ -406,10 +408,14 @@ class CustomerController extends Controller {
 			'kenmei' => 'required',
 			'txt_shimei' => 'required',
 			'txt_streetaddress' => 'required',
-			'txt_incharge_name' => 'required',
-			'txt_mailid' => 'required|email',
 		);
-		$rules = $commonrules;
+		if($request->flg!=1){
+			$commonrules1 = array(
+				'txt_incharge_name' => 'required',
+				'txt_mailid' => 'required|email',
+			);
+		}
+		$rules = $commonrules+$commonrules1;
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json($validator->messages(), 200);exit;
@@ -420,9 +426,71 @@ class CustomerController extends Controller {
   	}
   	public function Branchaddeditprocess(Request $request){
   		if($request->editid =="") {
-
+  			if(Session::get('custid') !=""){
+				$request->custid = Session::get('custid');
+			}
+			if(!isset($request->id)){
+				return $this->index($request);
+			}
+			$maxbranchid = Customer::getMaxBranchId($request);
+			if(empty($maxbranchid)) {
+				$aaa=$request->custid;
+				$customer = substr($aaa, 3,5);
+				$cus1 = (int)$customer + 1;
+				$cus2 = str_pad($cus1,5,"0",STR_PAD_LEFT);
+				$cus3 = "CST" . $cus2;
+			} else {
+				$aaa=$maxbranchid[0];
+				$customer = substr($aaa, 3,5);
+				$cus1 = (int)$customer + 1;
+				$cus2 = str_pad($cus1,5,"0",STR_PAD_LEFT);
+				$cus3 = "CST" . $cus2;
+			}
+			$custid=$request->custid;
+			$insert= Customer::InsertBranchRec($request,$cus3,$custid);
+			$insert=Customer::InsertIncharge($request,$cus3,$custid);
+			Session::flash('custid', $request->custid );
+			Session::flash('id', $request->id );
+			if($insert) {
+				Session::flash('success', 'Branch Inserted Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Inserted Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
   		}else{
-  			print_r("expression"); exit();
+  			$branchid=$request->branid;
+			$update= Customer::updatebranchrec($request,$branchid);
+			Session::flash('custid', $request->custid );
+	    	Session::flash('id', $request->id );
+			if($update) {
+				Session::flash('success', 'Branch Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Updated Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+  		}
+  		return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+  	}
+  	public function Inchargeaddedit(Request $request){
+  		$details=Customer::getBranchDetails($request->custid);
+  		$getbname = array();
+  		$indetails = array();
+		foreach ($details as $key => $value) {
+			$getbname[$value->branch_id] = $value->branch_name;
+		}
+		$getdesname = Customer::getDesignationList();
+  		if(isset($request->flg)){
+  			if($request->flg!=""){
+
+  			}
+  			return view('customer.inchargeaddedit',['request' => $request,
+													'getbname' => $getbname,
+													'indetails'=>$indetails,
+													'getdesname' => $getdesname]);
+  		}else{
+  			return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
   		}
   	}
 }

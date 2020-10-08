@@ -65,20 +65,17 @@
 	                                         'id'=>'frmbranchaddedit', 
 	                                         'url' => 'Customer/Branchaddeditprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'))) }}
 	            {{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
-	            {{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
-	            {{ Form::hidden('id', $request->id , array('id' => 'id')) }}
-	            {{ Form::hidden('custid',$request->custid,array('id' => 'custid')) }}
     	@else
 	        {{ Form::open(array('name'=>'frmbranchaddedit', 'id'=>'frmbranchaddedit', 
 	                            'class' => 'form-horizontal h-adr',
 	                            'files'=>true,
 	                            'url' => 'Customer/Branchaddeditprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 	                            'method' => 'POST')) }}
-	                {{ Form::hidden('custid',$request->custid, array('id' => 'custid')) }}
-	                {{ Form::hidden('id',$request->id, array('id' => 'id')) }} 
-	                {{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }} 
-	                {{ Form::hidden('editid', '', array('id' => 'editid')) }} 
+	            {{ Form::hidden('editid', '', array('id' => 'editid')) }} 
     	@endif
+    			{{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
+	            {{ Form::hidden('id', $request->id , array('id' => 'id')) }}
+	            {{ Form::hidden('custid',$request->custid,array('id' => 'custid')) }}
     	<fieldset class="mt20">
 			<div class="header">
 				<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/Client.png')  }}">
@@ -91,7 +88,12 @@
 				@endif
 			</div>
 		</fieldset>
-		<fieldset class="mt10 pull-left dispMainMobile">
+		@if($request->flg!=1)
+			{{--*/ $style = '' /*--}}
+		@else
+			{{--*/ $style = '100%' /*--}}
+		@endif
+		<fieldset class="mt10 pull-left dispMainMobile" style="width: {{$style}} ">
 			@if(!empty($bdetails))
 			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb text-right pm0">

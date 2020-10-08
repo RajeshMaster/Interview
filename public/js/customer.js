@@ -80,8 +80,6 @@ $(document).ready(function() {
 										}
 									});
                     			}
-
-                    			
                     		}
                     	},
                     	error: function(data){
@@ -136,7 +134,6 @@ $(document).ready(function() {
                     	url: 'getEmailExists',
                     	data: {"mailId": mailId},
                     	success: function(resp){
-                    		alert(resp);
                     		if(resp > 0){
                     			document.getElementById('errorSectiondisplay').innerHTML = "";
 	                            err_invalidcer = "Email Id Already Exists";
@@ -175,14 +172,12 @@ $(document).ready(function() {
 									function(isConfirm) {
 										if (isConfirm) {
 										   	pageload();
-                                			$("#frmcustaddedit").submit();
+                                			$("#frmbranchaddedit").submit();
 										} else {
 											
 										}
 									});
                     			}
-
-                    			
                     		}
                     	},
                     	error: function(data){
@@ -192,7 +187,6 @@ $(document).ready(function() {
 
 				}else{
 					$.each(resp, function(i, v) {
-						// alert(i + " => " + v); // view in console for error messages
 						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
 						if ($('input[name="' + i + '"]').hasClass('mailname')) {
 							$('input[name="' + i + '"]').addClass('inputTxtError');
@@ -216,6 +210,9 @@ $(document).ready(function() {
 			error: function(data) {
 			}
 		});
+	});
+	$('.Inchargeaddeditprocess').on('click', function() {
+		
 	});
 });
 function resetErrors() {
@@ -320,10 +317,7 @@ function umultiplesearch() {
 	} else {
 	$('#plimit').val(50);
 	$('#page').val('');
-	//$('#sortOptn').val('');
 	$("#filterval").val('');
-	//$('#sortOrder').val('DESC');
-   // $('#sortOrder').val('asc'); 
 	$('#singlesearchtxt').val('');
 	$('#searchmethod').val(2);
 	$('#customerindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
@@ -421,4 +415,38 @@ function gotoinpage(mainmenu,datetime) {
     pageload();
     $('#frmbranchaddeditcancel').attr('action', 'CustomerView?mainmenu='+mainmenu+'&time='+datetime);
     $("#frmbranchaddeditcancel").submit();
+}
+function branchedit(datetime,branchid){
+    $('#flg').val("1");
+    $('#editid').val(branchid);
+    $('#branchid').val(branchid);
+    var mainmenu="menu_customer";
+    $('#customerviewform').attr('action', 'Branchaddedit?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
+function inchargeadd(datetime) {
+    $('#flg').val("");
+    pageload();
+    var mainmenu="menu_customer";
+    $('#customerviewform').attr('action', 'Inchargeaddedit?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
+function gotoviewpage(mainmenu,datetime) {
+   swal({
+		title: msg_cancel,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+	},
+	function(isConfirm) {
+		if (isConfirm) {
+		   	pageload();
+			$("#frminchargeaddeditcancel").submit();
+		} else {
+			
+		}
+	});
+    
 }

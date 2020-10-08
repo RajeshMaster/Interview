@@ -370,4 +370,25 @@ class Customer extends Model {
 								'update_by' => Auth::user()->username]);
 		  return $allupdatequery;
 	}
+	public static function getMaxBranchId($request)	{
+			$db =DB::connection('mysql');
+			$tbl_name = "mst_branchdetails";
+			$query= $db->table($tbl_name)
+					   ->select('branch_id')
+					   ->where('customer_id','=', $request->custid)
+					   ->ORDERBY('branch_id', 'DESC')
+					   ->lists('branch_id');
+					   //->first();
+			return $query;
+	}
+	public static function getDesignationList()	{
+			$db =DB::connection('mysql');
+			$tbl_name = "sysdesignationtypes";
+			$query= $db->table($tbl_name)
+					   ->select('DesignationCD','DesignationNM')
+					   ->where('DelFlg','=', 0)
+					   ->ORDERBY('Order_id', 'ASC')
+					   ->lists('DesignationNM','DesignationCD');
+			return $query;
+	}
 }

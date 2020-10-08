@@ -165,6 +165,7 @@ Route::group(['prefix'=>'Customer','middleware' => 'auth'], function(){
 	Route::any('Branchaddedit','CustomerController@Branchaddedit');
 	Route::any('BranchRegValidation','CustomerController@BranchRegValidation');
 	Route::any('Branchaddeditprocess','CustomerController@Branchaddeditprocess');
+	Route::any('Inchargeaddedit','CustomerController@Inchargeaddedit');
 });
 
 //Customer
