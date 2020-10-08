@@ -13,16 +13,16 @@ class OldCustomer extends Model {
 	*  @param $request
 	*  Created At 2020/10/06
 	**/
-	public static function customerchange($request) {
+/*	public static function customerchange($request) {
 		$db = DB::connection('mysql');
-		$update=DB::table('temp_mst_customerdetail')
+		$update=DB::table('mst_customerdetail')
 			->where('id', $request->id)
 			->update(
 				['update_date' => date('Y-m-dh:i:s'),
 				 'delflg' => $request->useval]
 		);
 		return $update;
-	}
+	}*/
 
 	/**  
 	*  Employee Details
@@ -30,14 +30,14 @@ class OldCustomer extends Model {
 	*  @param $request
 	*  Created At 2020/10/06
 	**/
-	public static function CustomerDetails($request) {
+/*	public static function CustomerDetails($request) {
 		$db = DB::connection('mysql');
 		$query = $db->TABLE($db->raw("(select *,
-				(SELECT count(temp_clientempteam.cust_id) AS cnt FROM emp_mstemployees 
-								LEFT JOIN temp_clientempteam ON emp_mstemployees.Emp_ID=temp_clientempteam.emp_id
-								where temp_clientempteam.status = '1' AND emp_mstemployees.resign_id = '0' AND temp_clientempteam.cust_id = temp_mst_customerdetail.customer_id) 
+				(SELECT count(clientempteam.cust_id) AS cnt FROM emp_mstemployees 
+								LEFT JOIN clientempteam ON emp_mstemployees.Emp_ID=clientempteam.emp_id
+								where clientempteam.status = '1' AND emp_mstemployees.resign_id = '0' AND clientempteam.cust_id = mst_customerdetail.customer_id) 
 				CNT 
-				from temp_mst_customerdetail) as tbl1"));
+				from mst_customerdetail) as tbl1"));
 	  
 				if ($request->filterval == 1) {
 					//print_r($request->filterval);exit();
@@ -106,9 +106,9 @@ class OldCustomer extends Model {
 											// ->tosql()
 											// dd($query);
 			return $query;
-	}
+	}*/
 
-/*	public static function customerchange($request) {
+	public static function customerchange($request) {
 		$db = DB::connection('mysql_invoice');
 		$update=DB::table('mst_customerdetail')
 			->where('id', $request->id)
@@ -125,7 +125,7 @@ class OldCustomer extends Model {
 	*  @param $request
 	*  Created At 2020/10/06
 	**/
-	/*public static function CustomerDetails($request) {
+	public static function CustomerDetails($request) {
 		$db = DB::connection('mysql_invoice');
 		$query = $db->TABLE($db->raw("(select *,
 				(SELECT count(clientempteam.cust_id) AS cnt FROM emp_mstemployees 
@@ -198,24 +198,24 @@ class OldCustomer extends Model {
 											// ->tosql()
 											// dd($query);
 			return $query;
-	}*/
+	}
 
 
 	public static function getSelectedMember($id) {
-		$db = DB::connection('mysql');
-		$query= $db->table('temp_mst_branchdetails')
-					->SELECT('temp_mst_branchdetails.*')
-					->leftJoin('temp_mst_customerdetail', 'temp_mst_customerdetail.customer_id', '=', 'temp_mst_branchdetails.customer_id')
-					->where('temp_mst_customerdetail.customer_id','=', $id)
-					->ORDERBY('temp_mst_branchdetails.branch_id','ASC')
+		$db = DB::connection('mysql_invoice');
+		$query= $db->table('mst_branchdetails')
+					->SELECT('mst_branchdetails.*')
+					->leftJoin('mst_customerdetail', 'mst_customerdetail.customer_id', '=', 'mst_branchdetails.customer_id')
+					->where('mst_customerdetail.customer_id','=', $id)
+					->ORDERBY('mst_branchdetails.branch_id','ASC')
 					->get();
 		return $query;
 	}
 
 
 	public static function getbranchdetails($request,$branchid) { 
-		$db =DB::connection('mysql');
-		$tbl_name = "temp_mst_branchdetails";
+		$db =DB::connection('mysql_invoice');
+		$tbl_name = "mst_branchdetails";
 		$query= $db->table($tbl_name)
 					->select('id AS id',
 							 'branch_id AS branch_id',
@@ -231,20 +231,20 @@ class OldCustomer extends Model {
 	 }
 
 	public static function getinchargedetails($id) {
-		$db = DB::connection('mysql');
-		$query= $db->table('temp_mst_cus_inchargedetail')
-					->SELECT('temp_mst_cus_inchargedetail.*','sysdesignationtypes.DesignationNM')
-					->leftJoin('sysdesignationtypes', 'sysdesignationtypes.DesignationCD', '=', 'temp_mst_cus_inchargedetail.designation')
-					->where('temp_mst_cus_inchargedetail.branch_name','=', $id)
+		$db = DB::connection('mysql_invoice');
+		$query= $db->table('mst_cus_inchargedetail')
+					->SELECT('mst_cus_inchargedetail.*','sysdesignationtypes.DesignationNM')
+					->leftJoin('sysdesignationtypes', 'sysdesignationtypes.DesignationCD', '=', 'mst_cus_inchargedetail.designation')
+					->where('mst_cus_inchargedetail.branch_name','=', $id)
 					->get();
 		return $query;
 	}
 
 	public static function getbdetails($id) { 
-		$db =DB::connection('mysql');
-		$tbl_name = "temp_mst_branchdetails";
+		$db =DB::connection('mysql_invoice');
+		$tbl_name = "mst_branchdetails";
 		$query= $db->table($tbl_name)
-					->select('temp_mst_branchdetails.*')
+					->select('mst_branchdetails.*')
 					->where('customer_id','=', $id)
 					->ORDERBY('branch_id','ASC')
 					->get();
@@ -252,23 +252,25 @@ class OldCustomer extends Model {
 	}
 
 	public static function selectByIdclient($id) { 
-		$sql="SELECT * FROM  temp_mst_customerdetail LEFT JOIN temp_clientempteam ON temp_clientempteam.cust_id = temp_mst_customerdetail.customer_id 
-					AND LEFT(temp_clientempteam.emp_id, 3) NOT LIKE '%MBC%'
-					where temp_clientempteam.cust_id = '".$id."' ORDER BY temp_clientempteam.start_date DESC";
-		$cards = DB::select($sql);
+		$db =DB::connection('mysql_invoice');
+		$sql="SELECT * FROM  mst_customerdetail LEFT JOIN clientempteam ON clientempteam.cust_id = mst_customerdetail.customer_id 
+					AND LEFT(clientempteam.emp_id, 3) NOT LIKE '%MBC%'
+					where clientempteam.cust_id = '".$id."' ORDER BY clientempteam.start_date DESC";
+		$cards = $db->select($sql);
 		return $cards;
 	}
 
 	public static function selectByIdchangeclient($id) { 
-		$sql="SELECT * FROM  temp_mst_customerdetail LEFT JOIN temp_clientempteam ON temp_clientempteam.cust_id = temp_mst_customerdetail.customer_id 
-					AND LEFT(temp_clientempteam.emp_id, 3) NOT LIKE '%MBC%'
-					where temp_clientempteam.cust_id = '".$id."' ORDER BY temp_clientempteam.end_date DESC";
-		$cards = DB::select($sql);
+		$db =DB::connection('mysql_invoice');
+		$sql="SELECT * FROM  mst_customerdetail LEFT JOIN clientempteam ON clientempteam.cust_id = mst_customerdetail.customer_id 
+					AND LEFT(clientempteam.emp_id, 3) NOT LIKE '%MBC%'
+					where clientempteam.cust_id = '".$id."' ORDER BY clientempteam.end_date DESC";
+		$cards = $db->select($sql);
 		return $cards;
 	}
 
 	 public static function fnGetOnsiteHistory($empid,$request) {
-		$db = DB::connection('mysql');
+		$db = DB::connection('mysql_invoice');
 		$query = $db->table('emp_mstemployees AS emp')->SELECT('emp.Emp_ID',
 								'emp.FirstName',
 								'emp.LastName',
@@ -288,5 +290,26 @@ class OldCustomer extends Model {
 					//->paginate($request->plimit);
 		return $query;
 	}
+
+	public static function getcustomerdetails($request) {
+        $db =DB::connection('mysql_invoice');
+        $tbl_name = "mst_customerdetail";
+        $query= $db->table($tbl_name)
+                   ->select('id AS id',
+                   			 'customer_id AS custid', 
+                             'customer_name AS txt_custnamejp',
+                             'contract AS txt_custagreement', 
+                             'customer_contact_no AS txt_mobilenumber',
+                             'customer_fax_no AS txt_fax', 
+                             'customer_website AS txt_url', 
+                             'customer_address As txt_address',
+                             'romaji As txt_kananame',
+                             'nickname As txt_repname',
+                             'cover_letter As coverletter'
+                             )
+                   ->where('id','=', $request->id)
+                   ->get();
+        return $query;
+    }
 
 }

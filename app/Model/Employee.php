@@ -309,7 +309,7 @@ class Employee extends Model
 				'CreatedBy' => Session::get('FirstName').' '.Session::get('LastName'),
 				'UpdatedBy' => Session::get('FirstName').' '.Session::get('LastName'),
 				'remarks' => $request->remarks,
-				'delFLg' => 0,
+				'delFLg' => 1,
 				'reason' => "",
 			]
 		);

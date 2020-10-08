@@ -116,6 +116,8 @@ class EmployeeController extends Controller
 				Point To remember
 				clientStatus = 0 ->able to edit end date
 				clientStatus = 1 ->Unable to edit end date
+				current Employee = 2 ->working employee
+				Old Employee =  ->working employee
 			*/
 			if (isset($recentClient->status)) {
 				$empdetailsdet[$i]['clientStatus'] = $recentClient->status;

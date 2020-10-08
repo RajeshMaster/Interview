@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Model\Customer;
+use App\Model\Common;
 use Redirect;
 use Session;
 use Input;
@@ -229,6 +230,7 @@ class CustomerController extends Controller {
 	    	$i++;
 	    }
 	    $currentempdetails = Customer::selectByIdchangeclientDtl($id);
+	    	    	
 	    $i=0;
 		foreach($currentempdetails as $key=>$cemployeeview) {
 	    	$currentempview[$i]['customer_id'] = $cemployeeview->customer_id;
@@ -255,6 +257,10 @@ class CustomerController extends Controller {
 	    	$i++;
 	    }
 	    $getdetails=Customer::getCustomerDetails($request);
+
+	    /*	echo "<pre>";
+print_r($currentempview);
+echo "</pre>";*/
 		return view('customer.customerview',['request' => $request,
 										'getdetails' => $getdetails,
 										'inchargeview' => $inchargeview,

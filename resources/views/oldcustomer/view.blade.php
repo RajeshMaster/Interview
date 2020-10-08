@@ -4,7 +4,6 @@
 {{ HTML::style(asset('public/css/footable.core.css')) }}
 {{ HTML::style(asset('public/css/tableviewlayout.css')) }}
 {{ HTML::script(asset('public/js/footable.js')) }}
-{{ HTML::script(asset('public/js/customer.js')) }}
 {{ HTML::script(asset('public/js/lib/bootstrap-datepicker.min.js')) }}
 {{ HTML::style(asset('public/css/lib/bootstrap-datetimepicker.min.css')) }}
 <style type="text/css">
@@ -103,42 +102,11 @@
 			@else
 				<a href="javascript:goindexpage('menu_customer',{{ date('YmdHis') }});" class="pageload btn btn-info box80"><span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}</a>
 			@endif
-				<a href="javascript:edit('{{ date('YmdHis') }}','{{ $getdetails[0]->id}}','{{ $getdetails[0]->custid}}');" class="pageload btn btn-warning box100"><span class="fa fa-pencil"></span> {{ trans('messages.lbl_edit') }}</a>
 		</div>
 	</div>
-	<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
-	 id="styleSelector">
-		<div class="selector-toggle">
-			<a id="sidedesignselector" href="javascript:void(0)"></a>
-		</div>
-		<ul>
-			<li class="theme-option ml6">
-				<div class="box100per mt5"  onKeyPress="return checkSubmitsingle(event)">
-					<a href="#demo" onclick="branchadd('{{ date('YmdHis') }}');" class="" style="font-family: arial, verdana;" data-toggle="collapse">
-					<span class="fa fa-plus csrp"></span><span class="ml5 csrp">
-						{{ 	trans('messages.lbl_branchadd') }}</span>
-				</a>	
-				<div>
-			</li>
-			<li class="theme-option ml6">
-				<div class="box100per mt5"  onKeyPress="return checkSubmitsingle(event)">
-					<a href="#demo" onclick="inchargeadd('{{ date('YmdHis') }}');" class="" style="font-family: arial, verdana;" data-toggle="collapse">
-					<span class="fa fa-plus csrp"></span><span class="ml5 csrp">
-						{{ 	trans('messages.lbl_inchargeadd') }}</span>
-					</a>
-				<div>
-			</li>
-			<li class="theme-option ml6">
-				<div class="box100per mt5"  onKeyPress="return checkSubmitsingle(event)">
-					<a href="javascript:empselectionpopupadd('{{ date('YmdHis') }}','{{ $request->custid}}','{{ $request->id}}');" class="">
-					<span class="fa fa-plus csrp"></span><span class="ml5 csrp">{{trans('messages.lbl_employeeselection')}}</span>
-					</a>
-				<div>
-			</li>
-		</ul>
-	</div>	
 
 	<fieldset class="mt10 mb10 pull-left dispviewMainMobile">
+		<textarea id="element_html"></textarea>
 		<div class="col-md-12">
 			<div class="col-xs-12 mt20">
 				<div class="col-xs-4 lb text-right">
@@ -146,7 +114,6 @@
 				</div>
 				<div class="col-xs-8 mw">
 					<label class="clr_black">
-						{{ Form::hidden('txt_custID', (isset($getdetails[0]->custid)) ? $getdetails[0]->custid : '', array('id' => 'txt_custID')) }}
 						@if(isset($getdetails[0]->custid))
 							{{ $getdetails[0]->custid}}
 						@else
@@ -155,24 +122,21 @@
 					</label>
 				</div>
 			</div>
-
 			<div class="col-xs-12 mt20">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_custname(JP & Eng)') }}</label>
 				</div>
 				<div class="col-xs-8 mw">
 					<label class="clr_black">
-						{{ Form::hidden('txt_custnamejp', (isset($getdetails[0]->txt_custnamejp)) ? $getdetails[0]->txt_custnamejp : '', array('id' => 'txt_custnamejp')) }}
-
 						@if(isset($getdetails[0]->txt_custnamejp))
 							{{ $getdetails[0]->txt_custnamejp}}
+							{{ Form::hidden('CustNameFormail', $getdetails[0]->txt_custnamejp, array('id' => 'CustNameFormail')) }}
 						@else
-							{{ "NILL"}}
-						@endif
+							{{ Form::hidden('CustNameFormail', '', array('id' => 'CustNameFormail')) }}
+						@endif	
 					</label>
 				</div>
 			</div>
-
 			<div class="col-xs-12 mt20">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_custname(JP & Eng)') }}</label>
@@ -457,71 +421,7 @@
 				</div>
 			</div>
 		</fieldset>
-		@for ($j = 0; $j < count($branchview[$i]['incharegdetails']); $j++)
-			<fieldset class="mt15 pull-right dispviewSubMobile">
-				<div class="col-xs-12 mt20">
-					<div class="col-xs-4 lb text-right">
-						<label class="clr_blue">{{ trans('messages.lbl_inchargename') }}</label>
-					</div>
-					<div class="col-xs-8 mw text-left">
-						<label class="clr_black">
-							@if(isset($branchview[$i]['incharegdetails'][$j]->incharge_name))
-								<a class="colbl" href="javascript:inchargeedit('{{ date('YmdHis') }}','{{ $branchview[$i]['incharegdetails'][$j]->id }}');">
-									{{ $branchview[$i]['incharegdetails'][$j]->incharge_name }}
-								@if($branchview[$i]['incharegdetails'][$j]->incharge_name_romaji != "")
-									({{ $branchview[$i]['incharegdetails'][$j]->incharge_name_romaji  }})
-								@endif	  
-								</a>
-							@else
-								{{ "NILL"}}
-							@endif	
-						</label>
-					</div>
-				</div>
-				<div class="col-xs-12 mt20">
-					<div class="col-xs-4 lb text-right">
-						<label class="clr_blue">{{ trans('messages.lbl_mobilenumber') }}</label>
-					</div>
-					<div class="col-xs-8 mw text-left">
-						<label class="clr_black">
-							@if(isset($branchview[$i]['incharegdetails'][$j]->incharge_name))
-								{{ $branchview[$i]['incharegdetails'][$j]->incharge_contact_no }}
-							@else
-								{{ "NILL"}}
-							@endif
-						</label>
-					</div>
-				</div>
-				<div class="col-xs-12 mt20">
-					<div class="col-xs-4 lb text-right">
-						<label class="clr_blue">{{ trans('messages.lbl_mail') }}</label>
-					</div>
-					<div class="col-xs-8 mw text-left" style="word-break: break-all;">
-						<label class="clr_black">
-							@if(isset($branchview[$i]['incharegdetails'][$j]->incharge_email_id))
-								{{ $branchview[$i]['incharegdetails'][$j]->incharge_email_id }}
-							@else
-								{"NILL"}}
-							@endif
-						</label>
-					</div>
-				</div>
-				<div class="col-xs-12 mt20">
-					<div class="col-xs-4 lb text-right">
-						<label class="clr_blue">{{ trans('messages.lbl_designation') }}</label>
-					</div>
-					<div class="col-xs-8 mw text-left">
-						<label class="clr_black">
-							@if(isset($branchview[$i]['incharegdetails'][$j]->DesignationNM))
-								{{ $branchview[$i]['incharegdetails'][$j]->DesignationNM }}
-							@else
-								{{ "NILL"}}
-							@endif
-						</label>
-					</div>
-				</div>
-			</fieldset>
-		@endfor
+
 	</div>
 		@endfor
 	</fieldset>
@@ -580,9 +480,8 @@
 							@endif
 						</td>
 						<td class="text">
-
 							@if(!empty($currentview[$i]['LastName']))
-								{{ $currentview[$i]['LastName'] }} {{ $currentview[$i]['FirstName'] }}
+								{{ empnamelength($currentview[$i]['LastName'], $currentview[$i]['FirstName'], 50) }}
 							@else
 								{{""}}
 							@endif
@@ -674,7 +573,7 @@
 				<tr>
 					<td class="text-center">{{$i+1}}</td>
 					<td class="text-center"> 
-						<a class="colbl fwb" href="javascript:getchangeempdetails('{{ date('YmdHis') }}','{{ $currentempview[$i]['emp_id'] }}');">
+						<a class="colbl fwb" href="javascript:getchangeempdetails('{{ date('YmdHis') }}','{{ $currentempview[$i]['emp_id'] }}','{{$currentempview[$i]['LastName']}}');">
 						@if($currentempview[$i]['emp_id'])
 							{{ $currentempview[$i]['emp_id'] }}
 						</a>    
@@ -684,8 +583,7 @@
 					</td>
 					<td class="text">
 						@if(!empty($currentempview[$i]['LastName']))
-						<!-- 	{{ empnamelength($currentempview[$i]['LastName'], $currentempview[$i]['FirstName'], 50) }} -->
-							{{ $currentempview[$i]['LastName'] }} {{ $currentempview[$i]['FirstName'] }} 
+							{{ empnamelength($currentempview[$i]['LastName'], $currentempview[$i]['FirstName'], 50) }}
 						@else
 							{{ "-"}}
 						@endif
