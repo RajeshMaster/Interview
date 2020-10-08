@@ -137,21 +137,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
-				<div class="col-xs-4 lb text-right">
-					<label class="clr_blue">{{ trans('messages.lbl_custname(JP & Eng)') }}</label>
-				</div>
-				<div class="col-xs-8 mw">
-					<label class="clr_black">
-						@if(isset($getdetails[0]->txt_custnamejp))
-							{{ $getdetails[0]->txt_custnamejp}}
-							{{ Form::hidden('CustNameFormail', $getdetails[0]->txt_custnamejp, array('id' => 'CustNameFormail')) }}
-						@else
-							{{ Form::hidden('CustNameFormail', '', array('id' => 'CustNameFormail')) }}
-						@endif	
-					</label>
-				</div>
-			</div>
+			
 			<div class="col-xs-12 mt20">
 				<div class="col-xs-4 lb text-right">
 					<label class="clr_blue">{{ trans('messages.lbl_custname(kana)') }}</label>
