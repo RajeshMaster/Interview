@@ -47,6 +47,14 @@
 		.dispSubMobile {
 			width:48%;
 		}
+		.col-xs-3 {
+			width:50%;
+			font-size:100%;
+			margin-left:-10%;
+		}
+		.col-xs-9 {
+			width:50%;
+		}
 	}
 </style>
 <div class="" id="main_contents">
@@ -94,14 +102,14 @@
 		<fieldset class="mt10 pull-left dispMainMobile">
 		@if(!empty($getdetails))
 			<div class="col-xs-12 mt20">
-			<div class="col-xs-3 lb text-right pm0">
-				<label class="clr_black">{{ trans('messages.lbl_CustId') }}</label>
-				<span class="fr ml2 fs7"> </span>
+				<div class="col-xs-3 lb text-right pm0">
+					<label class="clr_black">{{ trans('messages.lbl_CustId') }}</label>
+					<span class="fr ml2 fs7"> </span>
+				</div>
+				<div class="col-xs-9 mw">
+	               	{{$request->custid}} 
+				</div>
 			</div>
-			<div class="col-xs-9 mw">
-               	{{$request->custid}} 
-			</div>
-		</div>
 		@endif
 		<div class="col-xs-12 mt20">
 			<div class="col-xs-3 lb text-right pm0">
@@ -327,8 +335,6 @@
 			</div>
 		</div>
 		@endif
-		
-
 	</fieldset>
 		<div style="margin-top: -5px;">
             <fieldset class="mt10 footerbg pull-left box100per">
