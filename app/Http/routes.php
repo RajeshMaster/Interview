@@ -172,6 +172,7 @@ Route::group(['prefix'=>'OldCustomer','middleware' => 'auth'], function(){
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('index', 'OldCustomerController@index');
 	Route::any('view', 'OldCustomerController@view');
+	Route::any('copyCustomer', 'OldCustomerController@copyCustomer');
 });
 
 ?>

@@ -208,4 +208,21 @@ class Helpers {
 		echo "&nbsp;&nbsp;";
 		echo "</div></div>";
 	}
+
+    public static function checkTELFAX($str) {
+		$rval = "";
+		if (!empty($str)) {
+			if (strlen($str) == 10) {
+				$rval = substr($str, 0, 2) . '-' . substr($str, 2, 4) . '-' . substr($str, 6);
+				return $rval;
+			} else if (strlen($str) == 11) {
+				$rval = substr($str, 0, 3) . '-' . substr($str, 3, 4) . '-' . substr($str, 7);
+				return $rval;
+			} else {
+				return $str;
+			}
+		} else {
+			return $str;
+		}
+	}
 }

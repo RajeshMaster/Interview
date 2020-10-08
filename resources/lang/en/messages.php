@@ -158,6 +158,7 @@ return [
 	'lbl_active' => 'Active',
 	'lbl_inactive' => 'In Active',
 	'lbl_customerno' => 'Customer No',
+	'lbl_copy' => 'Copy',
 	/* End Employee Module */
 
 	/* Start Setting Module */

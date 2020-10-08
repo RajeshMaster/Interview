@@ -131,13 +131,31 @@ function filter(val) {
 	$("#Oldcustomerindexform").submit();
 }
 
-// 
+// customer view
 function custview(id,custid) {
-   //alert(id);
-    //alert(custid);
-    $('#id').val(id);
-    $('#custid').val(custid);
-    
-    $('#Oldcustomerindexform').attr('action', 'view?mainmenu='+mainmenu+'&time='+datetime);
-    $("#Oldcustomerindexform").submit();
+	$('#id').val(id);
+	$('#custid').val(custid);
+	
+	$('#Oldcustomerindexform').attr('action', 'view?mainmenu='+mainmenu+'&time='+datetime);
+	$("#Oldcustomerindexform").submit();
+}
+
+// Functiopn back Event
+function goempindexpage (){
+	pageload();
+	$('#customerviewform').attr('action', '../OldCustomer/index?mainmenu='+mainmenu+'&time='+datetime);
+	$("#customerviewform").submit();
+}
+
+// Functiopn back Event
+function goindexpage(mainmenu,datetime) {
+    pageload();
+    $('#customerviewform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
+
+function copyCustomer(){
+    var mainmenu="OldCustomer";
+    $('#customerviewform').attr('action', 'copyCustomer?mainmenu='+mainmenu);
+    $("#customerviewform").submit();
 }

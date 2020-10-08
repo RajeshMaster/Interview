@@ -234,7 +234,7 @@ class OldCustomerController extends Controller {
 			}
 			$i++;
 		}
-		
+
 		$getdetails=OldCustomer::getcustomerdetails($request);
 		return view('oldcustomer.View',['request' => $request,
 										'getdetails' => $getdetails,
@@ -244,5 +244,22 @@ class OldCustomerController extends Controller {
 										'currentempview' =>$currentempview,
 										'getbranchdetails' =>$getbranchdetails
 										]);
+	}
+
+	public function copyCustomer(Request $request) {
+		Session::put('Allbranch_Idset',$request->Allbranch_Idset);
+		$allBrcancharray = explode(',', $request->Allbranch_Idset);
+		Session::put('allBrcancharray',$allBrcancharray);
+		Session::put('OldCustomerIdselected',$request->txt_custID);
+		print_r($request->all());exit;
+		if ($request->txt_custnamejp == "") {
+			return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
+		$getKenname=Common::getKendetails();
+		return view('oldcustomer.customercopy',[
+									'request'=> $request,
+									'getKenname' => $getKenname
+							]);
+
 	}
 }
