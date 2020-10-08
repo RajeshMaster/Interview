@@ -30,11 +30,7 @@ class Customer extends Model {
 
 	public static function CustomerDetailsSelect($request) {
 		$db = DB::connection('mysql');
-		$query = $db->TABLE($db->raw("(select *,
-				(SELECT count(inv_clientemp_dtl.cust_id) AS cnt FROM emp_mstemployees 
-								LEFT JOIN inv_clientemp_dtl ON emp_mstemployees.Emp_ID=inv_clientemp_dtl.emp_id
-								where inv_clientemp_dtl.status = '1' AND emp_mstemployees.resign_id = '0' AND inv_clientemp_dtl.cust_id = mst_customerdetail.customer_id) 
-				CNT 
+		$query = $db->TABLE($db->raw("(select *
 				from mst_customerdetail) as tbl1"));
 			if ($request->filterval != 1) {
 				$query = $query->where(function($joincont) use ($request) {
@@ -251,15 +247,7 @@ class Customer extends Model {
 		$cards = DB::select($sql);
 		return $cards;
 	}
-	public static  function  empLastName($empid) {
-		$db =DB::connection('mysql');
-		$tbl_name = "emp_mstemployees";
-		$query= $db->table($tbl_name)
-				   ->select('Emp_ID','FirstName','LastName','nickname','latestResume')
-				   ->where('Emp_ID','=', $empid)
-				   ->get();
-		return $query;
-	}
+	
 	public static function getYrMonCountBtwnDates($startDT, $endDT){
 		$retVal['year']=0;
 		$retVal['month']=0;
