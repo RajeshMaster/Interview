@@ -163,6 +163,7 @@ class OldCustomerController extends Controller {
 		}
 
 		$getbranchdetails=OldCustomer::getbdetails($id);
+
 		$i=0;
 		foreach($getbranchdetails as $key=>$bview) {
 			$branchview[$i]['branch_name'] = $bview->branch_name;
@@ -233,6 +234,15 @@ class OldCustomerController extends Controller {
 			}
 			$i++;
 		}
-		print_r("expression");exit;
+		
+		$getdetails=OldCustomer::getcustomerdetails($request);
+		return view('oldcustomer.View',['request' => $request,
+										'getdetails' => $getdetails,
+										'inchargeview' => $inchargeview,
+										'branchview' => $branchview,
+										'currentview' => $currentview,
+										'currentempview' =>$currentempview,
+										'getbranchdetails' =>$getbranchdetails
+										]);
 	}
 }
