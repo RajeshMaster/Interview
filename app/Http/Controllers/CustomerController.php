@@ -397,4 +397,25 @@ class CustomerController extends Controller {
 											'bdetails' => $bdetails
 											]);
   	}
+  	public function BranchRegValidation(Request $request){
+  		$commonrules = array(
+			'txt_branch_name' => 'required',
+			'txt_mobilenumber' => 'required',
+			'txt_fax' => 'required',
+			'txt_postal' => 'required|min:8',
+			'kenmei' => 'required',
+			'txt_shimei' => 'required',
+			'txt_streetaddress' => 'required',
+			'txt_incharge_name' => 'required',
+			'txt_mailid' => 'required|email',
+		);
+		$rules = $commonrules;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+  	}
 }

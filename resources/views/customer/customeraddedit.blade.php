@@ -335,8 +335,6 @@
 			</div>
 		</div>
 		@endif
-		
-
 	</fieldset>
 		<div style="margin-top: -5px;">
             <fieldset class="mt10 footerbg pull-left box100per">
