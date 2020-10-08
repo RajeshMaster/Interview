@@ -418,4 +418,11 @@ class CustomerController extends Controller {
             echo json_encode($success);
         }
   	}
+  	public function Branchaddeditprocess(Request $request){
+  		if($request->editid =="") {
+
+  		}else{
+  			print_r("expression"); exit();
+  		}
+  	}
 }
