@@ -5,7 +5,7 @@
 {{ HTML::style(asset('public/css/footable.core.css')) }}
 {{ HTML::style(asset('public/css/tableviewlayout.css')) }}
 {{ HTML::script(asset('public/js/footable.js')) }}
-{{ HTML::script(asset('public/js/mailstatus.js')) }}
+{{ HTML::script(asset('public/js/sendmail.js')) }}
 <style type="text/css">
 /* Start Laptop screen Setting index page design */
 @media all and (min-width:1205px) {
@@ -92,14 +92,24 @@
 				</h2>
 			</div>
 		</fieldset>
+		<!-- End Heading -->
+
+		<!-- Session msg Start-->
+		@if(Session::has('success'))
+			<div align="center" class="alertboxalign col-xs-12 mt10" role="alert" >
+				<span class="alert {{ Session::get('alert', Session::get('type') ) }}">
+				{{ Session::get('success') }}
+				</span>
+			</div>
+		@endif
 
 		@if (session('danger'))
 			<div class="col-xs-12 mt10" align="center">
 				<span class="alert-danger">{{ session('danger') }}</span>
 			</div>
 		@endif
+		<!-- Session msg End-->
 
-		<!-- End Heading -->
 		<a disabled="disabled" class="btn btn-success box70 mt10" id="postBtn" href="javascript:postsendmail(datetime);" style="float: right;" class="pl10 pb5">Post</a>
 
 		<div class="box100per tableShrink pt10 mnheight mb0">
@@ -249,7 +259,9 @@
 											
 										</div>
 									</div> -->
-
+										<div class="CMN_display_block">
+											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a>
+										</div>
 								</div>
 							</div>
 						</td>
@@ -306,4 +318,12 @@
 		}
 	}); 
 </script>
+
+<div id="uploadRes" class="modal fade" style="width: 775px;">
+	<div id="login-overlay">
+		<div class="modal-content">
+		<!-- Popup will be loaded here -->
+		</div>
+	</div>
+</div>
 @endsection

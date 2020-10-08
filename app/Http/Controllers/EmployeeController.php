@@ -472,7 +472,12 @@ class EmployeeController extends Controller
 				Session::flash('type','alert-danger'); 
 			}
 		}
-		return Redirect::to('Employee/index?mainmenu=menu_employee&time='.date('YmdHis'));
+		if($request->hName == 1){
+			return Redirect::to('MailSend/index?mainmenu=menu_mailsend&time='.date('YmdHis'));
+		} else {
+			return Redirect::to('Employee/index?mainmenu=menu_employee&time='.date('YmdHis'));
+		}
+
 	}
 
 	/**

@@ -288,8 +288,8 @@ function employeEdit(type,id){
 // Bakc to Employee View
 function fnbackEmpView(){
 	pageload();
-	$('#frmaddeditcancel').attr('action', 'view?mainmenu='+mainmenu+'&time='+datetime);
-	$("#frmaddeditcancel").submit();
+	$('#senmailfrm').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+	$("#senmailfrm").submit();
 }
 
 // Bakc to Employee View

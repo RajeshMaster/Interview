@@ -122,7 +122,7 @@ class Employee extends Model
 		$select = $db->table('mst_resume')
 					->SELECT('*')
 					->where([['empId', '=', $request->empid]])
-					->ORDERBY('createdDate', 'ASC')
+					->ORDERBY('createdDate', 'DESC')
 					->paginate($request->plimit);
 		return $select;
 	}

@@ -38,6 +38,7 @@
 							'id'=>'senmailfrm',
 							'class'=>'focusFields',
 							'method' => 'POST',
+						'url' => 'MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 							'files'=>true)) }}
 		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
 		{{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
@@ -244,7 +245,7 @@
 					</button>
 					&emsp;
 				@endif
-				<a href="javascript:fnbackEmpindex();" class="button button-red textDecNone">
+				<a href="javascript:fnbackmailindex();" class="button button-red textDecNone">
 					<span class="fa fa-remove"></span> {{ trans('messages.lbl_cancel') }}
 				</a>
 			</div>

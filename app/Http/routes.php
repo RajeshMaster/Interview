@@ -120,6 +120,7 @@ Route::group(['prefix' => 'MailSend','middleware' => 'auth'], function(){
 	Route::any('sendMialvalidation','MailSendController@sendMialvalidation');
 	Route::any('sendMailpostProcess','MailSendController@sendMailpostProcess');
 	Route::any('inchargenamepopup','MailSendController@inchargenamepopup');
+	Route::any('uploadResume','EmployeeController@uploadResume');
 });
 
 // Setting

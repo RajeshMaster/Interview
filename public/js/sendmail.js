@@ -238,6 +238,7 @@ function fnselect() {
 	}
 }
 
+// Incharge Name get popup
 function inchargename(){
 	var branchid = document.getElementById("branchId").value;
 	var check = 1;
@@ -250,11 +251,13 @@ function inchargename(){
 	$('#customerSelect').modal('show');
 }
 
+// to clear incgarge name
 function fninchclear(){
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 }
 
+// to clear customer details
 function fncusclear(){
 	document.getElementById("customerName").value = "";
 	document.getElementById("inchargeDetails").value = "";
@@ -262,4 +265,52 @@ function fncusclear(){
 	$('#branchId').find('option').not(':first').remove();
 	$(".incadd").css("display", "none");
 	$(".btnclr").css("display", "none");
+}
+
+// Resume Upload Screen View
+function uploadResume(empid,lastname){
+	$('#empid').val(empid);
+	$('#empname').val(lastname);
+	popupopenclose(1);
+	$('#uploadRes').load('uploadResume?mainmenu='+mainmenu+'&time='+datetime+'&empId='+empid+'&lastname=1');
+	$("#uploadRes").modal({
+			backdrop: 'static',
+			keyboard: false
+		});
+	$('#uploadRes').modal('show');
+}
+
+// upoload process same as employewe index
+function fnUpload(){
+	var pdf = $('#pdffile').val()
+	if (pdf != "") {
+		pdf = pdf.split(".");
+		if (pdf[pdf.length -1] != "pdf") {
+			alert(msg_fileformat);
+		} else {
+			swal({
+				title: msg_upload,
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				closeOnConfirm: true,
+				closeOnCancel: true
+			},
+			function(isConfirm) {
+				if (isConfirm) {
+				   pageload();
+					$("#uploadpopup").submit();
+				}
+			});
+		}
+	} else {
+		alert(msg_fileEmpty);
+	}
+}
+
+// back to send mail index
+function fnbackmailindex(){
+	pageload();
+	$('#frmaddeditcancel').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+	$("#frmaddeditcancel").submit();
 }

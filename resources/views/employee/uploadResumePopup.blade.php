@@ -32,7 +32,7 @@
 					  'method' => 'POST')) }}
 {{ Form::hidden('mainmenu', $request->mainmenu, array('id' => 'mainmenu')) }}
 {{ Form::hidden('empId', $request->empId, array('id' => 'empId')) }}
-{{ Form::hidden('hName', '', array('id' => 'hName')) }}
+{{ Form::hidden('hName', $request->lastname, array('id' => 'hName')) }}
 
 <div class="popupstyle popupsize">
 	<div class="modal-content">

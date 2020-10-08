@@ -547,7 +547,6 @@ class MailSendController extends Controller {
     	}
 		$getInchargeDetails = mailsend::fngetInchargeDetails($request,$customerId,$branchId,$inchargeId);
 		foreach ($getInchargeDetails as $key1 => $value1) {
-			print_r($value1);echo "<br/>";
 			// if ($value1->sendpasswrodFlg == 1) {
 				$email = $value1->incharge_email_id;
 				$getmailId .= $email.',';
@@ -564,7 +563,7 @@ class MailSendController extends Controller {
 				// if(!in_array($customerId,$email_array)){
 					$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
 				// }
-
+					
 			// } else {
 			// 	$email = $value1->incharge_email_id;
 			// 	$getmailId .= $email.',';
@@ -586,6 +585,17 @@ class MailSendController extends Controller {
 			// 	}
 			// }
 		}
+
+		if($getmailId != ""){
+			$allmailId = substr($getmailId,0,-1);
+			if($sendmail){
+				$mailSendList = mailsend::mailPostSendList($allmailId,$subject,$request->selectedEmployee,$custID,$BranchId,$request->selectedEmployeeResume);
+			}
+		}
+
+		
+
+
 
 		/*$agentMail = Interview::getAgentMail($customerId);
 		$CustomerName = Interview::getCustomerName($customerId);
