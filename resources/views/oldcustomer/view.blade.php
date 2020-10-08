@@ -72,7 +72,7 @@
 </script>
 <div class="" id="main_contents">
 	<article id="customer" class="DEC_flex_wrapper" data-category="customer cus_sub_3">
-		{{ Form::open(array('name'=>'customerviewform', 'id'=>'customerviewform','url' => 'Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 'method' => 'POST')) }}
+		{{ Form::open(array('name'=>'customerviewform', 'id'=>'customerviewform','url' => 'Customer/index?mainmenu=menu_oldcustomer&time='.date('YmdHis'), 'method' => 'POST')) }}
 		{{ Form::hidden('id',$request->id,array('id' => 'id')) }}
 		{{ Form::hidden('custid',$request->custid,array('id' => 'custid')) }}
 		{{ Form::hidden('editid','',array('id' => 'editid')) }}
@@ -139,6 +139,7 @@
 				</div>
 				<div class="col-xs-8 mw">
 					<label class="clr_black">
+						{{ Form::hidden('txt_custID', (isset($getdetails[0]->custid)) ? $getdetails[0]->custid : '', array('id' => 'txt_custID')) }}
 						@if(isset($getdetails[0]->custid))
 							{{ $getdetails[0]->custid}}
 						@else
@@ -153,12 +154,13 @@
 				</div>
 				<div class="col-xs-8 mw">
 					<label class="clr_black">
+						{{ Form::hidden('txt_custnamejp', (isset($getdetails[0]->txt_custnamejp)) ? $getdetails[0]->txt_custnamejp : '', array('id' => 'txt_custnamejp')) }}
+
 						@if(isset($getdetails[0]->txt_custnamejp))
 							{{ $getdetails[0]->txt_custnamejp}}
-							{{ Form::hidden('CustNameFormail', $getdetails[0]->txt_custnamejp, array('id' => 'CustNameFormail')) }}
 						@else
-							{{ Form::hidden('CustNameFormail', '', array('id' => 'CustNameFormail')) }}
-						@endif	
+							{{ "NILL"}}
+						@endif
 					</label>
 				</div>
 			</div>

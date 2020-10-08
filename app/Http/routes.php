@@ -176,6 +176,10 @@ Route::group(['prefix'=>'OldCustomer','middleware' => 'auth'], function(){
 	Route::any('index', 'OldCustomerController@index');
 	Route::any('view', 'OldCustomerController@view');
 	Route::any('copyCustomer', 'OldCustomerController@copyCustomer');
+	Route::any('OldInchargeSelect', 'OldCustomerController@OldInchargeSelect');
+	Route::any('CustomerRegValidation', 'OldCustomerController@CustomerRegValidation');
+	Route::any('addprocess', 'OldCustomerController@addprocess');
+	Route::any('copyBranch', 'OldCustomerController@copyBranch');
 });
 
 ?>
