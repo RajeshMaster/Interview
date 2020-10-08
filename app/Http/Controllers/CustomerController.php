@@ -212,7 +212,7 @@ class CustomerController extends Controller {
 	    	$currentview[$i]['start_date'] = $cempview->start_date;
 	    	$currentview[$i]['end_date'] = $cempview->end_date;
 	    	$currentview[$i]['update_by'] = $cempview->update_by;
-	    	$viewname = Customer::empLastName($currentview[$i]['emp_id']);
+	    	$viewname = Common::fnGetEmployeeInfo($currentview[$i]['emp_id']);
 	    	foreach($viewname as $key=>$rec) { 
 	 		$currentview[$i]['LastName']=$rec->LastName;
 	 		$currentview[$i]['FirstName']=$rec->FirstName;
@@ -238,7 +238,7 @@ class CustomerController extends Controller {
 	    	$currentempview[$i]['start_date'] = $cemployeeview->start_date;
 	    	$currentempview[$i]['end_date'] = $cemployeeview->end_date;
 	    	$currentempview[$i]['update_by'] = $cemployeeview->update_by;
-	    	$viewname = Customer::empLastName($currentempview[$i]['emp_id']);
+	    	$viewname = Common::fnGetEmployeeInfo($currentempview[$i]['emp_id']);
 	    	foreach($viewname as $key=>$rec) { 
 		 		$currentempview[$i]['LastName']=$rec->LastName;
 		 		$currentempview[$i]['FirstName']=$rec->FirstName;
