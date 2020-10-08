@@ -253,5 +253,7 @@ return [
 	'lbl_branchadd' =>'支店設定',
 	'lbl_inchargeadd' => '担当者設定 ',
 	'lbl_employeeselection' => "従業員選択",
+	'lbl_incharge' => '担当者',
+	'lbl_inchargenamekana' => '担当者名（カナ）',
 	/* End Customer Module*/
 ];

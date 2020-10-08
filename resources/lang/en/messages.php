@@ -253,5 +253,7 @@ return [
 	'lbl_branchadd' => 'Branch Add',
 	'lbl_inchargeadd' => 'Incharge Add',
 	'lbl_employeeselection' => "Employee_selection",
+	'lbl_incharge' => 'Incharge',
+	'lbl_inchargenamekana' => 'Incharge Name(Kana)',
 	/* End Customer Module*/
 ];

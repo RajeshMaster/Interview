@@ -80,8 +80,6 @@ $(document).ready(function() {
 										}
 									});
                     			}
-
-                    			
                     		}
                     	},
                     	error: function(data){
@@ -136,7 +134,6 @@ $(document).ready(function() {
                     	url: 'getEmailExists',
                     	data: {"mailId": mailId},
                     	success: function(resp){
-                    		alert(resp);
                     		if(resp > 0){
                     			document.getElementById('errorSectiondisplay').innerHTML = "";
 	                            err_invalidcer = "Email Id Already Exists";
@@ -175,14 +172,12 @@ $(document).ready(function() {
 									function(isConfirm) {
 										if (isConfirm) {
 										   	pageload();
-                                			$("#frmcustaddedit").submit();
+                                			$("#frmbranchaddedit").submit();
 										} else {
 											
 										}
 									});
                     			}
-
-                    			
                     		}
                     	},
                     	error: function(data){
@@ -192,7 +187,6 @@ $(document).ready(function() {
 
 				}else{
 					$.each(resp, function(i, v) {
-						// alert(i + " => " + v); // view in console for error messages
 						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
 						if ($('input[name="' + i + '"]').hasClass('mailname')) {
 							$('input[name="' + i + '"]').addClass('inputTxtError');
@@ -216,6 +210,111 @@ $(document).ready(function() {
 			error: function(data) {
 			}
 		});
+	});
+	$('.Inchargeaddeditprocess').on('click', function() {
+		resetErrors();
+		var url ='InchargeRegValidation';
+		$.each($('form input, form select, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+			}
+		});
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				/*alert(JSON.stringify(resp));*/
+				if(resp == true){
+					var inchargeName = $('#txt_incharge_name').val();
+					var mailId = $('#txt_mailid').val();
+                	var editId = $('#editid').val();
+					$.ajax({
+						type: 'GET',
+                    	url: 'getEmailExists',
+                    	data: {"inchargeName": inchargeName,
+                            "mailId": mailId,
+                            "editId": editId},
+                    	success: function(resp){
+                    		if(resp > 0){
+                    			document.getElementById('errorSectiondisplay').innerHTML = "";
+	                            err_invalidcer = "Email Id Already Exists";
+	                            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invalidcer+'</label></div>';
+	                            document.getElementById('errorSectiondisplay').style.display = 'inline-block';
+	                            document.getElementById('errorSectiondisplay').innerHTML = error;
+	                            return false;
+                    		}
+                    		else{
+                    			if($('#frminchargeaddedit #editid').val() == "") {
+                    				swal({
+									title: msg_register,
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonClass: "btn-danger",
+									closeOnConfirm: true,
+									closeOnCancel: true
+									},
+									function(isConfirm) {
+										if (isConfirm) {
+										   	pageload();
+                                			$("#frminchargeaddedit").submit();
+										} else {
+											
+										}
+									});
+                    			}else{
+                    				swal({
+									title: msg_update,
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonClass: "btn-danger",
+									closeOnConfirm: true,
+									closeOnCancel: true
+									},
+									function(isConfirm) {
+										if (isConfirm) {
+										   	pageload();
+                                			$("#frminchargeaddedit").submit();
+										} else {
+											
+										}
+									});
+                    			}
+                    		}
+                    	},
+                    	error: function(data){
+
+                    	}
+					});
+				}
+				else{
+					$.each(resp, function(i, v) {
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						if ($('input[name="' + i + '"]').hasClass('mailname')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailname_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('mailSubject')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailSubject_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('mailheader')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailheader_err').append(msg)
+						} else if ($('textarea[name="' + i + '"]').hasClass('mailContent')) {
+							$('textarea[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailContent_err').append(msg)
+						} else {
+							$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError').after(msg);
+						}
+					});
+				}
+			},
+			error: function(data){
+
+			}
+		});
+
 	});
 });
 function resetErrors() {
@@ -320,10 +419,7 @@ function umultiplesearch() {
 	} else {
 	$('#plimit').val(50);
 	$('#page').val('');
-	//$('#sortOptn').val('');
 	$("#filterval").val('');
-	//$('#sortOrder').val('DESC');
-   // $('#sortOrder').val('asc'); 
 	$('#singlesearchtxt').val('');
 	$('#searchmethod').val(2);
 	$('#customerindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
@@ -421,4 +517,45 @@ function gotoinpage(mainmenu,datetime) {
     pageload();
     $('#frmbranchaddeditcancel').attr('action', 'CustomerView?mainmenu='+mainmenu+'&time='+datetime);
     $("#frmbranchaddeditcancel").submit();
+}
+function branchedit(datetime,branchid){
+    $('#flg').val("1");
+    $('#editid').val(branchid);
+    $('#branchid').val(branchid);
+    var mainmenu="menu_customer";
+    $('#customerviewform').attr('action', 'Branchaddedit?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
+function inchargeadd(datetime) {
+    $('#flg').val("");
+    pageload();
+    var mainmenu="menu_customer";
+    $('#customerviewform').attr('action', 'Inchargeaddedit?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
+function gotoviewpage(mainmenu,datetime) {
+   swal({
+		title: msg_cancel,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+	},
+	function(isConfirm) {
+		if (isConfirm) {
+		   	pageload();
+			$("#frminchargeaddeditcancel").submit();
+		} else {
+			
+		}
+	});
+}
+function inchargeedit(datetime,inchargeid){
+    $('#flg').val("1");
+    $('#editid').val(inchargeid);
+    $('#inchargeid').val(inchargeid);
+    var mainmenu="menu_customer";
+    $('#customerviewform').attr('action', 'Inchargeaddedit?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
 }

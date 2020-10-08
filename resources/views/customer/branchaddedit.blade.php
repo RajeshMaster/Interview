@@ -65,20 +65,17 @@
 	                                         'id'=>'frmbranchaddedit', 
 	                                         'url' => 'Customer/Branchaddeditprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'))) }}
 	            {{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
-	            {{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
-	            {{ Form::hidden('id', $request->id , array('id' => 'id')) }}
-	            {{ Form::hidden('custid',$request->custid,array('id' => 'custid')) }}
     	@else
 	        {{ Form::open(array('name'=>'frmbranchaddedit', 'id'=>'frmbranchaddedit', 
 	                            'class' => 'form-horizontal h-adr',
 	                            'files'=>true,
 	                            'url' => 'Customer/Branchaddeditprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 	                            'method' => 'POST')) }}
-	                {{ Form::hidden('custid',$request->custid, array('id' => 'custid')) }}
-	                {{ Form::hidden('id',$request->id, array('id' => 'id')) }} 
-	                {{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }} 
-	                {{ Form::hidden('editid', '', array('id' => 'editid')) }} 
+	            {{ Form::hidden('editid', '', array('id' => 'editid')) }} 
     	@endif
+    			{{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
+	            {{ Form::hidden('id', $request->id , array('id' => 'id')) }}
+	            {{ Form::hidden('custid',$request->custid,array('id' => 'custid')) }}
     	<fieldset class="mt20">
 			<div class="header">
 				<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/Client.png')  }}">
@@ -91,7 +88,12 @@
 				@endif
 			</div>
 		</fieldset>
-		<fieldset class="mt10 pull-left dispMainMobile">
+		@if($request->flg!=1)
+			{{--*/ $style = '' /*--}}
+		@else
+			{{--*/ $style = '100%' /*--}}
+		@endif
+		<fieldset class="mt10 pull-left dispMainMobile" style="width: {{$style}} ">
 			@if(!empty($bdetails))
 			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb text-right pm0">
@@ -266,15 +268,13 @@
 	                        <button type="button" class="btn edit btn-warning box100 Branchaddeditprocess" >
 	                        	<i class="fa fa-edit" aria-hidden="true"></i> {{ trans('messages.lbl_update') }}
 	                    	</button>
-	                        <a onclick="javascript:gotoinpage('{{ $request->mainmenu }}',{{ date('YmdHis') }});" class="btn btn-danger box120 white"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('messages.lbl_cancel') }} 
-	                        </a>
                         @else
 	                        <button type="button" class="btn btn-success add box100 Branchaddeditprocess ml5">
 	                            <i class="fa fa-plus" aria-hidden="true"></i> {{ trans('messages.lbl_register') }}
 	                        </button>
-	                        <a onclick="javascript:gotoinpage('{{ $request->mainmenu }}',{{ date('YmdHis') }});" class="btn btn-danger box120 white"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('messages.lbl_cancel') }} 
-	                        </a>
-                        @endif  
+                        @endif
+                        <a onclick="javascript:gotoinpage('{{ $request->mainmenu }}',{{ date('YmdHis') }});" class="btn btn-danger box120 white"><i class="fa fa-times" aria-hidden="true"></i> {{ trans('messages.lbl_cancel') }} 
+	                        </a>  
                     </div>
                 </div>
             </fieldset>
