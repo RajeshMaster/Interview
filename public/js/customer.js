@@ -559,3 +559,14 @@ function inchargeedit(datetime,inchargeid){
     $('#customerviewform').attr('action', 'Inchargeaddedit?mainmenu='+mainmenu+'&time='+datetime);
     $("#customerviewform").submit();
 }
+function empselectionpopupadd(datetime,custid,id){
+	popupopenclose(1);
+	var selectionid = $('#selectionid').val();
+	var mainmenu="menu_customer";
+	$('#empnamepopup').load('../Customer/EmpNamePopup?custid='+custid+'&id='+id+'&selectionid='+selectionid+'&mainmenu='+mainmenu+'&time='+datetime);
+	$("#empnamepopup").modal({
+		backdrop: 'static',
+		keyboard: false
+	});
+	$('#empnamepopup').modal('show');
+} 
