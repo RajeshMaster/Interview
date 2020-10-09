@@ -262,6 +262,21 @@ class Common extends Model {
 		return $query;
 	}
 
+	/**  
+	*  Year counnt Between dates Details(Common Function)
+	*  @author Rajesh 
+	*  @param $startDT,$endDT
+	*  Created At 2020/09/30
+	**/
+	public static function getKendetails() {
+		$query = DB::table('mst_prefecture')
+				->select('id','prefecture_name_jp')
+				->WHERE('delflg', '=', 0)
+				->lists('prefecture_name_jp','id');
+		return $query;	
+	}
+
+
 	/**
 	 * 画面表示
 	 *

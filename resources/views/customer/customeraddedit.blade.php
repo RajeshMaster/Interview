@@ -3,6 +3,7 @@
 {{ HTML::script(asset('public/js/lib/bootstrap-datepicker.min.js')) }}
 {{ HTML::style(asset('public/css/lib/bootstrap-datetimepicker.min.css')) }}
 {{ HTML::script(asset('public/js/customer.js')) }}
+{{ HTML::script(asset('public/js/oldcustomer.js')) }}
 {{ HTML::script(asset('public/js/yubinbango.js')) }}
 <script type="text/javascript">
 	var mainmenu = '@php echo $request->mainmenu; @endphp';

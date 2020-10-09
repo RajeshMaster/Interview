@@ -158,6 +158,7 @@ return [
 	'lbl_active' => '活動',
 	'lbl_inactive' => '非活動',
 	'lbl_customerno' => '取引先番号',
+	'lbl_copy' => 'コーピ',
 	/* End Employee Module */
 
 	/* Start Setting Module */
