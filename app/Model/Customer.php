@@ -439,4 +439,6 @@ class Customer extends Model {
 							'update_by' => Auth::user()->username]);
 		  return $allupdatequery;
 	}
+
+
 }

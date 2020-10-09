@@ -289,12 +289,14 @@ class OldCustomerController extends Controller {
 			'txt_shimei' => 'required',
 			'txt_streetaddress' => 'required',
 		);
-		if($request->flg!=1) {
+
+		if($request->flg !=1) {
 			$commonrules1 = array(
 				'txt_incharge_name' => 'required',
 				'txt_mailid' => 'required',
 			);
 		}
+
 		$rules = $commonrules+$commonrules1;
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -360,13 +362,13 @@ class OldCustomerController extends Controller {
 				// $deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
 				Session::flash('id', $getmaxid );
 				Session::flash('custid', $cus3 );
-				return Redirect::to('Customer/View?mainmenu=Customer&time='.date('YmdHis'));
+				return Redirect::to('Customer/index?mainmenu=Customer&time='.date('YmdHis'));
 			}
 
 		} else {
 			Session::flash('type', 'Inserted Unsucessfully!'); 
 			Session::flash('type', 'alert-danger'); 
-			return Redirect::to('Customer/View?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+			return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 
 		}
 	}
@@ -379,7 +381,7 @@ class OldCustomerController extends Controller {
 			// $deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
 			Session::flash('id', $getmaxid );
 			Session::flash('custid', $cus3 );
-			return Redirect::to('Customer/View?mainmenu=Customer&time='.date('YmdHis'));
+			return Redirect::to('Customer/index?mainmenu=menu_customer&time='.date('YmdHis'));
   		}
   		$allbranch = session::get('Allbranch_Idset');
   		$allBrcancharray = session::get('allBrcancharray');
@@ -409,4 +411,123 @@ class OldCustomerController extends Controller {
 								]);
 
 	}
+
+	public function BranchRegValidation(Request $request){
+  		$commonrules1 = array();
+  		$commonrules = array(
+			'txt_branch_name' => 'required',
+			'txt_mobilenumber' => 'required',
+			'txt_fax' => 'required',
+			'txt_postal' => 'required|min:7|max:8',
+			'kenmei' => 'required',
+			'txt_shimei' => 'required',
+			'txt_streetaddress' => 'required',
+		);
+		if($request->flg!=1){
+			$commonrules1 = array(
+				'txt_incharge_name' => 'required',
+				'txt_mailid' => 'required',
+			);
+		}
+		$rules = $commonrules+$commonrules1;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+  	}
+
+  	function copyBranchProcess(Request $request) {
+		if(Session::get('customerIdSel') !=""){
+			$request->custid = Session::get('customerIdSel');
+		}
+      	$maxbranchid = OldCustomer::branchadd($request);
+
+		if(empty($maxbranchid)) {
+			$aaa=$request->custid;
+			$customer = substr($aaa, 3,5);
+			$cus1 = (int)$customer + 1;
+			$cus2 = str_pad($cus1,5,"0",STR_PAD_LEFT);
+			$cus3 = "CST" . $cus2;
+		} else {
+			$aaa=$maxbranchid[0];
+			$customer = substr($aaa, 3,5);
+			$cus1 = (int)$customer + 1;
+			$cus2 = str_pad($cus1,5,"0",STR_PAD_LEFT);
+			$cus3 = "CST" . $cus2;
+		}
+		$rest1 = substr($request->txt_mailid, -1);
+		if ($rest1 != ";") {
+			$request->txt_mailid = $request->txt_mailid . ";";
+		}
+		$rest2 = substr($request->txt_incharge_name, -1);
+		if ($rest2 != ";") {
+			$request->txt_incharge_name = $request->txt_incharge_name . ";";
+		}
+		if($request->txt_mailid != ""){
+			$rest = substr($request->txt_mailid, 0, -1);
+			$restname = substr($request->txt_incharge_name, 0, -1);
+		}
+		$inchArray = explode(";", $rest);
+		$inchNameArray = explode(";", $restname);
+		$custid=$request->custid;
+		$insert= OldCustomer::insertbranchrec($request,$cus3,$custid);
+		$getmaxid = OldCustomer::fetchmaxid($request);
+		foreach ($inchArray as $key => $value) {
+			$mail = $value;
+			$name = $inchNameArray[$key];
+			$insert=OldCustomer::insertincharge($name,$mail,$cus3,$custid);
+		}
+		$allBrcancharray = explode(',', session::get('Allbranch_Idset'));
+		if($insert) {
+			if (isset($allBrcancharray[0]) && $allBrcancharray[0] != "") {
+				Session::flash('custid', $cus3);
+				return Redirect::to('OldCustomer/copyBranch?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+			} else {
+				$oldCustomerId = Session::get('OldCustomerIdselected');
+				//$deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
+				Session::flash('id', $getmaxid );
+				Session::flash('custid', $custid );
+				return Redirect::to('Customer/index?mainmenu=menu_customer&time='.date('YmdHis'));
+			}
+		} else {
+			Session::flash('type', 'Inserted Unsucessfully!'); 
+			Session::flash('type', 'alert-danger'); 
+			return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
+		
+	}
+
+	public function addcopycancel(Request $request) {
+		$oldCustomerId = Session::get('OldCustomerIdselected');
+		// $deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
+		Session::flash('id', $request->id );
+		Session::flash('custid', $request->custid );
+		return Redirect::to('Customer/CustomerView?mainmenu=menu_customer&time='.date('YmdHis'));
+  	}
+
+  	public function getEmailExistsManyFields(Request $request) {
+		$rest1 = substr($request->mailId, -1);
+		if ($rest1 != ";") {
+			$request->mailId = $request->mailId . ";";
+		}
+		$rest = substr($request->mailId, 0, -1);  // returns "abcde"
+		$restarry = explode(';', $rest);
+		for ($i=0; $i < count($restarry) ; $i++) {
+			$inchargeMailExist = OldCustomer::fnGetEmailExistsCheckmanyField($restarry[$i]);
+			$countEmail = count($inchargeMailExist);
+			if ($countEmail == 0) {
+				$whchMail = 0;
+			} else {
+				$whchMail = $i+1;
+				break;
+			}
+		}
+		print_r($whchMail);exit;
+		// $inchargeMailExist = OldCustomer::fnGetEmailExistsCheck($request);
+		// $countEmail = count($inchargeMailExist);
+  	}
+
 }

@@ -412,4 +412,25 @@ class OldCustomer extends Model {
                    ->get();
         return $query;
     }
+
+   	public static function branchadd($request)	{
+		$db =DB::connection('mysql');
+        $tbl_name = "mst_branchdetails";
+        $query= $db->table($tbl_name)
+                   ->select('branch_id')
+                   ->where('customer_id','=', $request->custid)
+                   ->ORDERBY('branch_id', 'DESC')
+                   ->lists('branch_id');
+                   //->first();
+        return $query;
+	}
+
+	public static function fnGetEmailExistsCheckmanyField($mail){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_cus_inchargedetail')
+					->select('*')
+					->WHERE('incharge_email_id','=', $mail)
+					->get();
+		return $result;
+	}
 }

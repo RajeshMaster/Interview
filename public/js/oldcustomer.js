@@ -16,6 +16,8 @@ $(function () {
 
 $(document).ready(function() {
 	$('.addeditprocesscopy').on('click', function() {
+		$("#CountError").hide();
+		$("#emailError").hide();
 		resetErrors();
 		var url ='CustomerRegValidation';
 		$.each($('form input, form select, form textarea'), function(i, v) {  
@@ -30,25 +32,72 @@ $(document).ready(function() {
 			data: data,
 			async: false, //blocks window close
 			success: function(resp) {
-				/*alert(JSON.stringify(resp));*/
 				if(resp == true){
 					var mailId = $('#txt_mailid').val();
-					swal({
-					title: msg_register,
-					type: "warning",
-					showCancelButton: true,
-					confirmButtonClass: "btn-danger",
-					closeOnConfirm: true,
-					closeOnCancel: true
-					},
-					function(isConfirm) {
-						if (isConfirm) {
-							pageload();
-							$("#frmcustaddcopy").submit();
-						} else {
-							
+					var incharge_name = $('#txt_incharge_name').val();
+				
+					var newStr = mailId.slice(0, -1);
+					var arr = newStr.split(';');
+					var name = incharge_name.slice(0, -1);
+					var namearr = name.split(';');
+					if (arr.length != namearr.length) {
+						$("#CountError").show();
+						return false;
+					} else {
+						var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+						for(var i=0; i< arr.length; i++){
+							if(arr[i].match(mailformat)){
+							} else {
+								$("#emailError").show();
+								return false;
+							}
+						}
+					}
+
+					$.ajax({
+						type: 'GET',
+						url: 'getEmailExistsManyFields',
+						data: {"mailId": mailId},
+						success: function(resp) {
+
+							if (resp > 0) {
+								document.getElementById('errorSectiondisplay').innerHTML = "";
+								err_invalidcer ="No"+resp +"Email Id Already Exists";
+								 var error='<div align="center" style="padding: 0px;" id="inform">';
+										error+='<table cellspacing="0" class="statusBg1" cellpadding="0" border="0">';
+										error+='<tbody><tr><td style="padding: 4px 10px" align="center"><span class="innerBg" id="mc_msg_txt">'+err_invalidcer+'</span></td>';
+										error+='<td width="20" valign="top" style="padding-top: 4px; _padding-top: 2px;"><span>';
+										error+='<a href="javascript:displaymessage();" class="fa fa-times" style="color:white;"/>';
+										error+='</span></td>';
+										error+='</tr></tbody></table></div>';
+								document.getElementById('errorSectiondisplay').style.display = 'block';
+								document.getElementById('errorSectiondisplay').innerHTML = error;
+								$( "#txt_mailid" ).focus();
+							} else {
+								swal({
+								title: msg_register,
+								type: "warning",
+								showCancelButton: true,
+								confirmButtonClass: "btn-danger",
+								closeOnConfirm: true,
+								closeOnCancel: true
+								},
+								function(isConfirm) {
+									if (isConfirm) {
+										pageload();
+										$("#frmcustaddcopy").submit();
+									} else {
+										
+									}
+								});
+							}
+						},
+						error: function(data) {
+							alert(data);
+							// $("#regbutton").attr("data-dismiss","modal");
 						}
 					});
+
 				} else{
 					$.each(resp, function(i, v) {
 						// alert(i + " => " + v); // view in console for error messages
@@ -67,6 +116,7 @@ $(document).ready(function() {
 							$('.mailContent_err').append(msg)
 						} else {
 							$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError').after(msg);
+							// $('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError');
 						}
 					});
 				}
@@ -74,6 +124,119 @@ $(document).ready(function() {
 			error: function(data) {
 			}
 		}); 
+	});
+
+		$('.Branchaddedcopy').on('click', function() {
+		resetErrors();
+		var url ='BranchRegValidation';
+		$.each($('form input, form select, form textarea'), function(i, v) {
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+			}
+		});
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				if(resp == true) {
+					var mailId = $('#txt_mailid').val();
+					var incharge_name = $('#txt_incharge_name').val();
+					var newStr = mailId.slice(0, -1);
+					var arr = newStr.split(';');
+					var name = incharge_name.slice(0, -1);
+					var namearr = name.split(';');
+					if (arr.length != namearr.length) {
+						$("#CountError").show();
+						return false;
+					} else {
+						var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+						for(var i=0; i< arr.length; i++){
+							if(arr[i].match(mailformat)){
+							} else {
+								$("#emailError").show();
+								return false;
+							}
+						}
+					}
+
+					$.ajax({
+						type: 'GET',
+						url: 'getEmailExistsManyFields',
+						data: {"mailId": mailId},
+						success: function(resp) {
+							if (resp > 0) {
+								document.getElementById('errorSectiondisplay').innerHTML = "";
+								err_invalidcer ="No"+resp +"Email Id Already Exists";
+								 var error='<div align="center" style="padding: 0px;" id="inform">';
+										error+='<table cellspacing="0" class="statusBg1" cellpadding="0" border="0">';
+										error+='<tbody><tr><td style="padding: 4px 10px" align="center"><span class="innerBg" id="mc_msg_txt">'+err_invalidcer+'</span></td>';
+										error+='<td width="20" valign="top" style="padding-top: 4px; _padding-top: 2px;"><span>';
+										error+='<a href="javascript:displaymessage();" class="fa fa-times" style="color:white;"/>';
+										error+='</span></td>';
+										error+='</tr></tbody></table></div>';
+								document.getElementById('errorSectiondisplay').style.display = 'block';
+								document.getElementById('errorSectiondisplay').innerHTML = error;
+								$( "#txt_mailid" ).focus();
+							} else {
+								swal({
+									title: msg_register,
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonClass: "btn-danger",
+									closeOnConfirm: true,
+									closeOnCancel: true
+									},
+								function(isConfirm) {
+										if (isConfirm) {
+											pageload();
+											$("#frmbranchaddcopy").submit();
+										} else {
+											
+										}
+								});
+							}
+						},
+						error: function(data) {
+							alert(data);
+							// $("#regbutton").attr("data-dismiss","modal");
+						}
+					});
+
+
+
+
+
+
+					
+
+				} else {
+					$.each(resp, function(i, v) {
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						if ($('input[name="' + i + '"]').hasClass('mailname')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailname_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('mailSubject')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailSubject_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('mailheader')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailheader_err').append(msg)
+						} else if ($('textarea[name="' + i + '"]').hasClass('mailContent')) {
+							$('textarea[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailContent_err').append(msg)
+						} else {
+							$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError').after(msg);
+						}
+					});
+				}
+
+			},
+			error: function(data) {
+			}
+		});
 	});
 
 	$('#selectInc').click(function () {
@@ -316,4 +479,37 @@ function divGroupSelPopClosess() {
 	} else {
 		return false;
 	}
+}
+
+function resetErrors() {
+	$('form input, form select, form radio, form textarea').css("border-color", "");
+	$('form input').removeClass('inputTxtError');
+	$('label.error').remove();
+}
+
+function gotoinpagecancel() {
+	if (confirm("Do You Want To Cancel the Page?")) {
+		pageload();
+		$('#frmbranchaddcopycancel').attr('action', 'addcopycancel?mainmenu='+mainmenu+'&time='+datetime);
+		$("#frmbranchaddcopycancel").submit();
+	} else {
+		return false;
+	}
+}
+
+function gotoviewpagecopy() {
+	if (confirm("Do You Want To Cancel the Page?")) {
+		$('#frmcustaddcopycancel').attr('action', 'view?mainmenu='+mainmenu+'&time='+datetime);
+		$("#frmcustaddcopycancel").submit();
+	} else {
+		return false;
+	}
+}
+
+function cleartxt(){
+	$('#inchargeValue').val("");
+	$('#txt_incharge_name').val("");
+	$('#txt_mailid').val("");
+	$('#selctedIncharge').val("");
+	$('#selctedInchargeNumber').val("");
 }

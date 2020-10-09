@@ -39,6 +39,10 @@
 		.dispSubMobile {
 			width:100%;
 		}
+
+		.lengthset {
+			width:85%;
+		}
 	}
 	/*End Mobile layout*/
 	@media all and (min-width:1205px) {
@@ -55,6 +59,9 @@
 		}
 		.col-xs-9 {
 			width:50%;
+		}
+		.lengthset {
+			width:55%;
 		}
 	}
 </style>
@@ -86,6 +93,7 @@
 				<h2 class="pull-left mt10 green">{{ trans('messages.lbl_copy') }}</h2>
 			</div>
 		</fieldset>
+			<div id="errorSectiondisplay"style="color: #9C0000;"  align="center" class="box100per"></div>
 
 		<fieldset class="mt10 pull-left dispMainMobile">
 
@@ -154,13 +162,13 @@
 				</div>
 				<div class="col-xs-9 mw">
 					{{ Form::text('txt_postal','',array(
-                                    'id'=>'txt_postal',
-                                    'name' => 'txt_postal',
-                                    'class'=>'box38per form-control p-postal-code',
-                                    'maxlength' => '8',
-                                    'onkeypress' => 'return isNumberKeywithminus(event)',
-                                    'onkeyup' => 'addHyphen(this)',
-                                    'data-label' => trans('messages.lbl_postalCode'))) }}
+									'id'=>'txt_postal',
+									'name' => 'txt_postal',
+									'class'=>'box38per form-control p-postal-code',
+									'maxlength' => '8',
+									'onkeypress' => 'return isNumberKeywithminus(event)',
+									'onkeyup' => 'addHyphen(this)',
+									'data-label' => trans('messages.lbl_postalCode'))) }}
 				</div>
 			</div>
 		<div class="col-xs-12 mt10">
@@ -279,31 +287,30 @@
 										'data-label' => trans('messages.lbl_url'))) }}
 			</div>
 		</div>
-		@if($request->flg!=1)
-		<div class="col-xs-12 mt15">
-			<div class="col-xs-3 lb text-right pm0">
+
+		<div class="col-xs-12 mt10">
+			<div class="col-xs-3 lb text-right pm0 inb">
 				<label>{{ trans('messages.lbl_inchargename') }}<span class="fr ml2 red"> * </span></label>
 			</div>
-			<div class="col-xs-9 mw inb" style="width: 350px;">
-                <input type="hidden" id="inchargeValue" name="inchargeValue" value="" />
+			<div class="col-xs-9 mw inb">
+				<input type="hidden" id="inchargeValue" name="inchargeValue" value="" />
 				{{ Form::text('txt_incharge_name','',array(
 										'id'=>'txt_incharge_name',
 										'name' => 'txt_incharge_name',
-										'class'=>'box55per form-control inb',
+										'class'=>'lengthset form-control inb',
 										'data-label' => trans('messages.lbl_inchargename'))) }}
-				<button data-toggle="modal" type="button" class="btn btn-success add inb" 
-                        style="height:30px;width: 50px;font-size: 12px;" onclick="return oldInchargeSelect();">
-                        <span>{{ trans('messages.lbl_select') }}</span> 
-                </button>
-                <a onclick="javascript:cleartxt();" style="height:30px;width: 50px;font-size: 12px;" 
-                    class="btn btn-danger box47 white inb">
-                      <span>Clear</span>  
-                </a>
+				<button data-toggle="modal" type="button" class="btn btn-success add mt3" 
+						style="height:27px;width: 50px;font-size: 12px;" onclick="return oldInchargeSelect();">
+						<span class="mr10">{{ trans('messages.lbl_select') }}</span> 
+				</button>
+				<a onclick="javascript:cleartxt();" style="height:27px;width: 45px;font-size: 12px;" 
+					class="btn btn-danger box47 white mt3">
+					  <span>Clear</span>  
+				</a>
 			</div>
 		</div>
-		@endif
-		@if($request->flg!=1)
-		<div class="col-xs-12 mt15 mb50">
+	
+		<div class="col-xs-12 mt15 mb15">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>{{ trans('messages.lbl_incharge_mail') }}<span class="fr ml2 red"> * </span></label>
 			</div>
@@ -317,7 +324,23 @@
 				<div id="errorSectiondisplay" align="center"></div>            
 			</div>
 		</div>
-		@endif
+
+		<div class="col-xs-12 " id="CountError" style="color: #9C0000;display: none" >
+			<div class="col-xs-3 lb text-right pm0">
+			</div>
+			<div class="col-xs-9 mw">
+				Please Input Same Count of Incharge Name and Email Id.
+			</div>
+		</div>
+
+		<div class="col-xs-12 " id="emailError" style="color: #9C0000;display: none" >
+			<div class="col-xs-3 lb text-right pm0">
+			</div>
+			<div class="col-xs-9 mw">
+				You have entered an invalid email address!
+			</div>
+		</div>
+
 	</fieldset>
 		<div style="margin-top: -5px;">
 			<fieldset class="mt10 footerbg pull-left box100per">
@@ -326,7 +349,7 @@
 						<button type="button" class="btn btn-success add box100 addeditprocesscopy ml5">
 							<i class="fa fa-plus" aria-hidden="true"></i> {{ trans('messages.lbl_register') }}
 						</button>
-						<a onclick="javascript:gotoindexpage();" class="btn btn-danger box120 white">
+						<a onclick="javascript:gotoviewpagecopy();" class="btn btn-danger box120 white">
 							<i class="fa fa-times" aria-hidden="true"></i> {{ trans('messages.lbl_cancel') }} 
 						</a>
 					</div>
@@ -335,32 +358,32 @@
 		</div>
 	</article>
 </div>
-    {{ Form::close() }}
+	{{ Form::close() }}
 
-     {{ Form::open(array('name'=>'frmcustaddcopycancel', 'id'=>'frmcustaddcopycancel', 'url' => 'OldCustomer/addprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'files'=>true,'method' => 'POST')) }}
+	 {{ Form::open(array('name'=>'frmcustaddcopycancel', 'id'=>'frmcustaddcopycancel', 'url' => 'OldCustomer/addprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'files'=>true,'method' => 'POST')) }}
 
-        {{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
 
-        {{ Form::hidden('filterval', $request->filterval, array('id' => 'filterval')) }}
+		{{ Form::hidden('filterval', $request->filterval, array('id' => 'filterval')) }}
 
-        {{ Form::hidden('editid','', array('id' => 'editid')) }}
+		{{ Form::hidden('editid','', array('id' => 'editid')) }}
 
-        {{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
+		{{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
 
-        {{ Form::hidden('id', $request->id , array('id' => 'id')) }}
+		{{ Form::hidden('id', $request->id , array('id' => 'id')) }}
 
-        {{ Form::hidden('custid',$request->custid,array('id' => 'custid')) }}
+		{{ Form::hidden('custid',$request->custid,array('id' => 'custid')) }}
 
-         {{ Form::hidden('hid_branch_id','', array('id' => 'hid_branch_id')) }}
+		 {{ Form::hidden('hid_branch_id','', array('id' => 'hid_branch_id')) }}
 
-    {{ Form::close() }}
+	{{ Form::close() }}
 
-
-   <div id="inchargeSelect" class="modal fade">
-      <div id="login-overlay">
-        <div class="modal-content">
-        <!-- Popup will be loaded here -->
-        </div>
-      </div>
-    </div>
+	<div id="inchargeSelect" class="modal fade">
+		<div id="login-overlay">
+		<div class="modal-content">
+		<!-- Popup will be loaded here -->
+		</div>
+		</div>
+	</div>
+	
 @endsection
