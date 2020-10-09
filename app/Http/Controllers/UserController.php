@@ -106,103 +106,98 @@ class UserController extends Controller {
 	function addedit(Request $request) {
 
 		if(!isset($request->editflg)){
-
 			return $this->index($request);
-
 		}
 
 		$userview = User::viewdetails($request->editid);
-
 		$dob_year = Carbon\Carbon::createFromFormat('Y-m-d', date("Y-m-d"));
-
 		$dob_year   = $dob_year->subYears(18);
-
 		$dob_year = $dob_year->format('Y-m-d');
-
 		if (Session::get('userclassification') == "4") {
-
 			$Classificationarray = array("0"=>trans('messages.lbl_staff'),
-
 									"1"=>trans('messages.lbl_conEmployee'),
-
 									"2"=>trans('messages.lbl_subEmployee'),
-
 									"3"=>trans('messages.lbl_pvtPerson'),
-
 									"4"=>trans('messages.lbl_superadmin'),);
 
 		} else {
-
 			$Classificationarray = array("0"=>trans('messages.lbl_staff'),
-
 									"1"=>trans('messages.lbl_conEmployee'),
-
 									"2"=>trans('messages.lbl_subEmployee'),
-
 									"3"=>trans('messages.lbl_pvtPerson'),);
-
 		}
 
 		return view('user.addedit',['Classificationarray' => $Classificationarray,
-
 									'userview' => $userview,
-
 									'request' => $request,
-
 									'dob_year' => $dob_year]);
 
 	}
 
+	function UserRegValidation (Request $request) {
+		$commonrules=array();
+		$commonrules1=array();
+		$commonrules = array(
+			'MstuserUserID' => 'required',
+			'MstuserPassword'=>'required',
+			'MstuserConPassword' => 'required|same:MstuserPassword',
+			'MstuserUserKbn' => 'required',
+			'MstuserSurNM' => 'required',
+			'MstuserSurNMK' => 'required',
+			'Mstusernickname' => 'required',
+			'MstuserSex' => 'required',
+			'MstuserBirthDT' => 'required|date_format:"Y-m-d"',
+			'MstuserTelNO' => 'required',
+			'MstuserTelNO1' => 'required',
+			'MstuserTelNO2' => 'required',
+			'MstuserTelNO2' => 'required',
+			'MstuserMailID' => 'required|email',
+		);
+
+		$customizedNames = array(
+           'MstuserPassword' => 'Password',
+           'MstuserConPassword' => 'Confirm Password',
+           'MstuserMailID' => 'Email',
+           'MstuserSex' => 'Gender',
+        );
+
+		$rules = $commonrules+$commonrules1;
+        $validator = Validator::make($request->all(), $rules);
+        $validator->setAttributeNames($customizedNames);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+	}
+
 	function addeditprocess(Request $request) {
-
-		if($request->editid!="") {
-
+		if($request->editid !="") {
 			$update = User::UpdateReg($request);
-
 	        Session::flash('viewid', $request->editid); 
-
 			if($update) {
-
 				Session::flash('success', 'Updated Sucessfully!'); 
-
 				Session::flash('type', 'alert-success'); 
-
 			} else {
-
 				Session::flash('type', 'Updated Unsucessfully!'); 
-
 				Session::flash('type', 'alert-danger'); 
-
 			}
-
 		} else {
 
 			$autoincId=User::getautoincrement();
-
 			$Usercode="MBINV".(str_pad($autoincId,'3','0',STR_PAD_LEFT));
-
 			$insert = User::insertRec($request,$Usercode);
-
 	        Session::flash('viewid', $autoincId); 
-
 			if($insert) {
-
 				Session::flash('success', 'Inserted Sucessfully!'); 
-
 				Session::flash('type', 'alert-success'); 
-
 			} else {
-
 				Session::flash('type', 'Inserted Unsucessfully!'); 
-
 				Session::flash('type', 'alert-danger'); 
-
 			}
-
 		}
-
 		return Redirect::to('user/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
-
 	}
 
 	/**  
@@ -262,29 +257,18 @@ class UserController extends Controller {
 	}
 
 	function passwordchangeprocess(Request $request) {
-
 		$update = User::passwordchange($request);
-
 		if($update) {
-
 			Session::flash('message', 'Password Updated Sucessfully!'); 
-
 			Session::flash('type', 'alert-success'); 
-
 		} else {
-
 			Session::flash('type', 'Password Updated Unsucessfully!'); 
-
 			Session::flash('type', 'alert-danger'); 
-
 		}
 
 		Session::flash('viewid', $request->id);
-
 		Session::flash('id', $request->id); 
-
 		return Redirect::to('user/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
-
 	}
 
 }

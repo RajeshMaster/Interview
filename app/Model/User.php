@@ -30,69 +30,38 @@ class User extends Model {
 	}
 
 	public static function getautoincrement() {
-
 		$statement = DB::select("show table status like 'dev_mstuser'");
-
 		return $statement[0]->Auto_increment;
-
 	}
 
 	public static function insertRec($request,$Usercode) {
-
-		if ($request->MstuserUserKbn == "4") {
-
+		/*if ($request->MstuserUserKbn == "4") {
 			$request->DataView = "";
-
-		}
-
+		}*/
 		$phone = $request->MstuserTelNO.'-'.$request->MstuserTelNO1.'-'.$request->MstuserTelNO2;
-
 		$insert=DB::table('dev_mstuser')->insert(
-
 			['id' => '',
-
 			'usercode' => $Usercode,
-
 			'userid' => $request->MstuserUserID,
-
 			'password' => md5($request->MstuserPassword),
-
 			'conpassword' => md5($request->MstuserConPassword),
-
 			'userclassification' => $request->MstuserUserKbn,
-
 			'username' => $request->MstuserSurNM,
-
 			'givenname' => $request->MstuserSurNMK,
-
 			'nickName' => $request->Mstusernickname,
-
 			'dob' => $request->MstuserBirthDT,
-
 			'gender' => $request->MstuserSex,
-
 			'mobileno' => $phone,
-
 			'email' => $request->MstuserMailID,
-
 			'accessDate' => $request->DataView,
-
 			'delflg' => 0,
-
 			'delchgflg' => 0,
-
 			'Ins_DT' => date('Y-m-d'),
-
 			'Ins_TM' => date('h:i:s'),
-
 			'CreatedBy' => Auth::user()->username,
-
 			'Up_DT' => date('Y-m-d'),
-
 			'Up_TM' => date('h:i:s'),
-
 			'UpdatedBy' => Auth::user()->username]
-
 		);
 
 		return $insert;

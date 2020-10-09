@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+{{ HTML::style(asset('public/css/tableviewlayout.css')) }}
 {{ HTML::script(asset('public/js/user.js')) }}
 <script type="text/javascript">
 	var datetime = '<?php echo date('Ymdhis'); ?>';
@@ -17,6 +18,7 @@
 			</h2>
 		</div>
 	</fieldset>
+
 	@if (session('danger'))
 		<div class="col-xs-12 mt10" align="center">
 			<span class="alert-danger">{{ session('danger') }}</span>
@@ -26,6 +28,7 @@
 			<span class="alert-success">{{ session('message') }}</span>
 		</div>
 	@endif
+
 	<div class="col-xs-12 pull-left mt10 mb10">
 		<a href="javascript:goindexpage('{{ $request->mainmenu }}');" class="button button-blue textDecNone" 
 			style="text-decoration: none !important;">
@@ -42,6 +45,7 @@
 			<span class="fa fa-key"></span> {{ trans('messages.lbl_passwordchange') }}
 		</a>
 	</div>
+
 	{{ Form::open(array('name'=>'frmuserview',
 			'id'=>'frmuserview',
 			'url' => 'user/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),
@@ -58,24 +62,49 @@
 		{{ Form::hidden('id', $userview[0]->id , array('id' => 'id')) }}
 		{{ Form::hidden('viewid', $request->viewid , array('id' => 'viewid')) }}
 		{{ Form::hidden('editid', $userview[0]->id , array('id' => 'editid')) }}
-	<fieldset class="mt2">
-		<div class="col-xs-12">
+
+
+	<div>
+		<fieldset class="mt20 mb20">
+
 			<div class="col-xs-9 mt10">
-				<div class="col-xs-4 tar lb">
-					{{ Form::label('lbl_usercode', trans('messages.lbl_usercode'), array('class' => 'lbl_usercode clr_blue')) }}
+				<div class="col-xs-4 lb tar">
+					<label>{{ Form::label('lbl_usercode', trans('messages.lbl_usercode'), array('class' => 'lbl_usercode clr_blue')) }}</label>
 				</div>
-				<div class="col-xs-8 fontcolor fwb mw clr_black">
+				<div class="col-xs-8 mw" style="word-wrap: break-word;">
 					{{ ($userview[0]->usercode != "") ? $userview[0]->usercode : 'Nill'}}
 				</div>
 			</div>
+
 			<div class="col-xs-9 mt10">
-				<div class="col-xs-4 tar lb">
-					{{ Form::label('lbl_userid', trans('messages.lbl_userid'), array('class' => 'lbl_userid clr_blue')) }}
+				<div class="col-xs-4 lb tar">
+					<label>{{ Form::label('lbl_userid', trans('messages.lbl_userid'), array('class' => 'lbl_userid clr_blue')) }}</label>
 				</div>
-				<div class="col-xs-8 mw clr_black">
-					{{ ($userview[0]->userid != "") ? $userview[0]->userid : 'Nill'}}
+				<div class="col-xs-8 mw" style="word-wrap: break-word;">
+					{{ ($userview[0]->usercode != "") ? $userview[0]->usercode : 'Nill'}}
 				</div>
 			</div>
+
+			<div class="col-xs-9 mt10">
+				<div class="col-xs-4 lb tar">
+					<label>{{ Form::label('lbl_userclassification', trans('messages.lbl_userclassification'), array('class' => 'lbl_userclassification clr_blue')) }}</label>
+				</div>
+				<div class="col-xs-8 mw" style="word-wrap: break-word;">
+					{{ ($userview[0]->usercode != "") ? $userview[0]->usercode : 'Nill'}}
+				</div>
+			</div>
+
+		</fieldset>
+	</div>
+
+
+	
+
+
+	<fieldset class="mt2">
+		<div class="col-xs-12">
+			
+			
 			<div class="col-xs-9 mt10">
 				<div class="col-xs-4  tar">
 					{{ Form::label('lbl_userclassification', trans('messages.lbl_userclassification'), array('class' => 'lbl_userclassification clr_blue')) }}

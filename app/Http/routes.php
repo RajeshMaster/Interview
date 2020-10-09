@@ -146,6 +146,8 @@ Route::group(['prefix'=>'user', 'middleware' => 'auth'], function() {
 	Route::any('index', 'UserController@index');
 	Route::get('changelanguage', 'AjaxController@index');
 	Route::any('view', 'UserController@view');
+	Route::any('addedit', 'UserController@addedit');
+	Route::any('UserRegValidation', 'UserController@UserRegValidation');
 });
 
 // LOGOUT PROCESS

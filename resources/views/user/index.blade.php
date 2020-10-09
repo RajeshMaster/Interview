@@ -43,7 +43,7 @@
 </script>
 {{ Form::open(array('name'=>'frmuserindex',
 		'id'=>'frmuserindex',
-		'url' => 'user/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
+		'url' => 'User/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 		'files'=>true,
 		'method' => 'POST')) }}
 		{{ Form::hidden('editflg', '', array('id' => 'editflg')) }}
@@ -70,7 +70,7 @@
 	</fieldset>
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
-			<button type="button" onclick="underconst();"
+			<button type="button" onclick="addedit();"
 					class="button button-green pull-right">
 				<span class="fa fa-plus"></span> {{ trans('messages.lbl_register')}}
 			</button>

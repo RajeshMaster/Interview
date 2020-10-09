@@ -222,7 +222,7 @@ return [
 	'lbl_Details' => 'Details',
 	'lbl_Creater' => 'Creater',
 	'lbl_userclassification' => 'User Classification',
-	'lbl_unamesurname' => 'User Name(English):Surname',
+	'lbl_unamesurname' => '(English):Surname',
 	'lbl_mobilenumber' => 'Mobile Number',
 	'lbl_passwordchange' => 'Password Change',
 	/* End User Module */

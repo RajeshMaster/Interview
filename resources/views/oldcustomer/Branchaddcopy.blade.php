@@ -36,6 +36,9 @@
 		.lengthset {
 			width:85%;
 		}
+		.btnlengthset {
+			width:30%;
+		}
 	}
 	/*End Mobile layout*/
 	@media all and (min-width:1205px) {
@@ -55,6 +58,9 @@
 		}
 		.lengthset {
 			width:55%;
+		}
+		.btnlengthset {
+			width:15%;
 		}
 	}
 </style>
@@ -310,7 +316,7 @@
 
 {{ Form::close() }}
 
-	<div id="inchargeSelect" class="modal fade">
+	<div id="inchargeSelect" class="modal fade" style="width: 775px;">
 	  <div id="login-overlay">
 		<div class="modal-content">
 		<!-- Popup will be loaded here -->

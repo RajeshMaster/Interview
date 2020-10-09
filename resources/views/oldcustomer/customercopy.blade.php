@@ -43,6 +43,10 @@
 		.lengthset {
 			width:85%;
 		}
+
+		.btnlengthset {
+			width:30%;
+		}
 	}
 	/*End Mobile layout*/
 	@media all and (min-width:1205px) {
@@ -62,6 +66,10 @@
 		}
 		.lengthset {
 			width:55%;
+		}
+
+		.btnlengthset {
+			width:15%;
 		}
 	}
 </style>
@@ -111,7 +119,7 @@
 				</div>
 			</div>
 
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_custname(kana)') }}<span class="fr ml2 red"> * </span></label>
 				</div>
@@ -124,7 +132,7 @@
 				</div>
 			</div>
 
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_repname') }}<span class="fr ml2 red"> * </span></label>
 				</div>
@@ -155,7 +163,7 @@
 				</div>
 			</div>
 
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb text-right pm0">
 					<span class="p-country-name" style="display:none;">Japan</span>
 					<label>{{ trans('messages.lbl_postalCode') }}<span class="fr ml2 red"> * </span></label>
@@ -203,7 +211,7 @@
 										'data-label' => trans('messages.lbl_streetaddress'))) }}
 			</div>
 		</div>
-		<div class="col-xs-12 mt10 mb20">
+		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>{{ trans('messages.lbl_buildingname') }}<span class="fr ml2 red" style="visibility: hidden;"> * </span></label>
 			</div>
@@ -378,7 +386,7 @@
 
 	{{ Form::close() }}
 
-	<div id="inchargeSelect" class="modal fade">
+	<div id="inchargeSelect" class="modal fade" style="width: 775px;">
 		<div id="login-overlay">
 		<div class="modal-content">
 		<!-- Popup will be loaded here -->
