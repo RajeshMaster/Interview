@@ -255,5 +255,6 @@ return [
 	'lbl_employeeselection' => "従業員選択",
 	'lbl_incharge' => '担当者',
 	'lbl_inchargenamekana' => '担当者名（カナ）',
+	'lbl_employeenameselection' =>'社員名の選択 ',
 	/* End Customer Module*/
 ];

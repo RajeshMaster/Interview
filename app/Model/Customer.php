@@ -439,6 +439,101 @@ class Customer extends Model {
 							'update_by' => Auth::user()->username]);
 		  return $allupdatequery;
 	}
+	public static  function getCusDetailEmp($request) {
+		$db =DB::connection('mysql');
+		$tbl_name = "mst_customerdetail";
+		$query= $db->table($tbl_name)
+				   ->select('mst_customerdetail.*')
+				   ->where('customer_id','=', $request->custid)
+				   ->get();
+		return $query;
+	}
+	public static function getUserNameByEmployee($request) {
+		$db = DB::connection('mysql_invoice');
+		$result = $db->table('emp_mstemployees')
+						->select('FirstName', 'LastName', 'nickname','Emp_ID')
+						->WHERE('resign_id', '=', 0)
+						->WHERE('delFlg', '=', 0)
+						->WHERE('Title', '=', 2)
+						->WHERE('clientFlg', '=', 0)
+						->ORDERBY('LastName','ASC' ) 
+						->lists('LastName','Emp_ID');
+					return $result;
+	}
+	public static function getBranchDetailsEmp($request)	{
+		$db =DB::connection('mysql');
+		$tbl_name = "mst_branchdetails";
+		$query= $db->table($tbl_name)
+				   ->select('branch_name','branch_id')
+				   ->where('customer_id','=', $request->custid)
+				   ->ORDERBY('branch_id', 'DESC')
+				   ->lists('branch_name','branch_id');
+		return $query;
+	}
 
-
+	public static function selectEmpAddressInClient($request) {
+		$query = DB::table('inv_clientemp_dtl')
+					->select('inv_clientemp_dtl.start_date',
+				'inv_clientemp_dtl.cust_id','inv_clientemp_dtl.end_date','inv_clientemp_dtl.status','mst_customerdetail.customer_name', 'inv_clientemp_dtl.branch_id','mst_branchdetails.branch_name','mst_cus_inchargedetail.incharge_name')
+					->leftjoin('mst_customerdetail', 'mst_customerdetail.customer_id', '=', 'inv_clientemp_dtl.cust_id') 
+					->leftjoin('mst_branchdetails', 'mst_branchdetails.branch_id', '=', 'inv_clientemp_dtl.branch_id')
+					->leftjoin('mst_cus_inchargedetail', 'mst_cus_inchargedetail.id', '=', 'inv_clientemp_dtl.incharge_id')
+					->where('inv_clientemp_dtl.cust_id', $request->custid)
+					->where('inv_clientemp_dtl.status','=', 1)
+					->where('inv_clientemp_dtl.delFLg','=', 0)
+					->get();
+				return $query;
+	} 
+	public static function fnGetinchargeName($customerId,$branchId) {
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_cus_inchargedetail')
+					->select('*')
+					->WHERE('delflg', '=', 0)
+					->WHERE('customer_id', '=', $customerId)
+					->WHERE('branch_name', '=', $branchId)
+					->get();
+		return $result;
+	}
+	public static function insclientdtl($request) {
+		$insert = DB::table('inv_clientemp_dtl')
+				->insert(
+				['cust_id' => $request->custid,
+				'status' => 1,
+				'emp_id' => $request->newemployeename,
+				'start_date' => $request->txt_start_date,
+				'delFLg' => 0,
+				'incharge_id' => $request->inchargeId,
+				'branch_id' => $request->newbranches,
+				'CreatedBy' => Auth::user()->username]);
+		return $insert;
+	}
+	public static function updateEnddate($request) {
+		$db = DB::connection('mysql');
+		$result = DB::table('inv_clientemp_dtl')
+				->where('emp_id', $request->empidd)
+				->where('status', 1)
+				->where('delFLg', 0)
+				->update([
+					'start_date' => $request->txt_start_date,
+					'end_date' => $request->txt_end_date,
+					'UpdatedBy' => Auth::user()->username,
+					'delFLg' => 1]);
+		return $result;
+	}
+	public static function fnGetOnsiteHistoryDetails($request) {
+		$db = DB::connection('mysql');
+		$query =  $db->TABLE('inv_clientemp_dtl as cli')
+				->SELECT('cli.cust_id',
+						'cli.status',
+						'cli.start_date',
+						'cli.end_date',
+						'brn.branch_name',
+						'cus.customer_name')
+				->JOIN('mst_customerdetail AS cus','cli.cust_id','=','cus.customer_id')
+				->JOIN('mst_branchdetails AS brn','cli.branch_id','=','brn.branch_id')
+				->where('cli.emp_id','=', $request->hdnempid)
+				->paginate($request->plimit);
+		return $query;
+	}
 }
+

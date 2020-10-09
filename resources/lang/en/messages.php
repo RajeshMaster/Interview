@@ -255,5 +255,6 @@ return [
 	'lbl_employeeselection' => "Employee_selection",
 	'lbl_incharge' => 'Incharge',
 	'lbl_inchargenamekana' => 'Incharge Name(Kana)',
+	'lbl_employeenameselection' =>'Employee Name Selection',
 	/* End Customer Module*/
 ];

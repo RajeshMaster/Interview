@@ -171,6 +171,10 @@ Route::group(['prefix'=>'Customer','middleware' => 'auth'], function(){
 	Route::any('InchargeRegValidation','CustomerController@InchargeRegValidation');
 	Route::any('Inchargeaddeditprocess','CustomerController@Inchargeaddeditprocess');
 	Route::any('EmpNamePopup','CustomerController@EmpNamePopup');
+	Route::any('incharge_ajax', 'CustomerController@incharge_ajax');
+	Route::any('EmpNamePopupRegValidation','CustomerController@EmpNamePopupRegValidation');
+	Route::any('EmpNamePopupAddEditprocess','CustomerController@EmpNamePopupAddEditprocess');
+	Route::any('Onsitehistory','CustomerController@Onsitehistory');
 });
 
 //Customer
