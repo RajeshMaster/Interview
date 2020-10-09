@@ -553,4 +553,7 @@ echo "</pre>";*/
   		}
   		return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
   	}
+  	public function EmpNamePopup(Request $request){
+  		print_r("expression"); exit();
+  	}
 }

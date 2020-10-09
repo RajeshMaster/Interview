@@ -527,6 +527,7 @@
 		@endfor
 	</fieldset>
 	@endif
+	@if(count($currentview)!="")
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
 			{{ trans('messages.lbl_currentemployees') }} : 
@@ -640,6 +641,8 @@
 			</tbody>
 		</table>
 	</div>	
+	@endif
+	@if(count($currentempview)!="")
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
 			{{ trans('messages.lbl_oldEmployeee') }} : 
@@ -735,6 +738,7 @@
 			</tbody>
 		</table>
 	</div>
+	@endif
 	</article>
 </div>
 <script>
@@ -744,4 +748,11 @@
 		}
 	}); 
 </script>
+<div id="empnamepopup" class="modal fade">
+	<div id="login-overlay">
+		<div class="modal-content">
+		<!-- Popup will be loaded here -->
+		</div>
+	</div>
+</div>
 @endsection
