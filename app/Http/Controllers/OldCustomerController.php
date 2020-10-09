@@ -236,7 +236,7 @@ class OldCustomerController extends Controller {
 		}
 
 		$getdetails=OldCustomer::getcustomerdetails($request);
-		return view('oldcustomer.View',['request' => $request,
+		return view('oldcustomer.view',['request' => $request,
 										'getdetails' => $getdetails,
 										'inchargeview' => $inchargeview,
 										'branchview' => $branchview,
