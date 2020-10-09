@@ -480,7 +480,7 @@ body {
 											$request->mainmenu == "menu_oldcustomer") 
 											class="active" 
 										@endif>
-										<a  href="#"
+										<a class="pageload" href="{{ url('OldCustomer/index?mainmenu=menu_oldcustomer&time='.date('Ymdhis')) }}"
 										style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_old_customer') }}</a>
 									</li>
 								</ul>

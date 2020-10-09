@@ -185,6 +185,10 @@ Route::group(['prefix'=>'OldCustomer','middleware' => 'auth'], function(){
 	Route::any('CustomerRegValidation', 'OldCustomerController@CustomerRegValidation');
 	Route::any('addprocess', 'OldCustomerController@addprocess');
 	Route::any('copyBranch', 'OldCustomerController@copyBranch');
+	Route::any('BranchRegValidation', 'OldCustomerController@BranchRegValidation');
+	Route::any('copyBranchProcess', 'OldCustomerController@copyBranchProcess');
+	Route::any('addcopycancel', 'OldCustomerController@addcopycancel');
+	Route::any('getEmailExistsManyFields', 'OldCustomerController@getEmailExistsManyFields');
 });
 
 ?>

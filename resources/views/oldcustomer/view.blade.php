@@ -498,12 +498,6 @@
 			<div class="pull-left">
 				{{ trans('messages.lbl_currentemployees') }} : 
 			</div>
-			<div class="pull-right">
-				<button id="select" type="button" data-dismiss="modal" 
-				onclick="popupopen('{{ date('YmdHis') }}','{{ $request->custid}}','{{ $request->id}}');" 
-				class="btn CMN_display_block box80 flr white bg_grey" disabled="disabled" 
-				style="margin-top: -10px;cursor: pointer"><span class="fa fa-pencil"></span>Edit</button>
-			</div>
 		</div>
 		<div class="box100per tableShrink pt10 mnheight mb0">
 			<table class="table-striped table footable table-bordered mt10 mb10" >
