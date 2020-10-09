@@ -252,7 +252,7 @@ class OldCustomerController extends Controller {
 		Session::put('allBrcancharray',$allBrcancharray);
 		Session::put('OldCustomerIdselected',$request->txt_custID);
 		if ($request->txt_custnamejp == "") {
-			return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+			return Redirect::to('OldCustomer/index?mainmenu=menu_customer&time='.date('YmdHis'));
 		}
 		$getKenname=Common::getKendetails();
 		return view('oldcustomer.customercopy',[
@@ -356,19 +356,19 @@ class OldCustomerController extends Controller {
 
 			if (session::get('Allbranch_Idset') != "" ) {
 				Session::flash('custid', $cus3 );
-				return Redirect::to('OldCustomer/copyBranch?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+				return Redirect::to('OldCustomer/copyBranch?mainmenu=menu_oldcustomer&time='.date('YmdHis'));
 			} else {
 				$oldCustomerId = Session::get('OldCustomerIdselected');
 				// $deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
 				Session::flash('id', $getmaxid );
 				Session::flash('custid', $cus3 );
-				return Redirect::to('Customer/index?mainmenu=Customer&time='.date('YmdHis'));
+				return Redirect::to('Customer/index?mainmenu=menu_oldcustomer&time='.date('YmdHis'));
 			}
 
 		} else {
 			Session::flash('type', 'Inserted Unsucessfully!'); 
 			Session::flash('type', 'alert-danger'); 
-			return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+			return Redirect::to('Customer/index?mainmenu=menu_oldcustomer&time='.date('YmdHis'));
 
 		}
 	}
@@ -484,7 +484,7 @@ class OldCustomerController extends Controller {
 		if($insert) {
 			if (isset($allBrcancharray[0]) && $allBrcancharray[0] != "") {
 				Session::flash('custid', $cus3);
-				return Redirect::to('OldCustomer/copyBranch?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+				return Redirect::to('OldCustomer/copyBranch?mainmenu=menu_oldcustomer&time='.date('YmdHis'));
 			} else {
 				$oldCustomerId = Session::get('OldCustomerIdselected');
 				//$deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
