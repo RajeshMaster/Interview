@@ -316,6 +316,84 @@ $(document).ready(function() {
 		});
 
 	});
+	$('.empaddeditprocess').on('click', function(){
+		resetErrors();
+		var url ='EmpNamePopupRegValidation';
+		$.each($('form input, form select, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+			}
+		});
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				if(resp == true){
+					if($('#frmempnameedit #editid').val() == 1) {
+						swal({
+							title: msg_register,
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonClass: "btn-danger",
+							closeOnConfirm: true,
+							closeOnCancel: true
+						},
+						function(isConfirm) {
+							if (isConfirm) {
+							   	pageload();
+                    			$("#frmempnameedit").submit();
+							} else {
+								
+							}
+						});
+					}else{
+						swal({
+							title: msg_update,
+							type: "warning",
+							showCancelButton: true,
+							confirmButtonClass: "btn-danger",
+							closeOnConfirm: true,
+							closeOnCancel: true
+						},
+						function(isConfirm) {
+							if (isConfirm) {
+							   	pageload();
+                    			$("#frmempnameedit").submit();
+							} else {
+								
+							}
+						});
+					}
+				}
+				else{
+					$.each(resp, function(i, v) {
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						if ($('input[name="' + i + '"]').hasClass('mailname')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailname_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('mailSubject')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailSubject_err').append(msg)
+						} else if ($('input[name="' + i + '"]').hasClass('mailheader')) {
+							$('input[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailheader_err').append(msg)
+						} else if ($('textarea[name="' + i + '"]').hasClass('mailContent')) {
+							$('textarea[name="' + i + '"]').addClass('inputTxtError');
+							$('.mailContent_err').append(msg)
+						} else {
+							$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').focus().addClass('inputTxtError').after(msg);
+						}
+					});
+				}
+			},
+			error: function(data){
+
+			}
+		});
+	});
 });
 function resetErrors() {
 	$('form input, form select, form radio, form textarea').css("border-color", "");
@@ -570,3 +648,70 @@ function empselectionpopupadd(datetime,custid,id){
 	});
 	$('#empnamepopup').modal('show');
 } 
+function empNamePopupOpen(datetime,custid,id){
+	var employeeid=$("#emp_id").val();
+	var mainmenu="menu_customer";
+	$('#empnamepopup').load('../Customer/EmpNamePopup?custid='+custid+'&id='+id+'&mainmenu='+mainmenu+'&employeeid='+employeeid+'&time='+datetime);
+	$("#empnamepopup").modal({
+		backdrop: 'static',
+		keyboard: false
+	});
+	$('#empnamepopup').modal('show');
+} 
+function closefunction() {
+	swal({
+		title: msg_cancel,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+			   	$("body div").removeClass("modalOverlay");
+				$('#empnamepopup').empty();
+				$('#empnamepopup').modal('toggle');
+			} else {
+				
+			}
+	});
+}
+function fnGetbranchDetail(value){
+	$('#inchargeId').find('option').not(':first').remove();
+	var getcusId = $('#custid').val();
+	var getbranchId = $('#newbranches').val();
+	var mainmenu = 'menu_customer';
+	$.ajax({
+		type: 'GET',
+		dataType: "JSON",
+		url: 'incharge_ajax',
+		data: {"getcusId": getcusId,"getbranchId": getbranchId,"mainmenu": mainmenu},
+		success: function(resp) {
+			for (i = 0; i < resp.length; i++) {
+				$('#inchargeId').append( '<option value="'+resp[i]["id"]+'">'+resp[i]["incharge_name"]+'</option>' );
+				$('select[name="inchargeId"]').val(value);
+			}
+		},
+		error: function(data) {
+			alert(data.status);
+		}
+	});
+}
+function disablededittrue(empoid) {
+    $("#emp_id").val(empoid);
+    $("#select" ).css( "background-color", "orange" );
+    $("#select" ).removeAttr("disabled");
+}
+function getchangeempdetails(datetime,empid,empname){
+    $('#hdnempid').val(empid);
+    $('#hdnempname').val(empname);
+    var mainmenu="menu_customer";
+    $('#customerviewform').attr('action', '../Customer/Onsitehistory?mainmenu='+mainmenu+'&time='+datetime);
+    $("#customerviewform").submit();
+}
+function fngoback(){
+	pageload();
+	$('#emphistoryviewform').attr('action', '../Customer/CustomerView?mainmenu='+mainmenu+'&time='+datetime);
+    $("#emphistoryviewform").submit();
+}

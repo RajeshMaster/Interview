@@ -534,7 +534,7 @@
 		</div>
 		<div class="pull-right">
 			<button id="select" type="button" data-dismiss="modal" 
-			onclick="popupopen('{{ date('YmdHis') }}','{{ $request->custid}}','{{ $request->id}}');" 
+			onclick="empNamePopupOpen('{{ date('YmdHis') }}','{{ $request->custid}}','{{ $request->id}}');" 
 			class="btn CMN_display_block box80 flr white bg_grey" disabled="disabled" 
 			style="margin-top: -10px;cursor: pointer"><span class="fa fa-pencil"></span>Edit</button>
 		</div>
@@ -678,7 +678,7 @@
 				<tr>
 					<td class="text-center">{{$i+1}}</td>
 					<td class="text-center"> 
-						<a class="colbl fwb" href="javascript:getchangeempdetails('{{ date('YmdHis') }}','{{ $currentempview[$i]['emp_id'] }}');">
+						<a class="colbl fwb" href="javascript:getchangeempdetails('{{ date('YmdHis') }}','{{ $currentempview[$i]['emp_id'] }}','{{$currentempview[$i]['LastName']}}');">
 						@if($currentempview[$i]['emp_id'])
 							{{ $currentempview[$i]['emp_id'] }}
 						</a>    
@@ -748,7 +748,7 @@
 		}
 	}); 
 </script>
-<div id="empnamepopup" class="modal fade">
+<div id="empnamepopup" class="modal fade" style="width: 775px;">
 	<div id="login-overlay">
 		<div class="modal-content">
 		<!-- Popup will be loaded here -->

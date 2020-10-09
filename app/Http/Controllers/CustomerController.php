@@ -554,6 +554,123 @@ echo "</pre>";*/
   		return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
   	}
   	public function EmpNamePopup(Request $request){
-  		print_r("expression"); exit();
+
+  		$cemployeeview=array();
+		$cusdetail = Customer::getCusDetailEmp($request);
+		$selectionaddress = Customer::selectEmpAddressInClient($request);
+		$i=0;
+		foreach($selectionaddress as $key=>$cpopupview) {
+	    	$cemployeeview[$i]['branch_name'] = $cpopupview->branch_name;
+	    	$cemployeeview[$i]['start_date'] = $cpopupview->start_date;
+	    	$cemployeeview[$i]['end_date'] = $cpopupview->end_date;
+	    	$cemployeeview[$i]['status'] = $cpopupview->status;
+	    	$cemployeeview[$i]['incharge_name'] = $cpopupview->incharge_name;
+
+	    	if($cpopupview->end_date=="0000-00-00") {
+				$cemployeeview[$i]['end_date'] ="";
+			} else {
+				$cemployeeview[$i]['end_date'] = $cpopupview->end_date;
+			}
+			$i++;
+	    }
+		$emp_type1=Customer::getUserNameByEmployee($request);
+		$empdt = Common::fnGetEmployeeInfo($request->employeeid);
+		$branchdetails=Customer::getBranchDetailsEmp($request);
+		return view('customer.empnamepopup',['request' => $request,
+					'cusdetail' => $cusdetail,
+					'cemployeeview' => $cemployeeview,
+					'empname1' => $emp_type1,
+					'bname' => $branchdetails,
+					'empdt' => $empdt
+					]);
   	}
+  	public function incharge_ajax(Request $request){
+		$customerId = $request->getcusId;
+		$branchId = $request->getbranchId;
+		$getInchargeDtl = Customer::fnGetinchargeName($customerId,$branchId);
+		$inchargearray = json_encode($getInchargeDtl);
+		echo $inchargearray;
+		exit();
+	}
+	public function EmpNamePopupRegValidation(Request $request){
+		$commonrules= array();
+		if($request->selectionid !=1){
+			$commonrules = array(
+				'txt_start_date' => 'required|date_format:"Y-m-d"',
+				'txt_end_date' => 'required|date_format:"Y-m-d"|after:txt_start_date',
+			);
+		}else{
+			$commonrules = array(
+			'newemployeename' => 'required',
+			'inchargeId' => 'required',
+			'newbranches' => 'required',
+			'txt_start_date' => 'required|date_format:"Y-m-d"',
+			);
+		}
+		$rules = $commonrules;
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
+	}
+	public function EmpNamePopupAddEditprocess(Request $request){
+		if($request->selectionid == 1){
+			$insert = Customer::insclientdtl($request);
+			if($insert){
+				Session::flash('success', 'Registered Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}else {
+				Session::flash('type', 'Registered Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		    Session::flash('custid', $request->custid );
+		    Session::flash('id', $request->id );
+		}else{
+			$update = Customer::updateEnddate($request);
+			if($update) {
+				Session::flash('success', 'Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Updated Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		    Session::flash('custid', $request->custid );
+		    Session::flash('id', $request->id );
+		}
+		return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+	}
+	public function Onsitehistory(Request $request){
+		$customerhistory = array();
+		if ($request->plimit=="") {
+			$request->plimit = 50;
+		}
+		$empDt = Common::fnGetEmployeeInfo($request->hdnempid);
+		$cushistory = Customer::fnGetOnsiteHistoryDetails($request);
+		$i = 0;
+	    foreach($cushistory as $key=>$chistory) {
+	    	$customerhistory[$i]['start_date'] = $chistory->start_date;
+	    	$customerhistory[$i]['end_date'] = $chistory->end_date;
+	    	$customerhistory[$i]['status'] = $chistory->status;
+	    	$customerhistory[$i]['customer_name'] = $chistory->customer_name;
+	    	$customerhistory[$i]['branch_name'] = $chistory->branch_name;
+	    	if($chistory->end_date=="0000-00-00") {
+				$customerhistory[$i]['end_date'] ="";
+			}
+	    	$cusexpdetails = Customer::getYrMonCountBtwnDates($customerhistory[$i]['start_date'],$customerhistory[$i]['end_date']);
+	    	if ($cusexpdetails['year'].".".$cusexpdetails['month'] == 0.0) {
+				$customerhistory[$i]['experience'] = "0.0";
+			} else {
+				$customerhistory[$i]['experience'] = $cusexpdetails['year'].".".Customer::fnAddZeroSubstring($cusexpdetails['month']);
+			}
+	    	$i++;
+	    }
+	    return view('customer.Onsitehistory',['request' => $request,
+											'cushistory' => $cushistory,
+											'customerhistory' => $customerhistory,
+											'empDt' => $empDt
+											]);
+	}
 }
