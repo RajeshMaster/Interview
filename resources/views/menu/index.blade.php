@@ -79,14 +79,14 @@
 						</div>
 						<div class="pull-left mt10 mb10 box100per">
 							<span  class="col-xs-10 ml30 mt5 lbldesset settingsubdesignright">
-							 	<a name="houseName" style="color: #33AFFF !important;" 
+							 	<a name="houseName" class="pageload" href="{{ url('Customer/index?mainmenu=menu_customer&time='.date('Ymdhis')) }}"style="color: #33AFFF !important;" 
 						 		id="houseName" href="">{{ trans('messages.lbl_customer') }}</a>
 							</span>
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
 								<a name="houseImg" id="houseImg" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_agent') }}</a>
 							</span>
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
-								<a name="houseImg" id="houseImg" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_old_customer') }}</a>
+								<a name="houseImg" class="pageload" href="{{ url('OldCustomer/index?mainmenu=menu_oldcustomer&time='.date('Ymdhis')) }}" id="houseImg" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_old_customer') }}</a>
 							</span>
 						</div>
 					</div>
