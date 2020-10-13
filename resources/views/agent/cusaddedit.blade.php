@@ -4,7 +4,7 @@
 {{ HTML::style(asset('public/css/footable.core.css')) }}
 {{ HTML::style(asset('public/css/tableviewlayout.css')) }}
 {{ HTML::script(asset('public/js/footable.js')) }}
-{{ HTML::script(asset('public/js/customer.js')) }}
+{{ HTML::script(asset('public/js/agent.js')) }}
 {{ HTML::script(asset('public/js/lib/bootstrap-datepicker.min.js')) }}
 {{ HTML::style(asset('public/css/lib/bootstrap-datetimepicker.min.css')) }}
 <script type="text/javascript">
@@ -125,10 +125,31 @@
 											@endforeach
 										@endif
 									</select>
+									{{ Form::hidden('selected', $customerValue , array('id' => 'selected')) }}
 						
 				</div>
 			</div>
 		</fieldset>
+		<fieldset class="bg_footer_clr">
+		<div class="form-group mt15">
+			<div align="center" class="mt5">
+				@if($request->cuseditflg == 'edit')
+					<button type="submit" class="btn btn-warning add box100 cusaddeditprocess">
+						<i class="fa fa-edit ml7"></i>
+						{{ trans('messages.lbl_update') }}
+					</button>
+				@else
+					<button type="submit" class="btn btn-success add box100 cusaddeditprocess">
+						<i class="fa fa-plus ml7"></i>
+						{{ trans('messages.lbl_register') }}
+					</button>
+				@endif
+				<a onclick="javascript:gotoindexpage('1');" class="btn btn-danger box100 white">
+					<i class="fa fa-times" aria-hidden="true"></i> {{trans('messages.lbl_cancel')}}
+				</a>
+			</div>
+		</div>
+	</fieldset>
 		{{ Form::close() }}
 	</article>
 </div>

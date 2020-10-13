@@ -285,3 +285,34 @@ function customerAddEdit(flg) {
     $('#agentviewform').attr('action','addeditCustomer?mainmenu='+mainmenu+'&time='+datetime);
     $("#agentviewform").submit();
 }
+function listbox_moveacross(sourceID, destID, SelectID, HdnID) {
+    var src = document.getElementById(sourceID);
+    var dest = document.getElementById(destID);
+    for(var count=0; count < src.options.length; count++) {
+        if(src.options[count].selected == true) {
+            var option = src.options[count];
+            var newOption = document.createElement("option");
+            newOption.value = option.value;
+            newOption.text = option.text;
+            newOption.selected = true;
+            try {
+                 dest.add(newOption, null); //Standard
+                 src.remove(count, null);
+            }catch(error) {
+                dest.add(newOption); // IE only
+                src.remove(count);
+            }
+            count--;
+        }
+    }
+    //set Value for Hidden box
+    var dest = document.getElementById(SelectID);
+    var str='';
+    if(dest.options.length>=1){
+        str+=dest.options[0].value;
+    }
+    for(var count=1; count < dest.options.length; count++) {
+        str+=','+dest.options[count].value;
+    }
+    document.getElementById(HdnID).value=str;
+}
