@@ -257,4 +257,12 @@ return [
 	'lbl_inchargenamekana' => '担当者名（カナ）',
 	'lbl_employeenameselection' =>'社員名の選択 ',
 	/* End Customer Module*/
+
+	/* Start Agent Module*/
+	'lbl_agentId' => 'エージェントID',
+	'lbl_url' => 'URL',
+	'lbl_agentname(JP&Eng)' =>'エージェント氏名(JP&Eng)',
+	'lbl_agentname(kana)' =>'エージェント名(カナ)',
+	'lbl_agentagreement' =>'エージェント契約日',
+	/* End Agent Module*/
 ];

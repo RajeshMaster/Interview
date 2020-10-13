@@ -193,4 +193,13 @@ Route::group(['prefix'=>'OldCustomer','middleware' => 'auth'], function(){
 	Route::any('getEmailExistsManyFields', 'OldCustomerController@getEmailExistsManyFields');
 });
 
+//Agent
+Route::group(['prefix'=>'Agent','middleware' => 'auth'], function(){
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('index', 'AgentController@index');
+	Route::any('AgentView','AgentController@AgentView');
+	Route::any('AgentAddedit','AgentController@AgentAddedit');
+	Route::any('AgentRegValidation','AgentController@AgentRegValidation');
+});
+
 ?>

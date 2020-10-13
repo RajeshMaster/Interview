@@ -257,4 +257,12 @@ return [
 	'lbl_inchargenamekana' => 'Incharge Name(Kana)',
 	'lbl_employeenameselection' =>'Employee Name Selection',
 	/* End Customer Module*/
+
+	/* Start Agent Module*/
+	'lbl_agentId' => 'Agent Id',
+	'lbl_url' => 'URL',
+	'lbl_agentname(JP&Eng)' =>'Agent Name(JP&Eng)',
+	'lbl_agentname(kana)' =>'Agent Name(Kana)',
+	'lbl_agentagreement' =>'Agent Agreement Date',
+	/* End Agent Module*/
 ];
