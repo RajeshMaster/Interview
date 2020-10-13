@@ -227,7 +227,7 @@ return [
 	'lbl_passwordchange' => 'パスワードの変更',
 	/* End User Module */
 
-	/* Start Employee Module */
+	/* Start Customer Module */
 	'lbl_customerList' => '取引先一覧',
 	'lbl_contractDate' => '契約日',
 	'lbl_name' => '名前',
@@ -257,4 +257,24 @@ return [
 	'lbl_inchargenamekana' => '担当者名（カナ）',
 	'lbl_employeenameselection' =>'社員名の選択 ',
 	/* End Customer Module*/
+
+	/* Start Our Details Module */
+	'lbl_companyname' => '会社名',
+	'lbl_companynamekana' => '会社名（カナ）',
+	'lbl_postalservice' => '〒',
+	'lbl_perfecturename' => '県名',
+	'lbl_buildingname' => 'ビル名',
+	'lbl_commonmail' => 'メール',
+	'lbl_establisheddate' => '設立日付',
+	'lbl_closingdate' => '決算月日',
+	'lbl_accountperiod' => '決算期',
+	'lbl_systemname' => 'システム名前',
+	'lbl_period' => '期',
+	'lbl_tel' => 'TEL',
+	'lbl_Tax_added' => '税金追加',
+	'lbl_Tax_per' => '税金%',
+	'lbl_Start_date' => '開始日',
+	'lbl_Created_By' => '作成者',
+	'lbl_Date' => '日付',
+	/* End Our Details Module*/
 ];

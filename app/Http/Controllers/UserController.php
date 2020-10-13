@@ -139,8 +139,7 @@ class UserController extends Controller {
 		$commonrules1=array();
 		$commonrules = array(
 			'MstuserUserID' => 'required',
-			'MstuserPassword'=>'required',
-			'MstuserConPassword' => 'required|same:MstuserPassword',
+			
 			'MstuserUserKbn' => 'required',
 			'MstuserSurNM' => 'required',
 			'MstuserSurNMK' => 'required',
@@ -154,6 +153,12 @@ class UserController extends Controller {
 			'MstuserMailID' => 'required|email',
 		);
 
+		if($request->editflg != 'edit'){
+			$commonrules1 = array(
+				'MstuserPassword' => 'required',
+				'MstuserConPassword' => 'required|same:MstuserPassword',
+			);
+		}
 		$customizedNames = array(
            'MstuserPassword' => 'Password',
            'MstuserConPassword' => 'Confirm Password',
@@ -193,7 +198,7 @@ class UserController extends Controller {
 				Session::flash('success', 'Inserted Sucessfully!'); 
 				Session::flash('type', 'alert-success'); 
 			} else {
-				Session::flash('type', 'Inserted Unsucessfully!'); 
+				Session::flash('danger', 'Inserted Unsucessfully!'); 
 				Session::flash('type', 'alert-danger'); 
 			}
 		}
@@ -245,14 +250,11 @@ class UserController extends Controller {
 	function changepassword(Request $request) {
 
 		if(!isset($request->id)){
-
 			return $this->index($request);
-
 		}
 
 		$view = User::viewdetails($request->id);
-
-		return view('User.changepassword',['view' => $view,'request' => $request]);
+		return view('user.changepassword',['view' => $view,'request' => $request]);
 
 	}
 
@@ -269,6 +271,30 @@ class UserController extends Controller {
 		Session::flash('viewid', $request->id);
 		Session::flash('id', $request->id); 
 		return Redirect::to('user/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+	}
+
+	function PasswordValidation (Request $request) {
+		$commonrules=array();
+		$commonrules1=array();
+		$commonrules = array(
+			'MstuserPassword' => 'required',
+			'MstuserConPassword' => 'required|same:MstuserPassword',
+		);
+
+		$customizedNames = array(
+           'MstuserPassword' => 'Password',
+           'MstuserConPassword' => 'Confirm Password',
+        );
+
+		$rules = $commonrules+$commonrules1;
+        $validator = Validator::make($request->all(), $rules);
+        $validator->setAttributeNames($customizedNames);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
 	}
 
 }

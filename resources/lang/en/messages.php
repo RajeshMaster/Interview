@@ -227,7 +227,7 @@ return [
 	'lbl_passwordchange' => 'Password Change',
 	/* End User Module */
 
-	/* Start Employee Module */
+	/* Start Customer Module */
 	'lbl_customerList' => 'Customer List',
 	'lbl_contractDate' => 'Contract Date',
 	'lbl_name' => 'Name',
@@ -257,4 +257,24 @@ return [
 	'lbl_inchargenamekana' => 'Incharge Name(Kana)',
 	'lbl_employeenameselection' =>'Employee Name Selection',
 	/* End Customer Module*/
+
+	/* Start Our Details Module */
+	'lbl_companyname' => 'Company Name',
+	'lbl_companynamekana' => 'Company Name (Kana)',
+	'lbl_postalservice' => 'Postal Service',
+	'lbl_perfecturename' => 'Prefecture Name',
+	'lbl_buildingname' => 'Building Name',
+	'lbl_commonmail' => 'Common Mail',
+	'lbl_establisheddate' => 'Established Date',
+	'lbl_closingdate' => 'Closing Date',
+	'lbl_accountperiod' => 'Accounting Period',
+	'lbl_systemname' => 'System Name',
+	'lbl_period' => 'Period',
+	'lbl_tel' => 'TEL',
+	'lbl_Tax_added' => 'Tax Added',
+	'lbl_Tax_per' => 'Tax %',
+	'lbl_Start_date' => 'Start Date',
+	'lbl_Created_By' => 'Created By',
+	'lbl_Date' => 'Date',
+	/* End Our Details Module*/
 ];

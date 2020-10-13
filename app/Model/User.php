@@ -71,49 +71,27 @@ class User extends Model {
 	public static function UpdateReg($request) {
 
 		if ($request->MstuserUserKbn == "4") {
-
 			$request->DataView = "";
-
 		}
-
 		$phone = $request->MstuserTelNO.'-'.$request->MstuserTelNO1.'-'.$request->MstuserTelNO2;
-
 		$update=DB::table('dev_mstuser')
-
 			->where('id', $request->editid)
-
 			->update(
-
 				['userid' => $request->MstuserUserID,
-
 				'userclassification' => $request->MstuserUserKbn,
-
 				'username' => $request->MstuserSurNM,
-
 				'givenname' => $request->MstuserSurNMK,
-
 				'nickName' => $request->Mstusernickname,
-
 				'dob' => $request->MstuserBirthDT,
-
 				'gender' => $request->MstuserSex,
-
 				'mobileno' => $phone,
-
 				'email' => $request->MstuserMailID,
-
 				'accessDate' => $request->DataView,
-
 				'delflg' => 0,
-
 				'delchgflg' => 0,
-
 				'Up_DT' => date('Y-m-d'),
-
 				'Up_TM' => date('h:i:s'),
-
 				'UpdatedBy' => Auth::user()->username]
-
 		);
 
     	return $update;
@@ -206,25 +184,16 @@ class User extends Model {
 	public static function passwordchange($request) {
 
 		$update=DB::table('dev_mstuser')
-
 			->where('id', $request->id)
-
 			->update(
-
 				['password' => md5($request->password),
-
 				'conpassword' => md5($request->confirmpassword),
-
 				'Up_DT' => date('Y-m-d'),
-
 				'UP_TM' => date('h:i:s'),
-
 				'UpdatedBy' => Auth::user()->username]
-
-		);
+			);
 
     	return $update;
-
 	}
 
 }

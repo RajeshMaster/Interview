@@ -148,6 +148,15 @@ Route::group(['prefix'=>'user', 'middleware' => 'auth'], function() {
 	Route::any('view', 'UserController@view');
 	Route::any('addedit', 'UserController@addedit');
 	Route::any('UserRegValidation', 'UserController@UserRegValidation');
+	Route::any('changepassword', 'UserController@changepassword');
+	Route::any('PasswordValidation', 'UserController@PasswordValidation');
+	Route::any('passwordchangeprocess', 'UserController@passwordchangeprocess');
+});
+
+// Our Detail
+Route::group(['prefix'=>'OurDetail', 'middleware' => 'auth'], function() {
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('index', 'OurdetailController@index');
 });
 
 // LOGOUT PROCESS

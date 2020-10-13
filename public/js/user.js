@@ -24,7 +24,7 @@ $(document).ready(function() {
 			data: data,
 			async: false, //blocks window close
 			success: function(resp) {
-				if(resp == true){
+				if(resp == true) {
 					if($('#frmuseraddedit #editid').val() == "") {
 						swal({
 						title: msg_register,
@@ -38,11 +38,9 @@ $(document).ready(function() {
 							if (isConfirm) {
 								pageload();
 								$("#frmuseraddedit").submit();
-							} else {
-								
 							}
 						});
-					}else{
+					} else {
 						swal({
 						title: msg_update,
 						type: "warning",
@@ -55,9 +53,7 @@ $(document).ready(function() {
 							if (isConfirm) {
 								pageload();
 								$("#frmuseraddedit").submit();
-							} else {
-								
-							}
+							} 
 						});
 					}
 				} else{
@@ -80,96 +76,60 @@ $(document).ready(function() {
 		}); 
 	});
 
-});
 
-$(document).ready(function() {
-
-// PASSWORRD_CHANGE
-
-$('.frmpasswordchange').click(function () {
-
-		$("#frmpasswordchange").validate({
-
-			showErrors: function(errorMap, errorList) {
-
-			// Clean up any tooltips for valid elements
-
-				$.each(this.validElements(), function (index, element) {
-
-						var $element = $(element);
-
-						$element.data("title", "") // Clear the title - there is no error associated anymore
-
-								.removeClass("error")
-
-								.tooltip("destroy");
-
-				});
-
-				// Create new tooltips for invalid elements
-
-				$.each(errorList, function (index, error) {
-
-						var $element = $(error.element);
-
-						$element.tooltip("destroy") // Destroy any pre-existing tooltip so we can repopulate with new tooltip content
-
-								.data("title", error.message)
-
-								.addClass("error")
-
-								.tooltip(); // Create a new tooltip based on the error messsage we just set in the title
-
-				});
-
-			},
-
-			rules: {
-
-				password: {required: true},
-
-				confirmpassword: {required: true,equalTo: "#password"},
-
-			},
-
-			submitHandler: function(form) { // for demo
-
-				var confirmprocess = confirm("Do You Want To Change The password?");
-
-				if(confirmprocess) {
-
-					pageload();
-
-					form.submit();
-
-					return true;
-
-				} else {
-
-					return false
-
+	$('.frmpasswordchange').click(function () {
+		resetErrors();
+		var url ='PasswordValidation';
+		$.each($('form input, form select, form radio, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+				if (v.type == 'radio') {
+					var val = $('input[name='+v.name+']:checked').val();
+					data[v.name] = val;
 				}
-
 			}
-
 		});
 
-		$.validator.messages.required = function (param, input) {
-
-			var article = document.getElementById(input.id);
-
-			return article.dataset.label + ' field is required';
-
-		}
-
-		$.validator.messages.equalTo = function (param, input) {
-
-			var article = document.getElementById(input.id);
-
-			return passwordmatch;
-
-		}
-
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				if(resp == true) {
+					swal({
+					title: msg_update,
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonClass: "btn-danger",
+					closeOnConfirm: true,
+					closeOnCancel: true
+					},
+					function(isConfirm) {
+						if (isConfirm) {
+							pageload();
+							$("#frmpasswordchange").submit();
+						} 
+					});
+				} else{
+					$.each(resp, function(i, v) {
+						// alert(i + " => " + v); // view in console for error messages
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"], radio[name="' + i + '"]').addClass('inputTxtError').after(msg);
+					});
+					var keys = Object.keys(resp);
+					$('#'+keys[0]).focus();
+					$('select[name="'+keys[0]+'"]').focus();
+					$('textarea[name="'+keys[0]+'"]').focus();
+					$('input[name="'+keys[0]+'"]').focus();
+					$('radio[name="'+keys[0]+'"]').focus();
+					$('checkbox[name="'+keys[0]+'"]').focus();
+					}
+			},
+				error: function(data) {
+			}
+		}); 
 	});
 
 });

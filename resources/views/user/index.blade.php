@@ -18,6 +18,40 @@
 		color: red;
 	}
 	/* Start Laptop screen Setting index page design */
+
+
+	@media all and (max-width: 1200px) {
+		.regdes{
+			width:128%!important;
+		}
+		.h2cnt {
+			font-size: 150%!important;
+			margin-top: 3%!important;
+		}
+		.buttondes {
+			font-size: 80%!important;
+		}
+		.col-xs-3 {
+			 width:50%;
+			 font-size:80%;
+			 margin-left:-10%;
+		}
+		.col-xs-9 {
+			width:50%;
+		}
+		.dispMainMobile {
+			width:100%;
+		}
+		.dispSubMobile {
+			width:100%;
+		}
+		
+		.firstpre{
+			width: 30%;
+		}
+	}
+	/*End Mobile layout*/
+
 	@media all and (min-width:1205px) {
 		.settingdesign{
 			margin-left: 15%!important;
@@ -31,6 +65,9 @@
 		.settingsubdesignright{
 			margin-left: 13%!important;
 		}
+		.firstpre{
+			width: 10%;
+		}
 	}
 	/*End Laptop screen Setting index page design */
 </style>
@@ -43,7 +80,7 @@
 </script>
 {{ Form::open(array('name'=>'frmuserindex',
 		'id'=>'frmuserindex',
-		'url' => 'User/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
+		'url' => 'user/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 		'files'=>true,
 		'method' => 'POST')) }}
 		{{ Form::hidden('editflg', '', array('id' => 'editflg')) }}
@@ -122,7 +159,7 @@
 	<div class="box100per tableShrink pt10 mnheight mb0">
 			<table class="table-striped table footable table-bordered mt10 mb10">
 				<colgroup>
-					<col width="10%">
+					<col class="firstpre" >
 					<col width="">
 				</colgroup>
 				<thead class="CMN_tbltheadcolor" >
