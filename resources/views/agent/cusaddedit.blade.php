@@ -134,12 +134,12 @@
 		<div class="form-group mt15">
 			<div align="center" class="mt5">
 				@if($request->cuseditflg == 'edit')
-					<button type="submit" class="btn btn-warning add box100 cusaddeditprocess">
+					<button type="button" class="btn btn-warning add box100 cusaddeditprocess">
 						<i class="fa fa-edit ml7"></i>
 						{{ trans('messages.lbl_update') }}
 					</button>
 				@else
-					<button type="submit" class="btn btn-success add box100 cusaddeditprocess">
+					<button type="button" class="btn btn-success add box100 cusaddeditprocess">
 						<i class="fa fa-plus ml7"></i>
 						{{ trans('messages.lbl_register') }}
 					</button>
