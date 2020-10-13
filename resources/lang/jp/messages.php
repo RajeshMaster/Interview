@@ -277,4 +277,12 @@ return [
 	'lbl_Created_By' => '作成者',
 	'lbl_Date' => '日付',
 	/* End Our Details Module*/
+	
+	/* Start Agent Module*/
+	'lbl_agentId' => 'エージェントID',
+	'lbl_url' => 'URL',
+	'lbl_agentname(JP&Eng)' =>'エージェント氏名(JP&Eng)',
+	'lbl_agentname(kana)' =>'エージェント名(カナ)',
+	'lbl_agentagreement' =>'エージェント契約日',
+	/* End Agent Module*/
 ];

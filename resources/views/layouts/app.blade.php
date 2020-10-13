@@ -473,7 +473,7 @@ body {
 											$request->mainmenu == "menu_agent") 
 											class="active" 
 										@endif>
-										<a href="#"
+										<a class="pageload" href="{{ url('Agent/index?mainmenu=menu_agent&time='.date('Ymdhis')) }}"
 										style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_agent') }}</a>
 									</li>
 									<li @if(isset($request->mainmenu) && 
@@ -687,13 +687,13 @@ body {
 									{{ trans('messages.lbl_mailsignature') }}</a>
 								</div>
 							@endif
-							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_customer" || $request->mainmenu == "menu_oldcustomer"))
+							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_customer" || $request->mainmenu == "menu_oldcustomer" || $request->mainmenu == "menu_agent"))
 							<div id="cus_sub_1">
 								<a class="pageload" href="{{ url('Customer/index?mainmenu=menu_customer&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_customer') }}</a>
 							</div>
 							<div id="cus_sub_2">
-								<a  href="#">
+								<a class="pageload" href="{{ url('Agent/index?mainmenu=menu_agent&time='.date('Ymdhis')) }}">
 								{{ trans('messages.lbl_agent') }}</a>
 							</div>
 							<div id="cus_sub_3">

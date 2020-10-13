@@ -277,4 +277,12 @@ return [
 	'lbl_Created_By' => 'Created By',
 	'lbl_Date' => 'Date',
 	/* End Our Details Module*/
+	
+	/* Start Agent Module*/
+	'lbl_agentId' => 'Agent Id',
+	'lbl_url' => 'URL',
+	'lbl_agentname(JP&Eng)' =>'Agent Name(JP&Eng)',
+	'lbl_agentname(kana)' =>'Agent Name(Kana)',
+	'lbl_agentagreement' =>'Agent Agreement Date',
+	/* End Agent Module*/
 ];
