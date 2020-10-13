@@ -30,6 +30,63 @@ $(document).ready(function(){
             async: false, //blocks window close
             success: function(resp) {
                 if(resp == true){
+                    var mailId = $('#txt_emailId').val();
+                    var agentId = $('#agentId').val();
+                    $.ajax({
+                        type: 'GET',
+                        url: 'getEmailExists',
+                        data: {"mailId": mailId,"agentId": agentId},
+                        success: function(resp){
+                            if(resp > 0){
+                                document.getElementById('errorSectiondisplay').innerHTML = "";
+                                err_invaliderr = "Email Id Already Exists";
+                                var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invaliderr+'</label></div>';
+                                document.getElementById('errorSectiondisplay').style.display = 'inline-block';
+                                document.getElementById('errorSectiondisplay').innerHTML = error;
+                                return false;
+                            }
+                            else{
+                                if(agentId == "") {
+                                    swal({
+                                    title: msg_register,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonClass: "btn-danger",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                    },
+                                    function(isConfirm) {
+                                        if (isConfirm) {
+                                            pageload();
+                                            $("#frmagentaddedit").submit();
+                                        } else {
+                                            
+                                        }
+                                    });
+                                }else{
+                                    swal({
+                                    title: msg_update,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonClass: "btn-danger",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                    },
+                                    function(isConfirm) {
+                                        if (isConfirm) {
+                                            pageload();
+                                            $("#frmagentaddedit").submit();
+                                        } else {
+                                            
+                                        }
+                                    });
+                                }
+                            }
+                        },
+                        error: function(data){
+
+                        }
+                    });
 
                 }else{
                     $.each(resp, function(i,v) {
@@ -128,9 +185,103 @@ function goindexpage() {
     $('#agentviewform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
     $("#agentviewform").submit();
 }
+function gotoindexpage(viewflg) {
+     swal({
+        title: msg_cancel,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        closeOnConfirm: true,
+        closeOnCancel: true
+    },
+    function(isConfirm) {
+        if (isConfirm) {
+            pageload();
+           if (viewflg == "1") {
+                $('#frmagentaddeditcancel').attr('action', 'AgentView?mainmenu='+mainmenu+'&time='+datetime);
+                $("#frmagentaddeditcancel").submit();
+            } else {
+                $('#frmagentaddeditcancel').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+                $("#frmagentaddeditcancel").submit();
+            }
+        } else {
+            
+        }
+    });
+    
+        
+    
+}
 function fngotoregister(editFlg){
     $('#editFlg').val(editFlg);
     pageload();
     $('#agentindexform').attr('action', 'AgentAddedit?mainmenu='+mainmenu+'&time='+datetime);
     $("#agentindexform").submit();
+}
+function isNumberKey(evt) { 
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+    return true;
+}
+function isNumberKeywithminus(evt) { 
+    var charCode = (evt.which) ? evt.which : event.keyCode
+    if (charCode == 45) {
+      return true;
+    }
+    if (charCode > 31 && (charCode < 48 || charCode > 57))
+      return false;
+    return true;
+}
+function addHyphen (element) {
+    var ele = document.getElementById(element.id);
+    ele = ele.value.split('-').join('');    // Remove dash (-) if mistakenly entered.
+    var finalVal = ele.match(/\d{3}(?=\d{2,3})|\d+/g).join('-');
+    document.getElementById(element.id).value = finalVal;
+}
+function fnSingleSearch() {
+    var singlesearchtxt = $("#singlesearchtxt").val();
+    var singlesearchtxt = document.getElementById('singlesearchtxt').value;
+    if (singlesearchtxt == "") {
+        alert("Please Enter The agent Search.");
+        $("#singlesearchtxt").focus(); 
+        return false;
+    } else {
+        $('#plimit').val('');
+        $('#page').val('');
+        if ($('#singlesearchtxt').val()) {
+            $('#searchmethod').val(1);
+        } else {
+            $('#searchmethod').val('');
+        }
+        $('#name').val('');
+        $('#address').val('');
+        $('#agentindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+        $("#agentindexform").submit();
+    }
+}
+function umultiplesearch() {
+    var name = $("#name").val();
+    var name = document.getElementById('name').value;
+    var address = $("#address").val();
+    var address = document.getElementById('address').value;
+    if (name == "" && address == "") {
+        alert("Agent search is missing.");
+        $("#name").focus(); 
+        return false;
+    } else {
+        $('#plimit').val(50);
+        $('#page').val('');
+        $("#filterval").val('');
+        $('#singlesearchtxt').val('');
+        $('#searchmethod').val(2);
+        $('#agentindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+        $("#agentindexform").submit();
+    }
+}
+function customerAddEdit(flg) {
+    pageload();
+    $('#cuseditflg').val(flg);
+    $('#agentviewform').attr('action','addeditCustomer?mainmenu='+mainmenu+'&time='+datetime);
+    $("#agentviewform").submit();
 }

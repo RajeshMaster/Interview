@@ -40,12 +40,7 @@ class AgentController extends Controller {
 									"agent_name"=>trans('messages.lbl_name'),
 									"agent_address"=>trans('messages.lbl_address')
 		);
-		//SORT POSITION
-		if (!empty($request->singlesearchtxt) || $request->searchmethod == 2) {
-			$sortMargin = "margin-right:260px;";
-		} else {
-			$sortMargin = "margin-right:0px;";
-		}
+		
 		if ($request->agentsort == "") {
 			$request->agentsort = "agent_id";
 			$request->sortOrder = "DESC";
@@ -99,7 +94,6 @@ class AgentController extends Controller {
 		return view('agent.index',['request' => $request,
 									 'agentViews' => $agentViews,
 									 'agentsortarray' => $agentsortarray,
-									 'sortMargin' => $sortMargin,
 									 'agentdetails' => $agentdetails,
 									 'src' => $src,
 									 'disabledactive' => $disabledactive,
@@ -148,8 +142,8 @@ class AgentController extends Controller {
 		$commonrules = array(
 			'txt_agentName' => 'required',
 			'txt_agentNameJp' => 'required',
-			'txt_agentContract' => 'required',
-			'txt_emailId' => 'required',
+			'txt_agentContract' => 'required|date_format:"Y-m-d"',
+			'txt_emailId' => 'required|email',
 			'txt_mobilenumber' => 'required',
 			'txt_postal' => 'required',
 			'kenmei' => 'required',
@@ -165,5 +159,99 @@ class AgentController extends Controller {
             echo json_encode($success);
         }
 	}
-
+	public function getEmailExists(Request $request) {
+		$mailExist = Agent::fnGetEmailExistsCheck($request);
+		$countEmail = count($mailExist);
+		print_r($countEmail);exit();
+  	}
+  	public function AgentAddeditProcess(Request $request){
+  		if($request->editflg == "edit") {
+			$update = Agent::updateAgentRec($request);
+			if($update) {
+				Session::flash('success', 'Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Updated Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		    Session::flash('agentId', $request->agentId );
+		} else{
+			$agentMaxId = Agent::agentMaxIdGenerate();
+			if(!empty($agentMaxId)){
+				$agentId = $agentMaxId[0]->agentid;
+			}else{
+				$agentId = "AG0001";
+			}
+			$insert = Agent::insertAgentRec($request,$agentId);
+			if($insert) {
+				Session::flash('success', 'Inserted Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Inserted Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+			Session::flash('agentId', $agentId);
+		}
+		return Redirect::to('Agent/AgentView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+  	}
+  	public function addeditCustomer(Request $request) {
+		if(!isset($request->cuseditflg)){
+			return $this->index($request);
+		}
+		$customerUnSelectedMembers = "";
+		$Agent = "";
+		$Agentval = "";
+		$customerValue = "";
+		$SingleAgent = Agent::getSingleAgentRecord($request);
+		$Agentdtls = Agent::getAgentdtls();
+		foreach ($Agentdtls as $key => $val) {
+			$variable1 = explode(",", $val->customerId);
+			foreach ($variable1 as $key => $val1) {
+				$Agentval .= "'".$val1."',";
+			}
+		}
+		$customerUnSelectedMembers = rtrim($Agentval, ',');
+		if ($customerUnSelectedMembers != "") {
+			$customerName = Agent::getCustomergrp($customerUnSelectedMembers,2);
+		} else {
+			$customerName = Agent::getCustomergrp($customerUnSelectedMembers);
+		}
+		$customerUnSelectedMembers = str_replace("'", "",$customerUnSelectedMembers);
+		if($request->cuseditflg == "edit") {
+			foreach ($SingleAgent as $key => $value) {
+				$variable = explode(",", $value->customerId);
+				foreach ($variable as $key => $value1) {
+					$Agent .= "'".$value1."',";
+				}
+			}
+			$customerSelectedMembers = rtrim($Agent, ',');
+			$customerValue = str_replace("'","",$customerSelectedMembers);
+			$customerSelectedMembers = Agent::getCustomergrp($customerSelectedMembers,1);
+		} else {
+			$customerSelectedMembers = array();
+			
+		}
+		return view('agent.cusaddedit',compact('request',
+												'customerName',
+												'customerSelectedMembers',
+												'customerUnSelectedMembers',
+												'SingleAgent',
+												'customerValue'
+											));
+	}
+	public static function cusaddeditprocess(Request $request) {
+		if (!isset($request->agentId)) {
+			return $this->index($request);
+		}
+		$updatedtls = Agent::updCusDtls($request);
+		if ($updatedtls) {
+			Session::flash('message', 'Updated Sucessfully'); 
+			Session::flash('type', 'alert-success'); 
+		} else {
+			Session::flash('message', 'Update Unsucessfully'); 
+			Session::flash('type', 'alert-warning');
+		}
+		Session::flash('agentId', $request->agentId);
+		return Redirect::to('Agent/View?mainmenu=Agent&time='.date('YmdHis'));
+	}
 }

@@ -104,7 +104,7 @@
 			</a>
 				{{ Form::select('agentsort', $agentsortarray, $request->agentsort,
 					array('class' => 'form-control'.' ' .$request->sortstyle.' '.'CMN_sorting pull-right','id' => 'agentsort',
-					'style' => $sortMargin,'name' => 'agentsort'))
+					'name' => 'agentsort'))
 				}}
 		</div>
 		<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" id="styleSelector">
