@@ -83,7 +83,7 @@
 						 		id="houseName" href="">{{ trans('messages.lbl_customer') }}</a>
 							</span>
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
-								<a name="houseImg" id="houseImg" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_agent') }}</a>
+								<a name="houseImg" id="houseImg" href="{{ url('Agent/index?mainmenu=menu_agent&time='.date('Ymdhis')) }}" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_agent') }}</a>
 							</span>
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
 								<a name="houseImg" class="pageload" href="{{ url('OldCustomer/index?mainmenu=menu_oldcustomer&time='.date('Ymdhis')) }}" id="houseImg" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_old_customer') }}</a>

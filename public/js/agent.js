@@ -15,7 +15,6 @@ $(function () {
 });
 $(document).ready(function(){
     $('.addeditprocess').click(function () {
-        alert("under Construction");
         resetErrors();
         var url ='AgentRegValidation';
         $.each($('form input, form select, form textarea'), function(i, v) {  
@@ -30,7 +29,14 @@ $(document).ready(function(){
             data: data,
             async: false, //blocks window close
             success: function(resp) {
+                if(resp == true){
 
+                }else{
+                    $.each(resp, function(i,v) {
+                        var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+                        $('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').focus().addClass('inputTxtError').after(msg);
+                    });
+                }
             },
             error: function(data){
 
@@ -38,6 +44,11 @@ $(document).ready(function(){
         });
     });
 });
+function resetErrors() {
+    $('form input, form select, form radio, form textarea').css("border-color", "");
+    $('form input').removeClass('inputTxtError');
+    $('label.error').remove();
+}
 function sortingfun() {
     pageload();
     $('#plimit').val(50);

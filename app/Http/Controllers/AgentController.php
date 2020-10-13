@@ -145,7 +145,25 @@ class AgentController extends Controller {
 	}
 
 	public function AgentRegValidation(Request $request){
-		
+		$commonrules = array(
+			'txt_agentName' => 'required',
+			'txt_agentNameJp' => 'required',
+			'txt_agentContract' => 'required',
+			'txt_emailId' => 'required',
+			'txt_mobilenumber' => 'required',
+			'txt_postal' => 'required',
+			'kenmei' => 'required',
+			'txt_shimei' => 'required',
+			'txt_streetaddress' => 'required',
+		);
+		$rules = $commonrules;
+		$validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 200);exit;
+        } else {
+            $success = true;
+            echo json_encode($success);
+        }
 	}
 
 }
