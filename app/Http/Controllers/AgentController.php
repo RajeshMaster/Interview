@@ -252,6 +252,6 @@ class AgentController extends Controller {
 			Session::flash('type', 'alert-warning');
 		}
 		Session::flash('agentId', $request->agentId);
-		return Redirect::to('Agent/View?mainmenu=Agent&time='.date('YmdHis'));
+		return Redirect::to('Agent/AgentView?mainmenu=Agent&time='.date('YmdHis'));
 	}
 }

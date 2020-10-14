@@ -100,6 +100,57 @@ $(document).ready(function(){
             }
         });
     });
+    $('.cusaddeditprocess').click(function () {
+        var agentId = $('#agentId').val();
+        var cuseditflg = $('#cuseditflg').val();
+        var selected = $('#selected').val();
+        if (selected == "") {
+           document.getElementById('errorSectiondisplay').innerHTML = "";
+            err_invaliderr = "Select Customer Name";
+            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invaliderr+'</label></div>';
+            document.getElementById('errorSectiondisplay').style.display = 'inline-block';
+            document.getElementById('errorSectiondisplay').innerHTML = error;
+            $('#selected').focus();
+            return false;
+        } else {
+            if(cuseditflg == "edit") {
+                swal({
+                    title: msg_update,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            pageload();
+                            $("#frmcusreg").submit();
+                        } else {
+                            
+                        }
+                });
+
+            } else {
+                swal({
+                    title: msg_register,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            pageload();
+                            $("#frmcusreg").submit();
+                        } else {
+                            
+                        }
+                });
+            }
+        }
+    });
 });
 function resetErrors() {
     $('form input, form select, form radio, form textarea').css("border-color", "");

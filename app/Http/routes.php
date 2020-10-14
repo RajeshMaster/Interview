@@ -212,6 +212,7 @@ Route::group(['prefix'=>'Agent','middleware' => 'auth'], function(){
 	Route::any('getEmailExists','AgentController@getEmailExists');
 	Route::any('AgentAddeditProcess','AgentController@AgentAddeditProcess');
 	Route::any('addeditCustomer', 'AgentController@addeditCustomer');
+	Route::any('cusaddeditprocess', 'AgentController@cusaddeditprocess');
 });
 
 ?>

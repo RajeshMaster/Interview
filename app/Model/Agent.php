@@ -197,5 +197,23 @@ class Agent extends Model {
 									FROM `mst_customerdetail`) AS mergeall $concat");
 
 		return $query;
+	}
+	// Update Customer Id 
+	public static function updCusDtls($request) {
+		$customerId = "";
+		$customer = explode(",", $request->selected);
+		foreach ($customer as $key => $value) {
+			$customerId .= $value.',';
+			$updateQuery = DB::table('mst_customerdetail')
+					->where('customer_id', $value)
+					->where('delFlg', 0)
+					->update(['agentId' => $request->agentId]);
+		}
+		$customerId = substr($customerId,0,-1);
+		$update = DB::table('mst_agentdetail')
+					->where('agent_id', $request->agentId)
+					->where('delFlg', 0)
+					->update(['customerId' => $customerId]);
+		return $update; 
 	} 
 }
