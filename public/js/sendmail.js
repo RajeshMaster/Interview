@@ -48,6 +48,29 @@ $(document).ready(function() {
 	});
 
 
+	$('.selectgroup').click(function () {
+		if ($("[name='group[]']:checked").length <= 0) {
+			alert("Please select atleast one Group");
+			return false;
+		} else {
+			$("[name='group[]']:checked").each(function() {
+				var res = $(this).val().split("$");
+				$('#groupvalue').val($('#groupvalue').val() + ";" + res[0]);
+				$('#groupname').val($('#groupname').val() + ";" + res[1]);
+			});
+			if(groupname.text !="") {
+				$("#customernamerequired").css("visibility", "hidden");
+				$("#branchnamerequired").css("visibility", "hidden");
+			}
+			var v = document.getElementById("groupvalue").value;
+			document.getElementById("groupvalue").value = v.substring(1) + ";";
+			var s = document.getElementById("groupname").value;
+			document.getElementById("groupname").value = s.substring(1) + ";";
+			$("body div").removeClass("modalOverlay");
+			$('#customerSelect').empty();
+			$('#customerSelect').modal('toggle');
+		}
+	});
 
 
 
@@ -209,6 +232,15 @@ function fndbclick(cusid,cusname,name) {
 }
 
 // Single Click in tr
+function fnSclkTrgrp(grpid,grpname) {
+	if ($('.' + grpid).is(':checked')) {
+		$("."+grpid).prop("checked", false);
+    } else {
+		$("."+grpid).prop("checked", true);
+    }
+}
+
+// Single Click in tr for group
 function fnSclkTr(cusid,empname,name) {
 	$("#"+cusid).prop("checked", true);
 	if($.trim(name) == "" || $.trim(name) == null) {
@@ -313,4 +345,21 @@ function fnbackmailindex(){
 	pageload();
 	$('#frmaddeditcancel').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
 	$("#frmaddeditcancel").submit();
+}
+
+// Function To select Group
+function groupSelect() {
+	document.getElementById("groupvalue").value = "";
+	document.getElementById("groupname").value = "";
+	if(groupname.text == null) {
+		$("#customernamerequired").css("visibility", "visible");
+		$("#branchnamerequired").css("visibility", "visible");
+	}
+	popupopenclose(1);
+	$('#customerSelect').load('groupadd?mainmenu='+mainmenu+'&time='+datetime);
+	$("#customerSelect").modal({
+		backdrop: 'static',
+		keyboard: false
+	});
+	$('#customerSelect').modal('show');
 }

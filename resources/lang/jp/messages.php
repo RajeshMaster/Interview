@@ -86,6 +86,8 @@ return [
 	'lbl_mailsubject' => 'メール標記',
 	'lbl_subject' => '件名',
 	'lbl_mailtype' => 'メールタイプ',
+	'lbl_groupSelect' => 'グループを選択',
+	'lbl_groupid' => 'グループ Id',
 	/* End Mail Module  */
 
 	/* Start Setting Module */

@@ -325,14 +325,34 @@ class MailSendController extends Controller {
 	public function sendMialvalidation(Request $request) {
 		$commonrules=array();
 		$common2 = array();
+		$common3 = array();
+		$common4 = array();
 
 		$common1 = array(
-			'customerName' => 'required',
-			'branchId'=>'required',
-			'inchargeDetails'=>'required',
 			'subject'=>'required',
 		);
-		$commonrules = $common1 + $common2;
+
+		if($request->groupname == "") {
+			$common2 = array(
+				'customerName' => 'required',
+				'branchId'=>'required',
+				'inchargeDetails'=>'required',
+			);
+		}
+
+		if($request->customerName == ""){
+			$common3 = array(
+				'groupname'=>'required',
+			);
+		}
+		if($request->customerName != ""){
+			$common4 = array(
+				'inchargeDetails'=>'required',
+				'branchId'=>'required',
+			);
+		}
+			
+		$commonrules = $common1 + $common2 + $common3 + $common4;
 		$rules = $commonrules;
 		$validator = Validator::make($request->all(), $rules);
 		if ($validator->fails()) {
@@ -453,7 +473,7 @@ class MailSendController extends Controller {
 			for ($i=0; $i <count($value)-1 ; $i++) { 
 				$groupsends = mailsend::groupsends($value[$i]);
 				foreach ($groupsends as $key => $groups) {
-					if($groupId!="" && $groups->sendpasswrodFlg == 1) {
+					// if($groupId!="" && $groups->sendpasswrodFlg == 1) {
 						$customerid = $groups->customer_id;
 						$groupid = $groups->incharge_email_id;
 						$getmailIds .= $groupid.',';
@@ -463,7 +483,7 @@ class MailSendController extends Controller {
 						}
 						$branchID = $groups->branch_name;
 						$inchargename = $groups->incharge_name;
-						$CustomerName = Interview::getCustomerName($customerid);
+						$CustomerName = mailsend::getCustomerName($customerid);
 						$body = $data[0]->content;
 						$replace_contents = ['Admin','CCCC','IIII','<password>'];
 						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,$pdfpassword];
@@ -471,7 +491,7 @@ class MailSendController extends Controller {
 						$subject = str_replace('XXXX', 'Post Mail Successfully', $data[0]->subject);
 						$mailformat = [$bodyrep];
 						$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
-					} else {
+					/*} else {
 						$customerid= $groups->customer_id;
 						$groupid = $groups->incharge_email_id;
 						$getmailIds .= $groupid.',';
@@ -483,19 +503,17 @@ class MailSendController extends Controller {
 						$inchargename = $groups->incharge_name;
 						$body = $databoth[0]->header."\n";
 						$body .= $databoth[0]->content;
-						$CustomerName = Interview::getCustomerName($customerid);
+						$CustomerName = mailsend::getCustomerName($customerid);
 						$replace_contents = ['TTTT','CCCC','IIII','DDDD','<password>'];
 						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,'mb',$pdfpassword];
 						$bodyrep = str_replace($replace_contents, $real_contents, $body);
 						$subject = str_replace('XXXX', 'Post Mail Successfully', $databoth[0]->subject);
 						$mailformat = [$bodyrep];
 						$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
-						if ($sendmail) {
-							$changeMAilFlg = Interview::changeMailFlg($groupid);
-						}
-					}
+					}*/
 				}
-				$groupAgentsends = Interview::groupAgentsends($value[$i]);
+
+				$groupAgentsends = mailsend::groupAgentsends($value[$i]);
 				foreach ($groupAgentsends as $key => $agent) {
 					$agentMail = $agent->agent_email_id;
 					if ($agentMail  != "") {
@@ -507,7 +525,7 @@ class MailSendController extends Controller {
 						$cusId = $agent->customer_id;
 						$getAgentmailIds .= $agentMail.',';
 						$agentName = $agent->agent_name;
-						$CustomerName = Interview::getCustomerName($cusId);
+						$CustomerName = mailsend::getCustomerName($cusId);
 						$body1 = $dataAgent[0]->content;
 						$replace_contents1 = ['Admin','CCCC','IIII','<password>'];
 						$real_contents1 = [$agentMail,$CustomerName[0]->customer_name,$agentName,$pdfpassword];
@@ -560,9 +578,9 @@ class MailSendController extends Controller {
 				$bodyrep = str_replace($replace_contents, $real_contents, $body);
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $data[0]->subject);
 				$mailformat = [$bodyrep];
-				// if(!in_array($customerId,$email_array)){
+				if(!in_array($customerId,$email_array)){
 					$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
-				// }
+				}
 					
 			// } else {
 			// 	$email = $value1->incharge_email_id;
@@ -658,5 +676,20 @@ class MailSendController extends Controller {
 		return view('mailsend.inchargeSelPopup',['request' => $request,
 												'getdetails' => $getdetails]);
 	}
+
+
+	/**
+	*
+	* Group Select Process
+	* @author Rajesh
+	* @return object to particular Popup view page
+	* Created At 2020/10/05
+	*
+	*/
+	public function groupadd(Request $request) {
+		$getallGroup = Employee::getallGroup();
+		return view('mailsend.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup]);
+	}
+
 
 }
