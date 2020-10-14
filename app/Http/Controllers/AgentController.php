@@ -182,7 +182,6 @@ class AgentController extends Controller {
 			}else{
 				$agentId = "AG0001";
 			}
-			print_r($agentId); exit();
 			$insert = Agent::insertAgentRec($request,$agentId);
 			if($insert) {
 				Session::flash('success', 'Inserted Sucessfully!'); 
