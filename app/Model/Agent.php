@@ -115,5 +115,105 @@ class Agent extends Model {
 				->WHERE('delflg', '=', 0)
 				->lists('prefecture_name_jp','id');
 		return $query;	
+	}
+	public static function fnGetEmailExistsCheck($request){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_agentdetail')
+					->select('*')
+					->WHERE('agent_email_id','=', $request->mailId);
+			if($request->agentId != ""){
+				$result	= $result->WHERE('agent_id','!=', $request->agentId)->get();
+			} else {
+				$result = $result->get();
+			}
+		return $result;
+	}
+	// Update
+	public static function updateAgentRec($request) { 
+		$db = DB::connection('mysql');
+		$updateQuery = $db->table('mst_agentdetail')
+			->where('agent_id', $request->agentId)
+			->update([ 
+			'agent_id' => $request->agentId,
+			'agent_name' => $request->txt_agentName,
+			'agent_kananame' => $request->txt_agentNameJp,
+			'contract' => $request->txt_agentContract,
+			'agent_contact_no' => $request->txt_mobilenumber,
+			'agent_email_id' => $request->txt_emailId,
+			'agent_fax_no' => $request->txt_fax,
+			'agent_website' => $request->txt_url,
+			'agent_address' => $request->txt_address,
+			'postalNumber' => $request->txt_postal,
+			'kenmei' => $request->kenmei,
+			'shimei' => $request->txt_shimei,
+			'street_address' => $request->txt_streetaddress,
+			'buildingname' => $request->txt_buildingname,
+			'updated_by' => Auth::user()->username ]);
+	  	return $updateQuery;
+	}
+	public static function agentMaxIdGenerate(){
+		$query = DB::select("SELECT CONCAT('AG', LPAD(MAX(SUBSTRING(agent_id,4))+1,4,0)) AS agentid FROM mst_agentdetail WHERE agent_id LIKE '%AG%'");
+		return $query;
+	}
+	// Insert
+	public static function insertAgentRec($request,$agent) {
+		$insertQuery = DB::table('mst_agentdetail')
+				->insert([
+				'agent_id' => $agent,
+				'agent_name' => $request->txt_agentName,
+				'agent_kananame' => $request->txt_agentNameJp,
+				'contract' => $request->txt_agentContract,
+				'agent_contact_no' => $request->txt_mobilenumber,
+				'agent_email_id' => $request->txt_emailId,
+				'agent_fax_no' => $request->txt_fax,
+				'agent_website' => $request->txt_url,
+				'agent_address' => $request->txt_address,
+				'postalNumber' => $request->txt_postal,
+				'kenmei' => $request->kenmei,
+				'shimei' => $request->txt_shimei,
+				'street_address' => $request->txt_streetaddress,
+				'buildingname' => $request->txt_buildingname,
+				'created_by' => Auth::user()->username ]);
+		return $insertQuery;
+	}
+	// Customer Id
+	public static function getAgentdtls() {
+		$query = DB::table('mst_agentdetail')
+				->SELECT('customerId')
+				->WHERE('delFlg',0)
+				->GET();
+		return $query;
+	}
+	// Get Customer 
+	public static function getCustomergrp($result, $flg=null) {
+		$concat = "";
+		if ($result != "" &&  $flg == 2) {
+			$concat = "WHERE mergeall.customer_id NOT IN($result)";
+		}
+		if ($result != "" && $flg == 1) {
+			$concat = "WHERE mergeall.customer_id IN($result)";
+		}
+		$query = DB::select("SELECT * FROM(SELECT customer_id,customer_name
+									FROM `mst_customerdetail`) AS mergeall $concat");
+
+		return $query;
+	}
+	// Update Customer Id 
+	public static function updCusDtls($request) {
+		$customerId = "";
+		$customer = explode(",", $request->selected);
+		foreach ($customer as $key => $value) {
+			$customerId .= $value.',';
+			$updateQuery = DB::table('mst_customerdetail')
+					->where('customer_id', $value)
+					->where('delFlg', 0)
+					->update(['agentId' => $request->agentId]);
+		}
+		$customerId = substr($customerId,0,-1);
+		$update = DB::table('mst_agentdetail')
+					->where('agent_id', $request->agentId)
+					->where('delFlg', 0)
+					->update(['customerId' => $customerId]);
+		return $update; 
 	} 
 }

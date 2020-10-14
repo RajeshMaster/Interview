@@ -4,11 +4,13 @@
 {{ HTML::style(asset('public/css/tableviewlayout.css')) }}
 {{ HTML::style(asset('public/css/designtable.css')) }}
 {{ HTML::script(asset('public/js/yubinbango.js')) }}
+{{ HTML::script(asset('public/js/lib/bootstrap-datepicker.min.js')) }}
+{{ HTML::style(asset('public/css/lib/bootstrap-datetimepicker.min.css')) }}
 <style type="text/css">
 	/*Start Mobile layout*/
 	@media all and (max-width: 1200px) {
 		.regdes{
-			width:128%!important;
+			width:100%!important;
 		}
 		.h2cnt {
 			font-size: 150%!important;
@@ -50,13 +52,20 @@
 		}
 	}
 </style>
+<script type="text/javascript">
+	var mainmenu = '@php echo $request->mainmenu; @endphp';
+	var datetime = '@php echo date("Ymdhis") @endphp';
+	$(document).ready(function() {
+    	setDatePicker("txt_agentContract");
+  	});
+</script>
 <div class="" id="main_contents">
 	<article id="customer" class="DEC_flex_wrapper" data-category="customer cus_sub_2">
 		@if(!empty($getSingleAgent))
 			{{ Form::model($getSingleAgent,
 				array('name'=>'frmagentaddedit','method' => 'POST', 'id'=>'frmagentaddedit', 
 						'class'=>'form-horizontal h-adr',
-						'url' => 'Agent/addeditprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis')))
+						'url' => 'Agent/AgentAddeditProcess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis')))
 			}}
 			{{ Form::hidden('id', $request->id , array('id' => 'id')) }}
 			{{ Form::hidden('agentId',$request->agentId,array('id' => 'agentId')) }}
@@ -64,7 +73,7 @@
 			{{ Form::open(array('name'=>'frmagentaddedit', 'id'=>'frmagentaddedit', 
 					'class' => 'form-horizontal h-adr',
 					'method' => 'POST','files'=>true,
-					'url' => 'Agent/addeditprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'))) 
+					'url' => 'Agent/AgentAddeditProcess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'))) 
 			}}
 		{{ Form::hidden('id', '' , array('id' => 'id')) }}
 		{{ Form::hidden('agentId','',array('id' => 'agentId')) }}
@@ -101,7 +110,7 @@
 					<label class="clr_black">{{ trans('messages.lbl_agentname(JP&Eng)') }}</label>
 					<span class="fr ml2 fs7"> * </span>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 	               	{{ Form::text('txt_agentName',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_agentName : '',array(
 						'id'=>'txt_agentName',
 						'name' => 'txt_agentName',
@@ -115,7 +124,7 @@
 					<label class="clr_black">{{ trans('messages.lbl_agentname(kana)') }}</label>
 					<span class="fr ml2 fs7"> * </span>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 	               	{{ Form::text('txt_agentNameJp',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_agentNameJp : '',array(
 						'id'=>'txt_agentNameJp',
 						'name' => 'txt_agentNameJp',
@@ -130,7 +139,7 @@
 					<label class="clr_black">{{ trans('messages.lbl_postalCode') }}</label>
 					<span class="fr ml2 fs7"> * </span>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 	               	{{ Form::text('txt_postal',(isset($getSingleAgent[0]->postalNumber)) ? $getSingleAgent[0]->postalNumber : '',array(
 						'id'=>'txt_postal',
 						'name' => 'txt_postal',
@@ -139,7 +148,7 @@
 						'maxlength' => '8',
 						'onkeypress' => 'return isNumberKeywithminus(event)',
 						'onkeyup' => 'addHyphen(this)',
-						'data-label' => trans('messages.lbl_postalCode'))) }}
+						'data-label' => trans('messages.lbl_postalCode') )) }}
 				</div>
 			</div>
 			<div class="col-xs-12 mt20">
@@ -147,7 +156,7 @@
 					<label class="clr_black">{{ trans('messages.lbl_kenmei') }}</label>
 					<span class="fr ml2 fs7"> * </span>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 	               	{{ Form::select('kenmei',[null=>'Please select'] + $getKenname,(isset($getSingleAgent[0]->kenmei)) ? $getSingleAgent[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
 						'style'=> 'width:240px;',
 					'id' =>'kenmei','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei')) }}
@@ -158,7 +167,7 @@
 					<label class="clr_black">{{ trans('messages.lbl_shimei') }}</label>
 					<span class="fr ml2 fs7"> * </span>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 	               	{{ Form::text('txt_shimei',(isset($getSingleAgent[0]->shimei)) ? $getSingleAgent[0]->shimei : '',array(
 						'id'=>'txt_shimei',
 						'name' => 'txt_shimei',
@@ -172,7 +181,7 @@
 					<label class="clr_black">{{ trans('messages.lbl_streetaddress') }}</label>
 					<span class="fr ml2 fs7"> * </span>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 	               	{{ Form::text('txt_streetaddress',(isset($getSingleAgent[0]->street_address)) ? $getSingleAgent[0]->street_address : '',array(
 						'id'=>'txt_streetaddress',
 						'name' => 'txt_streetaddress',
@@ -186,7 +195,7 @@
 					<label class="clr_black">{{ trans('messages.lbl_buildingname') }}</label>
 					<span class="fr ml2 fs7" style="visibility: hidden;"> * </span>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 	               	{{ Form::text('txt_buildingname',(isset($getSingleAgent[0]->buildingname)) ? $getSingleAgent[0]->buildingname : '',array(
 						'id'=>'txt_buildingname',
 						'name' => 'txt_buildingname',
@@ -200,7 +209,7 @@
 					<label class="clr_black">{{ trans('messages.lbl_remarks') }}</label>
 					<span class="fr ml2 fs7" style="visibility: hidden;"> * </span>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 	               	{{ Form::textarea('txt_address',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_address : '',array(
 					'id'=>'txt_address',
 					'name' => 'txt_address',
@@ -215,36 +224,39 @@
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_agentagreement') }}<span class="fr ml2 red"> * </span></label>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 					{{ Form::text('txt_agentContract',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_agentContract : '',array(
 							'id'=>'txt_agentContract',
 							'name' => 'txt_agentContract',
-							'class'=>'ime_mode_disable txt dispinline form-control firstname regdes',
-							'style'=> 'width:240px;',
+							'class'=>'ime_mode_disable txt dispinline form-control firstname regdes txt_agentContract',
+							'style'=> 'width:110px;',
 							'data-label' => trans('messages.lbl_agentagreement'),
 							'onkeypress'=>'return event.charCode >=6 && event.charCode <=58',
 							'autocomplete' =>'off',
 							'maxlength' => '10')) }}
+							<label class="mt10 ml2 fa fa-calendar fa-lg" for="txt_agentContract" aria-hidden="true"></label>
 				</div>
 			</div>
 			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_email') }}<span class="fr ml2 red"> * </span></label>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 					{{ Form::text('txt_emailId',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_emailId : '',array(
 						'id'=>'txt_emailId',
 						'name' => 'txt_emailId',
 						'class'=>'ime_mode_disable txt dispinline form-control firstname regdes',
 						'style'=> 'width:240px;',
 						'data-label' => trans('messages.lbl_email'))) }}
+						<div id="errorSectiondisplay" align="center"></div>
 				</div>
+
 			</div>
 			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_mobilenumber') }}<span class="fr ml2 red"> * </span></label>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 					{{ Form::text('txt_mobilenumber',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_mobilenumber : '',array(
 						'id'=>'txt_mobilenumber',
 						'name' => 'txt_mobilenumber',
@@ -259,7 +271,7 @@
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_fax') }}<span class="fr ml2 red" style="visibility: hidden;"> * </span></label>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 					{{ Form::text('txt_fax',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_fax : '',array(
 						'id'=>'txt_fax',
 						'name' => 'txt_fax',
@@ -274,7 +286,7 @@
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_url') }}<span class="fr ml2 red" style="visibility: hidden;"> * </span></label>
 				</div>
-				<div class="col-xs-9 mw">
+				<div class="col-xs-7 mw">
 					{{ Form::text('txt_url',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_url : '',array(
 					'id'=>'txt_url',
 					'name' => 'txt_url',
@@ -314,4 +326,11 @@
         </div>
 	</article>
 </div>
+{{ Form::close() }}
+{{ Form::open(array('name'=>'frmagentaddeditcancel', 'id'=>'frmagentaddeditcancel', 
+		'url' => '','files'=>true,'method' => 'POST')) }}
+		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+		{{ Form::hidden('filterval', $request->filterval, array('id' => 'filterval')) }}
+		{{ Form::hidden('agentId',(isset($request->agentId)?$request->agentId:""),array('id' => 'agentId')) }}
+{{ Form::close() }}
 @endsection

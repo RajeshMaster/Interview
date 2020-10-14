@@ -14,15 +14,25 @@
 				</h2>
 			</div>
 		</fieldset>
-		@if (session('danger'))
-			<div class="col-xs-12 mt10" align="center">
-				<span class="alert-danger">{{ session('danger') }}</span>
-			</div>
-		@elseif (session('message'))
-			<div class="col-xs-12 mt10" align="center">
-				<span class="alert-success">{{ session('message') }}</span>
+		<!-- Session msg Start-->
+		@if(Session::has('success'))
+			<div align="center" class="alertboxalign col-xs-12 mt10" role="alert" >
+				<span class="alert {{ Session::get('alert', Session::get('type') ) }}">
+				{{ Session::get('success') }}
+				</span>
 			</div>
 		@endif
+
+		@if(Session::has('danger'))
+			<div align="center" class="alertboxalign col-xs-12 mt10" role="alert">
+				<span class="alert {{ Session::get('alert', Session::get('type') ) }}">
+				{{ Session::get('danger') }}
+				</span>
+			</div>
+		@endif
+		@php Session::forget('success'); @endphp
+		@php Session::forget('danger'); @endphp
+		<!-- Session msg End-->
 		
 		{{ Form::open(array('name'=>'agentviewform', 'id'=>'agentviewform','url' => 'Agent/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 'method' => 'POST')) }}
 		{{ Form::hidden('id',$request->id,array('id' => 'id')) }}
@@ -42,7 +52,28 @@
 				style="text-decoration: none !important;">
 				<span class="fa fa-edit"></span> {{ trans('messages.lbl_edit') }}
 			</a>
-		</div>	
+		</div>
+		<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
+	 	id="styleSelector">
+	 		<div class="selector-toggle">
+				<a id="sidedesignselector" href="javascript:void(0)"></a>
+			</div>
+			<ul>
+				<li class="theme-option ml6">
+					<div class="box100per mt5"  onKeyPress="return checkSubmitsingle(event)">
+						@if(!isset($getdetails[0]->customerId) && ($getdetails[0]->customerId == "" || $getdetails[0]->customerId == NULL))
+							<a href="javascript:customerAddEdit('add');" class="">
+								<span class="fa fa-plus csrp"></span><span class="ml5 csrp">{{trans('messages.lbl_newCustomer')}}</span>
+							</a>
+						@else
+							<a href="javascript:customerAddEdit('edit');" class="">
+								<span class="fa fa-pencil csrp"></span><span class="ml5 csrp">{{trans('messages.lbl_newCustomer')}}</span>
+							</a>
+						@endif	
+					<div>
+				</li>
+			</ul>
+	 	</div>	
 		<fieldset class="mt2">
 			<div class="col-xs-12">
 				<div class="col-xs-9 mt10">

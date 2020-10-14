@@ -286,5 +286,6 @@ return [
 	'lbl_agentname(JP&Eng)' =>'Agent Name(JP&Eng)',
 	'lbl_agentname(kana)' =>'Agent Name(Kana)',
 	'lbl_agentagreement' =>'Agent Agreement Date',
+	'lbl_newCustomer' => 'New Customer',
 	/* End Agent Module*/
 ];

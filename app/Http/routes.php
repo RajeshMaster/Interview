@@ -210,6 +210,10 @@ Route::group(['prefix'=>'Agent','middleware' => 'auth'], function(){
 	Route::any('AgentView','AgentController@AgentView');
 	Route::any('AgentAddedit','AgentController@AgentAddedit');
 	Route::any('AgentRegValidation','AgentController@AgentRegValidation');
+	Route::any('getEmailExists','AgentController@getEmailExists');
+	Route::any('AgentAddeditProcess','AgentController@AgentAddeditProcess');
+	Route::any('addeditCustomer', 'AgentController@addeditCustomer');
+	Route::any('cusaddeditprocess', 'AgentController@cusaddeditprocess');
 });
 
 ?>
