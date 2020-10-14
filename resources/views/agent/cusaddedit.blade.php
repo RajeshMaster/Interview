@@ -16,7 +16,7 @@
 </script>
 <style type="text/css">
 	.selectboxprop{
-		height: 280px;width: 180px;
+		height: 280px !important ;width: 180px;
 	}
 	@media all and (max-width: 1200px) {
 		.selectboxprop{
