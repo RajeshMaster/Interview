@@ -177,11 +177,12 @@ class AgentController extends Controller {
 		    Session::flash('agentId', $request->agentId );
 		} else{
 			$agentMaxId = Agent::agentMaxIdGenerate();
-			if(!empty($agentMaxId)){
+			if(!empty($agentMaxId) && $agentMaxId[0]->agentid!=""){
 				$agentId = $agentMaxId[0]->agentid;
 			}else{
 				$agentId = "AG0001";
 			}
+			print_r($agentId); exit();
 			$insert = Agent::insertAgentRec($request,$agentId);
 			if($insert) {
 				Session::flash('success', 'Inserted Sucessfully!'); 

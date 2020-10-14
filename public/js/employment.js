@@ -484,3 +484,19 @@ function fnselect() {
 		}
 	}
 }
+ function customerview(datetime,id,custid) {
+    $('#id').val(id);
+    $('#custid').val(custid);
+    $('#empid').val(1);
+    var mainmenu = "menu_customer";
+    $('#emphistoryform').attr('action', '../Customer/CustomerView?mainmenu='+mainmenu+'&time='+datetime);
+    $("#emphistoryform").submit();
+}
+function getdetails(empid,empname,datetime,id){
+	$('#hdnempid').val(empid);
+	$('#hdnempname').val(empname);
+    $('#hdnback').val(id);
+	var mainmenu="menu_customer";
+	$('#emphistoryform').attr('action', '../Customer/Onsitehistory?mainmenu='+mainmenu+'&time='+datetime);
+    $("#emphistoryform").submit();
+}

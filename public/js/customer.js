@@ -567,7 +567,7 @@ function addHyphen (element) {
 }
 function goempindexpage(mainmenu,datetime) {
     pageload();
-    $('#customerviewform').attr('action', '../Customer/index?mainmenu='+mainmenu+'&time='+datetime);
+    $('#customerviewform').attr('action', '../Employee/empHistory?mainmenu='+mainmenu+'&time='+datetime);
     $("#customerviewform").submit();
 }
 function goindexpage(mainmenu,datetime) {
@@ -711,7 +711,39 @@ function getchangeempdetails(datetime,empid,empname){
     $("#customerviewform").submit();
 }
 function fngoback(){
+	var back = $('#hdnback').val();
+
 	pageload();
-	$('#emphistoryviewform').attr('action', '../Customer/CustomerView?mainmenu='+mainmenu+'&time='+datetime);
-    $("#emphistoryviewform").submit();
+	if(back == 1){
+		$('#emphistoryviewform').attr('action', '../Employee/empHistory?mainmenu=menu_emphistory&time='+datetime);
+        $('#mainmenu').val("menu_emphistory");
+        $("#emphistoryviewform").submit();
+	}else{
+		$('#emphistoryviewform').attr('action', '../Customer/CustomerView?mainmenu='+mainmenu+'&time='+datetime);
+    	$("#emphistoryviewform").submit();
+	}
+}
+function gotoindexpage(viewflg,mainmenu,datetime) {
+	swal({
+		title: msg_cancel,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+			   if (viewflg == "1") {
+     				pageload();
+        			$('#frmcustaddeditcancel').attr('action', 'CustomerView?mainmenu='+mainmenu+'&time='+datetime);
+        			$("#frmcustaddeditcancel").submit();
+    			} else {
+			        $('#frmcustaddeditcancel').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+			        $("#frmcustaddeditcancel").submit();
+    			}
+			} else {
+				
+			}
+	});
 }
