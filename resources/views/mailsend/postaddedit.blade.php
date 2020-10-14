@@ -13,7 +13,9 @@
 	var mainmenu = '<?php echo $request->mainmenu; ?>';
 	
 </script>
-
+<style type="text/css">
+	
+</style>
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
 <article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_4">
@@ -124,7 +126,31 @@
 
 		<div class="col-xs-12 mt4">
 			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_cusname')}}<span class="fr">&nbsp;&#42;</span></label>
+				<label for="name">{{ trans('messages.lbl_group')}}<span class="fr">&nbsp;&#42;</span></label>
+			</div>
+
+			<div class="col-xs-7 mw">
+				<input type="hidden" id="groupvalue" name="groupvalue" value="" />
+					{{ Form::text('groupname','',array('id'=>'groupname', 
+						'name' => 'groupname',
+						'data-label' => trans('messages.lbl_group'),
+						'class'=>'mlength form-control dispinline pl5',
+						'onkeypress' => 'event.preventDefault();',
+						'readonly' => 'true',
+						'maxlength'=>'30')) }}
+				<div id="customerdiv" class="CMN_display_block box20per ml1">
+					<button data-toggle="modal" type="button" class="btn btn-success add box70per"
+						style="height:30px;width: 140px; margin-top: -3px;" 
+						onclick="return groupSelect();">
+						<i class="fa fa-plus vat">  {{ trans('messages.lbl_group') }}</i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12 mt4">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_cusname')}}<span class="fr" id="customernamerequired">&nbsp;&#42;</span></label>
 			</div>
 
 			<div class="col-xs-7 mw">
@@ -148,7 +174,7 @@
 
 		<div class="col-xs-12 mt5">
 			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_branchName')}}<span class="fr">&nbsp;&#42;</span></label>
+				<label for="name">{{ trans('messages.lbl_branchName')}}<span class="fr" id="branchnamerequired">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
 				{{ Form::select('branchId',[null=>''],'', 

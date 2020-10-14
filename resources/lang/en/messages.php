@@ -86,6 +86,8 @@ return [
 	'lbl_mailsubject' => 'Mail Subject',
 	'lbl_subject' => 'Subject',
 	'lbl_mailtype' => 'Mail Type',
+	'lbl_groupSelect' => 'Group Select',
+	'lbl_groupid' => 'Group Id',
 	/* End Mail Module  */
 
 	/* Start Setting Module  */

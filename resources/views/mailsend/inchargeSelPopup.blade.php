@@ -68,7 +68,7 @@
 				});
 				if ($('#hidincharge').val() != "") {
 					var getcusId = $('#hidincharge').val().slice(0,-1);
-			       	var strarray = getcusId.split(';');
+					var strarray = getcusId.split(';');
 				}
 				if ($("[name='incharge[]']:checked").length > 0) {
 					var v = document.getElementById("inchargeDetails").value;
@@ -84,9 +84,16 @@
 			}
 		}
 		});
-
 	});
 
+// Single Click in tr
+function fnSclkTrInc(grpid,grpname) {
+	if ($('.' + grpid).is(':checked')) {
+		$("."+grpid).prop("checked", false);
+	} else {
+		$("."+grpid).prop("checked", true);
+	}
+}
 	
 </script>
 
@@ -128,7 +135,7 @@
 				<tbody id="search" class="staff">
 					<?php $i=0; ?>
 					@forelse($getdetails as $key => $groupvalue)
-						<tr class="h25" >
+						<tr class="h25" onclick="fnSclkTrInc('<?php echo $groupvalue->id; ?>','<?php echo $groupvalue->incharge_name; ?>');">
 							<td class="tac"  >
 								{{ ++$key }}
 							</td>
@@ -158,7 +165,8 @@
 				</tbody>
 			</table>
 		</div>
-   <div class="modal-footer bg-info mt10">
+
+	<div class="modal-footer bg-info mt10">
 	  <center>
 		 <button id="add" class="btn btn-success CMN_display_block box100 selectinchargegroup">
 			<i class="fa fa-plus" aria-hidden="true"></i>
@@ -170,8 +178,9 @@
 		 </button>
 		 <!-- onclick="javascript:return cancelpopupclick();" -->
 	  </center>
-   </div>
-	  </div>
+	</div>
+</div>
+
    </div>
    </div>
    <script>

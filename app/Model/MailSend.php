@@ -211,7 +211,12 @@ class MailSend extends Model {
 		return $result;
 	}
 
-
+	/**  
+	*  get Customer Details
+	*  @author Rajesh 
+	*  @param $mailId,$subject,$empid,$CustId,$BranchId,$pdfFile
+	*  Created At 2020/10/01
+	**/
 	public static function getpopupincharge($inchargeId){
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('mst_cus_inchargedetail')
@@ -220,5 +225,21 @@ class MailSend extends Model {
 				->WHERE('delflg',0)
 				->get();
     	return $result;
+	}
+
+	/**  
+	*  get Customer Details
+	*  @author Rajesh 
+	*  @param $mailId,$subject,$empid,$CustId,$BranchId,$pdfFile
+	*  Created At 2020/10/01
+	**/
+	public static function groupAgentsends($group) {
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_customerdetail')
+		           ->select('mst_agentdetail.*','mst_customerdetail.*')
+		           ->leftJoin('mst_agentdetail','mst_agentdetail.agent_id','=','mst_customerdetail.agentId')
+				   ->WHERE('mst_customerdetail.groupId', '=',$group)
+					->get();
+		return $result;
 	}
 }
