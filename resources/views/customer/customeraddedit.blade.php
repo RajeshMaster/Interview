@@ -358,6 +358,17 @@
                 </div>
             </fieldset>
         </div>
+        {{ Form::close() }}
+{{ Form::open(array('name'=>'frmcustaddeditcancel', 'id'=>'frmcustaddeditcancel', 'url' => 'Customer/addeditprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'files'=>true,'method' => 'POST')) }}
+        {{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+        {{ Form::hidden('filterval', $request->filterval, array('id' => 'filterval')) }}
+        {{ Form::hidden('editid','', array('id' => 'editid')) }}
+        {{ Form::hidden('flg', $request->flg , array('id' => 'flg')) }}
+        {{ Form::hidden('id', $request->id , array('id' => 'id')) }}
+        {{ Form::hidden('custid',$request->custid,array('id' => 'custid')) }}
+     	{{ Form::hidden('hid_branch_id','', array('id' => 'hid_branch_id')) }}
+    {{ Form::close() }}
+
 	</article>
 </div>
 @endsection

@@ -723,3 +723,27 @@ function fngoback(){
     	$("#emphistoryviewform").submit();
 	}
 }
+function gotoindexpage(viewflg,mainmenu,datetime) {
+	swal({
+		title: msg_cancel,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+			   if (viewflg == "1") {
+     				pageload();
+        			$('#frmcustaddeditcancel').attr('action', 'CustomerView?mainmenu='+mainmenu+'&time='+datetime);
+        			$("#frmcustaddeditcancel").submit();
+    			} else {
+			        $('#frmcustaddeditcancel').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+			        $("#frmcustaddeditcancel").submit();
+    			}
+			} else {
+				
+			}
+	});
+}
