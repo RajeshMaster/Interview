@@ -142,7 +142,8 @@ function fnSclkTrInc(grpid,grpname) {
 							<td class="tac">
 							<input type="checkbox" name="incharge[]" id="incharge[]"
 							class="<?php echo $groupvalue->id; ?>" 
-								value="<?php  echo $groupvalue->incharge_name."$".$groupvalue->id."$".$groupvalue->incharge_email_id; ?>">
+								value="<?php  echo $groupvalue->incharge_name."$".$groupvalue->id."$".$groupvalue->incharge_email_id; ?>"
+								onclick="fnSclkTrInc('<?php echo $groupvalue->id; ?>','<?php echo $groupvalue->incharge_name; ?>');">
 							</td>
 							<td class="pl5 tal">
 								@if($groupvalue->incharge_name  != "")

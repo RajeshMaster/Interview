@@ -105,7 +105,8 @@
 									@if($pregroup != $groupvalue->groupId)
 										<input type="checkbox" name="group[]" id="group[]" 
 											class="<?php echo $groupvalue->groupId; ?>" 
-											value="<?php  echo $groupvalue->groupId."$".$groupvalue->groupName; ?>">
+											value="<?php  echo $groupvalue->groupId."$".$groupvalue->groupName; ?>" 
+											onclick="fnSclkTrgrp('<?php echo $groupvalue->groupId; ?>','<?php echo $groupvalue->groupName; ?>');">
 									@endif
 								</td>
 								<td class="pl5 tal">

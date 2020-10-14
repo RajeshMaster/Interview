@@ -242,4 +242,16 @@ class MailSend extends Model {
 					->get();
 		return $result;
 	}
+
+	public static function getallGroup() {
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('mst_cus_group as group')
+					->select('group.*','mst_customerdetail.customer_name')
+					->leftJoin('mst_customerdetail','mst_customerdetail.customer_id','=','group.customerId')
+					->WHERE('group.delFlg',0)
+					->groupBy('groupId')
+					->orderBy('group.groupId', 'ASC')
+					->get();
+		return $result;
+	} 
 }

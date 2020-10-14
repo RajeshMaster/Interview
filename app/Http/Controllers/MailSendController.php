@@ -204,8 +204,14 @@ class MailSendController extends Controller {
 		foreach ($selSendMail as $key => $value) {
 			$employeDetail = Common::fnGetEmployeeInfo($value);
 
-
+			$recentClient =Employee::fnGetClientDtl($value);
+			/*
+				Point To remember
+				clientStatus = 0 ->able to edit end date
+				clientStatus = 1 ->Unable to edit end date
+			*/
 			$recentResume = Employee::fnGetResume($value);
+
 			if(isset($recentResume->resume)) {
 				$recentResumeNm = $recentResume->resume;
 				$resumeInsDate = $recentResume->createdDate;
@@ -224,6 +230,10 @@ class MailSendController extends Controller {
 				$resuemPdf = $resuemPdf.','.$recentResumeNm;
 			}
 			if ($recentResumeNm == "") {
+				Session::flash('danger','Add Cv to all Selected Employee!'); 
+				Session::flash('type','alert-danger');
+				return Redirect::to('MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+			} else if($recentResume->createdDate < $recentClient->Ins_DT) {
 				Session::flash('danger','Add Cv to all Selected Employee!'); 
 				Session::flash('type','alert-danger');
 				return Redirect::to('MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
@@ -512,8 +522,8 @@ class MailSendController extends Controller {
 						$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
 					}*/
 				}
-
 				$groupAgentsends = mailsend::groupAgentsends($value[$i]);
+
 				foreach ($groupAgentsends as $key => $agent) {
 					$agentMail = $agent->agent_email_id;
 					if ($agentMail  != "") {
@@ -603,20 +613,14 @@ class MailSendController extends Controller {
 			// 	}
 			// }
 		}
-
-		if($getmailId != ""){
+		/*if($getmailId != ""){
 			$allmailId = substr($getmailId,0,-1);
 			if($sendmail){
 				$mailSendList = mailsend::mailPostSendList($allmailId,$subject,$request->selectedEmployee,$custID,$BranchId,$request->selectedEmployeeResume);
 			}
-		}
-
-		
-
-
-
-		/*$agentMail = Interview::getAgentMail($customerId);
-		$CustomerName = Interview::getCustomerName($customerId);
+		}*/
+		$agentMail = mailsend::getAgentMail($customerId);
+		$CustomerName = mailsend::getCustomerName($customerId);
 		if (isset($agentMail[0]->agent_email_id) && $agentMail[0]->agent_email_id != "") {
 			$body1 = $dataAgent[0]->content;
 			$replace_contents1 = ['Admin','CCCC','IIII','<password>'];
@@ -628,10 +632,11 @@ class MailSendController extends Controller {
 				$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,$ccemail,'','',$pdf_array);
 			} 
 		}
+
 		if($customerId != "") {
 			foreach ($selectedEmp as $key => $value) {
 				if($sendmail) {
-					$getAgentMail = SendingMail::getAgentMail($customerId);
+					$getAgentMail = mailsend::getAgentMail($customerId);
 					if (isset($getAgentMail[0])) {
 						$allmailId = $getmailId.$getAgentMail[0]->agent_email_id;
 					} else {
@@ -643,7 +648,8 @@ class MailSendController extends Controller {
 					}
 				}
 			}
-		}*/
+		}
+		
 		Session::flash('success','Post Mail Send sucessfully!'); 
 		Session::flash('type','alert-success'); 
 
@@ -687,7 +693,7 @@ class MailSendController extends Controller {
 	*
 	*/
 	public function groupadd(Request $request) {
-		$getallGroup = Employee::getallGroup();
+		$getallGroup = Mailsend::getallGroup();
 		return view('mailsend.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup]);
 	}
 

@@ -101,7 +101,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12">
+		<div class="col-xs-12 mt8">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_branchName')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
@@ -122,7 +122,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12">
+		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_inchargename')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
