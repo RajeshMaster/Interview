@@ -99,7 +99,7 @@
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
 			@if(!empty($request->empid))
-				<a href="javascript:goempindexpage('Employee',{{ date('YmdHis') }});" class="pageload btn btn-info box80"><span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}</a>
+				<a href="javascript:goempindexpage('menu_emphistory',{{ date('YmdHis') }});" class="pageload btn btn-info box80"><span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}</a>
 			@else
 				<a href="javascript:goindexpage('menu_customer',{{ date('YmdHis') }});" class="pageload btn btn-info box80"><span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}</a>
 			@endif

@@ -28,7 +28,7 @@
 </script>
 {{ Form::open(array('name'=>'emphistoryform',
 		'id'=>'emphistoryform',
-		'url' => 'Employee/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
+		'url' => 'Employee/empHistory?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 		'method' => 'POST')) }}
 		{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
 		{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
@@ -43,7 +43,7 @@
 		{{ Form::hidden('pageflg', '1', array('id' => 'pageflg')) }}
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
+<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_3">
 	<!-- Start Heading -->
 	<fieldset class="pm0 mt20">
 		<div class="header">
@@ -91,6 +91,8 @@
 					<th data-hide="phone" class="tac fs10">
 						{{ trans('messages.lbl_branch') }}
 					</th>
+					<th data-hide="phone" class="tac fs10">
+					</th>
 				</tr>
 			</thead>
 			<tbody class="tablealternateclr">
@@ -103,26 +105,64 @@
 
 							<td class="text-center">
 								{{ $empdetailsdet[$i]['Emp_ID'] }}
-							</td>
+							</td class="text-center">
 
 							<td>
-                				{{ empnamelength($empdetails[$i]['LastName'], $empdetails[$i]['FirstName'], 50) }}
+                				{{ $empdetailsdet[$i]['LastName'] }} {{ $empdetailsdet[$i]['FirstName'] }} 
+                			</td>
+                			<td class="text-center">
+                				{{ $empdetailsdet[$i]['start_date'] }}
+                			</td>
+                			<td class="text-center">
+                				{{ $empdetailsdet[$i]['end_date'] }}
+                			</td>
+                			<td class="text-center">
+                				@if($empdetailsdet[$i]['experience']== '-')
+                 				@else 
+                  					{{ $empdetailsdet[$i]['experience'] }} Yrs
+                 				@endif
+                			</td>
+                			<td>
+                				<a class="colbl" href="javascript:customerview('{{ date('YmdHis') }}','{{ $empdetailsdet[$i]['id'] }}','{{ $empdetailsdet[$i]['cust_id'] }}');">
+                     		 	{{ $empdetailsdet[$i]['customer_name'] }}</a>
+                     		 </td>
+                			<td class="text-left">
+                				{{ $empdetailsdet[$i]['branch_name'] }}
+                			</td>
+                			<td class="text-center">
+                				<a class="colbl" href="javascript:getdetails('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}','{{ date('YmdHis') }}','1');">{{ "Details" }}
+                  				</a>    
                 			</td>
 						</tr>
 					@endfor
-
 				@else
-					<tr>
-						<td class="text-center fr" colspan="8">
+					<tr class="nodata">
+						<th class="text-center red nodatades" colspan="2">
+							{{ trans('messages.lbl_nodatafound') }}
+						</th>
+					</tr>
+					<tr class="nodata">
+						<td class="text-center red nodatades1" colspan="8">
 							{{ trans('messages.lbl_nodatafound') }}
 						</td>
-					
 					</tr>
 				@endif
 			</tbody>
 		</table>
 	</div>
-
+	@if(!empty($empdetails))
+		<div class="text-center">
+			@if(!empty($empdetails->total()))
+				<span class="pull-left mt24">
+					{{ $empdetails->firstItem() }} ~ {{ $empdetails->lastItem() }} / {{ $empdetails->total() }}
+				</span>
+			@endif 
+				{{ $empdetails->links() }}
+			<div class="CMN_display_block flr">
+					{{ $empdetails->linkspagelimit() }}
+			</div>
+		</div>
+	@endif
 
 	{{ Form::close() }}
 
