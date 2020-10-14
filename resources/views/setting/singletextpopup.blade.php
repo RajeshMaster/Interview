@@ -162,6 +162,7 @@
 						<col class="use" width="18%">
 					</colgroup>
 					<tbody class="box100per setcolor">
+
 						{{ Form::hidden('rdoid','',array('id' => 'rdoid')) }}
 						{{--*/ $idOrder="" /*--}}
 						@php ($i = 1)

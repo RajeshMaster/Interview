@@ -182,6 +182,20 @@
 								<a name="bank" id="bank" style="color:#33AFFF !important;" href="javascript:requirmentSelect('{{ $tbl_name}}');">{{ trans('messages.lbl_req_setting') }}</a></span>
 						</div>
 					</div>
+					<div class="box80per pull-left mt10">
+						<div class="col-xs-12 fwb headlbl headlbl2 settingdesignright">
+							<div class="mt3" style="padding-left: 15px;">
+								{{ trans('messages.lbl_languageskill') }}
+							</div>
+						</div>
+						<div class="pull-left mt10 mb10 box100per">
+							<span  class="col-xs-10 mt5 ml30 mb10 lbldesset settingsubdesignright">
+								@php
+									$tbl_name = 'jplanguage_skill';
+								@endphp
+								<a name="family" style="color:#33AFFF !important;" id="family" href="javascript:settingpopupsinglefield('singletextpopup','{{ $tbl_name }}','');">{{ trans('messages.lbl_japanese_skills') }}</a></span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</fieldset>

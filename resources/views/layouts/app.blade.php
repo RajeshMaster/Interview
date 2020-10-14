@@ -405,7 +405,7 @@ body {
 											$request->mainmenu == "menu_yetTopay") 
 											class="active" 
 										@endif>
-										<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;
+										<a class="pageload" href="{{ url('Employee/empHistory?mainmenu=menu_employee&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;
 											{{ trans('messages.lbl_emphistory') }}</a>
 									</li>
 								</ul>
@@ -510,12 +510,12 @@ body {
 										@endif>
 										<a class="pageload" href="{{ url('OurDetail/index?mainmenu=menu_ourDetail&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_ourdetails') }}</a>
 									</li>
-									<li @if(isset($request->mainmenu) && 
+									<!-- <li @if(isset($request->mainmenu) && 
 											$request->mainmenu == "menu_mailstatus") 
 											class="active" 
 										@endif>
 										<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">&nbsp;&nbsp;{{ trans('messages.lbl_japanese_skills') }}</a>
-									</li>
+									</li> -->
 								</ul>
 							</li>
 							<li @if(isset($request->mainmenu) && 
@@ -655,7 +655,7 @@ body {
 									{{ trans('messages.lbl_home') }}</a>
 								</div>
 							@endif
-							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_employee" || $request->mainmenu == "menu_nonemployee"))
+							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_employee" || $request->mainmenu == "menu_nonemployee" ||  $request->mainmenu == "menu_emphistory" ))
 								<div id="emp_sub_1">
 									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_employee') }}</a>
@@ -665,7 +665,7 @@ body {
 									{{ trans('messages.lbl_nonEmployee') }}</a>
 								</div>
 								<div id="emp_sub_3">
-									<a class="" href="#">
+									<a class="" href="{{ url('Employee/empHistory?mainmenu=menu_emphistory&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_emphistory') }}</a>
 								</div>
 							@endif
@@ -726,11 +726,11 @@ body {
 										style="text-decoration: none !important;">
 									{{ trans('messages.lbl_ourdetails') }}</a>
 								</div>
-								<div id="setting_sub_1">
+								<!-- <div id="setting_sub_1">
 									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" 
 										style="text-decoration: none !important;">
 									{{ trans('messages.lbl_japanese_skills') }}</a>
-								</div>
+								</div> -->
 							@endif
 						</div>
 					</div>

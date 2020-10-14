@@ -26,6 +26,7 @@ return [
 	'lbl_search' => 'Search',
 	'lbl_multi_search' => 'Multi Search',
 	'lbl_clear' => 'Clear',
+	'lbl_End_date'  => 'End Date',
 	/* End Common Module  */
 	
 	/* Start Change Password Module  */
@@ -126,7 +127,6 @@ return [
 	'lbl_age' => 'Age',
 	'lbl_empdetails' => 'Employee Details',
 	'lbl_streetaddress' => 'Street Address',
-	'lbl_work_date' => 'Work End Date',
 	'lbl_staffusersurname' => 'User Name (Jp & Eng): Surname',
 	'lbl_staffusername' => 'User Name (Jp & Eng): Name',
     'lbl_nickname' => 'Nick Name',
@@ -159,6 +159,8 @@ return [
 	'lbl_inactive' => 'In Active',
 	'lbl_customerno' => 'Customer No',
 	'lbl_copy' => 'Copy',
+	'lbl_NoofYears' => 'No of Years',
+	'lbl_client_name' => 'Client Name',
 	/* End Employee Module */
 
 	/* Start Setting Module */

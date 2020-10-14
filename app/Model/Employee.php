@@ -29,14 +29,14 @@ class Employee extends Model
 
 		if ($request->searchmethod == 1) {
 			$query = $query->where(function($joincont) use ($request) {
-                                    $joincont->where('Emp_ID', 'LIKE', '%' . $request->singlesearch . '%')
-                                    		 ->orwhere('nickname', 'LIKE', '%' . $request->singlesearch . '%');
-                            });
+									$joincont->where('Emp_ID', 'LIKE', '%' . $request->singlesearch . '%')
+											 ->orwhere('nickname', 'LIKE', '%' . $request->singlesearch . '%');
+							});
 		} elseif ($request->searchmethod == 2) {
 			$query = $query->where(function($joincont) use ($request) {
-                                $joincont->where([['Emp_ID', 'LIKE', '%' . $request->employeeno . '%'],
-                                				 ['nickname', 'LIKE', '%' . $request->employeename . '%']]);
-                            });
+								$joincont->where([['Emp_ID', 'LIKE', '%' . $request->employeeno . '%'],
+												 ['nickname', 'LIKE', '%' . $request->employeename . '%']]);
+							});
 		}
 
 
@@ -347,6 +347,31 @@ class Employee extends Model
 					->select('*')
 					->WHERE('mailId','=',$mailId)
 					->get();
+		return $query;
+	}
+
+
+
+	/**  
+	*  Employee Details
+	*  @author Rajesh 
+	*  @param $request,$resignid,title
+	*  Created At 2020/09/30
+	**/
+	public static function fnGetEmpHistDetails($request) {
+		$db = DB::connection('mysql');
+		$query = $db->table('inv_clientemp_dtl')
+					->select('inv_clientemp_dtl.*','mst_customerdetail.customer_name','mst_customerdetail.id','mst_customerdetail.customer_id','mst_branchdetails.branch_name')
+					->leftJoin('mst_customerdetail', 'mst_customerdetail.customer_id', '=', 'inv_clientemp_dtl.cust_id')
+					->leftJoin('mst_branchdetails', function($join) {
+						$join->on('mst_branchdetails.customer_id', '=', 'inv_clientemp_dtl.cust_id');
+						$join->on('mst_branchdetails.branch_id', '=', 'inv_clientemp_dtl.branch_id');
+					})
+					->where([['status', '=', 1]])
+					->orderBy('inv_clientemp_dtl.cust_id', 'ASC')
+					->paginate($request->plimit);
+					/*->tosql();
+					dd($query);*/
 		return $query;
 	}
 }

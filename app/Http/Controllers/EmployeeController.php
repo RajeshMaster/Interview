@@ -572,6 +572,115 @@ class EmployeeController extends Controller
 											]);
 	}
 
+		/**
+	*
+	* Eployee History Proces
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/05
+	*
+	*/
+	public  function empHistory(Request $request) {
+		$disabledEmp= "";
+		$disabledNotEmp= "";
+		$disabledRes= "";
+		if ($request->plimit == "") {
+			$request->plimit = 50;
+		}
+
+/*		if (empty($request->resignid)) {
+			$resignid = 0;
+			if (!empty($request->title) && $request->title != 2) {
+				$title = 3;
+				$disabledNotEmp= "disabled";
+			} else {
+				$title = 2;
+				$disabledEmp= "disabled";
+			}
+		} else {
+			$resignid = 1;
+			$title = ""; 
+			$disabledRes= "disabled";
+		}
+
+		//SORTING PROCESS
+		if ($request->staffsort == "") {
+			$request->staffsort = "Emp_ID";
+		}
+		if (empty($request->sortOrder)) {
+			$request->sortOrder = "DESC";
+		}
+		if ($request->sortOrder == "asc") { 
+			$request->sortstyle="sort_asc";
+		} else {  
+			$request->sortstyle="sort_desc";
+		}
+
+		//SORT POSITION
+		if (!empty($request->singlesearch) || $request->searchmethod == 2) {
+		  $sortMargin = "margin-right:200px;";
+		} else {
+		  $sortMargin = "margin-right:0px;";
+		}
+
+		$array = array("Emp_Id"=>trans('messages.lbl_empid'),
+						"FirstName"=>trans('messages.lbl_empName'),
+						"DOJ"=>trans('messages.lbl_doj'),
+						"DOB"=>trans('messages.lbl_age')
+						);
+
+		$src = "";
+		$noimage = "../public/images";
+		$file = "../public/images/upload/";
+		$disPath = "../public/images/upload/";
+		$filename = "";
+		
+		$empdetailsdet=array();
+		$empdetails = Employee::fnGetEmployeeDetails($request, $resignid,$title);
+
+		$i = 0;
+		foreach($empdetails as $key=>$data) {
+			$empdetailsdet[$i]['Emp_ID'] = $data->Emp_ID;
+			$i++;
+		}*/
+
+		$empdetails = Employee::fnGetEmpHistDetails($request);
+		$i = 0;
+
+		$empdetailsdet=array();
+		foreach ($empdetails as $key => $value) {
+	    	$empdetails[$i]['id'] = $value->id;
+			$empdetailsdet[$i]['Emp_ID'] = $value->emp_id;
+			$empdetailsdet[$i]['cust_id'] = $value->cust_id;
+			$empdetailsdet[$i]['branch_id'] = $value->branch_id;
+			$empdetailsdet[$i]['incharge_id'] = $value->incharge_id;
+			$empdetailsdet[$i]['start_date'] = $value->start_date;
+			$empdetailsdet[$i]['end_date'] = $value->end_date;
+			$empdetailsdet[$i]['customer_name'] = $value->customer_name;
+			$empdetailsdet[$i]['branch_name'] = $value->branch_name;
+			$empdetailsdet[$i]['remarks'] = $value->remarks;
+
+			$expdetails = Common::getYrMonCountBtwnDates($emp->start_date,$emp->end_date);
+
+	    	if ($expdetails['year'].".".$expdetails['month'] == 0.0) {
+
+				$empdetailsdet[$i]['experience'] = "-";
+
+			} else {
+
+				$empdetailsdet[$i]['experience'] = $expdetails['year'].".".Common::fnAddZeroSubstring($expdetails['month']);
+
+			}
+
+			$i++;
+		}
+
+		return view('employee.empHistory',['request' => $request,
+											'empdetails' => $empdetails,
+											'empdetailsdet' => $empdetailsdet
+											]);
+	}
+
 	/**
 	*
 	* Resume Upload Proces

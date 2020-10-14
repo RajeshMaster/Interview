@@ -137,6 +137,17 @@ namespace App\Http\Common;
 		 										 		'commShow','Upd_DT','UpdatedBy'),
 												 	'usenotusefields'=>array('delFlg'),
 		 										 	'commitfields'=>array('Order_id')),
+
+						//Japanese Skills
+						'jplanguage_skill'=>array('labels'=>
+												array('heading'=>trans('messages.lbl_japanese'),
+												 	'field1lbl'=>trans('messages.lbl_skillname')),
+			    	  							 	'selectfields'=>array('id','skillName','Ins_DT','DelFlg','Order_id'),
+		 										 	'displayfields'=>array('id','skillName','Ins_DT','DelFlg','Order_id'),
+		 										 	'insertfields'=>array('skillName','DelFlg','Ins_DT','Upd_DT','CreatedBy','UpdatedBy','Order_id'),
+		 										 	'updatefields'=>array('skillName','UpdatedBy','Upd_DT'),
+												 	'usenotusefields'=>array('DelFlg'),
+		 										 	'commitfields'=>array('Order_id')),
 			    );
 		}
 	}

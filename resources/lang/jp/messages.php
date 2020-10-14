@@ -26,6 +26,7 @@ return [
 	'lbl_search' => '検索',
 	'lbl_multi_search' => '複数検索',
 	'lbl_clear' => 'クリア',
+	'lbl_End_date'  => '終了日',
 	/* End Common Module  */
 
 	/* Start Change Password */
@@ -126,7 +127,6 @@ return [
 	'lbl_age' => '年齢',
 	'lbl_empdetails' => '社員詳細',
 	'lbl_streetaddress' => '住所',
-	'lbl_work_date' => '仕事終了日',
 	'lbl_staffusersurname' => 'ユーザ名（日英）：姓',
 	'lbl_staffusername' => 'ユーザ名（日英）：姓',
 	'lbl_nickname' => 'ニック名',
@@ -159,6 +159,8 @@ return [
 	'lbl_inactive' => '非活動',
 	'lbl_customerno' => '取引先番号',
 	'lbl_copy' => 'コーピ',
+	'lbl_NoofYears' => '年数',
+	'lbl_client_name' => 'お客名',
 	/* End Employee Module */
 
 	/* Start Setting Module */

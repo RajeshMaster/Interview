@@ -59,14 +59,19 @@ class SettingController extends Controller {
 	**/
 	public static function singletextpopup(Request $request) {
 		$getTableFields = settingscommon::getDbFieldsforProcess();
+
 		$tablename = $request->tablename;
 	 	$query = setting::selectOnefieldDatas($getTableFields[$tablename]['selectfields'],
 	 										  $getTableFields[$tablename]['commitfields'][0],
 	 										  $request);
+
 		$requestAsJSONArray = json_encode($request->all());
+
 		$headinglbl = $getTableFields[$tablename]['labels']['heading'];
 		$field1lbl = $getTableFields[$tablename]['labels']['field1lbl'];
+
 		$selectfiled  = $getTableFields[$tablename]['selectfields'];
+		
 		return view('setting.singletextpopup',['getdetails' => $query,
 												'request'=>$request,
 												'headinglbl'=>$headinglbl,

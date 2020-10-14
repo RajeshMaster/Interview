@@ -227,6 +227,17 @@ class settingcommon {
 																		'UpdatedBy'),
 												'usenotusefields' => array('delFlg'),
 												'commitfields' => array('orderId')),
+
+					//Japanese Skills
+					'jplanguage_skill'=>array('labels'=>
+												array('heading'=>trans('messages.lbl_japanese'),
+												 	'field1lbl'=>trans('messages.lbl_skillname')),
+			    	  							 	'selectfields'=>array('id','skillName','Ins_DT','DelFlg'),
+		 										 	'displayfields'=>array('id','skillName','Ins_DT','DelFlg'),
+		 										 	'insertfields'=>array('skillName','DelFlg','Ins_DT','UpDT','CreatedBy','UpdatedBy','Order_id'),
+		 										 	'updatefields'=>array('skillName','UpdatedBy'),
+												 	'usenotusefields'=>array('DelFlg'),
+		 										 	'commitfields'=>array('id')),
 		);
 	}
 }
