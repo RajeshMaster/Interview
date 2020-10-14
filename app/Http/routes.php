@@ -202,6 +202,9 @@ Route::group(['prefix'=>'OldCustomer','middleware' => 'auth'], function(){
 	Route::any('copyBranchProcess', 'OldCustomerController@copyBranchProcess');
 	Route::any('addcopycancel', 'OldCustomerController@addcopycancel');
 	Route::any('getEmailExistsManyFields', 'OldCustomerController@getEmailExistsManyFields');
+	Route::any('importpopup', 'OldCustomerController@importpopup');
+	Route::any('importprocess', 'OldCustomerController@importprocess');
+	
 });
 
 //Agent

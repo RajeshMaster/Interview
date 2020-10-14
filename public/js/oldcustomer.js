@@ -513,3 +513,13 @@ function cleartxt(){
 	$('#selctedIncharge').val("");
 	$('#selctedInchargeNumber').val("");
 }
+
+function importpopupenable(mainmenu) {
+     popupopenclose(1);
+    $('#importpopup').load('importpopup?mainmenu='+mainmenu+'&time='+datetime);
+    $("#importpopup").modal({
+           backdrop: 'static',
+            keyboard: false
+        });
+    $('#importpopup').modal('show');
+}

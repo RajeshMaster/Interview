@@ -13,6 +13,8 @@ use File;
 use Storage;
 use View;
 use Illuminate\Support\Facades\Validator;
+use DB;
+
 
 class OldCustomerController extends Controller {
 	public function index(Request $request)
@@ -123,6 +125,13 @@ class OldCustomerController extends Controller {
 									 'disabledusenotuse' => $disabledusenotuse]);
 	}
 
+	function importpopup(Request $request){
+		//For Get The DataBase List
+		$getOldDbDetails = OldCustomer::fnOldDbDetails();
+		return view('oldcustomer.importpopup',['getOldDbDetails'=> $getOldDbDetails,
+										'request' => $request]);
+	}
+
 	public function view(Request $request) {
 		$inchargeview=array();
 		$branchview=array();
@@ -151,7 +160,6 @@ class OldCustomerController extends Controller {
 		$id = $request->custid;
 		$getinchargedetails = OldCustomer::getinchargedetails($id);
 		$i=0;
-
 		foreach($getinchargedetails as $key=>$inchview) {
 			$inchargeview[$i]['incharge_name'] = $inchview->incharge_name;
 			$inchargeview[$i]['incharge_contact_no'] = $inchview->incharge_contact_no;
@@ -177,6 +185,7 @@ class OldCustomerController extends Controller {
 		}
 
 		$currentemployeedetails = OldCustomer::selectByIdclient($id);
+
 		$i=0;
 
 		foreach($currentemployeedetails as $key=>$cempview) {
@@ -205,6 +214,7 @@ class OldCustomerController extends Controller {
 		}
 
 		$currentempdetails = OldCustomer::selectByIdchangeclient($id);
+
 		$i=0;
 		foreach($currentempdetails as $key=>$cemployeeview) {
 			$currentempview[$i]['customer_id'] = $cemployeeview->customer_id;
@@ -359,7 +369,7 @@ class OldCustomerController extends Controller {
 				return Redirect::to('OldCustomer/copyBranch?mainmenu=menu_oldcustomer&time='.date('YmdHis'));
 			} else {
 				$oldCustomerId = Session::get('OldCustomerIdselected');
-				// $deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
+				$deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
 				Session::flash('id', $getmaxid );
 				Session::flash('custid', $cus3 );
 				return Redirect::to('Customer/index?mainmenu=menu_oldcustomer&time='.date('YmdHis'));
@@ -378,7 +388,7 @@ class OldCustomerController extends Controller {
   			$oldCustomerId = Session::get('OldCustomerIdselected');
   			$getmaxid = Session::get('customerMax');
   			$cus3 = Session::get('customerIdSel');
-			// $deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
+			$deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
 			Session::flash('id', $getmaxid );
 			Session::flash('custid', $cus3 );
 			return Redirect::to('Customer/index?mainmenu=menu_customer&time='.date('YmdHis'));
@@ -487,7 +497,7 @@ class OldCustomerController extends Controller {
 				return Redirect::to('OldCustomer/copyBranch?mainmenu=menu_oldcustomer&time='.date('YmdHis'));
 			} else {
 				$oldCustomerId = Session::get('OldCustomerIdselected');
-				//$deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
+				$deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
 				Session::flash('id', $getmaxid );
 				Session::flash('custid', $custid );
 				return Redirect::to('Customer/index?mainmenu=menu_customer&time='.date('YmdHis'));
@@ -502,7 +512,7 @@ class OldCustomerController extends Controller {
 
 	public function addcopycancel(Request $request) {
 		$oldCustomerId = Session::get('OldCustomerIdselected');
-		// $deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
+		$deleteCusbranchincCli = OldCustomer::deleteCusbranchincCli($oldCustomerId);
 		Session::flash('id', $request->id );
 		Session::flash('custid', $request->custid );
 		return Redirect::to('Customer/CustomerView?mainmenu=menu_customer&time='.date('YmdHis'));
@@ -528,6 +538,271 @@ class OldCustomerController extends Controller {
 		print_r($whchMail);exit;
 		// $inchargeMailExist = OldCustomer::fnGetEmailExistsCheck($request);
 		// $countEmail = count($inchargeMailExist);
+  	}
+
+  	function importprocess(Request $request) {
+  		$employee_count = OldCustomer::fnGetCustomerCount();
+		$getConnectionQuery = OldCustomer::fnGetConnectionQuery($request);
+
+		$dbName = $getConnectionQuery[0]->DBName;
+		$dbUser = $getConnectionQuery[0]->UserName;
+		$dbPass = $getConnectionQuery[0]->Password;
+
+		Config::set('database.connections.otherdb.database', $dbName);
+		Config::set('database.connections.otherdb.username', $dbUser);
+		Config::set('database.connections.otherdb.password', $dbPass);
+		try {
+			$db = DB::connection('otherdb');
+			$db->getPdo();
+
+			if($db->getDatabaseName()){
+				$oldUserQuery = OldCustomer::fnGetCustomerDetailsMB();
+				$g_val = count($oldUserQuery);
+				$getOldUserRecordsAsArray = array();
+				$j = 0;
+				foreach ($oldUserQuery as $key => $value1) {
+					$getOldUserRecordsAsArray[$j]['customer_id'] = $value1->customer_id;
+					$getOldUserRecordsAsArray[$j]['customer_name'] = $value1->customer_name;
+					$getOldUserRecordsAsArray[$j]['contract'] = $value1->contract;
+					$getOldUserRecordsAsArray[$j]['customer_contact_no'] = $value1->customer_contact_no;
+					$getOldUserRecordsAsArray[$j]['customer_email_id'] = $value1->customer_email_id;
+					$getOldUserRecordsAsArray[$j]['customer_fax_no'] = $value1->customer_fax_no;
+					$getOldUserRecordsAsArray[$j]['customer_website'] = $value1->customer_website;
+					$getOldUserRecordsAsArray[$j]['customer_address'] = $value1->customer_address;
+					$getOldUserRecordsAsArray[$j]['cover_letter'] = $value1->cover_letter;
+					$getOldUserRecordsAsArray[$j]['create_date'] = $value1->create_date;
+					$getOldUserRecordsAsArray[$j]['create_by'] = $value1->create_by;
+					$getOldUserRecordsAsArray[$j]['update_date'] =	$value1->update_date;
+					$getOldUserRecordsAsArray[$j]['update_by'] =	$value1->update_by;
+					$getOldUserRecordsAsArray[$j]['delflg'] =	$value1->delflg;
+					$getOldUserRecordsAsArray[$j]['romaji'] = $value1->romaji;
+					$getOldUserRecordsAsArray[$j]['nickname'] =	$value1->nickname;
+					$getOldUserRecordsAsArray[$j]['move_flg'] =	$value1->move_flg;
+					$getOldUserRecordsAsArray[$j]['emp_active'] =	$value1->emp_active;
+					$j++;
+				}
+				if ($getOldUserRecordsAsArray != "") {
+					for ($i = 0; $i < count($getOldUserRecordsAsArray); $i++) {
+						$exist = OldCustomer::fnOldTempstaffExist($getOldUserRecordsAsArray[$i]["customer_id"]);
+						$existCount = count($exist);
+						if ($existCount == 0) {
+							$fldarray = "";
+							$valuearray = "";
+							foreach ($getOldUserRecordsAsArray[$i] AS $key => $value) {
+								$fldarray[]= $key;
+								$valuearray[]= $value;
+							}
+							$insertOldUserQuery = OldCustomer::fnInsertOLDMBDetails($fldarray,$valuearray);
+						} else {
+							$tempvar=$getOldUserRecordsAsArray[$i]['customer_id'];
+							$tempTM=$getOldUserRecordsAsArray[$i]['customer_id'];
+							$column_name_value = "";
+							$condition = "";
+							$fldarray = "";
+							$valuearray = "";
+							foreach ($getOldUserRecordsAsArray[$i] AS $key => $value) {
+								if ($key != "customer_id") {
+									$fldarray[]= $key;
+									$valuearray[]= $value;
+								}
+							}
+							$condition = "customer_id = '" . $tempvar. "'";
+							$column_name_value = mb_substr($column_name_value, 0, mb_strlen($column_name_value) - 1);
+							$updateOldUserQuery = OldCustomer::fnUpdateOLDMBDetails($fldarray,$valuearray,$tempvar);
+							Session::flash('success', 'Imported Sucessfully!'); 
+							Session::flash('type', 'alert-success'); 
+						}
+					}
+					// Branch Details INsert
+					$oldbranchUserQuery = OldCustomer::fnGetCustomerBranchDetailsMB();
+					$g_val = count($oldbranchUserQuery);
+					$oldbranchUserQueryRecordsAsArray = array();
+					$K = 0;
+					foreach ($oldbranchUserQuery as $key2 => $value2) {
+						$oldbranchUserQueryRecordsAsArray[$K]['customer_id'] = $value2->customer_id;
+						$oldbranchUserQueryRecordsAsArray[$K]['branch_id'] = $value2->branch_id;
+						$oldbranchUserQueryRecordsAsArray[$K]['branch_name'] = $value2->branch_name;
+						$oldbranchUserQueryRecordsAsArray[$K]['branch_contact_no'] = $value2->branch_contact_no;
+						$oldbranchUserQueryRecordsAsArray[$K]['branch_email_id'] = $value2->branch_email_id;
+						$oldbranchUserQueryRecordsAsArray[$K]['branch_fax_no'] = $value2->branch_fax_no;
+						$oldbranchUserQueryRecordsAsArray[$K]['branch_address'] = $value2->branch_address;
+						$oldbranchUserQueryRecordsAsArray[$K]['create_date'] = $value2->create_date;
+						$oldbranchUserQueryRecordsAsArray[$K]['create_by'] = $value2->create_by;
+						$oldbranchUserQueryRecordsAsArray[$K]['update_date'] = $value2->update_date;
+						$oldbranchUserQueryRecordsAsArray[$K]['update_by'] = $value2->update_by;
+						$oldbranchUserQueryRecordsAsArray[$K]['delflg'] =	$value2->delflg;
+						$K++;
+					}
+					if ($oldbranchUserQueryRecordsAsArray != "") {
+						for ($l = 0; $l < count($oldbranchUserQueryRecordsAsArray); $l++) {
+							$exist = OldCustomer::fnOldTempbranchExist($oldbranchUserQueryRecordsAsArray[$l]["branch_id"]);
+							$existCount = count($exist);
+
+							if ($existCount == 0) {
+								$fldarray = "";
+								$valuearray = "";
+								foreach ($oldbranchUserQueryRecordsAsArray[$l] AS $key => $value) {
+									$fldarray[]= $key;
+									$valuearray[]= $value;
+								}
+
+								$insertOldbranchQuery = OldCustomer::fnInsertBranchOLDMBDetails($fldarray,$valuearray);
+
+							} else {
+								$tempvar=$oldbranchUserQueryRecordsAsArray[$l]['branch_id'];
+								$fldarray = "";
+								$valuearray = "";
+
+								foreach ($oldbranchUserQueryRecordsAsArray[$l] AS $key => $value) {
+									if ($key != "branch_id") {
+										$fldarray[]= $key;
+										$valuearray[]= $value;
+									}
+								}
+
+								$updateOldUserQuery = OldCustomer::fnUpdatebranchOLDMBDetails($fldarray,$valuearray,$tempvar);
+							}
+						}
+						
+					} else {
+						Session::flash('success', 'Branch Data Does NOt exist'); 
+						Session::flash('type', 'alert-danger'); 
+						return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+					}
+
+					// Incharge Details Insert
+					$oldInchargeUserQuery = OldCustomer::fnGetCustomerInchargeDetailsMB();
+					$g_val = count($oldInchargeUserQuery);
+					$oldinchargeQueryRecordsAsArray = array();
+					$M = 0;
+					foreach ($oldInchargeUserQuery as $key3 => $value3) {
+						$oldinchargeQueryRecordsAsArray[$M]['id'] = $value3->id;
+						$oldinchargeQueryRecordsAsArray[$M]['customer_id'] = $value3->customer_id;
+						$oldinchargeQueryRecordsAsArray[$M]['incharge_name'] = $value3->incharge_name;
+						$oldinchargeQueryRecordsAsArray[$M]['incharge_name_romaji'] = $value3->incharge_name_romaji;
+						$oldinchargeQueryRecordsAsArray[$M]['branch_name'] = $value3->branch_name;
+						$oldinchargeQueryRecordsAsArray[$M]['incharge_contact_no'] = $value3->incharge_contact_no;
+						$oldinchargeQueryRecordsAsArray[$M]['incharge_email_id'] = $value3->incharge_email_id;
+						$oldinchargeQueryRecordsAsArray[$M]['password'] = $value3->password;
+						$oldinchargeQueryRecordsAsArray[$M]['confirmpassword'] = $value3->confirmpassword;
+						$oldinchargeQueryRecordsAsArray[$M]['create_date'] = $value3->create_date;
+						$oldinchargeQueryRecordsAsArray[$M]['create_by'] = $value3->create_by;
+						$oldinchargeQueryRecordsAsArray[$M]['update_date'] = $value3->update_date;
+						$oldinchargeQueryRecordsAsArray[$M]['update_by'] = $value3->update_by;
+						$oldinchargeQueryRecordsAsArray[$M]['delflg'] = $value3->delflg;
+						$oldinchargeQueryRecordsAsArray[$M]['designation'] =	$value3->designation;
+						$M++;
+					}
+
+					if ($oldinchargeQueryRecordsAsArray != "") {
+						for ($N = 0; $N < count($oldinchargeQueryRecordsAsArray); $N++) {
+							$exist = OldCustomer::fnOldTempInchargeExist($oldinchargeQueryRecordsAsArray[$N]["id"]);
+							$existCount = count($exist);
+							if ($existCount == 0) {
+								$fldarray = "";
+								$valuearray = "";
+								foreach ($oldinchargeQueryRecordsAsArray[$N] AS $key => $value) {
+									$fldarray[]= $key;
+									$valuearray[]= $value;
+								}
+								$insertOldbranchQuery = OldCustomer::fnInsertInchargeOLDMBDetails($fldarray,$valuearray);
+							} else {
+								$tempvar=$oldinchargeQueryRecordsAsArray[$N]['id'];
+								$fldarray = "";
+								$valuearray = "";
+
+								foreach ($oldinchargeQueryRecordsAsArray[$N] AS $key => $value) {
+									if ($key != "id") {
+										$fldarray[]= $key;
+										$valuearray[]= $value;
+									}
+								}
+								$updateOldUserQuery = OldCustomer::fnUpdateInchargeOLDMBDetails($fldarray,$valuearray,$tempvar);
+							}
+						}
+					} else {
+						Session::flash('success', 'Incharge Data Does NOt exist'); 
+						Session::flash('type', 'alert-danger'); 
+						return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+					}
+
+					// Clientempteam Details Insert
+					$oldClientEmpUserQuery = OldCustomer::fnGetCustomerClientEmpDetailsMB();
+					$g_val = count($oldClientEmpUserQuery);
+					$oldClientEmpQueryRecordsAsArray = array();
+					$O = 0;
+					foreach ($oldClientEmpUserQuery as $key4 => $value4) {
+						$oldClientEmpQueryRecordsAsArray[$O]['id'] = $value4->id;
+						$oldClientEmpQueryRecordsAsArray[$O]['cust_id'] = $value4->cust_id;
+						$oldClientEmpQueryRecordsAsArray[$O]['emp_id'] = $value4->emp_id;
+						$oldClientEmpQueryRecordsAsArray[$O]['status'] = $value4->status;
+						$oldClientEmpQueryRecordsAsArray[$O]['start_date'] = $value4->start_date;
+						$oldClientEmpQueryRecordsAsArray[$O]['end_date'] = $value4->end_date;
+						$oldClientEmpQueryRecordsAsArray[$O]['Ins_DT'] = $value4->Ins_DT;
+						$oldClientEmpQueryRecordsAsArray[$O]['Ins_TM'] = $value4->Ins_TM;
+						$oldClientEmpQueryRecordsAsArray[$O]['Up_DT'] = $value4->Up_DT;
+						$oldClientEmpQueryRecordsAsArray[$O]['UP_TM'] = $value4->UP_TM;
+						$oldClientEmpQueryRecordsAsArray[$O]['CreatedBy'] = $value4->CreatedBy;
+						$oldClientEmpQueryRecordsAsArray[$O]['UpdatedBy'] = $value4->UpdatedBy;
+						$oldClientEmpQueryRecordsAsArray[$O]['delFLg'] = $value4->delFLg;
+						$oldClientEmpQueryRecordsAsArray[$O]['branch_id'] =	$value4->branch_id;
+						$O++;
+					}
+					if ($oldClientEmpQueryRecordsAsArray != "") {
+						for ($p = 0; $p < count($oldClientEmpQueryRecordsAsArray); $p++) {
+
+							$exist = OldCustomer::fnOldClientEmpExist($oldClientEmpQueryRecordsAsArray[$p]["id"]);
+							$existCount = count($exist);
+
+							if ($existCount == 0) {
+								$fldarray = "";
+								$valuearray = "";
+								foreach ($oldClientEmpQueryRecordsAsArray[$p] AS $key => $value) {
+									$fldarray[]= $key;
+									$valuearray[]= $value;
+								}
+
+								$insertOldClientempQuery = OldCustomer::fnInsertClientEmpOLDMBDetails($fldarray,$valuearray);
+
+							}  else {
+								$tempvar=$oldClientEmpQueryRecordsAsArray[$p]['id'];
+								$fldarray = "";
+								$valuearray = "";
+
+								foreach ($oldClientEmpQueryRecordsAsArray[$p] AS $key => $value) {
+									if ($key != "id") {
+										$fldarray[]= $key;
+										$valuearray[]= $value;
+									}
+								}
+
+								$updateOldClientEmpQuery = OldCustomer::fnUpdateclientempOLDMBDetails($fldarray,$valuearray,$tempvar);
+							}
+						}
+						Session::flash('success', 'Import Sucessfully'); 
+						Session::flash('type', 'alert-success'); 
+						return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+
+					} else {
+						Session::flash('success', 'Data Does NOt exist'); 
+						Session::flash('type', 'alert-danger'); 
+						return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+					}
+
+				} else {
+					Session::flash('success', 'Invalid Db Connection'); 
+					Session::flash('type', 'alert-danger'); 
+				}
+			}
+			else {
+				Session::flash('success', 'Invalid Db Connection'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		} catch (\Exception $e) {
+	        Session::flash('success', 'Invalid Db Connection.'); 
+			Session::flash('type', 'alert-danger'); 
+    	}
+		return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
   	}
 
 }

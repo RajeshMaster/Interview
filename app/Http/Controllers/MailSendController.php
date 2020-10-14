@@ -15,6 +15,8 @@ use File;
 use Storage;
 use View;
 use Illuminate\Support\Facades\Validator;
+use FPDI_Protection;
+
 
 /*Class: MailController
 Some functions related to display the mail list and describing their particular details.*/
@@ -440,12 +442,12 @@ class MailSendController extends Controller {
 			$databoth[0]->content = str_replace('LINK',$urlValue, $databoth[0]->content);
 			$dataAgent[0]->content = str_replace('LINK',$urlValue, $dataAgent[0]->content);
 		}
-		if (isset($request->chk_passwordencryption) && $request->chk_passwordencryption!="") {
+		//if (isset($request->chk_passwordencryption) && $request->chk_passwordencryption!="") {
 			$data[0]->content = str_replace('<password>',$pdfpassword, $data[0]->content);
-		} else{
+		/*} else{
 			$data[0]->content = str_replace('パスワード　:<password>','', $data[0]->content);
 			$data[0]->content = str_replace('添付したファイルのパスワードは下記のようです。','',$data[0]->content);
-		}
+		}*/
 
 		$dateTime = date("YmdHis");
 		foreach ($selectedEmp as $key => $value) {
@@ -467,16 +469,15 @@ class MailSendController extends Controller {
 			$securename = '../ResumeUpload/employeResume/secure/'.$request->subject."_".strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
 			$tochangesecure = $OlddestinationPath.'/'. $selectedEmployeeResume[$key];
 			if(file_exists($pdfOldFile)) {
-				// self::pdfEncrypts($tochangesecure,$pdfpassword,$securename,$request);
+				 self::pdfEncrypts($tochangesecure,$pdfpassword,$securename,$request);
 				rename($pdfOldFile,$pdfNewFile);
-				/*if (isset($request->chk_passwordencryption) && $request->chk_passwordencryption!="") {
+				//if (isset($request->chk_passwordencryption) && $request->chk_passwordencryption!="") {
 					array_push($pdf_array, $securename);
-				} else {*/
-					array_push($pdf_array, $pdfNewFile);
-				// }
+				//} else {
+			//		array_push($pdf_array, $pdfNewFile);
+			//	}
 			}
 		}
-
 		$groupId = $request->groupvalue;
 		if($groupId != "") {
 			$value = explode(';', $groupId);
@@ -649,7 +650,7 @@ class MailSendController extends Controller {
 				}
 			}
 		}
-		
+
 		Session::flash('success','Post Mail Send sucessfully!'); 
 		Session::flash('type','alert-success'); 
 

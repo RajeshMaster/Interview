@@ -17,7 +17,6 @@ use Mail;
 class SendingMail extends Model {
 
 	public static function sendIntimationMail($mailformat, $to ,$maildetailssubject,$cc=null ,$protectpath=null,$files=null,$excelpdf=null,$excelfile=null) {
-
 		$msg = $mailformat[0];
 		Mail::sendwithoutview($msg, $mailformat, function ($message) use ($to,$maildetailssubject,$cc,$protectpath,$files,$excelpdf,$excelfile) {
 
@@ -53,6 +52,7 @@ class SendingMail extends Model {
 				$message->cc($cc);
 			}
 		});
+		
 		return true;
 	}
 }

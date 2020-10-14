@@ -97,12 +97,16 @@
 	<!-- Session msg End-->
 
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
-		<a class="btn btn-link {{ $disabledactive }}" href="javascript:filter('1');"> {{ trans('messages.lbl_active') }} </a>
+	<!-- 	<a class="btn btn-link {{ $disabledactive }}" href="javascript:filter('1');"> {{ trans('messages.lbl_active') }} </a>
 		<span>|</span>
 		<a class="btn btn-link {{ $disabledinactive }}" href="javascript:filter('2');"> {{ trans('messages.lbl_inactive') }} </a>
 		<span>|</span>
 		<a class="btn btn-link {{ $disabledusenotuse }}" href="javascript:filter('3');"> {{ trans('messages.lbl_notuse') }} </a>
 
+ -->
+		<a href="javascript:importpopupenable('{{ $request->mainmenu }}');" style="color:blue;" class="mr10 pb15 box30">
+            <img class="box22 mr7 mb5" src="{{ URL::asset('public/images/copy.png') }}">Import
+        </a>
 
 		<a href="javascript:clearsearch()" title="Clear Search">
 			<img class="pull-right box35 mr10 pageload clearposition" src="{{ URL::asset('public/images/clearsearch.png')  }}">
@@ -359,4 +363,12 @@
 			}
 		}); 
 	</script>
+
+<div id="importpopup" class="modal fade" style="width: 775px;">
+	<div id="login-overlay">
+		<div class="modal-content">
+		<!-- Popup will be loaded here -->
+		</div>
+	</div>
+</div>
 @endsection
