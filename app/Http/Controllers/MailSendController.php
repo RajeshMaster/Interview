@@ -644,7 +644,7 @@ class MailSendController extends Controller {
 					}
 					$subject = $request->subject;
 					if(!in_array($customerId,$email_array)){
-						$mailSendList = SendingMail::mailPostSendList($allmailId,$subject,$value,$custID,$BranchId,$selectedEmployeeResume[$key]);
+						$mailSendList = mailsend::mailPostSendList($allmailId,$subject,$value,$custID,$BranchId,$selectedEmployeeResume[$key]);
 					}
 				}
 			}
