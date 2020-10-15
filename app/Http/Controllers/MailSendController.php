@@ -720,9 +720,21 @@ class MailSendController extends Controller {
 	}
 
 	public static function skillAdd(Request $request){
-		$pgDetails = Mailsend::getProgramLanguage($request);
+		$empSkill = MailSend::getSkillDetail($request); 
+		if(!empty($empSkill)){
+			$editFlg = 1;
+		}else{
+			$editFlg = 0;
+		}
+		$pgDetails = MailSend::getProgramLanguage($request);
 		return view('mailsend.skillSelPopup',['request' => $request,
-												'pgDetails' => $pgDetails]);
+												'pgDetails' => $pgDetails,
+												'empSkill' => $empSkill,
+												'editFlg' => $editFlg]);
+	}
+
+	public static function skillAddEditProcess(Request $request){
+		print_r($request->all()); exit();
 	}
 
 }

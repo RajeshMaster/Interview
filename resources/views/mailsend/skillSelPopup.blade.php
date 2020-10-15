@@ -43,11 +43,41 @@
 				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 			});
 		});
-		/*$('.selectskill').on('click', function() {	
-			var getEmpId = $("#empId").val();
-			alert(getEmpId);
-		});*/
+		$('.selectskill').on('click', function() {
+			$('#hidskillId').val("");
+			if ($("[name='incharge[]']:checked").length <= 0){
+				alert("Please Select Programming Language");
+				return false;
+			}else{
+				$("#hidcheck").val('1');
+				var getchecked = $("#hidcheck").val();
+				$("[name='incharge[]']:checked").each(function(){
+					var res = $(this).val();
+					if (getchecked == 1) {
+						getchecked = 2;
+						$('#hidskillId').val($('#hidskillId').val() + res);
+					}else{
+						$('#hidskillId').val($('#hidskillId').val() + "," + res);
+					}
+				});
+				pageload();
+    			$("#skillAddfrm").submit();
+			}
+		});
+		check();
 	});
+
+	function check(){
+		var edit= $('#editFlg').val();
+		if(edit==1){
+			var sklist= $('#skillList').val();
+			var strarray = sklist.split(',');
+			for (var i = 0; i < strarray.length; i++) {
+				jQuery("."+strarray[i]).prop("checked", true);
+			}
+		}
+		
+	}
 // Single Click in tr
 function fnSclkTrInc(grpid,grpname) {
 	if ($('.' + grpid).is(':checked')) {
@@ -58,9 +88,20 @@ function fnSclkTrInc(grpid,grpname) {
 }
 	
 </script>
-
+{{ Form::open(array('name'=>'skillAddfrm',
+		'id'=>'skillAddfrm',
+		'url' => 'MailSend/skillAddEditProcess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
+		'method' => 'POST')) }}
 {{ Form::hidden('mainmenu', $request->mainmenu, array('id' => 'mainmenu')) }}
-{{ Form::text('empId', $request->empId, array('id' => 'empId')) }}
+{{ Form::hidden('empId', $request->empId, array('id' => 'empId')) }}
+{{ Form::hidden('hidcheck', null, array('id' => 'hidcheck')) }}
+{{ Form::hidden('hidskillId', null, array('id' => 'hidskillId')) }}
+{{ Form::hidden('editFlg', $editFlg, array('id' => 'editFlg')) }}
+@if($editFlg == "1")
+	{{ Form::hidden('skillList', $empSkill[0]->programming_lang, array('id' => 'skillList')) }}
+@else
+	{{ Form::hidden('skillList', '', array('id' => 'skillList')) }}
+@endif
 
 <div class="popupstyle popupsize">
 	<div class="modal-content">
@@ -84,14 +125,11 @@ function fnSclkTrInc(grpid,grpname) {
 					<col width="6%">
 					<col width="8%">
 					<col width="">
-					<!-- <col width="41%">
-					<col width=""> -->
 				</colgroup>
 				<thead class="CMN_tbltheadcolor" >
 					<th class="tac">{{ trans('messages.lbl_sno') }}</th>
 					<th class="tac"></th>
 					<th class="tac">{{ trans('messages.lbl_PLTypeNM') }}</th>
-					<!-- <th class="tac">{{ trans('messages.lbl_incharge_mail') }}</th> -->
 				</thead>
 				<tbody id="search" class="staff">
 					<?php $i=0; ?>
@@ -111,39 +149,68 @@ function fnSclkTrInc(grpid,grpname) {
 								 {{ $groupvalue->ProgramLangTypeNM }}
 								@endif
 							</td>
-							<!-- <td class="tac"  >
-								@if($groupvalue->ProgramLangTypeCD  != "")
-								 {{ $groupvalue->ProgramLangTypeCD }}
-								@endif
-							</td> -->
 						</tr>
 					<?php $i++; ?>
 					@empty
 						<tr>
-							<td class="text-center" colspan="5" style="color: red;">
+							<td class="text-center" colspan="3" style="color: red;">
 							{{ trans('messages.lbl_nodatafound') }}</td>
 						</tr>
 					@endforelse
 				</tbody>
 			</table>
 		</div>
-
+		<fieldset class="h50 mr7 ml7">
+					<div class="dispinline col-md-12 mt10 mb5 ml50">
+						<div class="pull-left text-right clr_blue fwb mt5 labeltext ml40">
+							Japanese Level
+							<span style="color:red;"> * 
+							</span>
+						</div>
+						<div class="dispinline ml15 mb5 pull-left box30per">
+							{{ Form::text('textbox1','',array('id'=>'textbox1', 
+											'name' => 'textbox1',
+											'class'=>'textbox1 form-control ime_mode_disable regdes',
+											'maxlength' => 100,
+											'onkeypress' =>'return blockSpecialChar(event)',
+											'onblur'=>'this.value=jQuery.trim(this.value);')) }}
+						</div>
+						<label id="empty_textbox1" class="display_none mt6 change">
+							This Field is required.
+						</label>
+						<label id="existsChk_textbox1" class="registernamecolor display_none mt6 change">
+							This Value is already exists.
+						</label>
+					</div>  
+				</fieldset>
 	<div class="modal-footer bg-info mt10">
 	  <center>
-		 <button id="add" class="btn btn-success CMN_display_block box100 selectskill">
+	  	@if($editFlg == "1")
+	  	 <button  type="button" id="add" class="btn btn-success CMN_display_block box100 selectskill">
+			<i class="fa fa-plus" aria-hidden="true"></i>
+			   {{ trans('messages.lbl_update') }}
+		 </button>
+	  	@else
+	  	 <button  type="button" id="add" class="btn btn-success CMN_display_block box100 selectskill">
+			<i class="fa fa-plus" aria-hidden="true"></i>
+			   {{ trans('messages.lbl_register') }}
+		 </button>
+	  	@endif
+	  	
+		<!--  <button  type="button" id="add" class="btn btn-success CMN_display_block box100 selectskill">
 			<i class="fa fa-plus" aria-hidden="true"></i>
 			   {{ trans('messages.lbl_select') }}
-		 </button>
+		 </button> -->
 		 <button data-dismiss="modal" onclick="javascript:fnclose();" class="btn btn-danger CMN_display_block box100">
 			<i class="fa fa-times" aria-hidden="true"></i>
 			   {{ trans('messages.lbl_cancel') }}
 		 </button>
-		 <!-- onclick="javascript:return cancelpopupclick();" -->
 	  </center>
 	</div>
 </div>
 
    </div>
+   {{ Form::close() }}
    </div>
    <script>
 	$('.footable').footable({

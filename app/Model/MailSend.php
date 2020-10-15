@@ -255,7 +255,7 @@ class MailSend extends Model {
 		return $result;
 	}
 
-	public static function getProgramLanguage(){
+	public static function getProgramLanguage($request){
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('emp_sysprogramlangtypes')
 					->select('id','ProgramLangTypeCD','ProgramLangTypeNM')
@@ -264,4 +264,13 @@ class MailSend extends Model {
 					->get();
 		return $result;
 	} 
+	public static function getSkillDetail($request){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('emp_mstskills')
+				->select('programming_lang')
+				->WHERE('empId', $request->empId)
+				->WHERE('delFlg',0)
+				->get();
+		return $result;		
+	}
 }

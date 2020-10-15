@@ -127,6 +127,7 @@ Route::group(['prefix' => 'MailSend','middleware' => 'auth'], function(){
 	Route::any('groupadd','MailSendController@groupadd');
 	Route::any('pdfViewProcess', 'MailSendController@pdfViewProcess');
 	Route::any('skillAdd','MailSendController@skillAdd');
+	Route::any('skillAddEditProcess','MailSendController@skillAddEditProcess');
 });
 
 // Setting
