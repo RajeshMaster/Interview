@@ -124,6 +124,7 @@ Route::group(['prefix' => 'MailSend','middleware' => 'auth'], function(){
 	Route::any('uploadResume','EmployeeController@uploadResume');
 	Route::any('groupadd','MailSendController@groupadd');
 	Route::any('pdfViewProcess', 'MailSendController@pdfViewProcess');
+	Route::any('skillAdd','MailSendController@skillAdd');
 });
 
 // Setting

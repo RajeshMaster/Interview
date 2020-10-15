@@ -185,11 +185,15 @@
 										@if($empdetailsdet[$i]['nickname'] != "" )
 											({{ $empdetailsdet[$i]['nickname'] }} )
 										@endif
+										@if($empdetailsdet[$i]['KanaFirstName'] != "" && $empdetailsdet[$i]['KanaLastName'] != "")
+												{{ $empdetailsdet[$i]['KanaFirstName'] }}
+												{{ $empdetailsdet[$i]['KanaLastName'] }}
+										@endif
 									</span>
 									<span class="" style="float: right">
 
 									</span>
-									@if($empdetailsdet[$i]['KanaFirstName'] != "" && $empdetailsdet[$i]['KanaLastName'] != "")
+									<!-- @if($empdetailsdet[$i]['KanaFirstName'] != "" && $empdetailsdet[$i]['KanaLastName'] != "")
 										<div>　
 											<span class="fll">
 												{{ $empdetailsdet[$i]['KanaFirstName'] }}
@@ -198,7 +202,7 @@
 												{{ $empdetailsdet[$i]['KanaLastName'] }}
 											</span>
 										</div>
-									@endif
+									@endif -->
 
 									<div>
 										<span class="f28 clr_blue"> 
@@ -214,12 +218,12 @@
 										<span class="f12"> 
 											{{ (!empty($empdetailsdet[$i]['Mobile1']) ?  $empdetailsdet[$i]['Mobile1'] : "Nill")  }}
 										</span>
-										<span class="f18 clr_blue">
+										<!-- <span class="f18 clr_blue">
 											{{ trans('messages.lbl_email') }} :
 										</span>
 										<span class="f12"> 
 											{{ $empdetailsdet[$i]['Emailpersonal'] }}
-										</span>
+										</span> -->
 									</div>
 
 									<div>
@@ -229,12 +233,12 @@
 										</span>
 									</div>
 
-									<div>
+									<!-- <div>
 										<span class="clr_blue">{{ trans('messages.lbl_customer') }}</span> :
 										<span class="f12"> 
 										{{ (!empty($empdetailsdet[$i]['customer_name']) ?  $empdetailsdet[$i]['customer_name'] : "Nill")  }}
 										</span>
-									</div>
+									</div> -->
 
 								<!-- 	<div class="mb4 CMN_display_block mt4">
 										<div class="CMN_display_block">
@@ -259,7 +263,8 @@
 										</div>
 									</div> -->
 										<div class="CMN_display_block">
-											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a>
+											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a> | 
+											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_skilladd') }}</a>
 										</div>
 								</div>
 							</div>
@@ -318,6 +323,13 @@
 </script>
 
 <div id="uploadRes" class="modal fade" style="width: 775px;">
+	<div id="login-overlay">
+		<div class="modal-content">
+		<!-- Popup will be loaded here -->
+		</div>
+	</div>
+</div>
+<div id="uploadSkill" class="modal fade" style="width: 775px;">
 	<div id="login-overlay">
 		<div class="modal-content">
 		<!-- Popup will be loaded here -->

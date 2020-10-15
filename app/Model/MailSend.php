@@ -253,5 +253,15 @@ class MailSend extends Model {
 					->orderBy('group.groupId', 'ASC')
 					->get();
 		return $result;
+	}
+
+	public static function getProgramLanguage(){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('emp_sysprogramlangtypes')
+					->select('id','ProgramLangTypeCD','ProgramLangTypeNM')
+					->WHERE('DelFlg',0)
+					->orderBy('Order_id', 'ASC')
+					->get();
+		return $result;
 	} 
 }

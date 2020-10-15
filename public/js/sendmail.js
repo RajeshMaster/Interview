@@ -391,3 +391,16 @@ function pdfview(filename) {
 	$('#frmurlview').attr('action', 'pdfViewProcess?mainmenu='+mainmenu+'&time='+datetime);
 	$("#frmurlview").submit();
 }
+
+// Skill Add Screen View
+function skillAdd(empid,lastname){
+	$('#empid').val(empid);
+	$('#empname').val(lastname);
+	popupopenclose(1);
+	$('#uploadSkill').load('skillAdd?mainmenu='+mainmenu+'&time='+datetime+'&empId='+empid+'&lastname=1');
+	$("#uploadSkill").modal({
+			backdrop: 'static',
+			keyboard: false
+		});
+	$('#uploadSkill').modal('show');
+}

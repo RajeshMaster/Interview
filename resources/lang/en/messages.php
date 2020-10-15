@@ -291,5 +291,6 @@ return [
 	'lbl_agentname(kana)' =>'Agent Name(Kana)',
 	'lbl_agentagreement' =>'Agent Agreement Date',
 	'lbl_newCustomer' => 'New Customer',
+	'lbl_skilladd' => 'Skill Add',
 	/* End Agent Module*/
 ];

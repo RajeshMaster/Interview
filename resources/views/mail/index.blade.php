@@ -52,25 +52,22 @@
 			</button>
 		</div>
 		<div class="pull-left input-group mt6 filtermail">
-			{{ Form::button(
-							trans('messages.lbl_all'),
-							array('class'=>'pageload btn btn-link filmail '.$disabledall,
+			{{ Form::button(trans('messages.lbl_all'),
+							array('class'=>'pageload btn btn-link filmail',
 							'type'=>'button',
-							'onclick' => 'javascript:return fnfilter(1)')) 
+							'onclick' => 'javascript:return fnfilter(1)' ,$disabledall)) 
 			}}
 			<span class = "filmail">|</span>
-			{{ Form::button(
-							trans('messages.lbl_use'),
-							array('class'=>'pageload btn btn-link filmail '.$disableduse,
+			{{ Form::button(trans('messages.lbl_use'),
+							array('class'=>'pageload btn btn-link filmail',
 							'type'=>'button',
-							'onclick' => 'javascript:return fnfilter(2)')) 
+							'onclick' => 'javascript:return fnfilter(2)',$disableduse)) 
 			}}
 			<span class = "filmail">|</span>
-			{{ Form::button(
-							trans('messages.lbl_notuse'),
-							array('class'=>'pageload btn btn-link filmail '.$disablednotuse,
+			{{ Form::button(trans('messages.lbl_notuse'),
+							array('class'=>'pageload btn btn-link filmail',
 							'type'=>'button',
-							'onclick' => 'javascript:return fnfilter(3)')) 
+							'onclick' => 'javascript:return fnfilter(3)',$disablednotuse)) 
 			}}
 		</div>
 	</div>
