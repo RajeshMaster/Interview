@@ -161,6 +161,7 @@ class MailSendController extends Controller {
 			} else {
 				$empdetailsdet[$i]['presentResume'] =0;
 			}
+			$skill =Employee::fnGetskilDtl($empdetailsdet[$i]['Emp_ID']);
 
 
 			$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
@@ -169,9 +170,9 @@ class MailSendController extends Controller {
 			}
 			$i++;
 		}
-		// 	echo "<pre>";
-		// print_r($empdetailsdet);
-		// echo "</pre>";
+			echo "<pre>";
+		print_r($empdetailsdet);
+		echo "</pre>";
 		$detailage = Employee::GetAvgage($resignid);
 
 		return view('mailsend.index', ['request' => $request,

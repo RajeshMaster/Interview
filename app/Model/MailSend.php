@@ -264,11 +264,11 @@ class MailSend extends Model {
 					->get();
 		return $result;
 	} 
-	public static function getSkillDetail($request){
+	public static function getSkillDetail($empId){
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('emp_mstskills')
 				->select('programming_lang')
-				->WHERE('empId', $request->empId)
+				->WHERE('empId', $empId)
 				->WHERE('delFlg',0)
 				->get();
 		return $result;		

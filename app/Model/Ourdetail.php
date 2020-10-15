@@ -1,21 +1,12 @@
 <?php
 
 namespace App\Model;
-
-
-
 use Illuminate\Database\Eloquent\Model;
-
 use DB;
-
 use Session;
-
 use Input;
-
 use Auth;
-
 use Carbon\Carbon ;
-
 class Ourdetail extends Model {
 
 	public static function viewdetails($request) {
@@ -49,6 +40,7 @@ class Ourdetail extends Model {
 	}
 
 	public static function UpdateuserReg($request) {
+		$db = DB::connection('mysql_invoice');
 
 		$name = Session::get('FirstName').' '.Session::get('LastName');
 
@@ -58,48 +50,27 @@ class Ourdetail extends Model {
 
 		$fax = $request->fax1.'-'.$request->fax2.'-'.$request->fax3;
 
-		$update=DB::table('dev_ourdetails')
-
+		$update=$db->table('dev_ourdetails')
 			->where('id', $request->editid)
-
 			->update(
-
 				['CompanyName' => $request->txt_cmyname,
-
 				'CompanyNamekana' => $request->txt_kananame,
-
 				'pincode' => $post,
-
 				'Prefecturename' => $request->txt_prefectname,
-
 				'Streetaddress' => $request->txt_jpaddress,
-
 				'BuildingName' => $request->txt_buildingname,
-
 				'TEL' => $tel,
-
 				'FAX' => $fax,
-
 				'Commonmail' => $request->txt_commonmail,
-
 				'URL' => $request->txt_websiteurl,
-
 				'Establisheddate' => $request->txt_establishdate,
-
 				'Closingmonth' => $request->txt_clsmonth,
-
 				'Closingdate' => $request->txt_clsdate,
-
 				'systemname' => $request->txt_systemname,
-
 				'delflg' => 0,
-
 				'UP_DT' => date('Y-m-d'),
-
 				'Up_TM' => date('h:i:s'),
-
 				'UpdatedBy' => $name]
-
 		);
 
 		return $update;
@@ -107,61 +78,35 @@ class Ourdetail extends Model {
 	}
 
 	public static function insertuserRec($request) {
-
+		$db = DB::connection('mysql_invoice');
 		$name = Session::get('FirstName').' '.Session::get('LastName');
-
 		$post = $request->txt_pincode1.'-'.$request->txt_pincode2;
-
 		$tel = $request->Tel1.'-'.$request->Tel2.'-'.$request->Tel3;
-
 		$fax = $request->fax1.'-'.$request->fax2.'-'.$request->fax3;
-
-		$insert=DB::table('dev_ourdetails')
+		$insert=$db->table('dev_ourdetails')
 
 			->insert(
-
 				['CompanyName' => $request->txt_cmyname,
-
 				'CompanyNamekana' => $request->txt_kananame,
-
 				'pincode' => $post,
-
 				'Prefecturename' => $request->txt_prefectname,
-
 				'Streetaddress' => $request->txt_jpaddress,
-
 				'BuildingName' => $request->txt_buildingname,
-
 				'TEL' => $tel,
-
 				'FAX' => $fax,
-
 				'Commonmail' => $request->txt_commonmail,
-
 				'URL' => $request->txt_websiteurl,
-
 				'Establisheddate' => $request->txt_establishdate,
-
 				'Closingmonth' => $request->txt_clsmonth,
-
 				'Closingdate' => $request->txt_clsdate,
-
 				'systemname' => $request->txt_systemname,
-
 				'delflg' => 0,
-
 				'Ins_DT' => date('Y-m-d'),
-
 				'Ins_TM' => date('h:i:s'),
-
 				'CreatedBy' => $name,
-
 				'Up_DT' => date('Y-m-d'),
-
 				'Up_TM' => date('h:i:s'),
-
 				'UpdatedBy' => $name]
-
 		);
 
 		return $insert;
@@ -177,23 +122,14 @@ class Ourdetail extends Model {
 			->insert(
 
 				['Tax' => $request->txt_tax,
-
 				'Startdate' => $request->txt_startdate,
-
 				'delflg' => 0,
-
 				'Ins_DT' => date('Y-m-d'),
-
 				'Ins_TM' => date('h:i:s'),
-
 				'CreatedBy' => $name,
-
 				'Up_DT' => date('Y-m-d'),
-
 				'Up_TM' => date('h:i:s'),
-
 				'UpdatedBy' => $name]
-
 		);
 
 		return $insert;
@@ -202,14 +138,11 @@ class Ourdetail extends Model {
 
 	public static function balanceedit($request) {
 
-		$db = DB::connection('mysql');
+		$db = DB::connection('mysql_invoice');
 
 		$result= $db->table('dev_kessandetails')
-
 						->SELECT('*')
-
 						->where('id', $request->balid)
-
 						->get();
 
 		return $result;
@@ -219,29 +152,17 @@ class Ourdetail extends Model {
 	public static function UpdatebalReg($request) {
 
 		$name = Session::get('FirstName').' '.Session::get('LastName');
-
 		$update=DB::table('dev_kessandetails')
-
 			->where('id', $request->balid)
-
 			->update(
-
 				['Accountperiod' => $request->period,
-
 				'Startingyear' => $request->startyear,
-
 				'Startingmonth' => $request->startmonth,
-
 				'Closingyear' => $request->endyear,
-
 				'Closingmonth' => $request->endmonth,
-
 				'delflg' => 0,
-
 				'UP_DT' => date('Y-m-d'),
-
 				'Up_TM' => date('h:i:s'),
-
 				'UpdatedBy' => $name]
 
 		);
@@ -251,37 +172,22 @@ class Ourdetail extends Model {
 	}
 
 	public static function insertbalRec($request) {
-
 		$name = Session::get('FirstName').' '.Session::get('LastName');
-
 		$insert=DB::table('dev_kessandetails')
 
 			->insert(
-
 				['Accountperiod' => $request->period,
-
 				'Startingyear' => $request->startyear,
-
 				'Startingmonth' => $request->startmonth,
-
 				'Closingyear' => $request->endyear,
-
 				'Closingmonth' => $request->endmonth,
-
 				'delflg' => 0,
-
 				'Ins_DT' => date('Y-m-d'),
-
 				'Ins_TM' => date('h:i:s'),
-
 				'CreatedBy' => $name,
-
 				'UP_DT' => date('Y-m-d'),
-
 				'Up_TM' => date('h:i:s'),
-
 				'UpdatedBy' => $name]
-
 		);
 
 		return $insert;

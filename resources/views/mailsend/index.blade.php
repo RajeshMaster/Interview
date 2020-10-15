@@ -133,7 +133,7 @@
 						{{ trans('messages.lbl_sno') }}
 					</th>
 					<th class="tac fs10">
-						{{ trans('messages.lbl_empid') }}
+						{{ trans('messages.lbl_skill') }}
 					</th>
 					<th data-hide="phone" class="tac fs10">
 						{{ trans('messages.lbl_empdetails') }}
@@ -141,7 +141,7 @@
 					<th data-hide="phone" class="tac fs10">
 					</th>
 					<th data-hide="phone" class="tac fs10">
-						{{ trans('messages.lbl_doj') }}
+						{{ trans('messages.lbl_workEdate') }}
 					</th>
 				</tr>
 			</thead>
@@ -271,20 +271,14 @@
 
 						<td class="tac">
 							<div class="45px">
-								<span>{{ $empdetailsdet[$i]['DOJ'] }}</span>
-							</div>
-							<div class="mt55">
-								<span class="clr_blue">
-									@if($empdetailsdet[$i]['experience'] > 1 )
-										{{ $empdetailsdet[$i]['experience'] }} Yrs
-									@elseif($empdetailsdet[$i]['experience'] <= 1 )
-										{{ $empdetailsdet[$i]['experience'] }} Yr
-									@else
-										{{ 0 }} Yr
-									@endif		
+								<span class="tac">	
+									@if(isset($empdetailsdet[$i]['clientEndDate']))
+										{{ substr($empdetailsdet[$i]['clientEndDate'], 0, 10) }} 
+									@endif	
 								</span>
 							</div>
 						</td>
+
 					</tr>
 					@endfor
 				@else
