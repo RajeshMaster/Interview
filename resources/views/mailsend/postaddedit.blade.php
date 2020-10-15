@@ -40,6 +40,7 @@
 		{{ Form::hidden('selectedEmployeeResume', $resuemPdf , array('id' => 'selectedEmployeeResume')) }}
 		{{ Form::hidden('selectedType', '' , array('id' => 'selectedType')) }}
 		{{ Form::hidden('dateTime', $dateTime , array('id' => 'dateTime')) }}
+		{{ Form::hidden('empSkills', $langSkills , array('id' => 'empSkills')) }}
 
 	<fieldset id="hdnfield" class="mt10">
 		<div class="col-xs-12 mt8">
@@ -60,6 +61,23 @@
 			<div class="col-xs-7 mw">
 				<span  class="CMN_display_block box33per blue ml2">
 					{{ $selectedEmpName }}
+				</span>
+			</div>
+		</div>
+
+		<div class="col-xs-12 mt8">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_skill')}}<span class="fr">&nbsp;&nbsp;</span></label>
+			</div>
+			<div class="col-xs-7 mw">
+				<span  class="CMN_display_block box33per blue ml2">
+					<?php $skills = explode(",", $langSkills); ?>
+					<?php for ($a = 0; $a < count($skills); $a++) { ?>
+						@if(isset($skills[$a]))
+							{{ $skills[$a] }}
+ 						@endif
+						<br>
+					<?php } ?>
 				</span>
 			</div>
 		</div>

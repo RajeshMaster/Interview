@@ -214,6 +214,7 @@ class MailSendController extends Controller {
 		$selectedEmpName = "";
 		$firstLastName = "";
 		$resuemPdf = "";
+		$langSkills = "";
 		$dateTime = date("YmdHis");
 		$url = "";
 		$tempdir = '../ResumeUpload/employeResume/temp';
@@ -222,7 +223,9 @@ class MailSendController extends Controller {
 		foreach ($selSendMail as $key => $value) {
 			$employeDetail = Common::fnGetEmployeeInfo($value);
 
-			$recentClient =Employee::fnGetClientDtl($value);
+			$empSkillDtls = mailsend::getSkillDetail($value);
+
+			$recentClient = Employee::fnGetClientDtl($value);
 			/*
 				Point To remember
 				clientStatus = 0 ->able to edit end date
@@ -245,10 +248,45 @@ class MailSendController extends Controller {
 				$resuemPdf = $recentResumeNm;
 			} else {
 				$SelectedEmpid = $SelectedEmpid.','.$value;
-				$selectedEmpName = $selectedEmpName.','.$employeDetail[0]->FirstName;
+				$selectedEmpName = $selectedEmpName.' , '.$employeDetail[0]->FirstName;
 				$firstLastName =  $firstLastName.','.strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 				$resuemPdf = $resuemPdf.','.$recentResumeNm;
 			}
+
+			if ($langSkills == "") {
+				if (isset($empSkillDtls[0]->japanese_skill) && isset($empSkillDtls[0]->programming_lang)) {
+					$pgmLang = explode(',', $empSkillDtls[0]->programming_lang);
+					foreach ($pgmLang as $keyskill => $skillVal) {
+						if($keyskill == 0) {
+							$singleSkill = MailSend::getSkillsingle($skillVal);
+							$pgmLangSkills = $singleSkill[0]->ProgramLangTypeNM;
+						} else {
+							$singleSkill = MailSend::getSkillsingle($skillVal);
+							$pgmLangSkills = $pgmLangSkills.' ; '.$singleSkill[0]->ProgramLangTypeNM;
+						}
+					}
+					$langSkills = $employeDetail[0]->FirstName." -> ".
+						trans('messages.lbl_skillname')." : ".$pgmLangSkills." | ".
+						trans('messages.lbl_japanese_skills')." : ".$empSkillDtls[0]->japanese_skill;
+				}
+			} else {
+				if (isset($empSkillDtls[0]->japanese_skill) && isset($empSkillDtls[0]->programming_lang)) {
+					$pgmLang = explode(',', $empSkillDtls[0]->programming_lang);
+					foreach ($pgmLang as $keyskill => $skillVal) {
+						if($keyskill == 0) {
+							$singleSkill = MailSend::getSkillsingle($skillVal);
+							$pgmLangSkills = $singleSkill[0]->ProgramLangTypeNM;
+						} else {
+							$singleSkill = MailSend::getSkillsingle($skillVal);
+							$pgmLangSkills = $pgmLangSkills.' ; '.$singleSkill[0]->ProgramLangTypeNM;
+						}
+					}
+					$langSkills = $langSkills.",".$employeDetail[0]->FirstName." -> ".
+						trans('messages.lbl_skillname')." : ".$pgmLangSkills." | ".
+						trans('messages.lbl_japanese_skills')." : ".$empSkillDtls[0]->japanese_skill;
+				}
+			}
+
 			if ($recentResumeNm == "") {
 				Session::flash('danger','Add Cv to all Selected Employee!'); 
 				Session::flash('type','alert-danger');
@@ -342,6 +380,7 @@ class MailSendController extends Controller {
 										'selectedEmpName' => $selectedEmpName,
 										'firstLastName' => $firstLastName,
 										'resuemPdf' => $resuemPdf,
+										'langSkills' => $langSkills,
 										'dateTime' => $dateTime,
 										'url' => $url,
 										'noimage' => $noimage,
@@ -465,7 +504,15 @@ class MailSendController extends Controller {
 			$data[0]->content = str_replace('パスワード　:<password>','', $data[0]->content);
 			$data[0]->content = str_replace('添付したファイルのパスワードは下記のようです。','',$data[0]->content);
 		}*/
-
+		if(trim($request->empSkills) == "") {
+			$data[0]->content = str_replace('SSSS','', $data[0]->content);
+			$databoth[0]->content = str_replace('SSSS','', $databoth[0]->content);
+			$dataAgent[0]->content = str_replace('SSSS','', $dataAgent[0]->content);
+		} else {
+			$data[0]->content = str_replace('SSSS',"Skills : ".$request->empSkills,$data[0]->content);
+			$databoth[0]->content = str_replace('SSSS',"Skills : ".$request->empSkills, $databoth[0]->content);
+			$dataAgent[0]->content = str_replace('SSSS',"Skills : ".$request->empSkills, $dataAgent[0]->content);
+		}
 		$dateTime = $request->dateTime;
 		foreach ($selectedEmp as $key => $value) {
 			$getDateTime = Common::getSystemDateTime();
