@@ -161,7 +161,7 @@ class MailSendController extends Controller {
 			} else {
 				$empdetailsdet[$i]['presentResume'] =0;
 			}
-			$skill =Employee::fnGetskilDtl($empdetailsdet[$i]['Emp_ID']);
+			$skill =MailSend::getSkillDetail($empdetailsdet[$i]['Emp_ID']);
 
 
 			$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
