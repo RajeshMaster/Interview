@@ -159,20 +159,32 @@ class MailSendController extends Controller {
 					$empdetailsdet[$i]['presentResume'] = 0;
 				}
 			} else {
-				$empdetailsdet[$i]['presentResume'] =0;
+				$empdetailsdet[$i]['presentResume'] = 0;
 			}
 			$skill =MailSend::getSkillDetail($empdetailsdet[$i]['Emp_ID']);
+			$pgSkil = array();
+			if (isset($skill[0]->programming_lang)) {
+				$empdetailsdet[$i]['JpSkills'] = $skill[0]->japanese_skill;
 
-
+				$pgSkil =explode(',', $skill[0]->programming_lang);
+				foreach ($pgSkil as $key => $value) {
+					if($key == 0) {
+						$singleSkill = MailSend::getSkillsingle($value);
+						$empdetailsdet[$i]['PgSkills'] = $singleSkill[0]->ProgramLangTypeNM;
+					} else {
+						$singleSkill = MailSend::getSkillsingle($value);
+						$empdetailsdet[$i]['PgSkills'] = $empdetailsdet[$i]['PgSkills'].';'.$singleSkill[0]->ProgramLangTypeNM;
+					}
+				}
+			}
+				
 			$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
 			foreach($cusname as $key=>$value) {
 				$empdetailsdet[$i]['customer_name'] = $value->customer_name;
 			}
 			$i++;
 		}
-			echo "<pre>";
-		print_r($empdetailsdet);
-		echo "</pre>";
+			
 		$detailage = Employee::GetAvgage($resignid);
 
 		return view('mailsend.index', ['request' => $request,

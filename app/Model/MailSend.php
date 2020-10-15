@@ -298,4 +298,14 @@ class MailSend extends Model {
 				]);
 		return $insert;
 	}
+
+	public static function getSkillsingle($id){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('emp_sysprogramlangtypes')
+					->select('id','ProgramLangTypeCD','ProgramLangTypeNM')
+					->WHERE('DelFlg',0)
+					->WHERE('id',$id)
+					->get();
+		return $result;
+	} 
 }

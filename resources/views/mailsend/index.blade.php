@@ -155,7 +155,15 @@
 						<td>
 							<div class="tac">
 								<!-- <label>{{ $empdetailsdet[$i]['Emp_ID'] }}</label> -->
-							
+								@if(isset($empdetailsdet[$i]['PgSkills']))
+									{{ $empdetailsdet[$i]['PgSkills'] }}
+								@endif
+								@if(isset($empdetailsdet[$i]['JpSkills']) && $empdetailsdet[$i]['JpSkills'] != "")
+									<span>Jpanese:</span> 
+									<span>
+											{{ $empdetailsdet[$i]['JpSkills'] }}
+									</span>
+								@endif
 							</div>
 						</td>
 
