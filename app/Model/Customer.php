@@ -455,7 +455,6 @@ class Customer extends Model {
 						->WHERE('resign_id', '=', 0)
 						->WHERE('delFlg', '=', 0)
 						->WHERE('Title', '=', 2)
-						->WHERE('clientFlg', '=', 0)
 						->ORDERBY('LastName','ASC' ) 
 						->lists('LastName','Emp_ID');
 					return $result;
