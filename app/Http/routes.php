@@ -71,6 +71,8 @@ Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 	Route::any('downloadprocess','EmployeeController@downloadprocess');
 	Route::any('Onsitehistory','EmployeeController@Onsitehistory');
 	Route::any('empHistory','EmployeeController@empHistory');
+
+	
 });
 
 // Non Employee - ADDED By Rajesh --2020/10/01
