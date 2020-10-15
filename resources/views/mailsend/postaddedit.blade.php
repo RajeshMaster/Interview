@@ -329,6 +329,17 @@
 		{{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
 	{{ Form::close() }}
 	
+	{{ Form::open(array('name'=>'frmurlview',
+							'id'=>'frmurlview',
+							'url' => 'MailSend/pdfViewProcess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),
+							'files'=>true,
+							'target'=>'_blank',
+							'method' => 'POST')) }}
+		{{ Form::hidden('filename', '' , array('id' => 'filename')) }}
+		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+		{{ Form::hidden('empid', $request->empid , array('id' => 'empid')) }}
+	{{ Form::close() }}
+	
 	<script type="text/javascript">
 		var cancel_check = true;
 		$('input, select, textarea').bind("change keyup paste", function() {
