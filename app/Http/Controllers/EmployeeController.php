@@ -119,7 +119,7 @@ class EmployeeController extends Controller
 				current Employee = 2 ->working employee
 				Old Employee =  ->working employee
 			*/
-			if (isset($recentClient->status)) {
+			if (isset($recentClient->status) && $recentClient->delFLg == 1) {
 				$empdetailsdet[$i]['clientStatus'] = $recentClient->status;
 				$empdetailsdet[$i]['clientEndDate'] = $recentClient->Ins_DT;
 			} else {

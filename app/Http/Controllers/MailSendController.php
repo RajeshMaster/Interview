@@ -37,7 +37,7 @@ class MailSendController extends Controller {
 		$i = 0;
 		foreach($empdetails as $key=>$data) {
 			$recentClient = MailSend::fnGetClientDtl($data->Emp_ID);
-			if (isset($recentClient->status) && $recentClient->status == 1) {
+			if (isset($recentClient->status) && $recentClient->status == 1 && $recentClient->delFLg == 1) {
 				$empdetailsdet[$i] = $data->Emp_ID;
 				$i++;
 			}
@@ -98,6 +98,7 @@ class MailSendController extends Controller {
 		$filename = "";
 
 		$empdetails = mailsend::fnGetEmployeeDetails($request, $resignid,$empdetailsdet);
+		// print_r($empdetails);exit;
 		$empdetailsdet=array();
 		$i = 0;
 		foreach($empdetails as $key=>$data) {
