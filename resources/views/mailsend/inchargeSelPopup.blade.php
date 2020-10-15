@@ -25,6 +25,10 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		document.getElementById("inchargeDetails").value = "";
+		document.getElementById("hidincharge").value = "";
+		document.getElementById("inchargemailDetails").value = "";
+		
 		$("#data tr").click(function() {
 			var selected = $(this).hasClass("highlight");
 			$("#data tr").removeClass("highlight");
@@ -50,38 +54,36 @@
 			alert("Please select atleast one Incharge");
 			return false;
 		} else {
-			var confirmgroup = confirm("Do You Want To Select Incharge?");
-			if(confirmgroup) {
-				$("#hidcheck").val('1');
-				var getchecked = $("#hidcheck").val();
-				$("[name='incharge[]']:checked").each(function(){
-					var res = $(this).val().split("$"); 
-					if (getchecked == 1) {
-					getchecked = 2;
-			
-					$('#inchargeDetails').val($('#inchargeDetails').val() + res[0]);
-					$('#hidincharge').val($('#hidincharge').val() + res[1]);
-					} else {
-						$('#inchargeDetails').val($('#inchargeDetails').val() + ";" + res[0]);
-						$('#hidincharge').val($('#hidincharge').val() + ";" + res[1]);
-					}
-				});
-				if ($('#hidincharge').val() != "") {
-					var getcusId = $('#hidincharge').val().slice(0,-1);
-					var strarray = getcusId.split(';');
+			$("#hidcheck").val('1');
+			var getchecked = $("#hidcheck").val();
+			$("[name='incharge[]']:checked").each(function(){
+				var res = $(this).val().split("$"); 
+				if (getchecked == 1) {
+				getchecked = 2;
+				$('#inchargeDetails').val($('#inchargeDetails').val() + res[0]);
+				$('#hidincharge').val($('#hidincharge').val() + res[1]);
+				$('#inchargemailDetails').val($('#inchargemailDetails').val() + res[2]);
+				} else {
+					$('#inchargeDetails').val($('#inchargeDetails').val() + ";" + res[0]);
+					$('#hidincharge').val($('#hidincharge').val() + ";" + res[1]);
+					$('#inchargemailDetails').val($('#inchargemailDetails').val()  + ";" + res[2]);
 				}
-				if ($("[name='incharge[]']:checked").length > 0) {
-					var v = document.getElementById("inchargeDetails").value;
-					document.getElementById("inchargeDetails").value = v + ";";
-					var s = document.getElementById("hidincharge").value;
-					document.getElementById("hidincharge").value = s + ";";
-				}
-				$("body div").removeClass("modalOverlay");
-				$('#customerSelect').empty();
-				$('#customerSelect').modal('toggle');
-			} else {
-				return false;
+			});
+			if ($('#hidincharge').val() != "") {
+				var getcusId = $('#hidincharge').val().slice(0,-1);
+				var strarray = getcusId.split(';');
 			}
+			if ($("[name='incharge[]']:checked").length > 0) {
+				var v = document.getElementById("inchargeDetails").value;
+				document.getElementById("inchargeDetails").value = v + ";";
+				var mail = document.getElementById("inchargemailDetails").value;
+				document.getElementById("inchargemailDetails").value = mail + ";";
+				var s = document.getElementById("hidincharge").value;
+				document.getElementById("hidincharge").value = s + ";";
+			}
+			$("body div").removeClass("modalOverlay");
+			$('#customerSelect').empty();
+			$('#customerSelect').modal('toggle');
 		}
 		});
 	});

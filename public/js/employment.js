@@ -103,13 +103,6 @@ $(document).ready(function() {
 		});
 	});
 
-
-
-
-
-
-
-
 });
 
 /*

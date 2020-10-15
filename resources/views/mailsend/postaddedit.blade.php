@@ -18,21 +18,11 @@
 </style>
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_4">
+<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_4">
 	<fieldset class="mt20">
 		<div class="header">
 			<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/employee.png')  }}">
-			<h2 class="pull-left h2cnt">{{trans('messages.lbl_workEdate')}}</h2>
-			<h2 class="pull-left h2cnt">&#9642;</h2>
-			@if($request->editflg != "edit")
-				<h2 class="pull-left h2cnt ml15" style="color: green;">
-					{{ trans('messages.lbl_register')}}
-				</h2>
-			@else
-				<h2 class="pull-left h2cnt ml5" style="color: red;">
-					{{ trans('messages.lbl_edit')}}
-				</h2>
-			@endif
+			<h2 class="pull-left h2cnt">{{trans('messages.lbl_sendMail')}}</h2>
 		</div>
 	</fieldset>
 
@@ -48,6 +38,7 @@
 		{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
 		{{ Form::hidden('selectedEmployee', $request->selSendMail , array('id' => 'selectedEmployee')) }}
 		{{ Form::hidden('selectedEmployeeResume', $resuemPdf , array('id' => 'selectedEmployeeResume')) }}
+		{{ Form::hidden('selectedType', '' , array('id' => 'selectedType')) }}
 
 	<fieldset id="hdnfield" class="mt10">
 		<div class="col-xs-12 mt10">
@@ -124,7 +115,38 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt4">
+		<div class="col-xs-12 mt8">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_select_Type')}}<span class="fr">&nbsp;&#42;</span></label>
+			</div>
+			<div class="col-xs-7 mw">
+				<span class="CMN_display_block  "> 
+	            	<label style="font-weight: normal;">
+						{{ Form::radio('type', '1','', 
+									array('id' =>'type1',
+										  'name' => 'type',
+										  'class' => 'comp',
+										  'style' => 'margin:-2px 0 0 !important',
+										  'onclick' => 'javascript:return slectType("1");',
+										  'data-label' => trans('messages.lbl_select_Type'))) }}
+						<span class="vat">&nbsp;{{ trans('messages.lbl_group') }}&nbsp;</span>
+					</label>
+					<label style="font-weight: normal;">
+						{{ Form::radio('type', '2','', 
+									array('id' =>'type2',
+										  'name' => 'type',
+										  'class' => 'ntcomp',
+										  'style' => 'margin:-2px 0 0 !important',
+										  'onclick' => 'javascript:return slectType("2");',
+										  'data-label' => trans('messages.lbl_select_Type'))) }}
+						<span class="vat">&nbsp;{{ trans('messages.lbl_custname') }}&nbsp;</span>
+					</label>
+					<span style="display: none;color: #9C0000" id="rdoreq"> Required</span>
+				</span>
+			</div>
+		</div>
+
+		<div class="col-xs-12 mt4 grpdiv" style="display: none;" >
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_group')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
@@ -134,7 +156,7 @@
 					{{ Form::text('groupname','',array('id'=>'groupname', 
 						'name' => 'groupname',
 						'data-label' => trans('messages.lbl_group'),
-						'class'=>'mlength form-control dispinline pl5',
+						'class'=>'form-control box50per dispinline mlength ',
 						'onkeypress' => 'event.preventDefault();',
 						'readonly' => 'true',
 						'maxlength'=>'30')) }}
@@ -148,7 +170,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt4">
+		<div class="col-xs-12 mt4 cstdiv" style="display: none">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_cusname')}}<span class="fr" id="customernamerequired">&nbsp;&#42;</span></label>
 			</div>
@@ -172,7 +194,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt5">
+		<div class="col-xs-12 mt5 bradiv" style="display: none">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_branchName')}}<span class="fr" id="branchnamerequired">&nbsp;&#42;</span></label>
 			</div>
@@ -188,7 +210,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt7">
+		<div class="col-xs-12 mt7 incdiv" style="display: none">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_inchargename')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
@@ -213,6 +235,23 @@
 				<div class="inchargeDetails_err dispinline"></div>
 				<input type="hidden" name="hidincharge" id="hidincharge">
 				<input type="hidden" name="hidcheck" id="hidcheck">
+			</div>
+		</div>
+
+		<div class="col-xs-12 mt7 incmaildiv" style="display: none">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_to_mail')}}<span class="fr">&nbsp;&nbsp;</span></label>
+			</div>
+			<div class="col-xs-7 mw" style="">
+
+				{{ Form::text('inchargemailDetails','', 
+								array('name' => 'inchargemailDetails',
+									  'id'=>'inchargemailDetails',
+									  'data-label' => trans('messages.lbl_inchargename'),
+									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
+									  'style'=>'width :50% !important;display :inline')) }}
+				
+				<input type="hidden" name="hidinchargemail" id="hidinchargemail">
 			</div>
 		</div>
 
@@ -243,7 +282,7 @@
 
 		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_content')}}<span class="fr">&nbsp;&nbsp;&nbsp;</span></label>
+				<label for="name">{{ trans('messages.lbl_content')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
 			
@@ -251,7 +290,7 @@
 												'name' => 'txt_content',
 												'data-label' => trans('messages.lbl_txt_content'),
 												'class' => 'mlength ntcomp dispinline form-control ime_mode_disable txt_content',
-												'style' => 'height:130px; ')) }}
+												'style' => 'height:130px; width :50%')) }}
 				<div class="txt_content_err dispinline"></div>
 			</div>
 		</div>

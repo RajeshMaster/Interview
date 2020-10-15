@@ -163,6 +163,8 @@ return [
 	'lbl_copy' => 'Copy',
 	'lbl_NoofYears' => 'No of Years',
 	'lbl_client_name' => 'Client Name',
+	'lbl_select_Type' => 'Select Type',
+	'lbl_to_mail' => 'To Mail',
 	/* End Employee Module */
 
 	/* Start Setting Module */

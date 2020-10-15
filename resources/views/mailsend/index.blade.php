@@ -83,7 +83,7 @@
     {{ Form::hidden('page', $request->page , array('id' => 'page')) }}
     {{ Form::hidden('selSendMail', '', array('id' => 'selSendMail')) }}
 <div class="" id="main_contents">
-	<article id="mail" class="DEC_flex_wrapper" data-category="mail mail_sub_4">
+	<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_4">
 		<!-- Start Heading -->
 		<fieldset class="pm0 mt20">
 			<div class="header">
@@ -96,7 +96,7 @@
 
 		<!-- Session msg Start-->
 		@if(Session::has('success'))
-			<div align="center" class="alertboxalign col-xs-12 mt10" role="alert" >
+			<div align="center" class="col-xs-12 mt10" role="alert" >
 				<span class="alert {{ Session::get('alert', Session::get('type') ) }}">
 				{{ Session::get('success') }}
 				</span>
@@ -110,9 +110,8 @@
 		@endif
 		<!-- Session msg End-->
 
-		<a disabled="disabled" class="btn btn-success box70 mt10" id="postBtn" href="javascript:postsendmail(datetime);" style="float: right;" class="pl10 pb5">Post</a>
-
 		<div class="box100per tableShrink pt10 mnheight mb0">
+			<a disabled="disabled" class="btn btn-success box70 mt10" id="postBtn" href="javascript:postsendmail(datetime);" style="float: right;" class="pl10 pb5">Post</a>
 		<table class="table-striped table footable table-bordered mt10 mb10" >
 			<colgroup>
 				<col width="4%">

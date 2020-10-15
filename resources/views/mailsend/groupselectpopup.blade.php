@@ -119,7 +119,7 @@
 						@endforeach
 					@else
 						<tr>
-							<td class="text-center" colspan="5" style="color: red;">
+							<td class="text-center" colspan="3" style="color: red;">
 							{{ trans('messages.lbl_nodatafound') }}</td>
 						</tr>
 					@endif

@@ -163,6 +163,8 @@ return [
 	'lbl_copy' => 'コーピ',
 	'lbl_NoofYears' => '年数',
 	'lbl_client_name' => 'お客名',
+	'lbl_select_Type' => 'タイプの選択',
+	'lbl_to_mail' => 'To Mail',
 	/* End Employee Module */
 
 	/* Start Setting Module */

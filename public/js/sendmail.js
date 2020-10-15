@@ -3,6 +3,8 @@ var data = {};
 $(document).ready(function() {
 	$('.sendmailRegister').on('click', function() {
 		resetErrors();
+		$("#rdoreq").css("display", "none");
+
 		var url ='sendMialvalidation';
 		$.each($('form input, form select, form textarea'), function(i, v) {  
 			if (v.type !== "submit") {
@@ -17,6 +19,11 @@ $(document).ready(function() {
 			async: false, //blocks window close
 			success: function(resp) {
 				if(resp == true){
+					if (!($("#type1").prop("checked")) && !($("#type2").prop("checked")))  {
+						$("#rdoreq").css("display", "inline-block");
+						return false;
+					}
+
 					swal({
 						title: msg_smail,
 						type: "warning",
@@ -33,6 +40,11 @@ $(document).ready(function() {
 						} 
 					});
 				} else {
+
+					if (!($("#type1").prop("checked")) && !($("#type2").prop("checked")))  {
+						$("#rdoreq").css("display", "inline-block");
+					}
+
 					$.each(resp, function(i, v) {
 						// alert(i + " => " + v); // view in console for error messages
 						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
@@ -46,7 +58,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-
 
 	$('.selectgroup').click(function () {
 		if ($("[name='group[]']:checked").length <= 0) {
@@ -71,13 +82,6 @@ $(document).ready(function() {
 			$('#customerSelect').modal('toggle');
 		}
 	});
-
-
-
-
-
-
-
 });
 
 /*
@@ -116,14 +120,11 @@ function resetErrors() {
 
 // For to get branch Details And incharge
 function fnGetbranchDetail() {
+
 	$('#branchId').find('option').not(':first').remove();
 	$('#inchargeDetails').find('option').not(':first').remove();
 	var getcustId = $('#customerId').val();
-	if ($('#customerId').val() != "") {
-		$("#customerdiv").hide();
-	} else {
-		$("#customerdiv").show();
-	}
+	
 	$.ajax({
 		type: 'GET',
 		dataType: "JSON",
@@ -156,8 +157,11 @@ function fnGetbranchDetail() {
 							$('#inchargeDetails').append( '<option value="'+resp[i]["id"]+'">'+resp[i]["incharge_name"]+'</option>' );
 						}
 						var incCount = $('#inchargeDetails > option').length;
-						if (incCount == 2) {
-							$('#inchargeDetails').val(resp[0]["id"]);
+						if (resp.length < 2) {
+							$('#inchargeDetails').val(resp[0]["incharge_name"] + ";");
+							$('#hidincharge').val(resp[0]["id"] + ";");
+							$('#inchargemailDetails').val(resp[0]["incharge_email_id"] + ";");
+							// $('#inchargeDetails').val(resp[0]["id"]);
 						} 
 					},
 					error: function(data) {
@@ -256,17 +260,12 @@ function fnselect() {
 		alert("Please select atleast one Customer");
 		return false;
 	} else {
-		var confirmcustomer = confirm("Do You Want To Select Customer?");
-		if(confirmcustomer) {
-			document.getElementById("inchargeDetails").value = "";
-			var cusId = $('#hcusId').val();
-			$('#customerId').val(cusId);
-			$('#customerName').val($('#hName').val());
-			fnGetbranchDetail();
-			$('#customerSelect').modal('toggle');
-		} else {
-			return false;
-		}
+		document.getElementById("inchargeDetails").value = "";
+		var cusId = $('#hcusId').val();
+		$('#customerId').val(cusId);
+		$('#customerName').val($('#hName').val());
+		fnGetbranchDetail();
+		$('#customerSelect').modal('toggle');
 	}
 }
 
@@ -287,6 +286,7 @@ function inchargename(){
 function fninchclear(){
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
+	document.getElementById("inchargemailDetails").value = "";
 }
 
 // to clear customer details
@@ -362,4 +362,21 @@ function groupSelect() {
 		keyboard: false
 	});
 	$('#customerSelect').modal('show');
+}
+
+function slectType(type) {
+	$('#selectedType').val(type);
+	if(type ==  1){
+		$(".grpdiv").css("display", "inline-block");
+		$(".cstdiv").css("display", "none");
+		$(".bradiv").css("display", "none");
+		$(".incdiv").css("display", "none");
+		$(".incmaildiv").css("display", "none");
+	}  else {
+		$(".cstdiv").css("display", "inline-block");
+		$(".bradiv").css("display", "inline-block");
+		$(".incdiv").css("display", "inline-block");
+		$(".incmaildiv").css("display", "inline-block");
+		$(".grpdiv").css("display", "none");
+	}
 }

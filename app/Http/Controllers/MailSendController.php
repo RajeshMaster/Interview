@@ -342,25 +342,20 @@ class MailSendController extends Controller {
 
 		$common1 = array(
 			'subject'=>'required',
+			'txt_content'=>'required',
 		);
 
-		if($request->groupname == "") {
-			$common2 = array(
-				'customerName' => 'required',
-				'branchId'=>'required',
-				'inchargeDetails'=>'required',
-			);
-		}
-
-		if($request->customerName == ""){
+		if($request->selectedType == 1) {
 			$common3 = array(
 				'groupname'=>'required',
 			);
 		}
-		if($request->customerName != ""){
-			$common4 = array(
-				'inchargeDetails'=>'required',
+
+		if($request->selectedType == 2) {
+			$common2 = array(
+				'customerName' => 'required',
 				'branchId'=>'required',
+				'inchargeDetails'=>'required',
 			);
 		}
 			
