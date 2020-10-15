@@ -728,11 +728,11 @@ class MailSendController extends Controller {
 
 	public static function skillAdd(Request $request){
 		$empSkill = MailSend::getSkillDetail($request->empId);
-		$getJapaneseLevel = array("1"=>"N1レベル",
-							"2"=>"N2レベル",
-							"3"=>"N3レベル", 
-							"4"=>"N4レベル", 
-							"5"=>"N5レベル" 
+		$getJapaneseLevel = array("N1レベル"=>"N1レベル",
+							"N2レベル"=>"N2レベル",
+							"N3レベル"=>"N3レベル", 
+							"N4レベル"=>"N4レベル", 
+							"N5レベル"=>"N5レベル" 
 		);
 		if(!empty($empSkill)){
 			$editFlg = 1;
