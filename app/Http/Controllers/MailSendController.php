@@ -720,7 +720,13 @@ class MailSendController extends Controller {
 	}
 
 	public static function skillAdd(Request $request){
-		$empSkill = MailSend::getSkillDetail($request); 
+		$empSkill = MailSend::getSkillDetail($request->empId);
+		$getJapaneseLevel = array("1"=>"N1レベル",
+							"2"=>"N2レベル",
+							"3"=>"N3レベル", 
+							"4"=>"N4レベル", 
+							"5"=>"N5レベル" 
+		);
 		if(!empty($empSkill)){
 			$editFlg = 1;
 		}else{
@@ -730,11 +736,31 @@ class MailSendController extends Controller {
 		return view('mailsend.skillSelPopup',['request' => $request,
 												'pgDetails' => $pgDetails,
 												'empSkill' => $empSkill,
-												'editFlg' => $editFlg]);
+												'editFlg' => $editFlg,
+												'getJapaneseLevel' => $getJapaneseLevel]);
 	}
 
 	public static function skillAddEditProcess(Request $request){
-		print_r($request->all()); exit();
+		if($request->editFlg == 1){
+			$updateDetail = MailSend::updateSkillDetail($request);
+			if($updateDetail) {
+				Session::flash('success', 'Skill Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Updated Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		}else{
+			$regDetail = MailSend::regSkillDetail($request);
+			if($regDetail){
+				Session::flash('success', 'Sill Registered Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}else {
+				Session::flash('type', 'Registered Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		}
+		return Redirect::to('MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 	}
 
 }

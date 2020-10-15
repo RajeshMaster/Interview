@@ -25,6 +25,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+
 		$("#data tr").click(function() {
 			var selected = $(this).hasClass("highlight");
 			$("#data tr").removeClass("highlight");
@@ -44,6 +45,10 @@
 			});
 		});
 		$('.selectskill').on('click', function() {
+			var jplevel = $('#japaneselevel').val();
+			if(jplevel==""){
+				alert()
+			}	
 			$('#hidskillId').val("");
 			if ($("[name='incharge[]']:checked").length <= 0){
 				alert("Please Select Programming Language");
@@ -163,17 +168,13 @@ function fnSclkTrInc(grpid,grpname) {
 		<fieldset class="h50 mr7 ml7">
 					<div class="dispinline col-md-12 mt10 mb5 ml50">
 						<div class="pull-left text-right clr_blue fwb mt5 labeltext ml40">
-							Japanese Level
+							{{ trans('messages.lbl_japanese_skills') }}
 							<span style="color:red;"> * 
 							</span>
 						</div>
 						<div class="dispinline ml15 mb5 pull-left box30per">
-							{{ Form::text('textbox1','',array('id'=>'textbox1', 
-											'name' => 'textbox1',
-											'class'=>'textbox1 form-control ime_mode_disable regdes',
-											'maxlength' => 100,
-											'onkeypress' =>'return blockSpecialChar(event)',
-											'onblur'=>'this.value=jQuery.trim(this.value);')) }}
+							{{ Form::select('japaneselevel',[null=>'Please select'] + $getJapaneseLevel,(isset($empSkill[0]->japanese_skill)) ? $empSkill[0]->japanese_skill : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
+								'style'=> 'width:200px;','id' =>'japaneselevel','data-label' => trans('messages.lbl_japanese_skills'),'name' => 'japaneselevel')) }}
 						</div>
 						<label id="empty_textbox1" class="display_none mt6 change">
 							This Field is required.
