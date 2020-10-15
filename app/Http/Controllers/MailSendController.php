@@ -317,12 +317,14 @@ class MailSendController extends Controller {
 		foreach ($details as $key => $value) {
 			$customerarray[$value->customer_id] = $value->customer_name;
 		}
+		$noimage = "../public/images";
 		return view('mailsend.postaddedit',['request' => $request,
 										'customerarray' => $customerarray,
 										'SelectedEmpid' => $SelectedEmpid,
 										'selectedEmpName' => $selectedEmpName,
 										'resuemPdf' => $resuemPdf,
 										'url' => $url,
+										'noimage' => $noimage,
 										'empdetailsdet'=> $empdetailsdet ]);
 	}
 

@@ -17,7 +17,7 @@ class OurdetailController extends Controller {
 		$viewtaxdetails = Ourdetail::viewtaxdetails($request);
 		$kessan = Ourdetail::viewkessandetails();
 		
-		return view('OurDetail.index',['result' => $result,
+		return view('ourDetail.index',['result' => $result,
 										'viewtaxdetails'=> $viewtaxdetails,
 										'kessan' => $kessan,
 										'request' => $request]);

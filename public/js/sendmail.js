@@ -225,6 +225,8 @@ function customerSelectPopup() {
 // Double Click on popup Select tr
 function fndbclick(cusid,cusname,name) {
 	document.getElementById("inchargeDetails").value = "";
+	document.getElementById("hidincharge").value = "";
+	document.getElementById("inchargemailDetails").value = "";
 	$("#"+cusid).prop("checked", true);
 	if($.trim(name) == "" || $.trim(name) == null) {
 		name = cusname;
@@ -261,6 +263,9 @@ function fnselect() {
 		return false;
 	} else {
 		document.getElementById("inchargeDetails").value = "";
+		document.getElementById("inchargeDetails").value = "";
+		document.getElementById("hidincharge").value = "";
+		document.getElementById("inchargemailDetails").value = "";
 		var cusId = $('#hcusId').val();
 		$('#customerId').val(cusId);
 		$('#customerName').val($('#hName').val());

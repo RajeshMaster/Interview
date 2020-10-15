@@ -269,7 +269,6 @@
 							@if($empdetailsdet[$i]['presentResume'] == 1 )
 								{{--*/ $src = $noimage . '/pdf.png'; /*--}}
 								<a href="javascript:downloadResume()" ><img class="pull-left box30 mr5  ml20" src="{{ $src }}" width="30" height = "30"></img>
-
 								</a>
 							@else
 								{{--*/ $src = $noimage . '/nopdf.png'; /*--}}

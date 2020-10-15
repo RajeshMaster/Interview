@@ -70,10 +70,16 @@
 			<div class="col-xs-7 mw">
 				<span  class="ml2" style="word-wrap: break-word">
 					<?php $attachments = explode(",", $resuemPdf); ?>
+					<?php $selectedEmpNamearr = explode(",", $selectedEmpName); ?>
 					<?php for ($i=0; $i < count($attachments); $i++) { ?>
+						@if(isset($selectedEmpNamearr[$i]))
+							{{ $selectedEmpNamearr[$i] }} 
+ 						@endif
+						{{--*/ $src = $noimage . '/pdf.png'; /*--}}
+						&nbsp;&nbsp;
 						<a class="csrp" onclick="pdfview('{{  $attachments[$i] }}');">
-							{{ $attachments[$i] }}
-						</a>	
+							<img class="box30 mr5  ml20" src="{{ $src }}" width="30" height = "30"></img>
+						</a>
 						<br/>
 					<?php } ?>
 				</span>
@@ -99,7 +105,7 @@
 			</div>
 		@endif
 
-		<div class="col-xs-12 ">
+		<div class="col-xs-12 mt8">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_CC')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
