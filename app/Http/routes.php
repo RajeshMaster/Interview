@@ -71,8 +71,6 @@ Route::group(['prefix'=>'Employee', 'middleware' => 'auth'], function() {
 	Route::any('downloadprocess','EmployeeController@downloadprocess');
 	Route::any('Onsitehistory','EmployeeController@Onsitehistory');
 	Route::any('empHistory','EmployeeController@empHistory');
-
-	
 });
 
 // Non Employee - ADDED By Rajesh --2020/10/01
@@ -125,6 +123,7 @@ Route::group(['prefix' => 'MailSend','middleware' => 'auth'], function(){
 	Route::any('inchargenamepopup','MailSendController@inchargenamepopup');
 	Route::any('uploadResume','EmployeeController@uploadResume');
 	Route::any('groupadd','MailSendController@groupadd');
+	Route::any('pdfViewProcess', 'MailSendController@pdfViewProcess');
 });
 
 // Setting
