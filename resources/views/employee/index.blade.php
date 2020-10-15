@@ -101,6 +101,9 @@
 			<span>|</span>
 			<a class="btn btn-linkemp {{ $disabledNotEmp }}" href="javascript:selectActive(0,3);" class="pl10 pb5">
 				{{ trans('messages.lbl_nonMB') }}
+			</a>|</span>
+			<a class="btn btn-linkemp" href="javascript:candiateInt();" class="pl10 pb5">
+				{{ trans('messages.lbl_nonMB') }}
 			</a>
 		</div>
 		<a href="javascript:clearsearch()" title="Clear Search">
@@ -159,6 +162,7 @@
 								array('','class'=>' form-control box95per pull-left','style'=>'height:30px;','id'=>'employeeno')) !!}
 						</div>
 					</div>
+
 					<div class="mt5">
 						<span class="pt3" style="font-family: arial, verdana;">
 							{{ trans('messages.lbl_empName') }}
@@ -168,6 +172,7 @@
 								array('','class'=>' form-control box95per pull-left','style'=>'height:30px;','id'=>'employeename')) !!}
 						</div>
 					</div>
+
 					<div class="mt5 mb6">
 						 {{ Form::button(
 							 '<i class="fa fa-search" aria-hidden="true"></i> '.trans('messages.lbl_search'),
