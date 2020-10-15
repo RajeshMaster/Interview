@@ -39,6 +39,7 @@
 		{{ Form::hidden('selectedEmployee', $request->selSendMail , array('id' => 'selectedEmployee')) }}
 		{{ Form::hidden('selectedEmployeeResume', $resuemPdf , array('id' => 'selectedEmployeeResume')) }}
 		{{ Form::hidden('selectedType', '' , array('id' => 'selectedType')) }}
+		{{ Form::hidden('dateTime', $dateTime , array('id' => 'dateTime')) }}
 
 	<fieldset id="hdnfield" class="mt10">
 		<div class="col-xs-12 mt8">
@@ -71,9 +72,10 @@
 				<span  class="ml2" style="word-wrap: break-word">
 					<?php $attachments = explode(",", $resuemPdf); ?>
 					<?php $selectedEmpNamearr = explode(",", $selectedEmpName); ?>
+					<?php $firstLastNamearr = explode(",", $firstLastName); ?>
 					<?php for ($i=0; $i < count($attachments); $i++) { ?>
-						@if(isset($selectedEmpNamearr[$i]))
-							{{ $selectedEmpNamearr[$i] }} 
+						@if(isset($firstLastNamearr[$i]))
+							{{ $firstLastNamearr[$i] }}_{{ $dateTime }}
  						@endif
 						{{--*/ $src = $noimage . '/pdf.png'; /*--}}
 						&nbsp;&nbsp;

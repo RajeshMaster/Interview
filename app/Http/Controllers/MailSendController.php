@@ -199,7 +199,9 @@ class MailSendController extends Controller {
 		$empdetailsdet = array();
 		$SelectedEmpid = "";
 		$selectedEmpName = "";
+		$firstLastName = "";
 		$resuemPdf = "";
+		$dateTime = date("YmdHis");
 		$url = "";
 		$tempdir = '../ResumeUpload/employeResume/temp';
 		$directory = '../ResumeUpload/employeResume';
@@ -226,12 +228,12 @@ class MailSendController extends Controller {
 			if ($SelectedEmpid == "") {
 				$SelectedEmpid = $value;
 				$selectedEmpName = $employeDetail[0]->FirstName;
-				$FirstLastName = strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
+				$firstLastName = strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 				$resuemPdf = $recentResumeNm;
 			} else {
 				$SelectedEmpid = $SelectedEmpid.','.$value;
 				$selectedEmpName = $selectedEmpName.','.$employeDetail[0]->FirstName;
-				$FirstLastName =  $selectedEmpName.','.strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
+				$firstLastName =  $firstLastName.','.strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 				$resuemPdf = $resuemPdf.','.$recentResumeNm;
 			}
 			if ($recentResumeNm == "") {
@@ -325,7 +327,9 @@ class MailSendController extends Controller {
 										'customerarray' => $customerarray,
 										'SelectedEmpid' => $SelectedEmpid,
 										'selectedEmpName' => $selectedEmpName,
+										'firstLastName' => $firstLastName,
 										'resuemPdf' => $resuemPdf,
+										'dateTime' => $dateTime,
 										'url' => $url,
 										'noimage' => $noimage,
 										'empdetailsdet'=> $empdetailsdet ]);
@@ -449,7 +453,7 @@ class MailSendController extends Controller {
 			$data[0]->content = str_replace('添付したファイルのパスワードは下記のようです。','',$data[0]->content);
 		}*/
 
-		$dateTime = date("YmdHis");
+		$dateTime = $request->dateTime;
 		foreach ($selectedEmp as $key => $value) {
 			$getDateTime = Common::getSystemDateTime();
 			$currentDate = $getDateTime[0]->CURRENT_TIMESTAMP;
