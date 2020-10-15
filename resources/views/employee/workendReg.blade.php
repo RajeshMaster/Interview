@@ -46,7 +46,9 @@
 		{{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
 		{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
 		{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
-
+		{{ Form::hidden('checkExist', isset($clientDtl->customer_name)?$clientDtl->customer_name:"" , array('id' => 'checkExist')) }}
+		{{ Form::hidden('clientempId', isset($clientDtl->id)?$clientDtl->id:"" , array('id' => 'clientempId')) }}
+		
 	<fieldset id="hdnfield" class="">
 		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb tar" >
@@ -72,9 +74,9 @@
 			</div>
 
 			<div class="col-xs-7 mw">
-				@if(isset($staff[0]->customer_name))
+				@if(isset($clientDtl->customer_name))
 					<span class="fwb">
-						{{ $staff[0]->customer_name}}
+						{{ $clientDtl->customer_name}}
 					</span>
 				@else
 					{{ Form::text('customerName','',array('id'=>'customerName', 
@@ -82,7 +84,7 @@
 													'data-label' => trans('Sur Name'),
 													'readonly' => 'true',
 													'class'=>'form-control box50per dispinline mlength customerName')) }}
-			{{ Form::hidden('customerId', "" , array('id' => 'customerId')) }}
+					{{ Form::hidden('customerId', "" , array('id' => 'customerId')) }}
 
 			<!-- 		{{ Form::select('customerId',[null=>'']+$customerarray,'', 
 						array('name' => 'customerId',
@@ -91,13 +93,14 @@
 								'data-label' => trans('messages.lbl_cusname'),
 								'readonly' => 'true',
 								'class'=>'form-control dispinline ime_mode_disable pl5 mlength'))}} -->
-				@endif
 				<button data-toggle="modal" type="button" class="btn btn-success add" 
 					style="width: 100px;height: 30px;margin-top: 5px;" 
 					 onclick="return customerSelectPopup();">
 					 <i class="fa fa-plus vat">{{ trans('messages.lbl_browse') }}</i>
 				</button>
 				<div class="customerName_err dispinline"></div>
+				@endif
+				
 			</div>
 		</div>
 
@@ -106,9 +109,9 @@
 				<label for="name">{{ trans('messages.lbl_branchName')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				@if(isset($staff[0]->branch_name))
+				@if(isset($clientDtl->branch_name))
 					<span class="fwb">
-					{{ $staff[0]->branch_name}}
+					{{ $clientDtl->branch_name}}
 					</span>
 				@else
 					{{ Form::select('branchId',[null=>''],'', 
@@ -127,9 +130,9 @@
 				<label for="name">{{ trans('messages.lbl_inchargename')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				@if(isset($staff[0]->incharge_name))
+				@if(isset($clientDtl->incharge_name))
 					<span class="fwb">
-						{{ $staff[0]->incharge_name}}
+						{{ $clientDtl->incharge_name}}
 					</span>
 				@else
 					{{ Form::select('inchargeDetails',[null=>''],'', 
@@ -147,7 +150,7 @@
 				<label for="name">{{ trans('messages.lbl_workStdate')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
 			<div class="col-xs-7 mw" style="">
-				{{ Form::text('startDate','',array('id'=>'startDate', 
+				{{ Form::text('startDate',(isset($clientDtl->start_date)?$clientDtl->start_date:""),array('id'=>'startDate', 
 												'name' => 'startDate','maxlength' => 10,
 												'autocomplete' => 'off',
 												'onKeyPress'=>'return event.charCode >= 48 && event.charCode <= 57',
@@ -170,6 +173,7 @@
 												'class'=>'ime_mode_disable form-control box40per dispinline enDate endDate mlength' ,
 												'data-label' => trans('messages.lbl_doj'))) }}
 				<div class="endDate_err dispinline"></div>
+				<div class="dategreatErr" style="display: none;color:#9C0000;"> Start Date Is greater than End Date</div>
 				<label class="mt10 ml2 fa fa-calendar fa-lg" for="endDate" aria-hidden="true"></label>
 			</div>
 		</div>
@@ -193,14 +197,14 @@
 	<fieldset class="mt10 mb10">
 		<div class="col-xs-12 mb10 mt10">
 			<div class="col-xs-12 buttondes" style="text-align: center;">
-				@if($request->editflg != "edit")
-					<button type="button" class="button button-green wrkEndRegister">
-						<i class="fa fa-plus"></i>&nbsp;{{ trans('messages.lbl_register')}}
+				@if(isset($clientDtl->customer_name))
+					<button type="button" class="button button-orange wrkEndEdit">
+						<i class="fa fa-edit"></i>&nbsp;{{ trans('messages.lbl_update') }}
 					</button>
 					&emsp;
 				@else
-					<button type="button" class="button button-orange wrkEndRegister">
-						<i class="fa fa-edit"></i>&nbsp;{{ trans('messages.lbl_update') }}
+					<button type="button" class="button button-green wrkEndRegister">
+						<i class="fa fa-plus"></i>&nbsp;{{ trans('messages.lbl_register')}}
 					</button>
 					&emsp;
 				@endif

@@ -97,6 +97,60 @@ $(document).ready(function() {
 				}
 			},
 			error: function(data) {
+				alert(data.status);
+				// alert('there was a problem checking the fields');
+			}
+		});
+	});
+
+
+	$('.wrkEndEdit').on('click', function() {
+		resetErrors();
+		$(".dategreatErr").css("display", "none");
+		var url ='wrkEndEditValidation';
+		$.each($('form input, form select, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+			}
+		}); 
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				if(resp == true){
+					var startDate = new Date($('#startDate').val());
+					var endDate = new Date($('#endDate').val());
+					if(startDate >= endDate) {
+						$(".dategreatErr").css("display", "inline-block");
+						return true;
+					}
+					swal({
+						title: msg_update,
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						closeOnConfirm: true,
+						closeOnCancel: true
+					},
+					function(isConfirm) {
+						if (isConfirm) {
+						   pageload();
+							$('#workEndReg').attr('action', 'wrkEndeditProcess'+'?menuid=menu_employee&time='+datetime);
+							$("#workEndReg").submit();
+						} 
+					});
+				} else {
+				  $.each(resp, function(i, v) {
+						// alert(i + " => " + v); // view in console for error messages
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"]').addClass('inputTxtError').after(msg);
+					});
+				}
+			},
+			error: function(data) {
 				// alert(data.status);
 				// alert('there was a problem checking the fields');
 			}
@@ -110,7 +164,7 @@ $(document).ready(function() {
 */
 function selectActive(val,title) {
 	$('#plimit').val(50);
-    $('#page').val('');
+	$('#page').val('');
 	$('#resignid').val(val);
 	$('#title').val(title);
 	$("#employeefrm").submit();
@@ -188,7 +242,7 @@ function fnMultiSearch() {
 		$("#employeeno").focus(); 
 		return false;
 	} else {
-       	$("#searchmethod").val(2);
+		$("#searchmethod").val(2);
 		$('#plimit').val('');
 		$('#page').val('');
 		$('#employeefrm').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
@@ -211,7 +265,7 @@ function cushistory(empid,lastname){
 	$('#hdnempid').val(empid);
 	$('#hdnempname').val(lastname);
 	$('#employeefrm').attr('action', '../Employee/Onsitehistory?mainmenu='+mainmenu+'&time='+datetime);
-    $("#employeefrm").submit();
+	$("#employeefrm").submit();
 }
 
 // To register the work end date
@@ -464,32 +518,35 @@ function fnselect() {
 		alert("Please select atleast one Customer");
 		return false;
 	} else {
-		var confirmcustomer = confirm("Do You Want To Select Customer?");
-		if(confirmcustomer) {
-			document.getElementById("inchargeDetails").value = "";
-			var cusId = $('#hcusId').val();
-			$('#customerId').val(cusId);
-			$('#customerName').val($('#hName').val());
-			fnGetbranchDetail();
-			$('#customerSelect').modal('toggle');
-		} else {
-			return false;
-		}
+		document.getElementById("inchargeDetails").value = "";
+		var cusId = $('#hcusId').val();
+		$('#customerId').val(cusId);
+		$('#customerName').val($('#hName').val());
+		fnGetbranchDetail();
+		$('#customerSelect').modal('toggle');
+		
 	}
 }
  function customerview(datetime,id,custid) {
-    $('#id').val(id);
-    $('#custid').val(custid);
-    $('#empid').val(1);
-    var mainmenu = "menu_customer";
-    $('#emphistoryform').attr('action', '../Customer/CustomerView?mainmenu='+mainmenu+'&time='+datetime);
-    $("#emphistoryform").submit();
+	$('#id').val(id);
+	$('#custid').val(custid);
+	$('#empid').val(1);
+	var mainmenu = "menu_customer";
+	$('#emphistoryform').attr('action', '../Customer/CustomerView?mainmenu='+mainmenu+'&time='+datetime);
+	$("#emphistoryform").submit();
 }
 function getdetails(empid,empname,datetime,id){
 	$('#hdnempid').val(empid);
 	$('#hdnempname').val(empname);
-    $('#hdnback').val(id);
+	$('#hdnback').val(id);
 	var mainmenu="menu_customer";
 	$('#emphistoryform').attr('action', '../Customer/Onsitehistory?mainmenu='+mainmenu+'&time='+datetime);
-    $("#emphistoryform").submit();
+	$("#emphistoryform").submit();
+}
+
+// 
+function candiateInt() {
+	var mainmenu = "menu_customer";
+	$('#emphistoryform').attr('action', '../Customer/CustomerView?mainmenu='+mainmenu+'&time='+datetime);
+	$("#emphistoryform").submit();
 }

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Model\Employee;
+use App\Model\MailSend;
 use App\Model\Common;
 use Auth;
 use Redirect;
@@ -25,6 +26,17 @@ class EmployeeController extends Controller
 	*
 	*/
 	public function index(Request $request) {
+		$resignid = 0;
+		$empdetails = MailSend::fnGetEmployeeDetailsstart($request, $resignid);
+		$empdetailsdet=array();
+		$i = 0;
+		foreach($empdetails as $key=>$data) {
+			$recentClient = MailSend::fnGetClientDtl($data->Emp_ID);
+			if (isset($recentClient->status) && $recentClient->status == 1 && $recentClient->delFLg == 1) {
+				$empdetailsdet[$i] = $data->Emp_ID;
+				$i++;
+			}
+		}
 
 		$disabledEmp= "";
 		$disabledNotEmp= "";
@@ -80,8 +92,8 @@ class EmployeeController extends Controller
 		$disPath = "../public/images/upload/";
 		$filename = "";
 		
-		$empdetailsdet=array();
-		$empdetails = Employee::fnGetEmployeeDetails($request, $resignid,$title);
+		$empdetails = Employee::fnGetEmployeeDetails($request, $resignid,$title ,$empdetailsdet);
+		$empdetailsdet = array();
 		$i = 0;
 		foreach($empdetails as $key=>$data) {
 			$empdetailsdet[$i]['FirstName'] = $data->FirstName;
@@ -154,9 +166,10 @@ class EmployeeController extends Controller
 			$i++;
 		}
 
-// 	echo "<pre>";
-// print_r($empdetailsdet);
-// echo "</pre>";
+		// echo "<pre>";
+		// print_r($empdetailsdet);
+		// echo "</pre>";
+
 		$detailage = Employee::GetAvgage($resignid);
 
 		return view('employee.index', ['request' => $request,
@@ -398,6 +411,37 @@ class EmployeeController extends Controller
 		}
 	}
 
+		/**
+	*
+	* Validation for work end Date
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/02
+	*
+	*/
+	public function wrkEndEditValidation(Request $request) {
+		$commonrules=array();
+		$common2 = array();
+
+		$after = $request->startDate;
+		$before = $request->endDate;
+
+		$common1 = array(
+			'startDate'=>'required|date_format:"Y-m-d|',
+			'endDate' => 'required|date_format:"Y-m-d|',
+		);
+		
+		$commonrules = $common1 + $common2;
+		$rules = $commonrules;
+		$validator = Validator::make($request->all(), $rules);
+		if ($validator->fails()) {
+			return response()->json($validator->messages(), 200);exit;
+		} else {
+			$success = true;
+			echo json_encode($success);
+		}
+	}
+
 	/**
 	*
 	* Validation for work end Date
@@ -408,6 +452,38 @@ class EmployeeController extends Controller
 	*/
 	public function wrkEndProcess(Request $request) {
 		$updateEnddate = Employee::insertEnddate($request);
+		if ($updateEnddate) {
+			$mailid = "MAIL0014";
+			$cont = Employee::getContentFirst($mailid);
+			$content = "";
+			$content.="\r\n EmployeeID   :".$request->empId;
+			$data[0] =  str_replace('AAAA',$content, $cont[0]->content);
+			$email=Common::fnGetEmployeeInfo($request->empid); 
+			$mail=SendingMail::sendIntimationMail($data,$email[0]->Emailpersonal,"Update Resume");
+			if($mail){
+				Session::flash('success', 'Mail Sent And End Date Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('danger', 'Mail Not Sent But End Date Updated Sucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		} else {
+			Session::flash('danger', 'End Date Updated UnSucessfully!'); 
+			Session::flash('type', 'alert-success'); 
+		}
+		return Redirect::to('Employee/index?mainmenu=menu_employee&time='.date('YmdHis'));
+	}
+
+	/**
+	*
+	* Validation for work end Date
+	* @author Rajesh
+	* @return object to particular view page
+	* Created At 2020/10/03
+	*
+	*/
+	public function wrkEndeditProcess(Request $request) {
+		$updateEnddate = Employee::editEnddate($request);
 		if ($updateEnddate) {
 			$mailid = "MAIL0014";
 			$cont = Employee::getContentFirst($mailid);

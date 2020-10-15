@@ -16,10 +16,11 @@ class Employee extends Model
 	*  @param $request,$resignid,title
 	*  Created At 2020/09/30
 	**/
-	public static function fnGetEmployeeDetails($request, $resignid, $title){
+	public static function fnGetEmployeeDetails($request, $resignid, $title ,$candiate){
 		$db = DB::connection('mysql_invoice');
 		$query = $db->table('emp_mstemployees')
 					->select('*')
+					->whereNotIn('Emp_ID', $candiate)
 					->where([['delFlg', '=', 0],
 							  ['resign_id', '=', $resignid],
 							  ['Emp_ID', 'LIKE', '%MB%']]);
@@ -236,7 +237,7 @@ class Employee extends Model
 					->where('inv_clientemp_dtl.emp_id','=', $request->empid)
 					->where('inv_clientemp_dtl.status','=', 1)
 					->where('inv_clientemp_dtl.delFLg', 0)
-					->get();
+					->first();
 		return $query;
 	}
 
@@ -373,5 +374,19 @@ class Employee extends Model
 					/*->tosql();
 					dd($query);*/
 		return $query;
+	}
+
+	public static function editEnddate($request) {
+		$name = Session::get('FirstName').' '.Session::get('LastName');
+		$db = DB::connection('mysql');
+		$result = DB::table('inv_clientemp_dtl')
+				->where('id', $request->clientempId)
+				->update([
+					'start_date' => $request->startDate,
+					'end_date' => $request->endDate,
+					'UpdatedBy' => $name,
+					'remarks' => $request->remarks,
+					'delFLg' => 1]);
+		return $result;
 	}
 }
