@@ -25,10 +25,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		document.getElementById("inchargeDetails").value = "";
-		document.getElementById("hidincharge").value = "";
-		document.getElementById("inchargemailDetails").value = "";
-		
 		$("#data tr").click(function() {
 			var selected = $(this).hasClass("highlight");
 			$("#data tr").removeClass("highlight");
@@ -49,6 +45,9 @@
 		});
 
 	$('.selectinchargegroup').click(function(){
+		document.getElementById("inchargeDetails").value = "";
+		document.getElementById("hidincharge").value = "";
+		document.getElementById("inchargemailDetails").value = "";
 		var hidVal = $("#hidincharge").val();
 		if ($("[name='incharge[]']:checked").length <= 0 && hidVal == "") {
 			alert("Please select atleast one Incharge");
@@ -86,8 +85,17 @@
 			$('#customerSelect').modal('toggle');
 		}
 		});
+	check();
 	});
-
+	function check(){
+		if ($('#hidincharge').val() != "") {
+			var getcusId = $('#hidincharge').val().slice(0,-1);
+	       	var strarray = getcusId.split(';');
+			for (var i = 0; i < strarray.length; i++) {
+				jQuery("."+strarray[i]).prop("checked", true);
+			}
+		}
+	}
 // Single Click in tr
 function fnSclkTrInc(grpid,grpname) {
 	if ($('.' + grpid).is(':checked')) {
