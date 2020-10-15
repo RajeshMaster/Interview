@@ -385,3 +385,9 @@ function slectType(type) {
 		$(".grpdiv").css("display", "none");
 	}
 }
+
+function pdfview(filename) {
+	$('#filename').val(filename);
+	$('#frmurlview').attr('action', 'pdfViewProcess?mainmenu='+mainmenu+'&time='+datetime);
+	$("#frmurlview").submit();
+}

@@ -171,8 +171,8 @@ class OldCustomer extends Model {
 	}
 
 	public static function getcustomerdetails($request) {
-        $db =DB::connection('mysql_invoice');
-        $tbl_name = "mst_customerdetail";
+        $db = DB::connection('mysql');
+        $tbl_name = "temp_mst_customerdetail";
         $query= $db->table($tbl_name)
                    ->select('id AS id',
                    			 'customer_id AS custid', 

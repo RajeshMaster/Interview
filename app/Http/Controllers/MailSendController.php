@@ -696,5 +696,29 @@ class MailSendController extends Controller {
 		return view('mailsend.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup]);
 	}
 
+	/**
+	*
+	* PDF View Process
+	* @author Sastha
+	* @return object to Send Mail view page
+	* Created At 2020/10/15
+	*
+	*/
+	public static function pdfViewProcess(Request $request) {
+
+		if (!isset($request->filename)) {
+			return Redirect::to('MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
+		$path = '../ResumeUpload/employeResume';
+		$filename = $path."/".$request->filename;
+		header('Content-type: application/pdf'); 
+		header('Content-Disposition: inline; filename="' . $filename . '"'); 
+		header('Content-Transfer-Encoding: binary'); 
+		header('Accept-Ranges: bytes');
+		@readfile($filename); 
+
+	}
+
+
 
 }
