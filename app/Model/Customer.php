@@ -22,7 +22,7 @@ class Customer extends Model {
 		$db = DB::connection('mysql');
 		$query = $db->TABLE('mst_cus_group')
 					->SELECT('*')
-					->WHERE('delFlg', 0)
+					// ->WHERE('delFlg', 0)
 					->ORDERBY('groupId', 'ASC')
 					->get();
 		return $query;
