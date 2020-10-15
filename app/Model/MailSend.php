@@ -264,13 +264,38 @@ class MailSend extends Model {
 					->get();
 		return $result;
 	} 
-	public static function getSkillDetail($empId){
+
+	public static function getSkillDetail($empid){
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('emp_mstskills')
-				->select('programming_lang')
-				->WHERE('empId', $empId)
+				->select('programming_lang','japanese_skill')
+				->WHERE('empId', $empid)
 				->WHERE('delFlg',0)
 				->get();
+		return $result;	
+	}
+	public static function updateSkillDetail($request){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('emp_mstskills')
+				->WHERE('empId', $request->empId)
+				->update(['japanese_skill' => $request->japaneselevel,
+						'programming_lang' => $request->hidskillId,
+						'updatedDate' => date('Y-m-d'),
+						'updatedBy' => Auth::user()->username
+					]);
 		return $result;		
+	}
+	public static function regSkillDetail($request){
+		$db = DB::connection('mysql');
+		$insert= $db->table('emp_mstskills')
+			->insert([
+				'empId'=> $request->empId,
+				'japanese_skill' => $request->japaneselevel,
+				'programming_lang' => $request->hidskillId,
+				'createdDate' => date('Y-m-d'),
+				'createdBy' => Auth::user()->username,
+				'delFlg' => 0
+				]);
+		return $insert;
 	}
 }
