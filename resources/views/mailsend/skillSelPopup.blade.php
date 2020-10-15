@@ -47,7 +47,10 @@
 		$('.selectskill').on('click', function() {
 			var jplevel = $('#japaneselevel').val();
 			if(jplevel==""){
-				alert()
+				$("#empty_textbox1").removeClass("display_none");
+				return false;
+			}else{
+				$("#empty_textbox1").addClass("display_none");
 			}	
 			$('#hidskillId').val("");
 			if ($("[name='incharge[]']:checked").length <= 0){
@@ -187,8 +190,8 @@ function fnSclkTrInc(grpid,grpname) {
 	<div class="modal-footer bg-info mt10">
 	  <center>
 	  	@if($editFlg == "1")
-	  	 <button  type="button" id="add" class="btn btn-success CMN_display_block box100 selectskill">
-			<i class="fa fa-plus" aria-hidden="true"></i>
+	  	 <button  type="button" id="add" class="btn btn-warning CMN_display_block box100 selectskill">
+			<i class="fa fa-edit" aria-hidden="true"></i>
 			   {{ trans('messages.lbl_update') }}
 		 </button>
 	  	@else
@@ -197,11 +200,6 @@ function fnSclkTrInc(grpid,grpname) {
 			   {{ trans('messages.lbl_register') }}
 		 </button>
 	  	@endif
-	  	
-		<!--  <button  type="button" id="add" class="btn btn-success CMN_display_block box100 selectskill">
-			<i class="fa fa-plus" aria-hidden="true"></i>
-			   {{ trans('messages.lbl_select') }}
-		 </button> -->
 		 <button data-dismiss="modal" onclick="javascript:fnclose();" class="btn btn-danger CMN_display_block box100">
 			<i class="fa fa-times" aria-hidden="true"></i>
 			   {{ trans('messages.lbl_cancel') }}
