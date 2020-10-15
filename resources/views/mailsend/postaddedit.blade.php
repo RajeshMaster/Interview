@@ -13,25 +13,25 @@
 	var mainmenu = '<?php echo $request->mainmenu; ?>';
 	
 </script>
-<style type="text/css">
-	
-</style>
+
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
 <article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
+
 	<fieldset class="mt20">
+
 		<div class="header">
 			<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/employee.png')  }}">
 			<h2 class="pull-left h2cnt">{{trans('messages.lbl_sendMail')}}</h2>
 		</div>
+
 	</fieldset>
 
-		{{ Form::open(array('name'=>'senmailfrm',
-							'id'=>'senmailfrm',
-							'class'=>'focusFields',
+	{{ Form::open(array('name'=>'senmailfrm', 'id'=>'senmailfrm', 'class'=>'focusFields',
 							'method' => 'POST',
-						'url' => 'MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
+							'url' => 'MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
 							'files'=>true)) }}
+
 		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
 		{{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
 		{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
@@ -41,7 +41,7 @@
 		{{ Form::hidden('selectedType', '' , array('id' => 'selectedType')) }}
 
 	<fieldset id="hdnfield" class="mt10">
-		<div class="col-xs-12 mt10">
+		<div class="col-xs-12 mt8">
 			<div class="col-xs-3 lb tar" >
 				<label>{{ trans('messages.lbl_empid') }}<span class="fr red">&nbsp;&nbsp;</span></label>
 			</div>
@@ -52,7 +52,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 ">
+		<div class="col-xs-12 mt8">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_empName')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
@@ -63,7 +63,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 ">
+		<div class="col-xs-12 mt8">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_pdffile')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
@@ -78,16 +78,16 @@
 						{{--*/ $src = $noimage . '/pdf.png'; /*--}}
 						&nbsp;&nbsp;
 						<a class="csrp" onclick="pdfview('{{  $attachments[$i] }}');">
-							<img class="box30 mr5  ml20" src="{{ $src }}" width="30" height = "30"></img>
+							<img class="box30 mr5  ml20" src="{{ $src }}" width="30" height = "30">
 						</a>
-						<br/>
+						<br>
 					<?php } ?>
 				</span>
 			</div>
 		</div>
 
 		@if($url != "")
-			<div class="col-xs-12 ">
+			<div class="col-xs-12 mt8">
 				<div class="col-xs-3 lb tar" >
 					<label for="name">{{ trans('messages.lbl_pdffile')}}<span class="fr">&nbsp;&nbsp;</span></label>
 				</div>
@@ -104,22 +104,6 @@
 				</div>
 			</div>
 		@endif
-
-		<div class="col-xs-12 mt8">
-			<div class="col-xs-3 lb tar" >
-				<label for="name">{{ trans('messages.lbl_CC')}}<span class="fr">&nbsp;&nbsp;</span></label>
-			</div>
-			<div class="col-xs-7 mw">
-				<span class="CMN_display_block box34per "> 
-
-					{{ Form::text('ccemail','',array('id'=>'ccemail', 
-							'name' => 'ccemail',
-							'data-label' => trans('messages.lbl_CC'),
-							'class'=>'box100per form-control ',
-							'maxlength'=>'30')) }}
-				</span>
-			</div>
-		</div>
 
 		<div class="col-xs-12 mt8">
 			<div class="col-xs-3 lb tar" >
@@ -152,7 +136,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt4 grpdiv" style="display: none;" >
+		<div class="col-xs-12 mt8 grpdiv" style="display: none;" >
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_group')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
@@ -166,7 +150,7 @@
 						'onkeypress' => 'event.preventDefault();',
 						'readonly' => 'true',
 						'maxlength'=>'30')) }}
-				<div id="customerdiv" class="CMN_display_block box20per ml1">
+				<div id="groupdiv" class="CMN_display_block box20per ml1">
 					<button data-toggle="modal" type="button" class="btn btn-success add box70per"
 						style="height:30px;width: 140px; margin-top: -3px;" 
 						onclick="return groupSelect();">
@@ -176,7 +160,7 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt4 cstdiv" style="display: none">
+		<div class="col-xs-12 mt8 cstdiv" style="display: none">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_cusname')}}<span class="fr" id="customernamerequired">&nbsp;&#42;</span></label>
 			</div>
@@ -190,17 +174,18 @@
 													'class'=>'form-control box50per dispinline mlength customerName')) }}
 				{{ Form::hidden('customerId', "" , array('id' => 'customerId')) }}
 				<button data-toggle="modal" type="button" class="btn btn-success add" 
-					style="width: 100px;height: 30px;margin-top: 5px;" 
-					 onclick="return customerSelectPopup();">
-					 <i class="fa fa-plus vat">{{ trans('messages.lbl_browse') }}</i>
+						style="width: 100px;height: 30px;margin-top: 5px;" 
+						onclick="return customerSelectPopup();">
+					<i class="fa fa-plus vat">{{ trans('messages.lbl_browse') }}</i>
 				</button>
 				<a class="btn btn-danger box67 p4" href="javascript:fncusclear();"
-							style="height:30px;width: 70px; margin-top: 5px;" >{{ trans('messages.lbl_clear') }}</a>
+					style="height:30px;width: 70px; margin-top: 5px;">
+						{{ trans('messages.lbl_clear') }}</a>
 				<div class="customerName_err dispinline"></div>
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt5 bradiv" style="display: none">
+		<div class="col-xs-12 mt8 bradiv" style="display: none">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_branchName')}}<span class="fr" id="branchnamerequired">&nbsp;&#42;</span></label>
 			</div>
@@ -216,11 +201,11 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt7 incdiv" style="display: none">
+		<div class="col-xs-12 mt8 incdiv" style="display: none">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_inchargename')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
-			<div class="col-xs-7 mw" style="">
+			<div class="col-xs-7 mw">
 
 				{{ Form::text('inchargeDetails','', 
 								array('name' => 'inchargeDetails',
@@ -229,22 +214,25 @@
 									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
 									  'style'=>'width :50% !important;display :inline')) }}
 		
-					<button data-toggle="modal" type="button" class="btn btn-success incadd" 
-					style="width: 100px;height: 30px;margin-top: 5px;display: none" 
-					 onclick="return inchargename();">
-					 <i class="fa fa-plus vat">{{ trans('messages.lbl_browse') }}</i>
-					</button>
-					<a class="btn btn-danger box67 p4 btnclr" href="javascript:fninchclear();"
-							style="height:30px;width: 70px; margin-top: 5px;display: none" >{{ trans('messages.lbl_clear') }}</a>
+				<button data-toggle="modal" type="button" class="btn btn-success incadd" 
+						style="width: 100px;height: 30px;margin-top: 5px;display: none" 
+						onclick = "return inchargename();">
+					<i class="fa fa-plus vat">{{ trans('messages.lbl_browse') }}</i>
+				</button>
+
+				<a class="btn btn-danger box67 p4 btnclr" href="javascript:fninchclear();"
+						style = "height:30px;width: 70px; margin-top: 5px;display: none">
+					{{ trans('messages.lbl_clear') }}</a>
 				
 				<div class="customerName_err dispinline"></div>
 				<div class="inchargeDetails_err dispinline"></div>
 				<input type="hidden" name="hidincharge" id="hidincharge">
 				<input type="hidden" name="hidcheck" id="hidcheck">
+
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt7 incmaildiv" style="display: none">
+		<div class="col-xs-12 mt8 incmaildiv" style="display: none">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_to_mail')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
@@ -261,7 +249,23 @@
 			</div>
 		</div>
 
-		<div class="col-xs-12 mt6">
+		<div class="col-xs-12 mt8">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_CC')}}<span class="fr">&nbsp;&nbsp;</span></label>
+			</div>
+			<div class="col-xs-7 mw">
+				<span class="CMN_display_block box34per "> 
+
+					{{ Form::text('ccemail','',array('id'=>'ccemail', 
+							'name' => 'ccemail',
+							'data-label' => trans('messages.lbl_CC'),
+							'class'=>'box100per form-control ',
+							'maxlength'=>'30')) }}
+				</span>
+			</div>
+		</div>
+
+		<div class="col-xs-12 mt8">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_subject')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
@@ -273,6 +277,7 @@
 							'maxlength'=>'30',
 							'style'=>'width :50% !important;display :inline')) }}
 				<div class="tsubject_err dispinline"></div>
+			</div>
 		</div>
 
 		<!-- <div class="col-xs-12 ">
@@ -286,7 +291,7 @@
 			</div>
 		</div> -->
 
-		<div class="col-xs-12 mt10">
+		<div class="col-xs-12 mt8 mb8">
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_content')}}<span class="fr">&nbsp;&#42;</span></label>
 			</div>
@@ -322,24 +327,28 @@
 			</div>
 		</div>
 	</fieldset>
+
 	{{ Form::close() }}
 
-	{{ Form::open(array('name'=>'frmaddeditcancel', 'id'=>'frmaddeditcancel', 'url' => 'Employee/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'files'=>true,'method' => 'POST')) }}
+	{{ Form::open(array('name'=>'frmaddeditcancel','id'=>'frmaddeditcancel', 
+						'url' => 'Employee/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),
+						'files'=>true,'method' => 'POST')) }}
+
 		{{ Form::hidden('empid', $request->empid , array('id' => 'empid')) }}
 		{{ Form::hidden('editid', $request->editid, array('id' => 'editid')) }}
+
 	{{ Form::close() }}
 	
-	{{ Form::open(array('name'=>'frmurlview',
-							'id'=>'frmurlview',
-							'url' => 'MailSend/pdfViewProcess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),
-							'files'=>true,
-							'target'=>'_blank',
-							'method' => 'POST')) }}
+	{{ Form::open(array('name'=>'frmurlview','id'=>'frmurlview',
+						'url' => 'MailSend/pdfViewProcess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),
+						'files'=>true,'target'=>'_blank','method' => 'POST')) }}
+
 		{{ Form::hidden('filename', '' , array('id' => 'filename')) }}
 		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
 		{{ Form::hidden('empid', $request->empid , array('id' => 'empid')) }}
+
 	{{ Form::close() }}
-	
+
 	<script type="text/javascript">
 		var cancel_check = true;
 		$('input, select, textarea').bind("change keyup paste", function() {

@@ -297,9 +297,11 @@ function fninchclear(){
 // to clear customer details
 function fncusclear(){
 	document.getElementById("customerName").value = "";
-	document.getElementById("inchargeDetails").value = "";
-	document.getElementById("branchId").value = "";
 	$('#branchId').find('option').not(':first').remove();
+	document.getElementById("branchId").value = "";
+	document.getElementById("inchargeDetails").value = "";
+	document.getElementById("hidincharge").value = "";
+	document.getElementById("inchargemailDetails").value = "";
 	$(".incadd").css("display", "none");
 	$(".btnclr").css("display", "none");
 }
@@ -374,15 +376,23 @@ function slectType(type) {
 	if(type ==  1){
 		$(".grpdiv").css("display", "inline-block");
 		$(".cstdiv").css("display", "none");
+		document.getElementById("customerId").value = "";
+		document.getElementById("customerName").value = "";
 		$(".bradiv").css("display", "none");
+		document.getElementById("branchId").value = "";
 		$(".incdiv").css("display", "none");
 		$(".incmaildiv").css("display", "none");
+		document.getElementById("inchargeDetails").value = "";
+		document.getElementById("hidincharge").value = "";
+		document.getElementById("inchargemailDetails").value = "";
 	}  else {
+		$(".grpdiv").css("display", "none");
+		document.getElementById("groupvalue").value = "";
+		document.getElementById("groupname").value = "";
 		$(".cstdiv").css("display", "inline-block");
 		$(".bradiv").css("display", "inline-block");
 		$(".incdiv").css("display", "inline-block");
 		$(".incmaildiv").css("display", "inline-block");
-		$(".grpdiv").css("display", "none");
 	}
 }
 

@@ -226,10 +226,12 @@ class MailSendController extends Controller {
 			if ($SelectedEmpid == "") {
 				$SelectedEmpid = $value;
 				$selectedEmpName = $employeDetail[0]->FirstName;
+				$FirstLastName = strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 				$resuemPdf = $recentResumeNm;
 			} else {
 				$SelectedEmpid = $SelectedEmpid.','.$value;
 				$selectedEmpName = $selectedEmpName.','.$employeDetail[0]->FirstName;
+				$FirstLastName =  $selectedEmpName.','.strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 				$resuemPdf = $resuemPdf.','.$recentResumeNm;
 			}
 			if ($recentResumeNm == "") {
@@ -463,8 +465,8 @@ class MailSendController extends Controller {
 				mkdir($securePath, 0777, true);
 			}
 			$pdfOldFile = $destinationPath.'/'. $selectedEmployeeResume[$key];
-			$pdfNewFile = $destinationPath.'/'.$request->subject."_".strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
-			$securename = '../ResumeUpload/employeResume/secure/'.$request->subject."_".strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
+			$pdfNewFile = $destinationPath.'/'.strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
+			$securename = '../ResumeUpload/employeResume/secure/'.strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
 			$tochangesecure = $OlddestinationPath.'/'. $selectedEmployeeResume[$key];
 			if(file_exists($pdfOldFile)) {
 				 self::pdfEncrypts($tochangesecure,$pdfpassword,$securename,$request);
@@ -497,7 +499,7 @@ class MailSendController extends Controller {
 						$replace_contents = ['Admin','CCCC','IIII','<password>'];
 						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,$pdfpassword];
 						$bodyrep = str_replace($replace_contents, $real_contents, $body);
-						$subject = str_replace('XXXX', 'Post Mail Successfully', $data[0]->subject);
+						$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 						$mailformat = [$bodyrep];
 						$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
 					/*} else {
@@ -516,7 +518,7 @@ class MailSendController extends Controller {
 						$replace_contents = ['TTTT','CCCC','IIII','DDDD','<password>'];
 						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,'mb',$pdfpassword];
 						$bodyrep = str_replace($replace_contents, $real_contents, $body);
-						$subject = str_replace('XXXX', 'Post Mail Successfully', $databoth[0]->subject);
+						$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 						$mailformat = [$bodyrep];
 						$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
 					}*/
@@ -539,7 +541,7 @@ class MailSendController extends Controller {
 						$replace_contents1 = ['Admin','CCCC','IIII','<password>'];
 						$real_contents1 = [$agentMail,$CustomerName[0]->customer_name,$agentName,$pdfpassword];
 						$bodyrep1 = str_replace($replace_contents1, $real_contents1, $body1);
-						$subject1 = str_replace('XXXX', 'Post Mail Successfully', $dataAgent[0]->subject);
+						$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 						$mailformat1 = [$bodyrep1];
 							$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$ccemail,'','',$pdf_array);
 					}
@@ -585,7 +587,7 @@ class MailSendController extends Controller {
 				$replace_contents = ['Admin','CCCC','IIII','<password>'];
 				$real_contents = [$email,$CustomerName[0]->customer_name,$name,$pdfpassword];
 				$bodyrep = str_replace($replace_contents, $real_contents, $body);
-				$subject = str_replace('XXXX', 'Post Mail Successfully', $data[0]->subject);
+				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 				$mailformat = [$bodyrep];
 				if(!in_array($customerId,$email_array)){
 					$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
@@ -603,7 +605,7 @@ class MailSendController extends Controller {
 			// 	$replace_contents = ['TTTT','CCCC','IIII','DDDD','<password>'];
 			// 	$real_contents = [$email,$CustomerName[0]->customer_name,$name,'mb',$pdfpassword];
 			// 	$bodyrep = str_replace($replace_contents, $real_contents, $body);
-			// 	$subject = str_replace('XXXX', 'Post Mail Successfully', $databoth[0]->subject);
+			// 	$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 			// 	$mailformat = [$bodyrep];
 			// 	if(!in_array($customerId,$email_array)){
 			// 		$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
@@ -625,7 +627,7 @@ class MailSendController extends Controller {
 			$replace_contents1 = ['Admin','CCCC','IIII','<password>'];
 			$real_contents1 = [$agentMail[0]->agent_email_id,$CustomerName[0]->customer_name,$agentMail[0]->agent_name,$pdfpassword];
 			$bodyrep1 = str_replace($replace_contents1, $real_contents1, $body1);
-			$subject1 = str_replace('XXXX', 'Post Mail Successfully', $dataAgent[0]->subject);
+			$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 			$mailformat1 = [$bodyrep1];
 			if(!in_array($customerId,$email_array)){
 				$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,$ccemail,'','',$pdf_array);
