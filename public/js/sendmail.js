@@ -404,3 +404,8 @@ function skillAdd(empid,lastname){
 		});
 	$('#uploadSkill').modal('show');
 }
+
+function EmployeInd() {
+	$('#mailSendfrm').attr('action', '../Employee/index?mainmenu=menu_employee&time='+datetime);
+	$("#mailSendfrm").submit();
+}

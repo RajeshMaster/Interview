@@ -386,14 +386,14 @@ body {
 									<span class="caret"></span></a>
 								<ul class="dropdown-menu" role="menu">
 									<li class="dropdown-header">&nbsp;&nbsp;{{ trans('messages.lbl_dropdown') }}</li>
-									<li @if(isset($request->mainmenu) && 
+									<!-- <li @if(isset($request->mainmenu) && 
 											$request->mainmenu == "menu_mailsend") 
 											class="active" 
 										@endif>
 										<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}"
 										style="text-decoration: none !important;">&nbsp;&nbsp;
 										{{ trans('messages.lbl_sendMail') }}</a>
-									</li>
+									</li> -->
 									<li @if(isset($request->mainmenu) && 
 											$request->mainmenu == "menu_employee") 
 											class="active" 
@@ -663,10 +663,7 @@ body {
 								</div>
 							@endif
 							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_employee" || $request->mainmenu == "menu_nonemployee" ||  $request->mainmenu == "menu_emphistory"  || $request->mainmenu == "menu_mailsend"))
-								<div id="emp_sub_4">
-									<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}">
-									{{ trans('messages.lbl_sendMail') }}</a>
-								</div>
+								
 								<div id="emp_sub_1">
 									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_employee') }}</a>

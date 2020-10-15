@@ -67,7 +67,7 @@
 					<span style="color:#136E83;font-weight:normal;font-size:16px;">
 						<?php echo number_format($detailage[0]->avg_age, 1);?>)
 					</span>
-				</span>		
+				</span>
 			</h2>
 		</div>
 	</fieldset>
@@ -95,14 +95,14 @@
 	<!-- Session msg End-->
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
+			<a class="btn btn-linkemp" href="javascript:candiateInt();" class="pl10 pb5">
+			Interview Candiate
+			</a><span>|</span>
 			<a class="btn btn-linkemp {{ $disabledEmp }}" href="javascript:selectActive(0,2);" class="pl10 pb5">
 					{{ trans('messages.lbl_employee') }}
 			</a>
 			<span>|</span>
 			<a class="btn btn-linkemp {{ $disabledNotEmp }}" href="javascript:selectActive(0,3);" class="pl10 pb5">
-				{{ trans('messages.lbl_nonMB') }}
-			</a>|</span>
-			<a class="btn btn-linkemp" href="javascript:candiateInt();" class="pl10 pb5">
 				{{ trans('messages.lbl_nonMB') }}
 			</a>
 		</div>

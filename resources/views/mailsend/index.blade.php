@@ -83,20 +83,19 @@
     {{ Form::hidden('page', $request->page , array('id' => 'page')) }}
     {{ Form::hidden('selSendMail', '', array('id' => 'selSendMail')) }}
 <div class="" id="main_contents">
-	<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_4">
+	<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
 		<!-- Start Heading -->
 		<fieldset class="pm0 mt20">
 			<div class="header">
-				<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/sentmail.png')  }}">
-				<h2 class="pull-left pl5 mt10">{{ trans('messages.lbl_sendMail') }}</h2>
-				</h2>
+				<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/staffList.png')  }}">
+				<h2 class="h2cnt">{{ trans('messages.lbl_employee') }}</h2>
 			</div>
 		</fieldset>
 		<!-- End Heading -->
 
 		<!-- Session msg Start-->
 		@if(Session::has('success'))
-			<div align="center" class="col-xs-12 mt10" role="alert" >
+			<div align="center" class="col-xs-12 " role="alert" >
 				<span class="alert {{ Session::get('alert', Session::get('type') ) }}">
 				{{ Session::get('success') }}
 				</span>
@@ -104,14 +103,24 @@
 		@endif
 
 		@if (session('danger'))
-			<div class="col-xs-12 mt10" align="center">
+			<div class="col-xs-12 " align="center">
 				<span class="alert-danger">{{ session('danger') }}</span>
 			</div>
 		@endif
 		<!-- Session msg End-->
 
-		<div class="box100per tableShrink pt10 mnheight mb0">
+		<div class="box100per tableShrink pt5 mnheight mb0">
+			<div class="col-xs-12 pm0 pull-left ">
+				<div class="pull-left">
+					<a class="btn btn-linkemp disabled" href="javascript:candiateInt();" class="pl10 pb5">
+					Interview Candiate
+					</a><span>|</span>
+					<a class="btn btn-linkemp " href="javascript:EmployeInd();" class="pl10 pb5">
+							{{ trans('messages.lbl_employee') }}
+					</a>
+				</div>
 			<a disabled="disabled" class="btn btn-success box70 mt10" id="postBtn" href="javascript:postsendmail(datetime);" style="float: right;" class="pl10 pb5">Post</a>
+			</div>
 		<table class="table-striped table footable table-bordered mt10 mb10" >
 			<colgroup>
 				<col width="4%">
@@ -145,30 +154,8 @@
 						</td>
 						<td>
 							<div class="tac">
-								<label>{{ $empdetailsdet[$i]['Emp_ID'] }}</label>
-									<!-- <a href="javascript:employeeview('{{ $empdetailsdet[$i]['Emp_ID'] }}');" style="color:blue;" class="vam ml18">
-										{{ $empdetailsdet[$i]['Emp_ID'] }}
-									</a> -->
-								<br>
-								{{--*/ $file_exist = "../../uploads/profile/original/" . $empdetailsdet[$i]['Picture']; /*--}}
-								{{--*/ $filename = $disPath . $empdetailsdet[$i]['Picture']; /*--}}
-								@if (!file_exists($filename))
-									{{--*/ $empdetailsdet[$i]['Picture'] = ""; /*--}}
-								@endif
-
-								@if($empdetailsdet[$i]['Picture'] != "")
-									{{--*/ $src = $file_exist; /*--}}
-								@else
-									@if($empdetailsdet[$i]['Gender'] == 1)
-										{{--*/ $src = $noimage . '/no-prof-male.JPG'; /*--}}
-									@else
-										{{--*/ $src = $noimage . '/no-prof-female.jpg'; /*--}}
-									@endif
-								@endif
-								<!-- <div style="border: 2px solid red;text-align: center;"> -->
-									<img class="pull-left box70 ml20 tac" src="{{ $src }}" width="90" height = "70"></img>
-								<!-- </div> -->
-								</label>
+								<!-- <label>{{ $empdetailsdet[$i]['Emp_ID'] }}</label> -->
+							
 							</div>
 						</td>
 

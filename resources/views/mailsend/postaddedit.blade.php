@@ -18,7 +18,7 @@
 </style>
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_4">
+<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
 	<fieldset class="mt20">
 		<div class="header">
 			<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/employee.png')  }}">

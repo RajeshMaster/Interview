@@ -546,7 +546,7 @@ function getdetails(empid,empname,datetime,id){
 
 // 
 function candiateInt() {
-	var mainmenu = "menu_customer";
-	$('#emphistoryform').attr('action', '../Customer/CustomerView?mainmenu='+mainmenu+'&time='+datetime);
-	$("#emphistoryform").submit();
+	var mainmenu = "menu_mailsend";
+	$('#employeefrm').attr('action', '../MailSend/index?mainmenu='+mainmenu+'&time='+datetime);
+	$("#employeefrm").submit();
 }
