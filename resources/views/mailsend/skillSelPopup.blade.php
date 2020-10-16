@@ -200,7 +200,7 @@ function fnSclkTrInc(grpid,grpname) {
 			   {{ trans('messages.lbl_register') }}
 		 </button>
 	  	@endif
-		 <button data-dismiss="modal" onclick="javascript:fnclose();" class="btn btn-danger CMN_display_block box100">
+		 <button data-dismiss="modal" class="btn btn-danger CMN_display_block box100">
 			<i class="fa fa-times" aria-hidden="true"></i>
 			   {{ trans('messages.lbl_cancel') }}
 		 </button>

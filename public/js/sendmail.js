@@ -124,8 +124,6 @@ function fnGetbranchDetail() {
 
 	$('#branchId').find('option').not(':first').remove();
 	$('#inchargeDetails').find('option').not(':first').remove();
-	$('span[id^="junk"]').remove();
-
 	var getcustId = $('#customerId').val();
 	
 	$.ajax({
@@ -164,7 +162,6 @@ function fnGetbranchDetail() {
 							$('#inchargeDetails').val(resp[0]["incharge_name"] + ";");
 							$('#hidincharge').val(resp[0]["id"] + ";");
 							$('#inchargemailDetails').val(resp[0]["incharge_email_id"] + ";");
-							 $("<span id='junk'>"+ $('#inchargemailDetails').val()+"</span>").appendTo(".mailidLabel");
 							// $('#inchargeDetails').val(resp[0]["id"]);
 						} 
 					},
@@ -231,7 +228,6 @@ function fndbclick(cusid,cusname,name) {
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
-	$('span[id^="junk"]').remove();
 	$("#"+cusid).prop("checked", true);
 	if($.trim(name) == "" || $.trim(name) == null) {
 		name = cusname;
@@ -271,7 +267,6 @@ function fnselect() {
 		document.getElementById("inchargeDetails").value = "";
 		document.getElementById("hidincharge").value = "";
 		document.getElementById("inchargemailDetails").value = "";
-		$('span[id^="junk"]').remove();
 		var cusId = $('#hcusId').val();
 		$('#customerId').val(cusId);
 		$('#customerName').val($('#hName').val());
@@ -295,11 +290,9 @@ function inchargename(){
 
 // to clear incgarge name
 function fninchclear(){
-
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
-	$('span[id^="junk"]').remove();
 }
 
 // to clear customer details
@@ -310,15 +303,13 @@ function fncusclear(){
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
-	$('span[id^="junk"]').remove();
-
 	$(".incadd").css("display", "none");
 	$(".btnclr").css("display", "none");
 }
 
 // Resume Upload Screen View
 function uploadResume(empid,lastname){
-	$('#empid').val(empid);
+	$('#empId').val(empid);
 	$('#empname').val(lastname);
 	popupopenclose(1);
 	$('#uploadRes').load('uploadResume?mainmenu='+mainmenu+'&time='+datetime+'&empId='+empid+'&lastname=1');
@@ -395,8 +386,6 @@ function slectType(type) {
 		document.getElementById("inchargeDetails").value = "";
 		document.getElementById("hidincharge").value = "";
 		document.getElementById("inchargemailDetails").value = "";
-		$('span[id^="junk"]').remove();
-
 	}  else {
 		$(".grpdiv").css("display", "none");
 		document.getElementById("groupvalue").value = "";
@@ -416,7 +405,7 @@ function pdfview(filename) {
 
 // Skill Add Screen View
 function skillAdd(empid,lastname){
-	$('#empid').val(empid);
+	$('#empId').val(empid);
 	$('#empname').val(lastname);
 	popupopenclose(1);
 	$('#uploadSkill').load('skillAdd?mainmenu='+mainmenu+'&time='+datetime+'&empId='+empid+'&lastname=1');
@@ -431,3 +420,11 @@ function EmployeInd() {
 	$('#mailSendfrm').attr('action', '../Employee/index?mainmenu=menu_employee&time='+datetime);
 	$("#mailSendfrm").submit();
 }
+// Resume History
+function resumeHistory(id) {
+	pageload();
+	$('#empId').val(id);
+	$('#mailSendfrm').attr('action', '../Employee/resumeHistory?mainmenu='+mainmenu+'&time='+datetime);
+	$("#mailSendfrm").submit();
+}
+

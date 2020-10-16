@@ -77,7 +77,7 @@
 	{{ Form::hidden('sortOrder', $request->sortOrder , array('id' => 'sortOrder')) }}
 	{{ Form::hidden('searchmethod', $request->searchmethod, array('id' => 'searchmethod')) }}
 	{{ Form::hidden('editflg', '' , array('id' => 'editflg')) }}
-	{{ Form::hidden('empId', '' , array('id' => 'empId')) }}
+	{{ Form::hidden('empid', '' , array('id' => 'empId')) }}
 	{{ Form::hidden('interviewId', '' , array('id' => 'interviewId')) }}
 	{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
     {{ Form::hidden('page', $request->page , array('id' => 'page')) }}
@@ -265,16 +265,16 @@
 									</div> -->
 										<div class="CMN_display_block">
 											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a> | 
-											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_skilladd') }}</a>
+											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_skilladd') }}</a> |
+											<a style="color:blue;" href="javascript:resumeHistory('{{ $empdetailsdet[$i]['Emp_ID'] }}');">{{ trans('messages.lbl_cvHist') }}</a>
 										</div>
 								</div>
 							</div>
 						</td>
-
 						<td class="vam tac">
 							@if($empdetailsdet[$i]['presentResume'] == 1 )
 								{{--*/ $src = $noimage . '/pdf.png'; /*--}}
-								<a href="javascript:downloadResume()" ><img class="box30" src="{{ $src }}" width="30" height = "30"></img>
+								<a href="javascript:downloadResume('{{ $empdetailsdet[$i]['recentResume'] }}')" ><img class="box30" src="{{ $src }}" width="30" height = "30"></img>
 								</a>
 							@else
 								{{--*/ $src = $noimage . '/nopdf.png'; /*--}}
