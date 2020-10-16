@@ -479,16 +479,16 @@ class MailSendController extends Controller {
 			$data[0]->content = str_replace('RRRR',$request->txt_content, $data[0]->content);
 		}
 		if(trim($request->videoUrl) == "") {
-			$data[0]->content = str_replace('UUUU','', $data[0]->content);
+			$data[0]->content = str_replace('Video','', $data[0]->content);
 			$data[0]->content = str_replace('LINK','', $data[0]->content);
-			$databoth[0]->content = str_replace('UUUU','', $databoth[0]->content);
+			$databoth[0]->content = str_replace('Video','', $databoth[0]->content);
 			$databoth[0]->content = str_replace('LINK','', $databoth[0]->content);
-			$dataAgent[0]->content = str_replace('UUUU','', $dataAgent[0]->content);
+			$dataAgent[0]->content = str_replace('Video','', $dataAgent[0]->content);
 			$dataAgent[0]->content = str_replace('LINK','', $dataAgent[0]->content);
 		} else {
-			$data[0]->content = str_replace('UUUU','依頼頼んだ方の自己PR動画のURLを添付しております。', $data[0]->content);
-			$databoth[0]->content = str_replace('UUUU','依頼頼んだ方の自己PR動画のURLを添付しております。', $databoth[0]->content);
-			$dataAgent[0]->content = str_replace('UUUU','依頼頼んだ方の自己PR動画のURLを添付しております。', $dataAgent[0]->content);
+			$data[0]->content = str_replace('Video','依頼頼んだ方の自己PR動画のURLを添付しております。', $data[0]->content);
+			$databoth[0]->content = str_replace('Video','依頼頼んだ方の自己PR動画のURLを添付しております。', $databoth[0]->content);
+			$dataAgent[0]->content = str_replace('Video','依頼頼んだ方の自己PR動画のURLを添付しております。', $dataAgent[0]->content);
 			$url = explode(',', $request->videoUrl);
 			$urlValue = "";
 			foreach ($url as $Ukey => $Uvalue) {
@@ -505,13 +505,13 @@ class MailSendController extends Controller {
 			$data[0]->content = str_replace('添付したファイルのパスワードは下記のようです。','',$data[0]->content);
 		}*/
 		if(trim($request->empSkills) == "") {
-			$data[0]->content = str_replace('SSSS','', $data[0]->content);
-			$databoth[0]->content = str_replace('SSSS','', $databoth[0]->content);
-			$dataAgent[0]->content = str_replace('SSSS','', $dataAgent[0]->content);
+			$data[0]->content = str_replace('Skills','', $data[0]->content);
+			$databoth[0]->content = str_replace('Skills','', $databoth[0]->content);
+			$dataAgent[0]->content = str_replace('Skills','', $dataAgent[0]->content);
 		} else {
-			$data[0]->content = str_replace('SSSS',"Skills : ".$request->empSkills,$data[0]->content);
-			$databoth[0]->content = str_replace('SSSS',"Skills : ".$request->empSkills, $databoth[0]->content);
-			$dataAgent[0]->content = str_replace('SSSS',"Skills : ".$request->empSkills, $dataAgent[0]->content);
+			$data[0]->content = str_replace('Skills',"Skills : ".$request->empSkills,$data[0]->content);
+			$databoth[0]->content = str_replace('Skills',"Skills : ".$request->empSkills, $databoth[0]->content);
+			$dataAgent[0]->content = str_replace('Skills',"Skills : ".$request->empSkills, $dataAgent[0]->content);
 		}
 		$dateTime = $request->dateTime;
 		foreach ($selectedEmp as $key => $value) {
@@ -560,7 +560,7 @@ class MailSendController extends Controller {
 						$inchargename = $groups->incharge_name;
 						$CustomerName = mailsend::getCustomerName($customerid);
 						$body = $data[0]->content;
-						$replace_contents = ['Admin','CCCC','IIII','<password>'];
+						$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
 						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,$pdfpassword];
 						$bodyrep = str_replace($replace_contents, $real_contents, $body);
 						$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
@@ -579,7 +579,7 @@ class MailSendController extends Controller {
 						$body = $databoth[0]->header."\n";
 						$body .= $databoth[0]->content;
 						$CustomerName = mailsend::getCustomerName($customerid);
-						$replace_contents = ['TTTT','CCCC','IIII','DDDD','<password>'];
+						$replace_contents = ['TTTT','CustomerName','InchargeName','DDDD','<password>'];
 						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,'mb',$pdfpassword];
 						$bodyrep = str_replace($replace_contents, $real_contents, $body);
 						$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
@@ -602,7 +602,7 @@ class MailSendController extends Controller {
 						$agentName = $agent->agent_name;
 						$CustomerName = mailsend::getCustomerName($cusId);
 						$body1 = $dataAgent[0]->content;
-						$replace_contents1 = ['Admin','CCCC','IIII','<password>'];
+						$replace_contents1 = ['Admin','CustomerName','InchargeName','<password>'];
 						$real_contents1 = [$agentMail,$CustomerName[0]->customer_name,$agentName,$pdfpassword];
 						$bodyrep1 = str_replace($replace_contents1, $real_contents1, $body1);
 						$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
@@ -648,7 +648,7 @@ class MailSendController extends Controller {
 				$name = $value1->incharge_name;
 				$body = $data[0]->content;
 				$CustomerName = mailsend::getCustomerName($custID);
-				$replace_contents = ['Admin','CCCC','IIII','<password>'];
+				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
 				$real_contents = [$email,$CustomerName[0]->customer_name,$name,$pdfpassword];
 				$bodyrep = str_replace($replace_contents, $real_contents, $body);
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
@@ -666,7 +666,7 @@ class MailSendController extends Controller {
 			// 	$body = $databoth[0]->header."\n";
 			// 	$body .= $databoth[0]->content;
 			// 	$CustomerName = mailsend::getCustomerName($custID);
-			// 	$replace_contents = ['TTTT','CCCC','IIII','DDDD','<password>'];
+			// 	$replace_contents = ['TTTT','CustomerName','InchargeName','DDDD','<password>'];
 			// 	$real_contents = [$email,$CustomerName[0]->customer_name,$name,'mb',$pdfpassword];
 			// 	$bodyrep = str_replace($replace_contents, $real_contents, $body);
 			// 	$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
@@ -688,7 +688,7 @@ class MailSendController extends Controller {
 		$CustomerName = mailsend::getCustomerName($customerId);
 		if (isset($agentMail[0]->agent_email_id) && $agentMail[0]->agent_email_id != "") {
 			$body1 = $dataAgent[0]->content;
-			$replace_contents1 = ['Admin','CCCC','IIII','<password>'];
+			$replace_contents1 = ['Admin','CustomerName','InchargeName','<password>'];
 			$real_contents1 = [$agentMail[0]->agent_email_id,$CustomerName[0]->customer_name,$agentMail[0]->agent_name,$pdfpassword];
 			$bodyrep1 = str_replace($replace_contents1, $real_contents1, $body1);
 			$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
