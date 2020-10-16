@@ -429,3 +429,21 @@ function resumeHistory(id) {
 	$("#mailSendfrm").submit();
 }
 
+// Resume History
+function downloadResume(resumename) {
+	swal({
+		title: msg_download,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+	},
+	function(isConfirm) {
+		if(isConfirm) {
+			$('#mailSendfrm #filenamePdf').val(resumename);
+			$('#mailSendfrm').attr('action', '../Employee/downloadprocess?mainmenu='+mainmenu+'&time='+datetime);
+			$("#mailSendfrm").submit();
+		}
+	});
+}

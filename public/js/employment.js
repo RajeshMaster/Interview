@@ -349,7 +349,7 @@ function fnbackEmpindex(){
 // Bakc to Employee Index
 function fnredirectindex(flg){
 	pageload();
-	if(flg==1){
+	if(flg == "1"){
 		$('#resHistfrm').attr('action', '../MailSend/index?mainmenu='+mainmenu+'&time='+datetime);
 		$("#resHistfrm").submit();
 	}else{
