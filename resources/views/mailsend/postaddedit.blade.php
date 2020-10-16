@@ -243,12 +243,10 @@
 				<a class="btn btn-danger box67 p4 btnclr" href="javascript:fninchclear();"
 						style = "height:30px;width: 70px; margin-top: 5px;display: none">
 					{{ trans('messages.lbl_clear') }}</a>
-				
 				<div class="customerName_err dispinline"></div>
 				<div class="inchargeDetails_err dispinline"></div>
 				<input type="hidden" name="hidincharge" id="hidincharge">
 				<input type="hidden" name="hidcheck" id="hidcheck">
-
 			</div>
 		</div>
 
@@ -256,9 +254,9 @@
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_to_mail')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
-			<div class="col-xs-7 mw" style="">
+			<div class="col-xs-7 mw mailidLabel" style="">
 
-				{{ Form::text('inchargemailDetails','', 
+				{{ Form::hidden('inchargemailDetails','', 
 								array('name' => 'inchargemailDetails',
 									  'id'=>'inchargemailDetails',
 									  'data-label' => trans('messages.lbl_inchargename'),

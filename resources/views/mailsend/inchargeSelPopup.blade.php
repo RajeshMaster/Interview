@@ -80,6 +80,7 @@
 				var s = document.getElementById("hidincharge").value;
 				document.getElementById("hidincharge").value = s + ";";
 			}
+			$("<span id='junk' style='word-wrap:break-word;'>"+ mail +"</span>").appendTo(".mailidLabel");
 			$("body div").removeClass("modalOverlay");
 			$('#customerSelect').empty();
 			$('#customerSelect').modal('toggle');

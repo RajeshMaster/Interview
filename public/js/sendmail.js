@@ -124,6 +124,8 @@ function fnGetbranchDetail() {
 
 	$('#branchId').find('option').not(':first').remove();
 	$('#inchargeDetails').find('option').not(':first').remove();
+	$('span[id^="junk"]').remove();
+
 	var getcustId = $('#customerId').val();
 	
 	$.ajax({
@@ -162,6 +164,7 @@ function fnGetbranchDetail() {
 							$('#inchargeDetails').val(resp[0]["incharge_name"] + ";");
 							$('#hidincharge').val(resp[0]["id"] + ";");
 							$('#inchargemailDetails').val(resp[0]["incharge_email_id"] + ";");
+							 $("<span id='junk'>"+ $('#inchargemailDetails').val()+"</span>").appendTo(".mailidLabel");
 							// $('#inchargeDetails').val(resp[0]["id"]);
 						} 
 					},
@@ -228,6 +231,7 @@ function fndbclick(cusid,cusname,name) {
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+	$('span[id^="junk"]').remove();
 	$("#"+cusid).prop("checked", true);
 	if($.trim(name) == "" || $.trim(name) == null) {
 		name = cusname;
@@ -267,6 +271,7 @@ function fnselect() {
 		document.getElementById("inchargeDetails").value = "";
 		document.getElementById("hidincharge").value = "";
 		document.getElementById("inchargemailDetails").value = "";
+		$('span[id^="junk"]').remove();
 		var cusId = $('#hcusId').val();
 		$('#customerId').val(cusId);
 		$('#customerName').val($('#hName').val());
@@ -290,9 +295,11 @@ function inchargename(){
 
 // to clear incgarge name
 function fninchclear(){
+
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+	$('span[id^="junk"]').remove();
 }
 
 // to clear customer details
@@ -303,6 +310,8 @@ function fncusclear(){
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+	$('span[id^="junk"]').remove();
+
 	$(".incadd").css("display", "none");
 	$(".btnclr").css("display", "none");
 }
@@ -386,6 +395,8 @@ function slectType(type) {
 		document.getElementById("inchargeDetails").value = "";
 		document.getElementById("hidincharge").value = "";
 		document.getElementById("inchargemailDetails").value = "";
+		$('span[id^="junk"]').remove();
+
 	}  else {
 		$(".grpdiv").css("display", "none");
 		document.getElementById("groupvalue").value = "";
