@@ -337,12 +337,12 @@ body {
 					<div class="navbar-brand" style="display: inline-block;">
 						@if(!empty(Auth::user()))
 							@if(Auth::user()->userType == 1)
-								<a class="" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">
+								<a class="" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">
 									<img class="vam pl25 mt20 box80per" 
 									src="{{ URL::asset('public/images/Microbit_logo.jpg') }}" />
 								</a>
 							@else
-								 <a class="" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}">
+								 <a class="" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}">
 									<img class="vam mt20 box80per pl10" 
 										src="{{ URL::asset('public/images/Microbit_logo.jpg') }}" />
 								</a>
@@ -368,14 +368,14 @@ body {
 								  {{ trans('messages.lbl_interview') }}
 								</a>
 							</li>
-							<li @if(isset($request->mainmenu) && 
+							<!-- <li @if(isset($request->mainmenu) && 
 									$request->mainmenu == "home") 
 									class="dropdown active" 
 								@endif>
 								<a class="pageload" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}" style="text-decoration: none !important;">
 									{{ trans('messages.lbl_home') }}
 								</a>
-							</li>
+							</li> -->
 							<li @if(isset($request->mainmenu) && 
 									($request->mainmenu == "menu_employee" || $request->mainmenu == "menu_mailsend"  )) 
 									class="dropdown active" 
@@ -592,11 +592,11 @@ body {
 					<div class="CMN_header_wrap">
 						<nav id="CMN_gmenu">
 							<ul class="" style="padding: 0px;">
-								<li class="btn_home jop_btn" style="">
+								<!-- <li class="btn_home jop_btn" style="">
 									<a class="pageload" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}" 
 									style="text-decoration: none !important;">
 									{{ trans('messages.lbl_home') }}</a>
-								</li>
+								</li> -->
 							<!-- 	<li class="btn_employee jop_btn" style="">
 									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}" 
 									style="text-decoration: none !important;">
@@ -649,16 +649,16 @@ body {
 							@endif
 						</div>
 						<div id="AssetDiv" class="CMN_sub_gmenu">
-							@if(isset($request->mainmenu) && $request->mainmenu == "home")
+							<!-- @if(isset($request->mainmenu) && $request->mainmenu == "home")
 								<div id="home_sub_1">
 									<a class="pageload" href="{{ url('menu/index?mainmenu=home&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_home') }}</a>
 								</div>
-							@endif
+							@endif -->
 							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_employee" || $request->mainmenu == "menu_nonemployee" ||  $request->mainmenu == "menu_emphistory"  || $request->mainmenu == "menu_mailsend"))
 								
 								<div id="emp_sub_1">
-									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}">
+									<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_employee') }}</a>
 								</div>
 								<div id="emp_sub_2">

@@ -26,6 +26,7 @@ class EmployeeController extends Controller
 	*
 	*/
 	public function index(Request $request) {
+		// print_r($request->all());exit;
 		$resignid = 0;
 		$empdetails = MailSend::fnGetEmployeeDetailsstart($request, $resignid);
 		$empdetailsdet=array();

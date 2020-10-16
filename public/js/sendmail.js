@@ -87,12 +87,13 @@ $(document).ready(function() {
 /*
 フリタ処理
 */
-function selectActive(val,title) {
+function filterNotMb(val,title) {
 	$('#plimit').val(50);
 	$('#page').val('');
 	$('#resignid').val(val);
 	$('#title').val(title);
-	$("#employeefrm").submit();
+	$('#mailSendfrm').attr('action', '../Employee/index?mainmenu=menu_employee&time='+datetime);
+	$("#mailSendfrm").submit();
 }
 
 

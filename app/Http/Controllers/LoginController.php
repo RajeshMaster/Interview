@@ -102,7 +102,7 @@ class LoginController extends Controller
 			        	Session::put('languageval', 'en');
 		   				Session::put('setlanguageval', 'jp');
 			        }
-					return Redirect::to('menu/index?mainmenu=home&time='.date('Ymdhis'));
+					return Redirect::to('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis'));
 		        }
 			} else {
 				// if any error send back with message.

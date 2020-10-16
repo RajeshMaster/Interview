@@ -106,9 +106,9 @@
 							<span  class="col-xs-10 mt5 ml30 lbldesset settingsubdesignright">
 								<a name="bank" id="bank" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_ourdetails') }}</a>
 							</span>
-							<span  class="col-xs-10 mt5 ml30 mb10 lbldesset settingsubdesignright">
+					<!-- 		<span  class="col-xs-10 mt5 ml30 mb10 lbldesset settingsubdesignright">
 								<a name="bank" id="bank" style="color:#33AFFF !important;" href="">{{ trans('messages.lbl_japanese_skills') }}</a>
-							</span>
+							</span> -->
 						</div>
 					</div>
 				</div>

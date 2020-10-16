@@ -82,6 +82,9 @@
 	{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
     {{ Form::hidden('page', $request->page , array('id' => 'page')) }}
     {{ Form::hidden('selSendMail', '', array('id' => 'selSendMail')) }}
+	{{ Form::hidden('resignid', '' , array('id' => 'resignid')) }}
+	{{ Form::hidden('title', '' , array('id' => 'title')) }}
+
 <div class="" id="main_contents">
 	<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
 		<!-- Start Heading -->
@@ -111,15 +114,18 @@
 
 		<div class="box100per tableShrink pt5 mnheight mb0">
 			<div class="col-xs-12 pm0 pull-left ">
-				<div class="pull-left">
-					<a class="btn btn-linkemp disabled" href="javascript:candiateInt();" class="pl10 pb5">
+				<div class="pull-left" style="vertical-align: text-bottom;">
+					<a class="btn btn-linkemp disabled" href="javascript:candiateInt();" class="pl10 ">
 					Interview Candiate
 					</a><span>|</span>
-					<a class="btn btn-linkemp " href="javascript:EmployeInd();" class="pl10 pb5">
+					<a class="btn btn-linkemp " href="javascript:EmployeInd();" class="pl10" style="padding-bottom: ">
 							{{ trans('messages.lbl_employee') }}
+					</a><span>|</span>
+					<a class="btn btn-linkemp " href="javascript:filterNotMb(0,3);" class="pl10 pb5">
+						{{ trans('messages.lbl_nonMB') }}
 					</a>
 				</div>
-			<a disabled="disabled" class="btn btn-success box70 mt10" id="postBtn" href="javascript:postsendmail(datetime);" style="float: right;" class="pl10 pb5">Post</a>
+			<a disabled="disabled" class="btn btn-success box70 mt10" id="postBtn" href="javascript:postsendmail(datetime);" style="float: right;" class="pl10 ">Post</a>
 			</div>
 		<table class="table-striped table footable table-bordered mt10 mb10" >
 			<colgroup>
@@ -159,7 +165,7 @@
 									{{ $empdetailsdet[$i]['PgSkills'] }}
 								@endif
 								@if(isset($empdetailsdet[$i]['JpSkills']) && $empdetailsdet[$i]['JpSkills'] != "")
-									<span>Jpanese:</span> 
+								<br/>	<span>Jpanese:</span> 
 									<span>
 											{{ $empdetailsdet[$i]['JpSkills'] }}
 									</span>
