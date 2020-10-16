@@ -424,6 +424,7 @@ function EmployeInd() {
 function resumeHistory(id) {
 	pageload();
 	$('#empId').val(id);
+	$('#hidHistory').val(1);
 	$('#mailSendfrm').attr('action', '../Employee/resumeHistory?mainmenu='+mainmenu+'&time='+datetime);
 	$("#mailSendfrm").submit();
 }

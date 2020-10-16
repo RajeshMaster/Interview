@@ -571,6 +571,11 @@ class EmployeeController extends Controller
 		if (!isset($request->empid) || $request->empid == "") {
 			return Redirect::to('Employee/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
+		if(isset($request->hidHistory)){
+			$historyFlg = $request->hidHistory;
+		}else{
+			$historyFlg=0;
+		}
 
 		if ($request->plimit == "") {
 			$request->plimit = 50;
@@ -581,7 +586,8 @@ class EmployeeController extends Controller
 
 		return view('employee.resumeHistory',['request' => $request,
 										'resumedetails' => $viewResumedetails,
-										'employeDetail' => $employeeInfo]);
+										'employeDetail' => $employeeInfo,
+										'historyFlg'=>$historyFlg]);
 	}
 
 	/**

@@ -84,6 +84,7 @@ $(document).ready(function() {
     {{ Form::hidden('selSendMail', '', array('id' => 'selSendMail')) }}
 	{{ Form::hidden('resignid', '' , array('id' => 'resignid')) }}
 	{{ Form::hidden('title', '' , array('id' => 'title')) }}
+	{{ Form::hidden('hidHistory', '' , array('id' => 'hidHistory')) }}
 
 <div class="" id="main_contents">
 	<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">

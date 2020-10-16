@@ -53,7 +53,7 @@
 
 	<div class="box100per tableShrink pt10 mnheight mb0">
 		<div class=""> 
-			<a href="javascript:fnredirectindex();" class="button pull-left button-blue textDecNone" 
+			<a href="javascript:fnredirectindex(<?php echo $historyFlg ?>);" class="button pull-left button-blue textDecNone" 
 				style="text-decoration: none !important;">
 				<span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}
 			</a>

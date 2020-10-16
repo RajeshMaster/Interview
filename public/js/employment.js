@@ -347,10 +347,15 @@ function fnbackEmpindex(){
 }
 
 // Bakc to Employee Index
-function fnredirectindex(){
+function fnredirectindex(flg){
 	pageload();
-	$('#resHistfrm').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
-	$("#resHistfrm").submit();
+	if(flg==1){
+		$('#resHistfrm').attr('action', '../MailSend/index?mainmenu='+mainmenu+'&time='+datetime);
+		$("#resHistfrm").submit();
+	}else{
+		$('#resHistfrm').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
+		$("#resHistfrm").submit();
+	}
 }
 
 // Bakc to Employee Index
