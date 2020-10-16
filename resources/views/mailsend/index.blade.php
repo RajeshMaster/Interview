@@ -50,8 +50,9 @@
 			$("#postBtn").attr('disabled','disabled');
 		}
 	}
-
-	function postsendmail(datetime) {
+$(document).ready(function() {
+	$('.postsendmail').on('click', function() {
+		alert();
 		var array = []; 
 		$("input:checked").each(function() {
 			array.push($(this).val()); 
@@ -61,10 +62,9 @@
 			$('#mailSendfrm').attr('action', 'sendMailPost?mainmenu='+mainmenu+'&time='+datetime);
 			$("#mailSendfrm").submit();
 		} 
-	}
+	});
+});
 </script>
-
-
 {{ Form::open(array('name'=>'mailSendfrm',
 		'id'=>'mailSendfrm',
 		'url' => 'MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'), 
@@ -125,7 +125,7 @@
 						{{ trans('messages.lbl_nonMB') }}
 					</a>
 				</div>
-			<a disabled="disabled" class="btn btn-success box70 mt10" id="postBtn" href="javascript:postsendmail(datetime);" style="float: right;" class="pl10 ">Post</a>
+			<button type="button" disabled="disabled" class="btn btn-success box70 mt10 postsendmail" id="postBtn" style="float: right;">Post</button>
 			</div>
 		<table class="table-striped table footable table-bordered mt10 mb10" >
 			<colgroup>
@@ -194,17 +194,6 @@
 									<span class="" style="float: right">
 
 									</span>
-									<!-- @if($empdetailsdet[$i]['KanaFirstName'] != "" && $empdetailsdet[$i]['KanaLastName'] != "")
-										<div>　
-											<span class="fll">
-												{{ $empdetailsdet[$i]['KanaFirstName'] }}
-											</span>
-											<span class="fwb" style="margin-left: -10px">
-												{{ $empdetailsdet[$i]['KanaLastName'] }}
-											</span>
-										</div>
-									@endif -->
-
 									<div>
 										<span class="f28 clr_blue"> 
 											{{ trans('messages.lbl_dob') }} :
@@ -219,12 +208,6 @@
 										<span class="f12"> 
 											{{ (!empty($empdetailsdet[$i]['Mobile1']) ?  $empdetailsdet[$i]['Mobile1'] : "Nill")  }}
 										</span>
-										<!-- <span class="f18 clr_blue">
-											{{ trans('messages.lbl_email') }} :
-										</span>
-										<span class="f12"> 
-											{{ $empdetailsdet[$i]['Emailpersonal'] }}
-										</span> -->
 									</div>
 
 									<div>
@@ -233,36 +216,6 @@
 											{{ (!empty($empdetailsdet[$i]['Address1']) ?  $empdetailsdet[$i]['Address1'] : "Nill")  }}
 										</span>
 									</div>
-
-									<!-- <div>
-										<span class="clr_blue">{{ trans('messages.lbl_customer') }}</span> :
-										<span class="f12"> 
-										{{ (!empty($empdetailsdet[$i]['customer_name']) ?  $empdetailsdet[$i]['customer_name'] : "Nill")  }}
-										</span>
-									</div> -->
-
-								<!-- 	<div class="mb4 CMN_display_block mt4">
-										<div class="CMN_display_block">
-											<a style="color:blue;" href="javascript:cushistory('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_customer') }}</a>
-										</div>
-										&nbsp;|
-										<div class="CMN_display_block">
-											@if($empdetailsdet[$i]['clientStatus'] == 0 )
-												<a style="color:blue;" href="javascript:workend('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_workEdate') }}</a>&nbsp;|
-											@else
-												{{ trans('messages.lbl_workEdate') }}&nbsp;|
-											@endif
-										</div>
-
-										<div class="CMN_display_block">
-											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a>&nbsp;|
-										</div>
-
-										<div class="CMN_display_block">
-											<a style="color:blue;" href="javascript:resumeHistory('{{ $empdetailsdet[$i]['Emp_ID'] }}')">{{ trans('messages.lbl_cvHist') }}</a>
-											
-										</div>
-									</div> -->
 										<div class="CMN_display_block">
 											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a> | 
 											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_skilladd') }}</a> |
