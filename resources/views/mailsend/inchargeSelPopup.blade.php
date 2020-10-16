@@ -48,6 +48,8 @@
 		document.getElementById("inchargeDetails").value = "";
 		document.getElementById("hidincharge").value = "";
 		document.getElementById("inchargemailDetails").value = "";
+		$('span[id^="junk"]').remove();
+		
 		var hidVal = $("#hidincharge").val();
 		if ($("[name='incharge[]']:checked").length <= 0 && hidVal == "") {
 			alert("Please select atleast one Incharge");
