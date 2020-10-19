@@ -228,6 +228,8 @@ function fndbclick(cusid,cusname,name) {
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+	$('span[id^="junk"]').remove();
+	$('.mailidLabel').find('br').remove();
 	$("#"+cusid).prop("checked", true);
 	if($.trim(name) == "" || $.trim(name) == null) {
 		name = cusname;
@@ -267,6 +269,8 @@ function fnselect() {
 		document.getElementById("inchargeDetails").value = "";
 		document.getElementById("hidincharge").value = "";
 		document.getElementById("inchargemailDetails").value = "";
+		$('span[id^="junk"]').remove();
+		$('.mailidLabel').find('br').remove();
 		var cusId = $('#hcusId').val();
 		$('#customerId').val(cusId);
 		$('#customerName').val($('#hName').val());
@@ -293,6 +297,8 @@ function fninchclear(){
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+	$('span[id^="junk"]').remove();
+	$('.mailidLabel').find('br').remove();
 }
 
 // to clear customer details
@@ -303,6 +309,8 @@ function fncusclear(){
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+	$('span[id^="junk"]').remove();
+	$('.mailidLabel').find('br').remove();
 	$(".incadd").css("display", "none");
 	$(".btnclr").css("display", "none");
 }

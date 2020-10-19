@@ -49,6 +49,7 @@
 		document.getElementById("hidincharge").value = "";
 		document.getElementById("inchargemailDetails").value = "";
 		$('span[id^="junk"]').remove();
+		$('.mailidLabel').find('br').remove();
 		
 		var hidVal = $("#hidincharge").val();
 		if ($("[name='incharge[]']:checked").length <= 0 && hidVal == "") {
@@ -82,7 +83,10 @@
 				var s = document.getElementById("hidincharge").value;
 				document.getElementById("hidincharge").value = s + ";";
 			}
-			$("<span id='junk' style='word-wrap:break-word;'>"+ mail +"</span>").appendTo(".mailidLabel");
+			var mailarray = mail.split(';');
+			for (var i = 0; i < mailarray.length; i++) {
+				$("<span id='junk'>"+ mailarray[i] +"</span><br>").appendTo(".mailidLabel");
+			}
 			$("body div").removeClass("modalOverlay");
 			$('#customerSelect').empty();
 			$('#customerSelect').modal('toggle');
