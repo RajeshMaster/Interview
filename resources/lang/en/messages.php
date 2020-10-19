@@ -292,5 +292,6 @@ return [
 	'lbl_agentagreement' =>'Agent Agreement Date',
 	'lbl_newCustomer' => 'New Customer',
 	'lbl_skilladd' => 'Skill Add',
+	'lbl_dbselection' => 'Database Selection',
 	/* End Agent Module*/
 ];
