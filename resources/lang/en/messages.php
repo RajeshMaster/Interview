@@ -293,5 +293,6 @@ return [
 	'lbl_newCustomer' => 'New Customer',
 	'lbl_skilladd' => 'Skill Add',
 	'lbl_dbselection' => 'Database Selection',
+	'lbl_upVideo' => 'Upload Video',
 	/* End Agent Module*/
 ];

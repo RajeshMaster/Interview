@@ -162,6 +162,11 @@ class MailSendController extends Controller {
 				$empdetailsdet[$i]['presentResume'] = 0;
 			}
 			$skill =MailSend::getSkillDetail($empdetailsdet[$i]['Emp_ID']);
+			if (isset($skill[0]->youTubeUrl)){
+				$empdetailsdet[$i]['youTubeUrl'] = $skill[0]->youTubeUrl;
+			}else{
+				$empdetailsdet[$i]['youTubeUrl'] = "";
+			}
 			$pgSkil = array();
 			if (isset($skill[0]->programming_lang)) {
 				$empdetailsdet[$i]['JpSkills'] = $skill[0]->japanese_skill;
@@ -226,11 +231,6 @@ class MailSendController extends Controller {
 			$empSkillDtls = mailsend::getSkillDetail($value);
 
 			$recentClient = Employee::fnGetClientDtl($value);
-			/*
-				Point To remember
-				clientStatus = 0 ->able to edit end date
-				clientStatus = 1 ->Unable to edit end date
-			*/
 			$recentResume = Employee::fnGetResume($value);
 
 			if(isset($recentResume->resume)) {
@@ -298,16 +298,16 @@ class MailSendController extends Controller {
 			}
 			$Nameletters = strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 		
-	/*		if ($url == "") {
-				if ($employeDetail[0]->videoUrl != "") {
+			if ($url == "") {
+				if ($empSkillDtls[0]->youTubeUrl != "") {
 					
-					$url = $Nameletters .':'. $employeDetail[0]->videoUrl ;
+					$url = $Nameletters .'->'. $empSkillDtls[0]->youTubeUrl ;
 				}
 			} else {
-				if ($employeDetail[0]->videoUrl != "") {
-					$url = $url.','. $Nameletters .':'.$employeDetail[0]->videoUrl;
+				if ($empSkillDtls[0]->youTubeUrl != "") {
+					$url = $url.','. $Nameletters .'->'.$empSkillDtls[0]->youTubeUrl;
 				}
-			}*/
+			}
 			$empdetailsdet[$key]['name'] = $employeDetail[0]->FirstName;
 			$empdetailsdet[$key]['resume'] = $recentResumeNm;
 
@@ -330,44 +330,6 @@ class MailSendController extends Controller {
 					}
 				}
 			}
-
-			/*$language =  $employeDetail[0]->languageSkill;
-			if ($language != "") {
-				$rest = substr($language, 0, -1);
-				$languageid = "";
-				$languagename = array();
-				$getLangSkills="";
-				if ($rest != "") {
-					$languageid = explode(";",$rest);
-					$langSkills = Interview::fnGetlanguagename($languageid);
-					foreach ($langSkills as $keylan => $language) {
-						$getLangSkills .= $language->skillName.",";
-					}
-					$getLangSkills = substr($getLangSkills, 0, -1);
-				}
-				$empdetailsdet[$key]['lan'] = $getLangSkills;
-			} else {
-				$empdetailsdet[$key]['lan'] = "";
-			}
-*/
-			/*$jplanguage =  $employeDetail[0]->japaneseSkill;
-			if ($jplanguage != "") {
-				$jprest = substr($jplanguage, 0, -1);
-				$jplanguageid = "";
-				$jplanguagename = array();
-				$getjpLangSkills="";
-				if ($jprest != "") {
-					$jplanguageid = explode(";",$jprest);
-					$jplangSkills = Interview::fnGetjplanguagename($jplanguageid);
-					foreach ($jplangSkills as $keylan => $jplanguage) {
-						$getjpLangSkills .= $jplanguage->skillName.",";
-					}
-					$getjpLangSkills = substr($getjpLangSkills, 0, -1);
-				}
-				$empdetailsdet[$key]['jplan'] = $getjpLangSkills;
-			} else {
-				$empdetailsdet[$key]['jplan'] = "";
-			}*/
 		}
 		$details = mailsend::selCustomer();
 		foreach ($details as $key => $value) {
@@ -827,6 +789,39 @@ class MailSendController extends Controller {
 			}
 		}
 		return Redirect::to('MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+	}
+
+	public static function uploadVideoPopup(Request $request){
+		return view('mailsend.videoUploadPopup',['request'=> $request]);
+	}
+
+	public static function uploadVideoProcess(Request $request){
+		$empSkill = MailSend::getSkillDetail($request->empId);
+		if(!empty($empSkill)){
+			$updateDetail = MailSend::updateVideo($request);
+			if($updateDetail) {
+				Session::flash('success', 'Video Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Video Updated Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		}else{
+			$regDetail = MailSend::insertVideo($request);
+			if($regDetail){
+				Session::flash('success', 'Video Registered Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}else {
+				Session::flash('type', 'Video Registered Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		}
+		return Redirect::to('MailSend/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+	}
+	public static function videoPlayPopup(Request $request){
+		$url = str_replace("$","&lt;",$_REQUEST['embedlink']);
+		return view('mailsend.videoPlayPopup',['request' => $request,
+											'url'=>$url ]);
 	}
 
 }

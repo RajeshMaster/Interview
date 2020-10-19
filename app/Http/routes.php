@@ -128,6 +128,9 @@ Route::group(['prefix' => 'MailSend','middleware' => 'auth'], function(){
 	Route::any('pdfViewProcess', 'MailSendController@pdfViewProcess');
 	Route::any('skillAdd','MailSendController@skillAdd');
 	Route::any('skillAddEditProcess','MailSendController@skillAddEditProcess');
+	Route::any('uploadVideoPopup','MailSendController@uploadVideoPopup');
+	Route::any('uploadVideoProcess','MailSendController@uploadVideoProcess');
+	Route::any('videoPlayPopup','MailSendController@videoPlayPopup');
 });
 
 // Setting

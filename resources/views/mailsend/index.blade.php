@@ -219,6 +219,7 @@ $(document).ready(function() {
 									</div>
 										<div class="CMN_display_block">
 											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a> | 
+											<a style="color:blue;" href="javascript:uploadvideo('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}','{{ $empdetailsdet[$i]['KanaLastName'] }}');">{{ trans('messages.lbl_upVideo') }}</a> | 
 											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_skilladd') }}</a> |
 											<a style="color:blue;" href="javascript:resumeHistory('{{ $empdetailsdet[$i]['Emp_ID'] }}');">{{ trans('messages.lbl_cvHist') }}</a>
 										</div>
@@ -226,6 +227,13 @@ $(document).ready(function() {
 							</div>
 						</td>
 						<td class="vam tac">
+							@if($empdetailsdet[$i]['youTubeUrl'] !="")
+							{{--*/ $src = $noimage . '/Video.png'; /*--}}
+								<a href="javascript:videoPlay('{{ $empdetailsdet[$i]['youTubeUrl'] }}')"><img class="box30" src="{{ $src }}" width="30" height = "30"></img></a>
+							@else
+								{{--*/ $src = $noimage . '/nonVideo.png'; /*--}}
+								<img class=" box30 " src="{{ $src }}" width="30" height = "30"></img>
+							@endif
 							@if($empdetailsdet[$i]['presentResume'] == 1 )
 								{{--*/ $src = $noimage . '/pdf.png'; /*--}}
 								<a href="javascript:downloadResume('{{ $empdetailsdet[$i]['recentResume'] }}')" ><img class="box30" src="{{ $src }}" width="30" height = "30"></img>
@@ -282,6 +290,13 @@ $(document).ready(function() {
 	<div id="login-overlay">
 		<div class="modal-content">
 		<!-- Popup will be loaded here -->
+		</div>
+	</div>
+</div>
+<div id="videoplayPopup" class="modal fade" style="width: 600px;">
+	<div id="login-overlay">
+		<div class="modal-content">
+			<!-- Popup will be loaded here -->
 		</div>
 	</div>
 </div>

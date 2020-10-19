@@ -41,6 +41,7 @@
 		{{ Form::hidden('selectedType', '' , array('id' => 'selectedType')) }}
 		{{ Form::hidden('dateTime', $dateTime , array('id' => 'dateTime')) }}
 		{{ Form::hidden('empSkills', $langSkills , array('id' => 'empSkills')) }}
+		{{ Form::hidden('videoUrl', $url , array('id' => 'videoUrl')) }}
 
 	<fieldset id="hdnfield" class="mt10">
 		<div class="col-xs-12 mt8">
@@ -109,15 +110,13 @@
 		@if($url != "")
 			<div class="col-xs-12 mt8">
 				<div class="col-xs-3 lb tar" >
-					<label for="name">{{ trans('messages.lbl_pdffile')}}<span class="fr">&nbsp;&nbsp;</span></label>
+					<label for="name">{{ trans('messages.lbl_url')}}<span class="fr">&nbsp;&nbsp;</span></label>
 				</div>
 				<div class="col-xs-7 mw">
 					<span  class="CMN_display_block box38per ml2" style="word-wrap: break-word">
 						<?php $url = explode(",", $url); ?>
 						<?php for ($i=0; $i < count($url); $i++) { ?>
-							<a class="csrp" onclick="pdfview('{{  $url[$i] }}');">
 								{{ $url[$i] }}
-							</a>	
 							<br/>
 						<?php } ?>
 					</span>

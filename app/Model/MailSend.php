@@ -268,7 +268,7 @@ class MailSend extends Model {
 	public static function getSkillDetail($empid){
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('emp_mstskills')
-				->select('programming_lang','japanese_skill')
+				->select('programming_lang','japanese_skill','youTubeUrl')
 				->WHERE('empId', $empid)
 				->WHERE('delFlg',0)
 				->get();
@@ -308,4 +308,31 @@ class MailSend extends Model {
 					->get();
 		return $result;
 	} 
+
+	public static function updateVideo($request){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('emp_mstskills')
+				->WHERE('empId', $request->empId)
+				->update(['kanaName' => $request->Kananame,
+						'lastName' => $request->Lastname,
+						'youTubeUrl' => $request->urlLink,
+						'updatedDate' => date('Y-m-d'),
+						'updatedBy' => Auth::user()->username
+					]);
+		return $result; 
+	}
+	public static function insertVideo($request){
+		$db = DB::connection('mysql');
+		$insert= $db->table('emp_mstskills')
+			->insert([
+				'empId'=> $request->empId,
+				'kanaName' => $request->Kananame,
+				'lastName' => $request->Lastname,
+				'youTubeUrl' => $request->urlLink,
+				'createdDate' => date('Y-m-d'),
+				'createdBy' => Auth::user()->username,
+				'delFlg' => 0
+				]);
+		return $insert; 
+	}
 }

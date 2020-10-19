@@ -187,7 +187,7 @@ function fnGetinchargeDetails() {
 	document.getElementById("inchargemailDetails").value = "";
 	$('span[id^="junk"]').remove();
 	$('.mailidLabel').find('br').remove();
-	
+
 	var getcusId = $('#customerId').val();
 	var getbranchId = $('#branchId').val();
 	if (getbranchId != "") {
@@ -461,4 +461,57 @@ function downloadResume(resumename) {
 			$("#mailSendfrm").submit();
 		}
 	});
+}
+
+function uploadvideo(empid,lastname,kananame){
+	$('#empId').val(empid);
+	popupopenclose(1);
+	$('#uploadRes').load('uploadVideoPopup?mainmenu='+mainmenu+'&time='+datetime+'&empId='+empid+'&Lastname='+lastname+'&Kananame='+kananame);
+	$("#uploadRes").modal({
+			backdrop: 'static',
+			keyboard: false
+		});
+	$('#uploadRes').modal('show');
+}
+
+function fnUploadVideo(){
+	var url = $('#urlLink').val();
+    if (url != undefined || url != '') {        
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        if (match && match[2].length == 11) {
+        	$('#embedLink').val(match[2]);
+            swal({
+				title: msg_upload,
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonClass: "btn-danger",
+				closeOnConfirm: true,
+				closeOnCancel: true
+			},
+			function(isConfirm) {
+				if(isConfirm) {
+					$("#uploadpopup").submit();
+				}
+			});
+        } else {
+            alert('Enter The YouTube URL Format');
+            // Do anything for not being valid
+        }
+    }
+}
+function videoPlay(url){
+	var url = url;
+	var id = url.split("?v=")[1];
+	var embedlink = "https://www.youtube.com/embed/" + id;
+	popupopenclose(1);
+	$('#videoplayPopup').load('videoPlayPopup?mainmenu='+mainmenu+'&time='+datetime+'&embedlink='+embedlink);
+	$("#videoplayPopup").modal({
+			backdrop: 'static',
+			keyboard: false
+		});
+	$('#videoplayPopup').modal('show');
+}
+function videostop(){
+	$('#iframevideo').attr('src', '');
 }

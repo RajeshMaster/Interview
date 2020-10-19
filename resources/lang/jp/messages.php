@@ -293,5 +293,6 @@ return [
 	'lbl_newCustomer' => '新規取引先',
 	'lbl_skilladd' => 'スキル追加',
 	'lbl_dbselection' => 'DBの選択',
+	'lbl_upVideo' => 'ビデオをアップロード',
 	/* End Agent Module*/
 ];
