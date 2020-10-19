@@ -158,7 +158,9 @@ function fnGetbranchDetail() {
 							$('#inchargeDetails').append( '<option value="'+resp[i]["id"]+'">'+resp[i]["incharge_name"]+'</option>' );
 						}
 						var incCount = $('#inchargeDetails > option').length;
+
 						if (resp.length < 2) {
+							$("<span id='junk'>"+ resp[0]["incharge_email_id"] +"</span><br>").appendTo(".mailidLabel");
 							$('#inchargeDetails').val(resp[0]["incharge_name"] + ";");
 							$('#hidincharge').val(resp[0]["id"] + ";");
 							$('#inchargemailDetails').val(resp[0]["incharge_email_id"] + ";");
@@ -181,6 +183,11 @@ function fnGetbranchDetail() {
 function fnGetinchargeDetails() {
 	$('#inchargeDetails').find('option').not(':first').remove();
 	$('#inchargeDetails').val("");
+	document.getElementById("hidincharge").value = "";
+	document.getElementById("inchargemailDetails").value = "";
+	$('span[id^="junk"]').remove();
+	$('.mailidLabel').find('br').remove();
+	
 	var getcusId = $('#customerId').val();
 	var getbranchId = $('#branchId').val();
 	if (getbranchId != "") {
