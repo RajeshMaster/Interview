@@ -52,9 +52,8 @@
 	}
 $(document).ready(function() {
 	$('.postsendmail').on('click', function() {
-		alert();
 		var array = []; 
-		$("input:checked").each(function() {
+		$("[name='emp[]']:checked").each(function() {
 			array.push($(this).val()); 
 		}); 
 		$('#selSendMail').val(array);
@@ -81,7 +80,7 @@ $(document).ready(function() {
 	{{ Form::hidden('interviewId', '' , array('id' => 'interviewId')) }}
 	{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
     {{ Form::hidden('page', $request->page , array('id' => 'page')) }}
-    {{ Form::hidden('selSendMail', '', array('id' => 'selSendMail')) }}
+    {{ Form::hidden('selSendMail', null, array('id' => 'selSendMail')) }}
 	{{ Form::hidden('resignid', '' , array('id' => 'resignid')) }}
 	{{ Form::hidden('title', '' , array('id' => 'title')) }}
 	{{ Form::hidden('hidHistory', '' , array('id' => 'hidHistory')) }}
@@ -158,7 +157,7 @@ $(document).ready(function() {
 					@for ($i = 0; $i < count($empdetailsdet); $i++)
 					<tr>
 						<td class="text-center vam">
-							<Input type = 'Checkbox' onchange="showbtn()" Name = '<?php echo $empdetailsdet[$i]['Emp_ID']; ?>' id='<?php echo $empdetailsdet[$i]['Emp_ID']; ?>' value ='<?php echo $empdetailsdet[$i]['Emp_ID']; ?>'>
+							<Input type = 'Checkbox' onchange="showbtn()" Name = "emp[]" id='<?php echo $empdetailsdet[$i]['Emp_ID']; ?>' value ='<?php echo $empdetailsdet[$i]['Emp_ID']; ?>'>
 						</td>
 						<td>
 							<div class="tac">
