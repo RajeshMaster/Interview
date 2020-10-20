@@ -184,9 +184,7 @@ $(document).ready(function() {
 										{{ $empdetailsdet[$i]['LastName'] }}
 									</span>
 									<span class="">
-										@if($empdetailsdet[$i]['nickname'] != "" )
-											({{ $empdetailsdet[$i]['nickname'] }} )
-										@endif
+										
 										@if($empdetailsdet[$i]['KanaFirstName'] != "" && $empdetailsdet[$i]['KanaLastName'] != "")
 												{{ $empdetailsdet[$i]['KanaFirstName'] }}
 												{{ $empdetailsdet[$i]['KanaLastName'] }}

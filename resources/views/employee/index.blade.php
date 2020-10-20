@@ -256,11 +256,7 @@
 									<span class="fwb" style="margin-left: -10px">
 										{{ $empdetailsdet[$i]['LastName'] }}
 									</span>
-									<span class="">
-										@if($empdetailsdet[$i]['nickname'] != "" )
-											({{ $empdetailsdet[$i]['nickname'] }} )
-										@endif
-									</span>
+									
 									<span class="" style="float: right">
 
 									</span>

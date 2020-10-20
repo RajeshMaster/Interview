@@ -160,7 +160,7 @@ class MailSignatureController extends Controller {
 	public function mailSignatureAddEditProcess(Request $request){
 		$signatureID = "SIGN00001";
 		$signIdcnt = MailSignature::signIdGenerate($request);
-		if(!empty($signIdcnt)){
+		if(!empty($signIdcnt[0]->signid)){
 			$signatureID = $signIdcnt[0]->signid;
 		}
 		if($request->editflg == 1){

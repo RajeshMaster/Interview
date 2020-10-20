@@ -257,7 +257,6 @@ class CustomerController extends Controller {
 	    	$i++;
 	    }
 	    $getdetails=Customer::getCustomerDetails($request);
-
 	    /*	echo "<pre>";
 print_r($currentempview);
 echo "</pre>";*/
@@ -364,10 +363,11 @@ echo "</pre>";*/
 		    Session::flash('custid', $request->custid );
 			Session::flash('id', $request->id );
   		}else{
-  			$maxCustID="CST00001";
   			$custmaxid=Customer::getMaxId();
-  			if(!empty($custmaxid)){
+  			if(!empty($custmaxid[0]->custid)){
 				$maxCustID = $custmaxid[0]->custid;
+			}else{
+				$maxCustID="CST00001";
 			}
 			if($_REQUEST['hid_branch_id'] == "") {
 				$customer = substr($maxCustID, 3,5);

@@ -82,11 +82,11 @@ return [
             *  @author Rajesh 
             *  Created At 2020/09/08
         **/
-        'mysql_invoice' => [
+        'mysql_mbstaff' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE_SS', 'vps10081_ssmbtest_invdb'),
+            'database' => env('DB_DATABASE_SS', 'vps10081_mbstaffdev'),
             'username' => env('DB_USERNAME_SS', 'root'),
             'password' => env('DB_PASSWORD_SS', ''),
             'charset' => 'utf8',

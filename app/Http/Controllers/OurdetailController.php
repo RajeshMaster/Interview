@@ -14,12 +14,12 @@ class OurdetailController extends Controller {
 	 **/
 	function index(Request $request) {
 		$result = Ourdetail::viewdetails($request);
-		$viewtaxdetails = Ourdetail::viewtaxdetails($request);
-		$kessan = Ourdetail::viewkessandetails();
+		/*$viewtaxdetails = Ourdetail::viewtaxdetails($request);*/
+		/*$kessan = Ourdetail::viewkessandetails();*/
 		
 		return view('ourDetail.index',['result' => $result,
-										'viewtaxdetails'=> $viewtaxdetails,
-										'kessan' => $kessan,
+										/*'viewtaxdetails'=> $viewtaxdetails,*/
+										/*'kessan' => $kessan,*/
 										'request' => $request]);
 	}
 }

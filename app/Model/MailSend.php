@@ -14,7 +14,7 @@ class MailSend extends Model {
 	*
 	*/
 	public static function fnGetEmployeeDetailsstart($request, $resignid){
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$query = $db->table('emp_mstemployees')
 					->select('Emp_ID')
 					->where([['delFlg', '=', 0],
@@ -31,7 +31,7 @@ class MailSend extends Model {
 	*  Created At 2020/09/30
 	**/
 	public static function fnGetEmployeeDetails($request, $resignid, $empidarr){
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$query = $db->table('emp_mstemployees')
 					->select('*')
 					->where([['delFlg', '=', 0],
@@ -121,7 +121,7 @@ class MailSend extends Model {
 	**/
 	public static function mailPostSendList($mailId,$subject,$empid,$CustId,$BranchId,$pdfFile) {
 		$db = DB::connection('mysql');
-		$result = DB::TABLE('mailStatus')
+		$result = DB::TABLE('mailstatus')
 					->insert([	
 						'empId' => $empid,
 						'companyId' => $CustId,

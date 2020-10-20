@@ -96,14 +96,7 @@
 					</div>
 				</div>
 
-				<div class="col-xs-9 mt10">
-					<div class="col-xs-4 lb tar">
-						<label>{{ trans('messages.lbl_nickname')}}</label>
-					</div>
-					<div class="col-xs-8 mw">
-						{{ ($empDetail[0]->nickname != "") ? $empDetail[0]->nickname : 'Nill'}}
-					</div>
-				</div>
+				
 
 				<div class="col-xs-9 mt10 mb10">
 					<div class="col-xs-4 lb tar">
@@ -159,51 +152,6 @@
 						@else
 							NIL
 						@endif
-					</div>
-				</div>
-
-				<div class="col-xs-9 mt10 mb10">
-					<div class="col-xs-4 lb tar">
-						<label>{{ trans('messages.lbl_resigneddate')}}</label>
-					</div>
-					<div class="col-xs-8 mw">
-						{{ ($empDetail[0]->resignedDate != "") ? $empDetail[0]->resignedDate : 'Nill'}}
-					</div>
-				</div>
-
-				<div class="col-xs-9 mt10 mb10">
-					<div class="col-xs-4 lb tar">
-						<label>{{ trans('messages.lbl_bankName')}}</label>
-					</div>
-					<div class="col-xs-8 mw">
-						{{ ($empDetail[0]->BankName != "") ? $empDetail[0]->BankName : 'Nill'}}
-					</div>
-				</div>
-
-				<div class="col-xs-9 mt10 mb10">
-					<div class="col-xs-4 lb tar">
-						<label>{{ trans('messages.lbl_branchName')}}</label>
-					</div>
-					<div class="col-xs-8 mw">
-						{{ ($empDetail[0]->BranchName != "") ? $empDetail[0]->BranchName : 'Nill'}}
-					</div>
-				</div>
-
-				<div class="col-xs-9 mt10 mb10">
-					<div class="col-xs-4 lb tar">
-						<label>{{ trans('messages.lbl_accountno')}}</label>
-					</div>
-					<div class="col-xs-8 mw">
-						{{ ($empDetail[0]->AccNo != "") ? $empDetail[0]->AccNo : 'Nill'}}
-					</div>
-				</div>
-
-				<div class="col-xs-9 mt10 mb10">
-					<div class="col-xs-4 lb tar">
-						<label>{{ trans('messages.lbl_branchnumber')}}</label>
-					</div>
-					<div class="col-xs-8 mw">
-						{{ ($empDetail[0]->BranchNo != "") ? $empDetail[0]->BranchNo : 'Nill'}}
 					</div>
 				</div>
 			</fieldset>

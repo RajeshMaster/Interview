@@ -221,3 +221,8 @@ function fnselect() {
 	});
 	$('#mailsignaturepopup').modal('toggle');
 }
+function fngotoback(){
+	pageload();
+	$('#mailSignatureReg').attr('action', 'mailSignatureView?mainmenu='+mainmenu+'&time='+datetime);
+	$("#mailSignatureReg").submit();
+}

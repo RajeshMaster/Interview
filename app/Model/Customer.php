@@ -449,9 +449,9 @@ class Customer extends Model {
 		return $query;
 	}
 	public static function getUserNameByEmployee($request) {
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$result = $db->table('emp_mstemployees')
-						->select('FirstName', 'LastName', 'nickname','Emp_ID')
+						->select('FirstName', 'LastName','Emp_ID')
 						->WHERE('resign_id', '=', 0)
 						->WHERE('delFlg', '=', 0)
 						->WHERE('Title', '=', 2)

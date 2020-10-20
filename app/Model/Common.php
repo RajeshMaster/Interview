@@ -213,7 +213,7 @@ class Common extends Model {
 	* Created At 2020/09/15
 	**/
 	public static function fnGetEmployeeInfo($id){
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$result = $db->table('emp_mstemployees')
 						->SELECT('*')
 						->leftJoin('mstaddress AS mst', 'mst.id', '=', 'emp_mstemployees.Address1')
@@ -255,7 +255,7 @@ class Common extends Model {
 	 */
 	public static function getContentFirst($mailId) {
 		$db = DB::connection('mysql');
-		$query = $db->TABLE('mailContent')
+		$query = $db->TABLE('mailcontent')
 					->select('*')
 					->WHERE('mailId','=',$mailId)
 					->get();

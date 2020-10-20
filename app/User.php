@@ -46,8 +46,7 @@ class User extends Authenticatable
         }
     }
     public static function fnfetchscreenname() {
-        $db = DB::connection('mysql_invoice');
-        $certificateName = $db->TABLE('dev_ourdetails')
+          $certificateName = DB::TABLE('dev_ourdetails')
                                 ->SELECT('systemname')
                                 ->get();
         return $certificateName;

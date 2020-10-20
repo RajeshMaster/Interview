@@ -115,7 +115,7 @@ class MailSendController extends Controller {
 				$empdetailsdet[$i]['Address1'] = $data->Address1;
 			}
 
-			$empdetailsdet[$i]['nickname'] = $data->nickname;
+			/*$empdetailsdet[$i]['nickname'] = $data->nickname;*/
 			$empdetailsdet[$i]['Mobile1'] = $data->Mobile1;
 			$empdetailsdet[$i]['DOJ'] = $data->DOJ;
 			$empdetailsdet[$i]['DOB'] = $data->DOB;
@@ -183,10 +183,10 @@ class MailSendController extends Controller {
 				}
 			}
 				
-			$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
+			/*$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
 			foreach($cusname as $key=>$value) {
 				$empdetailsdet[$i]['customer_name'] = $value->customer_name;
-			}
+			}*/
 			$i++;
 		}
 			
@@ -240,7 +240,6 @@ class MailSendController extends Controller {
 				$recentResumeNm = "";
 				$resumeInsDate = "";
 			}
-
 			if ($SelectedEmpid == "") {
 				$SelectedEmpid = $value;
 				$selectedEmpName = $employeDetail[0]->FirstName;
@@ -299,12 +298,12 @@ class MailSendController extends Controller {
 			$Nameletters = strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 		
 			if ($url == "") {
-				if ($empSkillDtls[0]->youTubeUrl != "") {
+				if (isset($empSkillDtls[0]->youTubeUrl)) {
 					
 					$url = $Nameletters .'->'. $empSkillDtls[0]->youTubeUrl ;
 				}
 			} else {
-				if ($empSkillDtls[0]->youTubeUrl != "") {
+				if (isset($empSkillDtls[0]->youTubeUrl)) {
 					$url = $url.','. $Nameletters .'->'.$empSkillDtls[0]->youTubeUrl;
 				}
 			}

@@ -17,7 +17,7 @@ class Employee extends Model
 	*  Created At 2020/09/30
 	**/
 	public static function fnGetEmployeeDetails($request, $resignid, $title ,$candiate){
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$query = $db->table('emp_mstemployees')
 					->select('*')
 					->whereNotIn('Emp_ID', $candiate)
@@ -54,7 +54,7 @@ class Employee extends Model
 	*  Created At 2020/09/30
 	**/
 	public static function fngetjapanaddress($address) {
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$query = $db->table('mstaddress')
 					->select(DB::raw("CONCAT('〒',pincode,jpstate,jpaddress,roomno,'号') AS address"))
 					->where('id', '=', $address)
@@ -89,7 +89,7 @@ class Employee extends Model
 	*  Created At 2020/09/30
 	**/
 	public static function GetAvgage($resignid) {
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$sql = "SELECT AVG(YEAR(CURDATE()) - YEAR(dob) - (RIGHT(CURDATE(), 5) < RIGHT(dob, 5))) as avg_age FROM emp_mstemployees
 		WHERE resign_id='$resignid' AND delFLg=0 AND Title = 2";
 		$query = $db->SELECT($sql);
@@ -177,7 +177,7 @@ class Employee extends Model
 	**/
 	public static function fnGetstaffDetail($request){
 		if (!empty($request->empid)) {
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$query = $db->table('emp_mstemployees')
 					->select('*')
 					->leftJoin('mstaddress AS mst', 'mst.id', '=', 'emp_mstemployees.Address1')
@@ -197,7 +197,7 @@ class Employee extends Model
 	**/
 	public static function updateprocess($request) {
 		$name = Session::get('FirstName').' '.Session::get('LastName');
-		$db = DB::connection('mysql_invoice');
+		$db = DB::connection('mysql_mbstaff');
 		$update = $db->table('emp_mstemployees')
 		->where('Emp_ID', $request->empid)
 		->update(
@@ -344,7 +344,7 @@ class Employee extends Model
 	**/
 	public static function getContentFirst($mailId) {
 		$db = DB::connection('mysql');
-		$query = $db->TABLE('mailContent')
+		$query = $db->TABLE('mailcontent')
 					->select('*')
 					->WHERE('mailId','=',$mailId)
 					->get();

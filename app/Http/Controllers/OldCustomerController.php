@@ -238,10 +238,6 @@ class OldCustomerController extends Controller {
 			} else {
 				$currentempview[$i]['experience'] = $cusexpdetails['year'].".".Common::fnAddZeroSubstring($cusexpdetails['month']);
 			}
-			$cushistory = OldCustomer::fnGetOnsiteHistory($currentempview[$i]['emp_id'],$request);
-			foreach($cushistory as $key=>$rec) { 
-				$currentempview[$i]['customername']=$rec->customer_name;
-			}
 			$i++;
 		}
 

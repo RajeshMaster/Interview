@@ -583,7 +583,7 @@
 						</td>
 						<td class="text">
 
-							@if(!empty($currentview[$i]['LastName']))
+							@if(isset($currentview[$i]['LastName']))
 								{{ $currentview[$i]['LastName'] }} {{ $currentview[$i]['FirstName'] }}
 							@else
 								{{""}}
@@ -678,8 +678,8 @@
 				<tr>
 					<td class="text-center">{{$i+1}}</td>
 					<td class="text-center"> 
+						@if(isset($currentempview[$i]['LastName']))
 						<a class="colbl fwb" href="javascript:getchangeempdetails('{{ date('YmdHis') }}','{{ $currentempview[$i]['emp_id'] }}','{{$currentempview[$i]['LastName']}}');">
-						@if($currentempview[$i]['emp_id'])
 							{{ $currentempview[$i]['emp_id'] }}
 						</a>    
 						@else

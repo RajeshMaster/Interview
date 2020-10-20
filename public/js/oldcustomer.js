@@ -523,3 +523,9 @@ function importpopupenable(mainmenu) {
         });
     $('#importpopup').modal('show');
 }
+function addHyphen (element) {
+    var ele = document.getElementById(element.id);
+    ele = ele.value.split('-').join('');    // Remove dash (-) if mistakenly entered.
+    var finalVal = ele.match(/\d{3}(?=\d{2,3})|\d+/g).join('-');
+    document.getElementById(element.id).value = finalVal;
+}

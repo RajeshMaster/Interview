@@ -230,65 +230,6 @@
 			</div>
 
 		</fieldset>
-
-		<div class="row hline">
-			<div class="col-xs-8 pl5">
-				<h2 class="pull-left pl5 mt10">{{ trans('messages.lbl_Tax_added') }}</h2>
-			</div>
-		</div>
-
-		<div class="box100per tableShrink  mnheight mb0">
-			<table class="table-striped table footable table-bordered mt10 mb10" >
-				<colgroup>
-					<col width="4%">
-					<col width="10%">
-					<col width="10%">
-					<col width="">
-					<col width="35%">
-					<col>
-				</colgroup>
-
-				<thead class="CMN_tbltheadcolor">
-					<tr class="CMN_tbltheadcolor">
-						<th class="tac fs10 sno">
-							{{ trans('messages.lbl_sno') }}
-						</th>
-						<th class="tac fs10">
-							{{ trans('messages.lbl_Tax_per') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_Start_date') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_Created_By') }}
-						</th>
-						<th data-hide="phone" class="tac fs10">
-							{{ trans('messages.lbl_Date') }}
-						</th>
-					</tr>
-				</thead>
-				<tbody class="tablealternateclr">
-					@php $i=1; @endphp
-
-					@forelse($viewtaxdetails as $key=>$user)
-							<tr>
-								<td class="tac">{{ $i++ }}</td>
-								<td class="tac">{{ $user->Tax }}</td>
-								<td class="tac">{{ $user->Startdate }}</td>
-								<td class="tal">{{ $user->CreatedBy }}</td>
-								<td class="tac">{{ $user->Ins_DT }}</td>
-							</tr>
-					@empty
-					<tr>
-						<td colspan="5">
-							{{ trans('messages.lbl_nodatafound') }}
-						</td>
-					</tr>
-					@endforelse
-
-				</tbody>
-			</table>
-		</div>
 		{{ Form::close() }}
 	</article>
 </div>

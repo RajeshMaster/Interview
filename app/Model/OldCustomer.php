@@ -147,29 +147,6 @@ class OldCustomer extends Model {
 		$cards = $db->select($sql);
 		return $cards;
 	}
-
-	 public static function fnGetOnsiteHistory($empid,$request) {
-		$db = DB::connection('mysql_invoice');
-		$query = $db->table('emp_mstemployees AS emp')->SELECT('emp.Emp_ID',
-								'emp.FirstName',
-								'emp.LastName',
-								'emp.Title',
-								'cli.cust_id',
-								'cli.status',
-								'cli.start_date',
-								'cli.end_date',
-								'cus.customer_name')
-					->JOIN('clientempteam AS cli','emp.Emp_ID','=','cli.emp_id')
-					->JOIN('mst_customerdetail AS cus','cli.cust_id','=','cus.customer_id')
-					->where('emp.Emp_ID', '=', $empid)
-					->where('emp.delFlg',0)
-					->where('cli.delFLg',0)	
-					->where('cus.delflg',0)
-					->get();
-					//->paginate($request->plimit);
-		return $query;
-	}
-
 	public static function getcustomerdetails($request) {
         $db = DB::connection('mysql');
         $tbl_name = "temp_mst_customerdetail";
@@ -192,10 +169,10 @@ class OldCustomer extends Model {
     }
 
     public static function getallIncharge($customerid) {
-		$db =DB::connection('mysql_invoice');
-        $tbl_name = "mst_cus_inchargedetail";
+		 $db = DB::connection('mysql');
+        $tbl_name = "temp_mst_cus_inchargedetail";
         $query= $db->table($tbl_name)
-                   ->select('mst_cus_inchargedetail.*')
+                   ->select('temp_mst_cus_inchargedetail.*')
                    ->where('customer_id','=', $customerid)
                    ->ORDERBY('id','ASC')
                    ->get();
@@ -282,10 +259,10 @@ class OldCustomer extends Model {
 	}
 
 	public static function getonebranch($branch_id) { 
-        $db =DB::connection('mysql_invoice');
-        $tbl_name = "mst_branchdetails";
+        $db = DB::connection('mysql');
+        $tbl_name = "temp_mst_branchdetails";
         $query= $db->table($tbl_name)
-                   ->select('mst_branchdetails.*')
+                   ->select('temp_mst_branchdetails.*')
                    ->where('branch_id','=', $branch_id)
                    ->ORDERBY('branch_id','ASC')
                    ->get();
