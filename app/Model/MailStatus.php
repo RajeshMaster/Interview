@@ -15,25 +15,25 @@ class MailStatus extends Model {
 	*/
 	public static function getMailStausData($request)
 	{
-		$result = db::table('mailStatus')
-						->select('mailStatus.*','mst_customerdetail.customer_name','branch.branch_name')
-						->leftJoin('mst_customerdetail' , 'mst_customerdetail.customer_id' ,'=','mailStatus.companyId')
+		$result = db::table('mailstatus')
+						->select('mailstatus.*','mst_customerdetail.customer_name','branch.branch_name')
+						->leftJoin('mst_customerdetail' , 'mst_customerdetail.customer_id' ,'=','mailstatus.companyId')
 						->leftjoin('mst_branchdetails AS branch', function($join)
 						{
-							$join->on('branch.customer_id', '=', 'mailStatus.companyId');
-							$join->on('branch.branch_id', '=', 'mailStatus.branchId');
+							$join->on('branch.customer_id', '=', 'mailstatus.companyId');
+							$join->on('branch.branch_id', '=', 'mailstatus.branchId');
 						});
 						if ($request->customerid  != "") {
-							$result = $result->WHERE('mailStatus.sendFlg','=',$request->historyfilter)
-											->WHERE('mailStatus.companyId','=',$request->customerid);
-										$result = $result->orderby('mailStatus.id','DESC')
+							$result = $result->WHERE('mailstatus.sendFlg','=',$request->historyfilter)
+											->WHERE('mailstatus.companyId','=',$request->customerid);
+										$result = $result->orderby('mailstatus.id','DESC')
 														->paginate($request->plimit);
 
 						} else {
 
-							$result = $result	->WHERE('mailStatus.sendFlg',$request->sendfilter)
-												->WHERE('mailStatus.delFlg',0);
-									$result = $result->orderby('mailStatus.id','DESC')
+							$result = $result	->WHERE('mailstatus.sendFlg',$request->sendfilter)
+												->WHERE('mailstatus.delFlg',0);
+									$result = $result->orderby('mailstatus.id','DESC')
 								->paginate($request->plimit);
 						}
 						return $result;
@@ -46,11 +46,11 @@ class MailStatus extends Model {
 	*
 	*/
 	public static function getSingleMailStatus($request){
-		$result = db::table('mailStatus')
-						->select('mailStatus.*','mst_customerdetail.customer_name')
-						->leftJoin('mst_customerdetail' , 'mst_customerdetail.customer_id' ,'=','mailStatus.companyId')
-						->WHERE('mailStatus.delFlg',0)
-						->WHERE('mailStatus.id','=',$request->statusid)
+		$result = db::table('mailstatus')
+						->select('mailstatus.*','mst_customerdetail.customer_name')
+						->leftJoin('mst_customerdetail' , 'mst_customerdetail.customer_id' ,'=','mailstatus.companyId')
+						->WHERE('mailstatus.delFlg',0)
+						->WHERE('mailstatus.id','=',$request->statusid)
 						->get();
 		return $result;
 	}

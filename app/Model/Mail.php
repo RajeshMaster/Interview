@@ -16,19 +16,19 @@ class Mail extends Model {
 	* 
 	*/
 	public static function getMailContent($request) {
-		$sql= DB::table('mailContent')
-						->SELECT('mailContent.*','mailType.typeName')
-						->leftjoin('mailType', 'mailContent.mailType', '=', 'mailType.id');
+		$sql= DB::table('mailcontent')
+						->SELECT('mailcontent.*','mailtype.typeName')
+						->leftjoin('mailtype', 'mailcontent.mailType', '=', 'mailtype.id');
 						if ($request->filvalhdn == 2) {
 							$sql = $sql->where(function($joincont) use ($request) {
-									$joincont->where('mailContent.delFlg', '=', '0');
+									$joincont->where('mailcontent.delFlg', '=', '0');
 									});
 						}else if ($request->filvalhdn == 3) {
 						$sql = $sql->where(function($joincont) use ($request) {
-									$joincont->where('mailContent.delFlg', '=', '1');
+									$joincont->where('mailcontent.delFlg', '=', '1');
 									});
 						} 
-					$sql = $sql->orderBy('mailContent.mailId', 'ASC')
+					$sql = $sql->orderBy('mailcontent.mailId', 'ASC')
 					->paginate($request->plimit);
 		return $sql;
 	}
@@ -41,10 +41,10 @@ class Mail extends Model {
 	* 
 	*/
 	public static function getMailcontentview($request){
-		$sql= DB::table('mailContent')
-				->SELECT('mailContent.*','mailType.typeName')
-				->leftjoin('mailType', 'mailContent.mailType', '=', 'mailType.id')
-				->WHERE('mailContent.mailId', '=', $request->mailid)
+		$sql= DB::table('mailcontent')
+				->SELECT('mailcontent.*','mailtype.typeName')
+				->leftjoin('mailtype', 'mailcontent.mailType', '=', 'mailtype.id')
+				->WHERE('mailcontent.mailId', '=', $request->mailid)
 			  	->get();
 		return $sql;
 	}
@@ -57,7 +57,7 @@ class Mail extends Model {
 	* 
 	*/
 	public static function fnfetchmailtypes($request) {
-		$sql= DB::table('mailType')
+		$sql= DB::table('mailtype')
 						->SELECT('*')
 						->WHERE('delFlg', '=', 0)
 						->lists('typeName','id');
@@ -72,7 +72,7 @@ class Mail extends Model {
 	* 
 	*/
 	public static function fnfetchupdatedata($request){
-		$sql= DB::table('mailContent')
+		$sql= DB::table('mailcontent')
 						->SELECT('*')
 						->WHERE('mailId', '=', $request->mailid)
 						->get();
@@ -87,7 +87,7 @@ class Mail extends Model {
 	* 
 	*/
 	public static function fnUpdateDelflg($request){
-		$sql = DB::TABLE('mailContent')
+		$sql = DB::TABLE('mailcontent')
 				->WHERE('mailId', $request->mailid)
 				->UPDATE(['delFlg' => $request->delflg]);
 		return $sql;
@@ -101,8 +101,8 @@ class Mail extends Model {
 	* 
 	*/
 	public static function getcount(){
-		   $query = DB::table('mailContent')
-				->select('mailId',DB::RAW("IF(mailId=(SELECT mailId FROM mailContent
+		   $query = DB::table('mailcontent')
+				->select('mailId',DB::RAW("IF(mailId=(SELECT mailId FROM mailcontent
 						ORDER BY id DESC LIMIT 1), CONCAT('MAIL', LPAD(SUBSTRING(mailId,5, 8)+1, 4, 0)),mailId) AS newmailId"))
 				->orderby('mailId','DESC')
 				->limit(1)
@@ -120,7 +120,7 @@ class Mail extends Model {
 	*/
 	public static function fninsertnewmailtype($request) {
 			$name = Session::get('FirstName').' '.Session::get('LastName');
-			$insert=DB::table('mailType')
+			$insert=DB::table('mailtype')
 			->insert(
 				[
 				'typeName' => $request->mailother,
@@ -148,7 +148,7 @@ class Mail extends Model {
 			} else {
 				$mailtype = $request->mailtype;
 			}
-			$update=DB::table('mailContent')
+			$update=DB::table('mailcontent')
             ->where('mailId', $mailid)
             ->update(
             	['mailName' => $request->mailName,
@@ -176,7 +176,7 @@ class Mail extends Model {
 			} else {
 				$mailtype = $request->mailtype;
 			}
-		$sql = 	DB::table('mailContent')
+		$sql = 	DB::table('mailcontent')
 					->insert(['mailId' => 	$newmailId,
 						'mailName' 		=> 	$request->mailName,
 						'mailType'		=> 	$mailtype,

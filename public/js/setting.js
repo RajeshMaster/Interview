@@ -1007,7 +1007,7 @@ function fnsettingcommitajax(actualId,idnew,tablename,screenname,tableselect){
 		data: {"actualId": actualId,"idnew": idnew,"tablename": tablename},
 		success: function(data) {
 			$("#popupsessioncommit").css("display", "block");
-			if (tablename == "requirmentSetting") {
+			if (tablename == "requirmentsetting") {
 				requirmentSelect(tablename);
 			} else {
 				settingpopupsinglefield(screenname,tablename,tableselect);

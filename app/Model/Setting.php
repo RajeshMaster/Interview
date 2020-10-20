@@ -593,14 +593,14 @@ class Setting extends Model {
     }
      public static function fnGetrequirment(){
         $db = DB::connection('mysql');
-        $result = DB::TABLE('requirmentSetting')
+        $result = DB::TABLE('requirmentsetting')
                 ->select('id','Requirment','commShow','delFlg')
                 ->get();
         return $result;
     }
     public static function insreqDtls($data) {
         $db = DB::connection('mysql');
-        $retunval=$db->table('requirmentSetting')
+        $retunval=$db->table('requirmentsetting')
                     ->updateOrInsert(
                     [
                     'id' => $data['id'],
@@ -611,7 +611,7 @@ class Setting extends Model {
     }
     public static function getonlymaxidrequirment() {
         $db = DB::connection('mysql');
-        $maxid = DB::table('requirmentSetting')
+        $maxid = DB::table('requirmentsetting')
                 ->max('id');
         return $maxid;
     }

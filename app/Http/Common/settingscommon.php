@@ -123,7 +123,7 @@ namespace App\Http\Common;
 												 	'usenotusefields'=>array('DelFlg'),
 		 										 	'commitfields'=>array('Order_id')),
 						// Requirement
-						'requirmentSetting'=>array('labels'=>
+						'requirmentsetting'=>array('labels'=>
 											   array('heading'=>trans('Requirments'),
 												 	'field1lbl'=>trans('Skill Name'),
 													'field2lbl'=>trans('Common Show')),
