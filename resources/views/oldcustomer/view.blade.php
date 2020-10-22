@@ -125,9 +125,13 @@
 				<a href="javascript:goindexpage('menu_customer',{{ date('YmdHis') }});" class="pageload btn btn-info box80"><span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}</a>
 			@endif
 		</div>
+		<a href="javascript:deleteCustomer()" style="float: right;" title="Delete">
+			<img class="box30 mr20" src="{{ URL::asset('public/images/delete.png') }}">
+		</a>
 		<a href="javascript:copyCustomer()" style="float: right;" title="Copy">
 			<img class="box30 mr20" src="{{ URL::asset('public/images/copy.png') }}">
 		</a>
+		
 	</div>
 
 	<fieldset class="mt10 mb10 pull-left dispviewMainMobile">

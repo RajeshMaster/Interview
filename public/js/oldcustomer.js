@@ -529,3 +529,22 @@ function addHyphen (element) {
     var finalVal = ele.match(/\d{3}(?=\d{2,3})|\d+/g).join('-');
     document.getElementById(element.id).value = finalVal;
 }
+
+function deleteCustomer(){
+	var mainmenu="menu_oldcustomer";
+	swal({
+			title: "Do You Want To Delete?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+				pageload();
+				$('#customerviewform').attr('action', 'deleteCustomer?mainmenu='+mainmenu+'&time='+datetime);
+				$("#customerviewform").submit();
+			}
+	});
+}

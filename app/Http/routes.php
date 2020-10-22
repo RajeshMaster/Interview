@@ -212,6 +212,7 @@ Route::group(['prefix'=>'OldCustomer','middleware' => 'auth'], function(){
 	Route::any('getEmailExistsManyFields', 'OldCustomerController@getEmailExistsManyFields');
 	Route::any('importpopup', 'OldCustomerController@importpopup');
 	Route::any('importprocess', 'OldCustomerController@importprocess');
+	Route::any('deleteCustomer','OldCustomerController@deleteCustomer');
 	
 });
 

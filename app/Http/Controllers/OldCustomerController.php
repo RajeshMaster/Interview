@@ -536,7 +536,8 @@ class OldCustomerController extends Controller {
 		// $countEmail = count($inchargeMailExist);
   	}
 
-  	function importprocess(Request $request) {
+  	public function importprocess(Request $request) {
+  		print_r($request->all()); exit();
   		$employee_count = OldCustomer::fnGetCustomerCount();
 		$getConnectionQuery = OldCustomer::fnGetConnectionQuery($request);
 
@@ -799,6 +800,18 @@ class OldCustomerController extends Controller {
 			Session::flash('type', 'alert-danger'); 
     	}
 		return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+  	}
+
+  	public function deleteCustomer(Request $request){
+  		$delete = OldCustomer::deleteCusbranchincCli($request->custid);
+  		if ($delete) {
+  			Session::flash('success', 'Deleted Sucessfully'); 
+			Session::flash('type', 'alert-success'); 
+  		}else{
+  			Session::flash('success', 'Deleted UnSucessfully'); 
+			Session::flash('type', 'alert-danger'); 
+  		}
+  		return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
   	}
 
 }

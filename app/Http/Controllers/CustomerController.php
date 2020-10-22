@@ -667,7 +667,7 @@ echo "</pre>";*/
 			}
 	    	$i++;
 	    }
-	    return view('customer.Onsitehistory',['request' => $request,
+	    return view('customer.onsitehistory',['request' => $request,
 											'cushistory' => $cushistory,
 											'customerhistory' => $customerhistory,
 											'empDt' => $empDt
