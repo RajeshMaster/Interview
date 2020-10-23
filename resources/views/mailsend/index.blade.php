@@ -92,7 +92,7 @@ $(document).ready(function() {
 		<fieldset class="pm0 mt20">
 			<div class="header">
 				<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/staffList.png')  }}">
-				<h2 class="h2cnt">{{ trans('messages.lbl_employee') }}</h2>
+				<h2 class="h2cnt">{{ trans('messages.lbl_interview_candidate') }}</h2>
 			</div>
 		</fieldset>
 		<!-- End Heading -->
@@ -115,7 +115,7 @@ $(document).ready(function() {
 
 		<div class="box100per tableShrink pt5 mnheight mb0">
 			<div class="col-xs-12 pm0 pull-left ">
-				<div class="pull-left" style="vertical-align: text-bottom;">
+				<!-- <div class="pull-left" style="vertical-align: text-bottom;">
 					<a class="btn btn-linkemp disabled" href="javascript:candiateInt();" class="pl10 ">
 					Interview Candiate
 					</a><span>|</span>
@@ -125,7 +125,7 @@ $(document).ready(function() {
 					<a class="btn btn-linkemp " href="javascript:filterNotMb(0,3);" class="pl10 pb5">
 						{{ trans('messages.lbl_nonMB') }}
 					</a>
-				</div>
+				</div> -->
 			<button type="button" disabled="disabled" class="btn btn-success box70 mt10 postsendmail" id="postBtn" style="float: right;">Post</button>
 			</div>
 		<table class="table-striped table footable table-bordered mt10 mb10" >

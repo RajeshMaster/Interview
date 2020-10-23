@@ -38,6 +38,13 @@
 			}
 		});
 	});
+	function fnRemoveGroup(){
+		var confirmgroup = confirm("Do You Want To Remove Group?");
+		if(confirmgroup) {
+			pageload();
+            $("#frmgroupsel").submit();
+		}
+	}
 </script>
 	{{ Form::open(array('name'=>'frmgroupsel', 'id'=>'frmgroupsel', 
 					  'url' => 'Customer/groupselpopup?mainmenu='.$request->mainmenu.
@@ -61,6 +68,11 @@
 			</div>
 		</div>
 	    <div class="modal-body" style="height: 310px;overflow-y: scroll;width: 100%;">
+	    	@if($flg == 1)
+		    	<div class="pull-right">
+		    		<a href="javascript:fnRemoveGroup();">Remove</a>
+		    	</div>
+	    	@endif
 			<table class="tablealternate box99per table-striped ml5 mt5" id="grouptable">
 				<colgroup>
 					<col width="5%">

@@ -656,16 +656,19 @@ body {
 								</div>
 							@endif -->
 							@if(isset($request->mainmenu) && ($request->mainmenu == "menu_employee" || $request->mainmenu == "menu_nonemployee" ||  $request->mainmenu == "menu_emphistory"  || $request->mainmenu == "menu_mailsend"))
-								
 								<div id="emp_sub_1">
 									<a class="pageload" href="{{ url('MailSend/index?mainmenu=menu_mailsend&time='.date('Ymdhis')) }}">
-									{{ trans('messages.lbl_employee') }}</a>
+									{{ trans('messages.lbl_interview_candidate') }}</a>
 								</div>
 								<div id="emp_sub_2">
+									<a class="pageload" href="{{ url('Employee/index?mainmenu=menu_employee&time='.date('Ymdhis')) }}">
+									{{ trans('messages.lbl_employee') }}</a>
+								</div>
+								<div id="emp_sub_3">
 									<a class="" href="{{ url('NonEmployee/index?mainmenu=menu_nonemployee&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_nonEmployee') }}</a>
 								</div>
-								<div id="emp_sub_3">
+								<div id="emp_sub_4">
 									<a class="" href="{{ url('Employee/empHistory?mainmenu=menu_emphistory&time='.date('Ymdhis')) }}">
 									{{ trans('messages.lbl_emphistory') }}</a>
 								</div>

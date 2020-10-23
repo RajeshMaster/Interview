@@ -56,6 +56,10 @@
 			width:50%;
 		}
 	}
+	input[type=text]:disabled {
+  		background: white;
+  		cursor: default;
+	}
 </style>
 <div class="" id="main_contents">
 	<article id="customer" class="DEC_flex_wrapper" data-category="customer cus_sub_1">
@@ -173,8 +177,7 @@
 					<label> {{ trans('messages.lbl_kenmei') }}<span class="fr ml2 red"> * </span></label>
 				</div>
 				<div class="col-xs-9 mw">
-					{{ Form::select('kenmei',[null=>'Please select'] + $kenmeiarray,(isset($bdetails[0]->kenmei)) ? $bdetails[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
-									'style'=> 'width:240px;','id' =>'kenmei','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei')) }}
+					{{ Form::select('kenmei',[null=>'Please select'] + $kenmeiarray,(isset($bdetails[0]->kenmei)) ? $bdetails[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id','style'=> 'width:240px; background: white; cursor: default;', 'disabled' =>'disabled','id' =>'kenmei','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei')) }}
 				</div>
 			</div>
 			<div class="col-xs-12 mt10">
@@ -185,7 +188,7 @@
 					{{ Form::text('txt_shimei',(isset($bdetails[0]->shimei)) ? $bdetails[0]->shimei : '',array('id'=>'txt_shimei',
 	                            'name' => 'txt_shimei',
 	                            'class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-locality',
-								'style'=> 'width:240px;',
+								'style'=> 'width:240px;','disabled' =>'disabled',
 	                            'data-label' => trans('messages.lbl_shimei'))) }}
 				</div>
 			</div>

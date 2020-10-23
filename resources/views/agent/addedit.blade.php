@@ -51,6 +51,11 @@
 			width:50%;
 		}
 	}
+	input[type=text]:disabled {
+  		background: white;
+  		cursor: default;
+	}
+	
 </style>
 <script type="text/javascript">
 	var mainmenu = '@php echo $request->mainmenu; @endphp';
@@ -156,9 +161,9 @@
 					<label class="clr_black">{{ trans('messages.lbl_kenmei') }}</label>
 					<span class="fr ml2 fs7"> * </span>
 				</div>
-				<div class="col-xs-7 mw">
-	               	{{ Form::select('kenmei',[null=>'Please select'] + $getKenname,(isset($getSingleAgent[0]->kenmei)) ? $getSingleAgent[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
-						'style'=> 'width:240px;',
+				<div class="col-xs-7 mw" >
+						{{ Form::select('kenmei',[null=>'Please select'] + $getKenname,(isset($getSingleAgent[0]->kenmei)) ? $getSingleAgent[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
+						'style'=> 'width:240px; background: white; cursor: default;', 'disabled' =>'disabled',
 					'id' =>'kenmei','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei')) }}
 				</div>
 			</div>
@@ -172,7 +177,7 @@
 						'id'=>'txt_shimei',
 						'name' => 'txt_shimei',
 						'class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-locality',
-						'style'=> 'width:240px;',
+						'style'=> 'width:240px;', 'disabled' =>'disabled',
 						'data-label' => trans('messages.lbl_shimei'))) }}
 				</div>
 			</div>
@@ -190,7 +195,7 @@
 						'data-label' => trans('messages.lbl_streetaddress'))) }}
 				</div>
 			</div>
-			<div class="col-xs-12 mt20">
+			<div class="col-xs-12 mt20 mb10">
 				<div class="col-xs-3 lb text-right pm0">
 					<label class="clr_black">{{ trans('messages.lbl_buildingname') }}</label>
 					<span class="fr ml2 fs7" style="visibility: hidden;"> * </span>
@@ -204,7 +209,7 @@
 						'data-label' => trans('messages.lbl_txt_buildingname'))) }}
 				</div>
 			</div>
-			<div class="col-xs-12 mt20 mb10">
+			<!-- <div class="col-xs-12 mt20 mb10">
 				<div class="col-xs-3 lb text-right pm0">
 					<label class="clr_black">{{ trans('messages.lbl_remarks') }}</label>
 					<span class="fr ml2 fs7" style="visibility: hidden;"> * </span>
@@ -217,10 +222,10 @@
 	                'style' =>'width:240px;height:70px;',
 					'data-label' => trans('messages.lbl_address'))) }}
 				</div>
-			</div>
+			</div> -->
 		</fieldset>
 		<fieldset class="mt10 pull-right dispSubMobile">
-			<div class="col-xs-12 mt10">
+			<div class="col-xs-12 mt20">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_agentagreement') }}<span class="fr ml2 red"> * </span></label>
 				</div>
@@ -237,7 +242,7 @@
 							<label class="mt10 ml2 fa fa-calendar fa-lg" for="txt_agentContract" aria-hidden="true"></label>
 				</div>
 			</div>
-			<div class="col-xs-12 mt10">
+			<div class="col-xs-12 mt20">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_email') }}<span class="fr ml2 red"> * </span></label>
 				</div>
@@ -252,7 +257,7 @@
 				</div>
 
 			</div>
-			<div class="col-xs-12 mt10">
+			<div class="col-xs-12 mt20">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_mobilenumber') }}<span class="fr ml2 red"> * </span></label>
 				</div>
@@ -267,7 +272,7 @@
 						'onkeypress' => 'return isNumberKeywithminus(event)')) }}
 				</div>
 			</div>
-			<div class="col-xs-12 mt10">
+			<div class="col-xs-12 mt20">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_fax') }}<span class="fr ml2 red" style="visibility: hidden;"> * </span></label>
 				</div>
@@ -282,7 +287,7 @@
 						'onkeypress' => 'return isNumberKeywithminus(event)')) }}
 				</div>
 			</div>
-			<div class="col-xs-12 mt10 mb10">
+			<div class="col-xs-12 mt20">
 				<div class="col-xs-3 lb text-right pm0">
 					<label>{{ trans('messages.lbl_url') }}<span class="fr ml2 red" style="visibility: hidden;"> * </span></label>
 				</div>
@@ -293,6 +298,20 @@
 					'class'=>'ime_mode_disable txt dispinline form-control firstname regdes',
 					'style'=> 'width:240px;',
 					'data-label' => trans('messages.lbl_url'))) }}
+				</div>
+			</div>
+			<div class="col-xs-12 mt20 mb10">
+				<div class="col-xs-3 lb text-right pm0">
+					<label class="clr_black">{{ trans('messages.lbl_remarks') }}</label>
+					<span class="fr ml2 fs7" style="visibility: hidden;"> * </span>
+				</div>
+				<div class="col-xs-7 mw">
+	               	{{ Form::textarea('txt_address',(isset($getSingleAgent[0])) ? $getSingleAgent[0]->txt_address : '',array(
+					'id'=>'txt_address',
+					'name' => 'txt_address',
+				 	'class'=>'ime_mode_disable txt dispinline form-control firstname regdes',
+	                'style' =>'width:240px;height:70px;',
+					'data-label' => trans('messages.lbl_address'))) }}
 				</div>
 			</div>
 		</fieldset>

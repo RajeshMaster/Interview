@@ -294,5 +294,6 @@ return [
 	'lbl_skilladd' => 'スキル追加',
 	'lbl_dbselection' => 'DBの選択',
 	'lbl_upVideo' => 'ビデオをアップロード',
+	'lbl_interview_candidate' => '面接候補者'
 	/* End Agent Module*/
 ];

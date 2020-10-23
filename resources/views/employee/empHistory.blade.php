@@ -43,7 +43,7 @@
 		{{ Form::hidden('pageflg', '1', array('id' => 'pageflg')) }}
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_3">
+<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_4">
 	<!-- Start Heading -->
 	<fieldset class="pm0 mt20">
 		<div class="header">

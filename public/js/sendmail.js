@@ -401,6 +401,9 @@ function slectType(type) {
 		document.getElementById("inchargeDetails").value = "";
 		document.getElementById("hidincharge").value = "";
 		document.getElementById("inchargemailDetails").value = "";
+		$('span[id^="junk"]').remove();
+		$('.mailidLabel').find('br').remove();
+		$('#branchId').find('option').not(':first').remove();
 	}  else {
 		$(".grpdiv").css("display", "none");
 		document.getElementById("groupvalue").value = "";

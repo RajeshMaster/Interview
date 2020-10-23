@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Model\Agent;
+use App\Model\Employee;
 use App\Model\Common;
 use Redirect;
 use Session;
@@ -109,17 +110,21 @@ class AgentController extends Controller {
 		}
 		$allcustomer = "";
 		$allcustomernames ="";
+		$getCusName=array();
 		$getdetails = Agent::getSingleAgentRecord($request);
 		$cusId = explode(",", $getdetails[0]->customerId);
+		$i=0;
 		foreach ($cusId as $key => $val) {
-			$getCusName = Agent::getCusName($request,$val);
-			foreach ($getCusName as $key => $value) {
-				$customername = $value->customer_name;
+			$getCusNamess = Agent::getCusName($request,$val);
+		 	$getCusName[$i] = Agent::getCusName($request,$val);
+			foreach ($getCusNamess as $key => $value) {
+				$customername = $value->customer_id;
 				$allcustomer .= $customername.',';
-				$allcustomernames = substr($allcustomer,0,-1);
+				$allcustomernames = $allcustomer;
 			}
+			$i++;
 		}
-		return view('agent.agentview',['request' => $request,'getdetails' => $getdetails,'allcustomernames' => $allcustomernames]);
+		return view('agent.agentview',['request' => $request,'getdetails' => $getdetails,'allcustomernames' => $allcustomernames,'getCusName' => $getCusName]);
 	}
 
 	public function AgentAddedit(Request $request){
@@ -245,6 +250,57 @@ class AgentController extends Controller {
 		}
 		$updatedtls = Agent::updCusDtls($request);
 		if ($updatedtls) {
+			Session::flash('message', 'Updated Sucessfully'); 
+			Session::flash('type', 'alert-success'); 
+		} else {
+			Session::flash('message', 'Update Unsucessfully'); 
+			Session::flash('type', 'alert-warning');
+		}
+		Session::flash('agentId', $request->agentId);
+		return Redirect::to('Agent/AgentView?mainmenu=menu_agent&time='.date('YmdHis'));
+	}
+	
+	public static function selectCustomerName(Request $request) {
+		if(!isset($request->cuseditflg)){
+			return $this->index($request);
+		}
+		$customerUnSelectedMembers = "";
+		$Agent = "";
+		$Agentval = "";
+		$customerValue = "";
+		$SingleAgent = Agent::getSingleAgentRecord($request);
+		$Agentdtls = Agent::getAgentdtls();
+		foreach ($Agentdtls as $key => $val) {
+			$variable1 = explode(",", $val->customerId);
+			foreach ($variable1 as $key => $val1) {
+				$Agentval .= "'".$val1."',";
+			}
+		}
+		$customerUnSelectedMembers = rtrim($Agentval, ',');
+		if ($customerUnSelectedMembers != "") {
+			$customerName = Agent::getCustomergrp($customerUnSelectedMembers,2);
+		} else {
+			$customerName = Agent::getCustomergrp($customerUnSelectedMembers);
+		}
+		$customerUnSelectedMembers = str_replace("'", "",$customerUnSelectedMembers);
+		if($request->cuseditflg == "edit") {
+			foreach ($SingleAgent as $key => $value) {
+				$variable = explode(",", $value->customerId);
+				foreach ($variable as $key => $value1) {
+					$Agent .= "'".$value1."',";
+				}
+			}
+			$customerSelectedMembers = rtrim($Agent, ',');
+			$customerValue = str_replace("'","",$customerSelectedMembers);
+			$customerSelectedMembers = Agent::getCustomergrp($customerSelectedMembers,1);
+		} else {
+			$customerSelectedMembers = array();
+		}
+		return view('agent.customerSelPopup',['custDtl' => $customerName,'request' => $request]);
+	}
+	public static function RemoveProcess(Request $request){
+		$remove = Agent::removeCusDtls($request);
+		if ($remove) {
 			Session::flash('message', 'Updated Sucessfully'); 
 			Session::flash('type', 'alert-success'); 
 		} else {

@@ -21,6 +21,7 @@
 	margin-right:4%!important;
   }
 }
+
 </style>
 
 <script type="text/javascript">
@@ -183,9 +184,63 @@ function fnSclkTrInc(grpid,grpname) {
 				</tbody>
 			</table>
 		</div>
-
+		<div class="box100per mb5">
+			<fieldset class="h50 mr7 ml7">
+				other
+			</fieldset>
+		</div>
+		<div class="box100per">
+				<fieldset class="h50 mr7 ml7">
+					<div class="dispinline col-md-12 mt10 mb5 ml17 text1">
+						<div class="pull-left text-right clr_blue fwb mt5 labeltexttwos ml50">
+							{{ trans('messages.lbl_custname') }}
+							<span style="color:red;"> * 
+							</span>
+						</div>
+						<div class="dispinline ml15 mb5 pull-left box30per">
+							{{ Form::text('textbox1','',array('id'=>'textbox1', 
+											'name' => 'textbox1',
+											'class'=>'textbox1 form-control ime_mode_disable regdestwo',
+											'maxlength' => 100,
+											'onkeypress' =>'return blockSpecialChar(event)',
+											'onblur'=>'this.value=jQuery.trim(this.value);')) }}
+						</div>
+							<label id="empty_textbox1" class="display_none mt6 change">
+								This Field is required.
+							</label>
+							<label id="existsChk_textbox1" class="display_none mt6 change">
+								This Value is already exists.
+							</label>
+					</div>  
+					<div class="dispinline col-md-12 mt5 mb5 ml2 text2">
+						<div class="pull-left text-right clr_blue fwb mt5 labeltexttwo ml50">
+							{{ trans('messages.lbl_incharge_mail') }}
+							<span style="color:red;"> * 
+							</span>
+						</div>
+						<div class="dispinline ml15 mb5 pull-left box30per">
+							{{ Form::text('textbox2','',array('id'=>'textbox2', 
+											'name' => 'textbox2',
+											'class'=>'textbox2 form-control ime_mode_disable regdestwo',
+											'maxlength' => 100,
+											'onkeypress' =>'return blockSpecialChar(event)',
+											'onblur'=>'this.value=jQuery.trim(this.value);')) }}
+						</div>
+							<label id="empty_textbox2" class="display_none mt6 change">
+								This Field is required.
+							</label>
+							<label id="existsChk_textbox2" class="display_none mt6 change">
+								This Value is already exists.
+							</label>
+					</div>  
+				</fieldset>
+			</div>
 	<div class="modal-footer bg-info mt10">
 	  <center>
+	  	 <button id="add" class="btn btn-success CMN_display_block box100">
+			<i class="fa fa-plus" aria-hidden="true"></i>
+			   {{ trans('messages.lbl_addmail') }}
+		 </button>
 		 <button id="add" class="btn btn-success CMN_display_block box100 selectinchargegroup">
 			<i class="fa fa-plus" aria-hidden="true"></i>
 			   {{ trans('messages.lbl_select') }}

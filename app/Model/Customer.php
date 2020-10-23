@@ -27,7 +27,14 @@ class Customer extends Model {
 					->get();
 		return $query;
 	}
-
+	public static function getGroupCheck($request){
+		$db = DB::connection('mysql');
+		$query = $db->TABLE('mst_customerdetail')
+					->SELECT('groupId')
+					->WHERE('customer_id', $request->custId)
+					->get();
+		return $query;
+	}
 	public static function CustomerDetailsSelect($request) {
 		$db = DB::connection('mysql');
 		$query = $db->TABLE($db->raw("(select *

@@ -227,6 +227,8 @@ Route::group(['prefix'=>'Agent','middleware' => 'auth'], function(){
 	Route::any('AgentAddeditProcess','AgentController@AgentAddeditProcess');
 	Route::any('addeditCustomer', 'AgentController@addeditCustomer');
 	Route::any('cusaddeditprocess', 'AgentController@cusaddeditprocess');
+	Route::any('selectCustomerName','AgentController@selectCustomerName');
+	Route::any('RemoveProcess','AgentController@RemoveProcess');
 });
 
 ?>

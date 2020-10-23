@@ -57,6 +57,10 @@
 			width:50%;
 		}
 	}
+	input[type=text]:disabled {
+  		background: white;
+  		cursor: default;
+	}
 </style>
 <div class="" id="main_contents">
 	<article id="customer" class="DEC_flex_wrapper" data-category="customer cus_sub_1">
@@ -187,7 +191,7 @@
 			</div>
 			<div class="col-xs-9 mw">
 				{{ Form::select('kenmei',[null=>'Please select'] + $getKenname,(isset($getdetails[0]->kenmei)) ? $getdetails[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
-								'style'=> 'width:240px;','id' =>'kenmei','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei')) }}
+								'style'=> 'width:240px; background: white; cursor: default;', 'disabled' =>'disabled','id' =>'kenmei','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei')) }}
 			</div>
 		</div>
 		<div class="col-xs-12 mt10">
@@ -199,7 +203,7 @@
                                         'id'=>'txt_shimei',
                                         'name' => 'txt_shimei',
                                         'class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-locality',
-										'style'=> 'width:240px;',
+										'style'=> 'width:240px;', 'disabled' =>'disabled',
                                         'data-label' => trans('messages.lbl_shimei'))) }}
 			</div>
 		</div>
@@ -229,7 +233,7 @@
                                         'data-label' => trans('messages.lbl_txt_buildingname'))) }}
 			</div>
 		</div>
-		<div class="col-xs-12 mt10 mb20">
+		<!-- <div class="col-xs-12 mt10 mb20">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>{{ trans('messages.lbl_remarks') }}<span class="fr ml2 red" style="visibility: hidden"> * </span></label>
 			</div>
@@ -241,7 +245,7 @@
                                         'style' =>'width:240px;height:70px;',
                                         'data-label' => trans('messages.lbl_address'))) }}
 			</div>
-		</div>
+		</div> -->
 	</fieldset>
 	<fieldset class="mt10 pull-right dispSubMobile">
 		<div class="col-xs-12 mt10">
@@ -287,12 +291,8 @@
                                         'onkeypress' => 'return isNumberKeywithminus(event)')) }}
 			</div>
 		</div>
-		@if($request->flg!=1)
-			{{--*/ $style = '' /*--}}
-		@else
-			{{--*/ $style = 'mb50' /*--}}
-		@endif
-		<div class="col-xs-12 mt10 {{$style}} ">
+		
+		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>URL<span class="fr ml2 red"> * </span></label>
 			</div>
@@ -321,7 +321,7 @@
 		</div>
 		@endif
 		@if($request->flg!=1)
-		<div class="col-xs-12 mt15 mb50">
+		<div class="col-xs-12 mt15">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>{{ trans('messages.lbl_incharge_mail') }}<span class="fr ml2 red"> * </span></label>
 			</div>
@@ -336,6 +336,19 @@
 			</div>
 		</div>
 		@endif
+		<div class="col-xs-12 mt10 mb20">
+			<div class="col-xs-3 lb text-right pm0">
+				<label>{{ trans('messages.lbl_remarks') }}<span class="fr ml2 red" style="visibility: hidden"> * </span></label>
+			</div>
+			<div class="col-xs-9 mw">
+				{{ Form::textarea('txt_address',(isset($getdetails)) ? $getdetails[0]->txt_address : '',array(
+                                        'id'=>'txt_address',
+                                        'name' => 'txt_address',
+                                        'class'=>'ime_mode_disable txt dispinline form-control firstname regdes',
+                                        'style' =>'width:240px;height:70px;',
+                                        'data-label' => trans('messages.lbl_address'))) }}
+			</div>
+		</div>
 	</fieldset>
 		<div style="margin-top: -5px;">
             <fieldset class="mt10 footerbg pull-left box100per">

@@ -57,7 +57,7 @@
 		{{ Form::hidden('hdnempname', '$request->hdnempname', array('id' => 'hdnempname')) }}
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
+<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_2">
 	<!-- Start Heading -->
 	<fieldset class="pm0 mt20">
 		<div class="header">
@@ -95,9 +95,9 @@
 	<!-- Session msg End-->
 	<div class="col-xs-12 pm0 pull-left mt5 mt13">
 		<div class="pull-left">
-			<a class="btn btn-linkemp" href="javascript:candiateInt();" class="pl10 pb5">
+			<!-- <a class="btn btn-linkemp" href="javascript:candiateInt();" class="pl10 pb5">
 			Interview Candiate
-			</a><span>|</span>
+			</a><span>|</span> -->
 			<a class="btn btn-linkemp {{ $disabledEmp }}" href="javascript:selectActive(0,2);" class="pl10 pb5">
 					{{ trans('messages.lbl_employee') }}
 			</a>

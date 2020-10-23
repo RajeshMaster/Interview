@@ -42,6 +42,8 @@
 		{{ Form::hidden('plimit', $request->plimit , array('id' => 'plimit')) }}
 		{{ Form::hidden('page', $request->page , array('id' => 'page')) }}
 		{{ Form::hidden('filterval', $request->filterval, array('id' => 'filterval')) }}
+		{{ Form::hidden('hidselectcus', null, array('id' => 'hidselectcus')) }}
+		{{ Form::hidden('selected',$allcustomernames, array('id' => 'selected')) }}
 		<div class="col-xs-12 pull-left mt10 mb10">
 			<a href="javascript:goindexpage();" class="button button-blue textDecNone" 
 				style="text-decoration: none !important;">
@@ -52,28 +54,16 @@
 				style="text-decoration: none !important;">
 				<span class="fa fa-edit"></span> {{ trans('messages.lbl_edit') }}
 			</a>
+			@if(!isset($getdetails[0]->customerId) && ($getdetails[0]->customerId == "" || $getdetails[0]->customerId == NULL))
+				<a href="javascript:customerAddEdit('add','{{ $getdetails[0]->txt_agentId}}' );" style="float: right; margin-top: inherit;">
+					<span class="fa fa-plus csrp"></span><span class="ml5 csrp">{{trans('messages.lbl_newCustomer')}}</span>
+				</a>
+			@else
+				<a href="javascript:customerAddEdit('edit','{{ $getdetails[0]->txt_agentId}}' );" style="float: right; margin-top: inherit;">
+					<span class="fa fa-pencil csrp"></span><span class="ml5 csrp">{{trans('messages.lbl_newCustomer')}}</span>
+				</a>
+			@endif	
 		</div>
-		<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
-	 	id="styleSelector">
-	 		<div class="selector-toggle">
-				<a id="sidedesignselector" href="javascript:void(0)"></a>
-			</div>
-			<ul>
-				<li class="theme-option ml6">
-					<div class="box100per mt5"  onKeyPress="return checkSubmitsingle(event)">
-						@if(!isset($getdetails[0]->customerId) && ($getdetails[0]->customerId == "" || $getdetails[0]->customerId == NULL))
-							<a href="javascript:customerAddEdit('add');" class="">
-								<span class="fa fa-plus csrp"></span><span class="ml5 csrp">{{trans('messages.lbl_newCustomer')}}</span>
-							</a>
-						@else
-							<a href="javascript:customerAddEdit('edit');" class="">
-								<span class="fa fa-pencil csrp"></span><span class="ml5 csrp">{{trans('messages.lbl_newCustomer')}}</span>
-							</a>
-						@endif	
-					<div>
-				</li>
-			</ul>
-	 	</div>	
 		<fieldset class="mt2">
 			<div class="col-xs-12">
 				<div class="col-xs-9 mt10">
@@ -110,7 +100,7 @@
 						@endif	 	
 					</div>
 				</div>
-				<div class="col-xs-9 mt10">
+				<!-- <div class="col-xs-9 mt10">
 					<div class="col-xs-4 tar lb">
 						{{ Form::label(trans('messages.lbl_custname'), trans('messages.lbl_custname'), array('class' => 'mailnum clr_blue')) }}
 					</div>
@@ -121,7 +111,7 @@
 							{{ "NILL"}}
 						@endif	 	
 					</div>
-				</div>
+				</div> -->
 				<div class="col-xs-9 mt10">
 					<div class="col-xs-4 tar lb">
 						{{ Form::label(trans('messages.lbl_email'), trans('messages.lbl_email'), array('class' => 'mailnum clr_blue')) }}
@@ -233,6 +223,98 @@
 			</div>
 		</fieldset>
 		{{ Form::close() }}
+		<div class="col-xs-12 pm0 pull-left mt5 mt13">
+			<div class="pull-left">
+				{{ trans('messages.lbl_customer') }} : 
+			</div>
+		</div>
+		<div class="box100per tableShrink pt10 mnheight mb0">
+			<table class="table-striped table footable table-bordered mt10 mb10">
+				<colgroup>
+					<col width="4%">
+					<col width="5%">
+					<col width="7%">
+					
+					<col width="9%">
+					<col width="9%">
+					
+					
+				</colgroup>
+				<thead class="CMN_tbltheadcolor">
+				<tr>
+					<th class="tac fs10 sno">{{ trans('messages.lbl_sno') }}</th>
+					<th data-hide="phone" class="tac fs10">{{ trans('messages.lbl_empid') }}</th>
+					<th data-hide="phone" class="tac fs10">{{ trans('messages.lbl_name') }}</th>
+					<th data-hide="phone" class="tac fs10">{{ trans('messages.lbl_mobileno') }}</th>
+					<th data-hide="phone" class="tac fs10"></th>
+					
+				</tr>
+			</thead>
+			<tbody class="tablealternateclr">
+				@if(count($getCusName[0])!="")
+					@for ($i = 0; $i < count($getCusName); $i++)
+					@if(isset($getCusName[$i][0]->customer_id) && $getCusName[$i][0]->customer_id!="")
+					<tr>
+						<td class="text-center">
+							@if(isset($getCusName[$i][0]->customer_id) && $getCusName[$i][0]->customer_id!="")
+							{{$i+1}}
+							@endif
+						</td>
+						<td class="text-center">
+							@if(isset($getCusName[$i][0]->customer_id) && $getCusName[$i][0]->customer_id!="")
+							{{ $getCusName[$i][0]->customer_id }}
+							@endif
+							
+						</td>
+						<td class="text-center">
+							@if(isset($getCusName[$i][0]->customer_name) && $getCusName[$i][0]->customer_name!="")
+							{{ $getCusName[$i][0]->customer_name }}
+							@endif
+						</td>
+						<td> 
+							@if(isset($getCusName[$i][0]->customer_contact_no) && $getCusName[$i][0]->customer_contact_no!="")
+							{{ $getCusName[$i][0]->customer_contact_no }} 
+							@endif
+						</td>
+						<td> 
+							@if(isset($getCusName[$i][0]->customer_id) && $getCusName[$i][0]->customer_id!="")
+							<a href="javascript:fnRemove('{{ $getCusName[$i][0]->customer_id }}');">
+								Remove
+							</a>
+							@endif
+					 	</td>
+					</tr>
+					@endif
+					@endfor
+				@else
+				<tr class="nodata">
+					<th class="text-center red nodatades" colspan="2">
+						{{ trans('messages.lbl_nodatafound') }}
+					</th>
+				</tr>
+				<tr class="nodata">
+					<td class="text-center red nodatades1" colspan="5">
+						{{ trans('messages.lbl_nodatafound') }}
+					</td>
+				</tr>
+				@endif
+			</tbody>
+			</table>
+		</div>
 	</article>
 </div>
+<div id="cusGroup" class="modal fade" style="width: 775px;">
+	<div id="login-overlay">
+		<div class="modal-content">
+			<!-- Popup will be loaded here -->
+		</div>
+	</div>
+</div>
+<script>
+	$('.footable').footable({
+		calculateWidthOverride: function() {
+			return { width: $(window).width() };
+		}
+	}); 
+</script>
 @endsection

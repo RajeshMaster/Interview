@@ -330,11 +330,22 @@ function umultiplesearch() {
         $("#agentindexform").submit();
     }
 }
-function customerAddEdit(flg) {
+/*function customerAddEdit(flg) {
     pageload();
     $('#cuseditflg').val(flg);
     $('#agentviewform').attr('action','addeditCustomer?mainmenu='+mainmenu+'&time='+datetime);
     $("#agentviewform").submit();
+}*/
+function customerAddEdit(flg,agentId) {
+    $('#cuseditflg').val(flg);
+    popupopenclose(1);
+    $('#cusGroup').load('selectCustomerName?mainmenu='+mainmenu+'&time='+datetime+'&cuseditflg='+flg+'&agentId='+agentId);
+    $("#cusGroup").modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $('#cusGroup').modal('show');
+   
 }
 function listbox_moveacross(sourceID, destID, SelectID, HdnID) {
     var src = document.getElementById(sourceID);
@@ -366,4 +377,27 @@ function listbox_moveacross(sourceID, destID, SelectID, HdnID) {
         str+=','+dest.options[count].value;
     }
     document.getElementById(HdnID).value=str;
+}
+function fnselectcustomer() {
+    var array = [];
+    if ($('input[name="cusId"]:checked').length == 0) {
+        alert("Please Select Atleast One Customer To Add");
+        return false;
+    }else{
+        $('input[name="cusId"]:checked').each(function() {
+            array.push($(this).val()); 
+        }); 
+        var sel =$('#selected').val();
+        $('#selected').val(sel+array.join(","));
+        if (array !="") {
+            $('#agentviewform').attr('action','cusaddeditprocess?mainmenu='+mainmenu+'&time='+datetime);
+            $("#agentviewform").submit();
+        } 
+    }
+}
+function fnRemove(custid){
+    $("#hidselectcus").val(custid); 
+    pageload();
+    $('#agentviewform').attr('action','RemoveProcess?mainmenu='+mainmenu+'&time='+datetime);
+    $("#agentviewform").submit();
 }

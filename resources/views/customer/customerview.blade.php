@@ -105,8 +105,21 @@
 			@endif
 				<a href="javascript:edit('{{ date('YmdHis') }}','{{ $getdetails[0]->id}}','{{ $getdetails[0]->custid}}');" class="pageload btn btn-warning box100"><span class="fa fa-pencil"></span> {{ trans('messages.lbl_edit') }}</a>
 		</div>
+		<div class="pull-right">
+			<a href="#demo" onclick="branchadd('{{ date('YmdHis') }}');" class="" style="font-family: arial, verdana; margin-top: inherit;" data-toggle="collapse">
+					<span class="fa fa-plus csrp"></span><span class="ml5 csrp">
+						{{ 	trans('messages.lbl_branchadd') }}</span>
+			</a> 
+			<a href="#demo" onclick="inchargeadd('{{ date('YmdHis') }}');" class="" style="font-family: arial, verdana; margin-top: inherit;" data-toggle="collapse">
+				<span class="fa fa-plus csrp"></span><span class="ml5 csrp">
+						{{ 	trans('messages.lbl_inchargeadd') }}</span>
+			</a>
+			<a href="javascript:empselectionpopupadd('{{ date('YmdHis') }}','{{ $request->custid}}','{{ $request->id}}');" class="">
+					<span class="fa fa-plus csrp"></span><span class="ml5 csrp">{{trans('messages.lbl_employeeselection')}}</span>
+					</a>	
+		</div>
 	</div>
-	<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
+	<!-- <div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
 	 id="styleSelector">
 		<div class="selector-toggle">
 			<a id="sidedesignselector" href="javascript:void(0)"></a>
@@ -136,7 +149,7 @@
 				<div>
 			</li>
 		</ul>
-	</div>	
+	</div>	 -->
 
 	<fieldset class="mt10 mb10 pull-left dispviewMainMobile">
 		<div class="col-md-12">

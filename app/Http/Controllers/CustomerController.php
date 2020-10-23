@@ -132,17 +132,33 @@ class CustomerController extends Controller {
 									'disabledGroup' => $disabledGroup]);
 	}
 	public function selectGroup(Request $request){
+		$getGroupCheck = Customer::getGroupCheck($request);
+		if (!empty($getGroupCheck[0]->groupId)) {
+			$flg = 1;
+		}else{
+			$flg = 0;
+		}
 		$getallGroup = Customer::getGroupName();
-		return view('customer.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup]);
+		return view('customer.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup,'flg' => $flg]);
 	}
 	public function groupselpopup(Request $request){
 		$updGrpId = Customer::updGrpId($request);
 		if($updGrpId) {
-			Session::flash('success', 'Group Added Sucessfully!'); 
-			Session::flash('type', 'alert-success'); 
+			if(isset($request->grpId) && $request->grpId!="" ){
+				Session::flash('success', 'Group Added Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}else{
+				Session::flash('success', 'Group Removed Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}
 		} else {
-			Session::flash('type', 'Group Added Unsucessfully!'); 
-			Session::flash('type', 'alert-danger'); 
+			if(isset($request->grpId) && $request->grpId!="" ){
+				Session::flash('success', 'Group Added UnSucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}else{
+				Session::flash('success', 'Group Removed UnSucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			}
 		}
 		return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 	}
