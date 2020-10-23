@@ -93,6 +93,32 @@
 			$('#customerSelect').modal('toggle');
 		}
 		});
+			$('.addmail').click(function(){
+				var textbox2 = $('#textbox2').val();
+				var textbox1 = $('#textbox1').val();
+				if(textbox1==""){
+					$("#empty_textbox1").removeClass("display_none");
+					return false;
+				}else{
+					$("#empty_textbox1").addClass("display_none");
+				}
+				if(textbox2==""){
+					$("#empty_textbox2").removeClass("display_none");
+					return false;
+				}else{
+					$("#empty_textbox2").addClass("display_none");
+				}
+				if(textbox1!="" && textbox2!=""){
+					$("<span id='tomail'>"+ textbox2 +"</span><br>").appendTo(".othermailidLabel");
+					$("#tomailDetails").val(textbox2);
+					var emailid = $("#tomailDetails").val();
+					if (emailid!="") {
+						
+					}
+					$('#customerSelect').empty();
+					$('#customerSelect').modal('toggle');
+				}		
+			});
 	check();
 	});
 	function check(){
@@ -223,7 +249,6 @@ function fnSclkTrInc(grpid,grpname) {
 											'name' => 'textbox2',
 											'class'=>'textbox2 form-control ime_mode_disable regdestwo',
 											'maxlength' => 100,
-											'onkeypress' =>'return blockSpecialChar(event)',
 											'onblur'=>'this.value=jQuery.trim(this.value);')) }}
 						</div>
 							<label id="empty_textbox2" class="display_none mt6 change">
@@ -237,7 +262,7 @@ function fnSclkTrInc(grpid,grpname) {
 			</div>
 	<div class="modal-footer bg-info mt10">
 	  <center>
-	  	 <button id="add" class="btn btn-success CMN_display_block box100">
+	  	 <button id="add" class="btn btn-success CMN_display_block box100 addmail">
 			<i class="fa fa-plus" aria-hidden="true"></i>
 			   {{ trans('messages.lbl_addmail') }}
 		 </button>

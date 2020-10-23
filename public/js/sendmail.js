@@ -306,6 +306,8 @@ function fninchclear(){
 	document.getElementById("inchargemailDetails").value = "";
 	$('span[id^="junk"]').remove();
 	$('.mailidLabel').find('br').remove();
+	$('span[id^="tomail"]').remove();
+	$('.othermailidLabel').find('br').remove();
 }
 
 // to clear customer details

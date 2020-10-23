@@ -295,6 +295,7 @@ return [
 	'lbl_dbselection' => 'Database Selection',
 	'lbl_upVideo' => 'Upload Video',
 	'lbl_interview_candidate' => 'Interview Candidate',
-	'lbl_addmail' => 'Add Mail'
+	'lbl_addmail' => 'Add Mail',
+	'lbl_othermail' => 'Other Mail',
 	/* End Agent Module*/
 ];

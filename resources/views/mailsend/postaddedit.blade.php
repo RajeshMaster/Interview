@@ -265,6 +265,22 @@
 				<input type="hidden" name="hidinchargemail" id="hidinchargemail">
 			</div>
 		</div>
+		<div class="col-xs-12 mt8 incmaildiv" style="display: none">
+			<div class="col-xs-3 lb tar" >
+				<label for="name">{{ trans('messages.lbl_othermail')}}<span class="fr">&nbsp;&nbsp;</span></label>
+			</div>
+			<div class="col-xs-7 mw othermailidLabel" style="">
+
+				{{ Form::hidden('tomailDetails','', 
+								array('name' => 'tomailDetails',
+									  'id'=>'tomailDetails',
+									  'data-label' => trans('messages.lbl_inchargename'),
+									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
+									  'style'=>'width :50% !important;display :inline')) }}
+				
+				<input type="hidden" name="hidinchargemail" id="hidinchargemail">
+			</div>
+		</div>
 
 		<div class="col-xs-12 mt8">
 			<div class="col-xs-3 lb tar" >
