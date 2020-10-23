@@ -55,6 +55,33 @@
 						'class'=>'box70per')) }}
 					(Upload .pdf Format only)
 				</div>
+
+				<div class="box25per pull-left text-right clr_blue fwb mt10 mb10 ml10 h50">
+					Excel Upload
+					<span style="color:red;display: none"> * </span>
+				</div>
+
+				<div class="ml15 pull-left box70per mb10 mt10">
+					<input type="checkbox" name="addexcel" id="addexcel" onclick="fnAddExlfile()" 
+						class="checkboxt" value="">
+				</div>
+
+
+				<div class="box25per pull-left text-right clr_blue fwb mt10 mb10 ml10 h50 excellbl" style="display: none;">
+					
+					<span style="color:red;" > * </span>
+				</div>
+				<div class="ml15 pull-left box70per mb10 mt10 excellbl"style="display: none;">
+					{{ Form::file('xlfile',array('id'=>'xlfile',
+							'name' => 'xlfile',
+							'data-label' => trans('messages.lbl_upload'),
+							'accept' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
+							'height' =>'30px',
+							'class'=>'box70per')) }}
+					(Upload .xlsx, .xls Format only)
+				</div>
+
+
 			</fieldset>
 		</div>
 		<div class="modal-footer bg-info mt10">
