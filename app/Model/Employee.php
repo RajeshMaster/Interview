@@ -323,13 +323,14 @@ class Employee extends Model
 	 * @param $request,$filename
 	 *  Created At 2020/10/5
 	 */
-	public static function InsResumeHistory($request,$filename) {
+	public static function InsResumeHistory($request,$filename,$xlfile) {
 		
 		$db = DB::connection('mysql');
 		$result = DB::TABLE('mst_resume')
 					->insert([	
 						'empId' => $request->empId,
 						'resume' => $filename,
+						'xlResume' => $xlfile,
 						'createdBy' => Auth::user()->username,
 						'updatedBy' => Auth::user()->username 
 					]);

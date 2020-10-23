@@ -338,11 +338,20 @@ function uploadResume(empid,lastname){
 // upoload process same as employewe index
 function fnUpload(){
 	var pdf = $('#pdffile').val()
+	var xlfile = $('#xlfile').val()
 	if (pdf != "") {
 		pdf = pdf.split(".");
+		xlfile = xlfile.split(".");
 		if (pdf[pdf.length -1] != "pdf") {
 			alert(msg_fileformat);
 		} else {
+			if($("[name='addexcel']:checked").length > 0 && xlfile == "") {
+				alert("please select Excel File");
+				return false;
+			} else if(xlfile[xlfile.length -1] != "xls"){
+				alert("please select Excel File");
+				return false;
+			}
 			swal({
 				title: msg_upload,
 				type: "warning",
@@ -517,4 +526,13 @@ function videoPlay(url){
 }
 function videostop(){
 	$('#iframevideo').attr('src', '');
+}
+
+function fnAddExlfile() {
+	if($("[name='addexcel']:checked").length > 0) {
+		$('.excellbl').show();
+	} else {
+		$('.excellbl').hide();
+		$('#xlfile').val('');
+	}
 }

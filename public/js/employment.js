@@ -297,6 +297,14 @@ function fnUpload(){
 		if (pdf[pdf.length -1] != "pdf") {
 			alert(msg_fileformat);
 		} else {
+			if($("[name='addexcel']:checked").length > 0 && xlfile == "") {
+				alert("please select Excel File");
+				return false;
+			} else if(xlfile[xlfile.length -1] != "xls"){
+				alert("please select Excel File");
+				return false;
+			}
+			
 			swal({
 				title: msg_upload,
 				type: "warning",
@@ -554,4 +562,13 @@ function candiateInt() {
 	var mainmenu = "menu_mailsend";
 	$('#employeefrm').attr('action', '../MailSend/index?mainmenu='+mainmenu+'&time='+datetime);
 	$("#employeefrm").submit();
+}
+
+function fnAddExlfile() {
+	if($("[name='addexcel']:checked").length > 0) {
+		$('.excellbl').show();
+	} else {
+		$('.excellbl').hide();
+		$('#xlfile').val('');
+	}
 }

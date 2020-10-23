@@ -527,12 +527,17 @@ class EmployeeController extends Controller
 			$ifile = $resume_name.".". self::getExtension($_FILES["pdffile"]["name"]);
 
 			move_uploaded_file($_FILES["pdffile"]['tmp_name'],$destinationPath ."/".$ifile);
+			$jfile = "";
+			if ($request->xlfile != "") {
+				$jfile = $resume_name.".". self::getExtension($_FILES["xlfile"]["name"]);
+				move_uploaded_file($_FILES["xlfile"]['tmp_name'],$destinationPath ."/".$jfile);
+			}
 
 		/*	if ($request->xlfile != "") {
 				$jfile = $resume_name.".". self::getExtension($_FILES["xlfile"]["name"]);
 				move_uploaded_file($_FILES["xlfile"]['tmp_name'],$destinationPath ."/".$jfile);
 			}*/
-			$empResumeIns = Employee::InsResumeHistory($request,$ifile);
+			$empResumeIns = Employee::InsResumeHistory($request,$ifile ,$jfile);
 			if($empResumeIns) {
 				Session::flash('success','Resume Uploaded Sucessfully!'); 
 				Session::flash('type','alert-success'); 

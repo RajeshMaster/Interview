@@ -236,6 +236,11 @@ $(document).ready(function() {
 								{{--*/ $src = $noimage . '/pdf.png'; /*--}}
 								<a href="javascript:downloadResume('{{ $empdetailsdet[$i]['recentResume'] }}')" ><img class="box30" src="{{ $src }}" width="30" height = "30"></img>
 								</a>
+								@if($empdetailsdet[$i]['recentxlResume'])
+									{{--*/ $src = $noimage . '/excel_a.png'; /*--}}
+									<a href="javascript:downloadResume('{{ $empdetailsdet[$i]['recentxlResume'] }}')" ><img class="box30" src="	{{ $src }}" width="30" height = "30"></img>
+									</a>
+								@endif
 							@else
 								{{--*/ $src = $noimage . '/nopdf.png'; /*--}}
 								<img class=" box30 " src="{{ $src }}" width="30" height = "30"></img>
