@@ -112,13 +112,13 @@
 			    @foreach($group as $key => $value)
 					<span>|</span>
 					@if($value->groupId != $request->filterval)
-						<a class="btn btn-link box18per tal" href="javascript:filter('{{ $value->groupId }}');" title="<?php echo $value->groupName ?>" style = "padding-left: <?php if($i % 5 != 0) { ?> 0px; <?php } ?>"> 
+						<a class="btn btn-link  tal" href="javascript:filter('{{ $value->groupId }}');" title="<?php echo $value->groupName ?>" style = "padding-left: <?php if($i % 5 != 0) { ?> 0px; <?php } ?>"> 
 		          		  {{ substr($value->groupName,0,12) }}
 		                @if(isset($cntGrpCus[$value->groupId][0]))
 		                  <span>({{ $cntGrpCus[$value->groupId][0]->cntCusId }})</span>
 		                @endif</a>
 					@else
-						<a class="btn btn-link box18per tal {{ $disabledGroup }}" href="javascript:filter('{{ $value->groupId }}');" title="<?php echo $value->groupName ?>" 
+						<a class="btn btn-link tal {{ $disabledGroup }}" href="javascript:filter('{{ $value->groupId }}');" title="<?php echo $value->groupName ?>" 
 		                style = "padding-left:  <?php if($i % 5 != 0) { ?> 0px; <?php } ?>"> 
 			                {{ substr($value->groupName,0,12) }}
 		                  @if(isset($cntGrpCus[$value->groupId][0]))

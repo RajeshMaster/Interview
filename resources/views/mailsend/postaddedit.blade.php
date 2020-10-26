@@ -269,8 +269,8 @@
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_othermail')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
-			<div class="col-xs-7 mw othermailidLabel" style="">
-
+			<div class="col-xs-7 mw " style="">
+			<div class="otherlabel">
 				{{ Form::hidden('tomailDetails','', 
 								array('name' => 'tomailDetails',
 									  'id'=>'tomailDetails',
@@ -278,8 +278,19 @@
 									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
 									  'style'=>'width :50% !important;display :inline')) }}
 				
-				<input type="hidden" name="hidinchargemail" id="hidinchargemail">
+				{{ Form::hidden('tomailName','', 
+								array('name' => 'tomailName',
+									  'id'=>'tomailName',
+									  'data-label' => trans('messages.lbl_inchargename'),
+									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
+									  'style'=>'width :50% !important;display :inline')) }}
+						<input type="hidden" name="tomailSelected" id="tomailSelected">
+						<input type="hidden" name="hidmailSelectedid" id="hidmailSelectedid">
 			</div>
+			<div class="othermailidLabel" style="">
+			</div>			  
+			</div>
+			
 		</div>
 
 		<div class="col-xs-12 mt8">

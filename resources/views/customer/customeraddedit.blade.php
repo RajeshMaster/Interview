@@ -190,8 +190,9 @@
 				<label> {{ trans('messages.lbl_kenmei') }}<span class="fr ml2 red"> * </span></label>
 			</div>
 			<div class="col-xs-9 mw">
-				{{ Form::select('kenmei',[null=>'Please select'] + $getKenname,(isset($getdetails[0]->kenmei)) ? $getdetails[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
-								'style'=> 'width:240px; background: white; cursor: default;', 'disabled' =>'disabled','id' =>'kenmei','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei')) }}
+				{{ Form::select('kenmei1',[null=>'Please select'] + $getKenname,(isset($getdetails[0]->kenmei)) ? $getdetails[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
+								'style'=> 'width:240px; background: white; cursor: default;', 'disabled' =>'disabled','id' =>'kenmei1','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei1')) }}
+				<input type="hidden" name="kenmei" id="kenmei" class="p-region-id" value="{{ (isset($getdetails[0]->kenmei)) ? $getdetails[0]->kenmei : '' }}">	
 			</div>
 		</div>
 		<div class="col-xs-12 mt10">
@@ -199,12 +200,13 @@
 				<label>{{ trans('messages.lbl_shimei') }}<span class="fr ml2 red"> * </span></label>
 			</div>
 			<div class="col-xs-9 mw">
-				{{ Form::text('txt_shimei',(isset($getdetails[0]->shimei)) ? $getdetails[0]->shimei : '',array(
-                                        'id'=>'txt_shimei',
-                                        'name' => 'txt_shimei',
+				{{ Form::text('txt_shimei1',(isset($getdetails[0]->shimei)) ? $getdetails[0]->shimei : '',array(
+                                        'id'=>'txt_shimei1',
+                                        'name' => 'txt_shimei1',
                                         'class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-locality',
 										'style'=> 'width:240px;', 'disabled' =>'disabled',
                                         'data-label' => trans('messages.lbl_shimei'))) }}
+                <input type="hidden" name="txt_shimei" id="txt_shimei" class="p-locality" value="{{ (isset($getdetails[0]->shimei)) ? $getdetails[0]->shimei : '' }}" >                       
 			</div>
 		</div>
 		<div class="col-xs-12 mt10">
@@ -349,6 +351,12 @@
                                         'data-label' => trans('messages.lbl_address'))) }}
 			</div>
 		</div>
+		<!-- @if(count($group) != 0)
+			@foreach($group as $key => $value)
+				{{ $value->groupName }}
+			@endforeach
+		@endif -->
+		
 	</fieldset>
 		<div style="margin-top: -5px;">
             <fieldset class="mt10 footerbg pull-left box100per">

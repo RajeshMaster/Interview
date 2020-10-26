@@ -290,6 +290,7 @@ echo "</pre>";*/
 		$maxid=array();
 		$getKenname= array();
 		$getKenname=Customer::getKendetails();
+		$group = Customer::getGroupName();
 		if(isset($request->flg)){
 			$customer_id = substr($request->custid, 3,5);
 			$cus = $customer_id+1;
@@ -305,7 +306,8 @@ echo "</pre>";*/
 			return view('customer.customeraddedit',['request' => $request,
 											'getdetails' => $getdetails,
 											'getKenname' => $getKenname,
-											'getbranchdetails' => $getbranchdetails]);
+											'getbranchdetails' => $getbranchdetails,
+											'group'=> $group ]);
 		}else{
 			if (!isset($request->hdnempid)) {
 				return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
@@ -316,7 +318,7 @@ echo "</pre>";*/
 			}
 			return view('customer.customeraddedit',['request' => $request,
 											'getKenname' => $getKenname,
-											'maxid' => $custmaxid]);
+											'maxid' => $custmaxid,'group'=> $group]);
 		}
 	}
 	public function CustomerRegValidation(Request $request){

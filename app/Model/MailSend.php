@@ -335,4 +335,65 @@ class MailSend extends Model {
 				]);
 		return $insert; 
 	}
+	public static function regOtherMail($mail,$name){
+		$db = DB::connection('mysql');
+		$insert= $db->table('other_mail_list')
+			->insert([
+				'other_name' => $name,
+				'other_mailid' => $mail,
+				'createdDate' => date('Y-m-d'),
+				'createdBy' => Auth::user()->username,
+				'delFlg' => 0
+				]);
+		return $insert; 
+	}
+	public static function getOthermailDt(){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('other_mail_list')
+					->select('*')
+					->WHERE('delFlg',0)
+					->get();
+		return $result;
+	}
+	public static function fnExistsCheck($request){
+		$db = DB::connection('mysql');
+		$exist = $db->TABLE('mst_cus_inchargedetail')
+					->select('*')
+					->WHERE('incharge_email_id','=', $request->mailId)
+					->get();
+		$existOther = $db->TABLE('other_mail_list')
+					->select('*')
+					->WHERE('other_mailid','=', $request->mailId);
+			if($request->editId != ""){
+				$existOther	= $existOther->WHERE('id','!=', $request->editId)->get();
+			} else {
+				$existOther = $existOther->get();
+			}
+		$result = count($exist)+ count($existOther);			
+		return $result;
+	}
+	public static function fnupdateOtherMailDetail($request)
+	{
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('other_mail_list')
+				->WHERE('id', $request->editId)
+				->update(['other_name' => $request->other_name,
+						'other_mailid' => $request->mailId,
+						'updatedDate' => date('Y-m-d'),
+						'updatedBy' => Auth::user()->username
+					]);
+		return $result; 
+	}
+	public static function getOtherNameEmail($id)
+	{
+		$db = DB::connection('mysql');
+			foreach ($id as $key => $value) {
+				$result = $db->TABLE('other_mail_list')
+					->select('*')
+					->WHERE('id','=', $value)
+					->get();
+				$query[$key] = $result[0];
+			}
+		return $query;
+	}
 }

@@ -235,6 +235,7 @@ function fndbclick(cusid,cusname,name) {
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+ 	fninchclear();
 	$('span[id^="junk"]').remove();
 	$('.mailidLabel').find('br').remove();
 	$("#"+cusid).prop("checked", true);
@@ -304,10 +305,16 @@ function fninchclear(){
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+	document.getElementById("tomailDetails").value = "";
+	document.getElementById("tomailName").value = "";
+	document.getElementById("tomailSelected").value = "";
+	document.getElementById("hidmailSelectedid").value = "";
 	$('span[id^="junk"]').remove();
 	$('.mailidLabel').find('br').remove();
 	$('span[id^="tomail"]').remove();
 	$('.othermailidLabel').find('br').remove();
+	$('span[id^="toselmail"]').remove();
+	$('.otherlabel').find('br').remove();
 }
 
 // to clear customer details
@@ -322,6 +329,7 @@ function fncusclear(){
 	$('.mailidLabel').find('br').remove();
 	$(".incadd").css("display", "none");
 	$(".btnclr").css("display", "none");
+	fninchclear();
 }
 
 // Resume Upload Screen View
@@ -415,6 +423,7 @@ function slectType(type) {
 		$('span[id^="junk"]').remove();
 		$('.mailidLabel').find('br').remove();
 		$('#branchId').find('option').not(':first').remove();
+		fninchclear();
 	}  else {
 		$(".grpdiv").css("display", "none");
 		document.getElementById("groupvalue").value = "";
