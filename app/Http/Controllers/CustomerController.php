@@ -139,7 +139,7 @@ class CustomerController extends Controller {
 			$flg = 0;
 		}
 		$getallGroup = Customer::getGroupName();
-		return view('customer.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup,'flg' => $flg]);
+		return view('customer.groupselectpopup',['request' => $request,'getallGroup' => $getallGroup,'flg' => $flg,'getGroupCheck'=>$getGroupCheck]);
 	}
 	public function groupselpopup(Request $request){
 		$updGrpId = Customer::updGrpId($request);
@@ -273,9 +273,6 @@ class CustomerController extends Controller {
 	    	$i++;
 	    }
 	    $getdetails=Customer::getCustomerDetails($request);
-	    /*	echo "<pre>";
-print_r($currentempview);
-echo "</pre>";*/
 		return view('customer.customerview',['request' => $request,
 										'getdetails' => $getdetails,
 										'inchargeview' => $inchargeview,
@@ -359,6 +356,10 @@ echo "</pre>";*/
 		print_r($countEmail);exit();
   	}
   	public function CustomerAddeditProcess(Request $request){
+  		$groupIdList="";
+  		if ($request->groupingID!="") {
+  			$groupIdList = implode(';',preg_replace("/\s+/", "", $request->groupingID)); 
+  		}
   		if($request->editid!="") {
   			$customer_id = substr($request->custid, 3,5);
 			$cus = $customer_id+1;
@@ -368,7 +369,7 @@ echo "</pre>";*/
 			} else {
 				$branchid = $_REQUEST['hid_branch_id'];
 			}	
-			$update = Customer::updaterec($request);
+			$update = Customer::updaterec($request,$groupIdList);
 			$update= Customer::updatebranchrec($request,$branchid);
 			// $update= Customer::updateincharge($request,$branchid);
 			if($update) {
@@ -395,7 +396,7 @@ echo "</pre>";*/
 			} else {
 				$branchid = $_REQUEST['hid_branch_id'];
 			}  
-			$insertId = Customer::InsertCustomerRec($request,$maxCustID);
+			$insertId = Customer::InsertCustomerRec($request,$maxCustID,$groupIdList);
 			$insert= Customer::InsertBranchRec($request,$branchid,$maxCustID);
 			$insert=Customer::InsertIncharge($request,$branchid,$maxCustID);
 			if($insert) {

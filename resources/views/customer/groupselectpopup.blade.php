@@ -18,14 +18,21 @@
 			});
 		});
 		$('.selectgroup').click(function(){
-			 if ($('input[name="grpId"]:checked').length == 0) {
+			 if($("[name='grpId[]']:checked").length  <= 0){
 				alert("Please select atleast one Group");
 				return false;
 			} else {
-				var radioValue = $("input[name='grpId']:checked").val();
+				$('#groupId').val("");
+				$("[name='grpId[]']:checked").each(function(){
+					var gpId= $('#groupId').val();
+					if(gpId.length > 0){
+						$('#groupId').val(gpId + ";" + $(this).val());
+					}else{
+						$('#groupId').val(gpId + $(this).val());
+					}
+				});
 				var confirmgroup = confirm("Do You Want To Select Group?");
 				if(confirmgroup) {
-					$('#groupId').val(radioValue);
 					pageload();
 					form.submit();
 					return true;
@@ -37,12 +44,22 @@
 				}
 			}
 		});
+		check();
 	});
 	function fnRemoveGroup(){
 		var confirmgroup = confirm("Do You Want To Remove Group?");
 		if(confirmgroup) {
 			pageload();
             $("#frmgroupsel").submit();
+		}
+	}
+	function check(){
+		if ($('#dbgetGroupID').val() != "") {
+			var getcusId = $('#dbgetGroupID').val();
+	       	var strarray = getcusId.split(';');
+			for (var i = 0; i < strarray.length; i++) {
+				jQuery("."+strarray[i]+"selGpid").prop("checked", true);
+			}
 		}
 	}
 </script>
@@ -55,6 +72,7 @@
 	{{ Form::hidden('customerId', $request->custId , array('id' => 'customerId')) }}
 	{{ Form::hidden('groupId', '' , array('id' => 'groupId')) }}
 	{{ Form::hidden('groupName', '' , array('id' => 'groupName')) }}
+	{{ Form::hidden('dbgetGroupID',(isset($getGroupCheck[0]->groupId)) ? $getGroupCheck[0]->groupId : '',array('id' => 'dbgetGroupID')) }}
 <div class="popupstyle popupsize">	
 	<div class="modal-content">
 		<div class="modal-header">
@@ -94,8 +112,8 @@
 					@forelse($getallGroup as $key => $value)
 						<tr>
 							<td align="center">
-								<input  type="radio" value="<?php echo $value->groupId; ?>" 
-									id = "grpId" name="grpId">
+								<input  type="checkbox" value="<?php echo $value->groupId; ?>" 
+									id ="grpId[]" name="grpId[]" class=" <?php echo $value->groupId.'selGpid'; ?>">
 							</td>
 							<td align="center">
 								{{ $i + 1 }}

@@ -10,7 +10,17 @@
 	var datetime = '@php echo date("Ymdhis") @endphp';
 	$(document).ready(function() {
     	setDatePicker("txt_custagreement");
+    	check();
   	});
+  	function check(){
+		if ($('#hidgrp').val() != "") {
+			var grid = $('#hidgrp').val();
+	       	var strarray = grid.split(';');
+			for (var i = 0; i < strarray.length; i++) {
+				jQuery("."+strarray[i]).prop("checked", true);
+			}
+		}
+	}
 </script>
 <style type="text/css">
 	/*Start Mobile layout*/
@@ -338,17 +348,34 @@
 			</div>
 		</div>
 		@endif
-		<div class="col-xs-12 mt10 mb20">
+		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>{{ trans('messages.lbl_remarks') }}<span class="fr ml2 red" style="visibility: hidden"> * </span></label>
 			</div>
 			<div class="col-xs-9 mw">
-				{{ Form::textarea('txt_address',(isset($getdetails)) ? $getdetails[0]->txt_address : '',array(
+				{{ Form::textarea('txt_address',(isset($getdetails[0]->txt_address)) ? $getdetails[0]->txt_address : '',array(
                                         'id'=>'txt_address',
                                         'name' => 'txt_address',
                                         'class'=>'ime_mode_disable txt dispinline form-control firstname regdes',
                                         'style' =>'width:240px;height:70px;',
                                         'data-label' => trans('messages.lbl_address'))) }}
+			</div>
+		</div>
+		<div class="col-xs-12 mt10 mb20">
+			<div class="col-xs-3 lb text-right pm0">
+				<label>{{ trans('messages.lbl_group') }}<span class="fr ml2 red" style="visibility: hidden"> * </span></label>
+			</div>
+			<div class="col-xs-9 mw">
+				<?php 
+					if (count($group) != 0) {
+						foreach ($group as $key => $value) {
+							?><label><input type="checkbox" name="groupingID[]" id="groupingID[]" 
+							value="<?php echo $value->groupId; ?> " class="<?php echo $value->groupId; ?> "> <?php echo $value->groupName; ?></label> <?php
+						}
+					}
+				?>
+				<input type="hidden" name="hidgrp" id="hidgrp" value="<?php echo (isset($getdetails[0]->groupId)) ? $getdetails[0]->groupId : '' ?>  ">
+		
 			</div>
 		</div>
 		<!-- @if(count($group) != 0)
