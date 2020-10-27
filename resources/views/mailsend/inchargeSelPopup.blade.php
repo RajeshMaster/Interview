@@ -58,6 +58,7 @@
 		$('span[id^="junk"]').remove();
 		$('.mailidLabel').find('br').remove();
 		
+		
 		var hidVal = $("#hidincharge").val();
 		if ($("[name='incharge[]']:checked").length <= 0 && hidVal == "") {
 			alert("Please select atleast one Incharge");
@@ -254,7 +255,7 @@ function fneditcleardata(){
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" style="color: red;" aria-hidden="true">&#10006;</button>
-			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_customerNameSel') }}</B></h3>
+			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_inchargenameselect') }}</B></h3>
 		</div>
 		<div>
 			<div style="display: inline-block;float: right;margin-top: 5px;">
@@ -377,7 +378,7 @@ function fneditcleardata(){
 				<fieldset class="h50 mr7 ml7">
 					<div class="dispinline col-md-12 mt10 mb5 ml17 text1">
 						<div class="pull-left text-right clr_blue fwb mt5 labeltexttwos ml50">
-							{{ trans('messages.lbl_custname') }}
+							{{ trans('messages.lbl_inchargename') }}
 							<span style="color:red;"> * 
 							</span>
 						</div>

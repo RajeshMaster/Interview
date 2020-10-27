@@ -222,7 +222,7 @@ class MailSendController extends Controller {
 		$firstLastName = "";
 		$resuemPdf = "";
 		$langSkills = "";
-		$dateTime = date("YmdHis");
+		$dateTime = date("Ymd");
 		$url = "";
 		$tempdir = '../ResumeUpload/employeResume/temp';
 		$directory = '../ResumeUpload/employeResume';
@@ -493,7 +493,7 @@ class MailSendController extends Controller {
 			}
 			$pdfOldFile = $destinationPath.'/'. $selectedEmployeeResume[$key];
 			$pdfNewFile = $destinationPath.'/'.strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
-			$securename = '../ResumeUpload/employeResume/secure/'.strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
+			$securename = '../ResumeUpload/employeResume/secure/'.strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.str_pad($key+1,2,"0",STR_PAD_LEFT).'.pdf';
 			$tochangesecure = $OlddestinationPath.'/'. $selectedEmployeeResume[$key];
 			if(file_exists($pdfOldFile)) {
 				 self::pdfEncrypts($tochangesecure,$pdfpassword,$securename,$request);
@@ -688,7 +688,7 @@ class MailSendController extends Controller {
 				$name = "Testing";
 				$body = $data[0]->content;
 				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
-				$real_contents = [$email,$name,$other_name,$pdfpassword];
+				$real_contents = [$email,$other_name,$other_name,$pdfpassword];
 				$bodyrep = str_replace($replace_contents, $real_contents, $body);
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 				$mailformat = [$bodyrep];
@@ -717,7 +717,7 @@ class MailSendController extends Controller {
 				$name = "Testing";
 				$body = $data[0]->content;
 				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
-				$real_contents = [$email,$name,$other_name,$pdfpassword];
+				$real_contents = [$email,$other_name,$other_name,$pdfpassword];
 				$bodyrep = str_replace($replace_contents, $real_contents, $body);
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 				$mailformat = [$bodyrep];

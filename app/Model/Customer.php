@@ -147,7 +147,12 @@ class Customer extends Model {
 			} else {
 				$result = $result->get();
 			}
-		return $result;
+		$existOther = $db->TABLE('other_mail_list')
+				->select('*')
+				->WHERE('other_mailid','=', $request->mailId)
+				->get();
+		$retresult = count($result) + count($existOther);
+		return $retresult;
 	}
 	public static function InsertCustomerRec($request,$cus,$groupIdList){
 		$insert=DB::table('mst_customerdetail')->insert([
