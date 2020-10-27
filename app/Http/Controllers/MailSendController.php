@@ -756,6 +756,13 @@ class MailSendController extends Controller {
 							"N4レベル"=>"N4レベル", 
 							"N5レベル"=>"N5レベル" 
 		);
+
+		$getSkills = array("operatingSys"=>"Operating System",
+							"programminLan"=>"Programming Language",
+							"dataBase"=>"DataBsae", 
+							"softwareTool"=>"Software Tools"
+		);
+
 		if(!empty($empSkill)){
 			$editFlg = 1;
 		}else{
@@ -766,6 +773,7 @@ class MailSendController extends Controller {
 												'pgDetails' => $pgDetails,
 												'empSkill' => $empSkill,
 												'editFlg' => $editFlg,
+												'getSkills' => $getSkills,
 												'getJapaneseLevel' => $getJapaneseLevel]);
 	}
 

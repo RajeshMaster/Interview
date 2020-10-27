@@ -115,9 +115,21 @@ function fnSclkTrInc(grpid,grpname) {
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" style="color: red;" aria-hidden="true">&#10006;</button>
-			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_sysprogramlangtypes') }}</B></h3>
+			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_skill') }}</B></h3>
 		</div>
 		<div>
+			<div style="display: inline-block;float: left;margin-top: 5px;width: 300px;">
+				<span style="float: left;width: 70px;">
+					{{ trans('messages.lbl_skill') }}
+				</span>
+					{{ Form::select('skills',$getSkills,'', 
+					array('name' => 'skills',
+					'id'=>'skills',
+					'onchange'=>'fnGetskillsDetails();',
+					'data-label' => trans('messages.lbl_branchname'),
+					'class'=>'form-control  mlength',
+					'style'=>'width :70% !important;display :inline')) }}
+			</div>
 			<div style="display: inline-block;float: right;margin-top: 5px;">
 				{!! Form::text('staffsearch', $request->staffsearch, array('','class'=>' form-control box85per pull-left','style'=>'height:30px;','id'=>'staffsearch','placeholder'=>'Search')) !!}
 			</div>

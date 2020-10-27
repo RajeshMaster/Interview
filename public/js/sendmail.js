@@ -538,3 +538,7 @@ function fnAddExlfile() {
 		$('#xlfile').val('');
 	}
 }
+
+function fnGetskillsDetails() {
+	alert();
+}
