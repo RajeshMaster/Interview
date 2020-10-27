@@ -506,12 +506,26 @@ class MailSendController extends Controller {
 			}
 		}
 		$groupId = $request->groupvalue;
+		$value = explode(';', $groupId);
+		$groupIdArr =array();
+		for ($g=0; $g < count($value)-1 ; $g++) { 
+			$groupIdArr[$g] = $value[$g];
+		}
+
+		// print_r($groupIdArr);exit;
+		$inchGrpNameArr =array();
+		
+
 		if($groupId != "") {
 			$value = explode(';', $groupId);
 			for ($i=0; $i <count($value)-1 ; $i++) { 
 				$groupsends = mailsend::groupsends($value[$i]);
+				// For Group Senmail
 				foreach ($groupsends as $key => $groups) {
-					// if($groupId!="" && $groups->sendpasswrodFlg == 1) {
+					// Check to send mail onlyg one time
+					if (!in_array($groups->incharge_email_id,$inchGrpNameArr)) {
+						array_push($inchGrpNameArr,$groups->incharge_email_id);
+						// if($groupId!="" && $groups->sendpasswrodFlg == 1) {
 						$customerid = $groups->customer_id;
 						$groupid = $groups->incharge_email_id;
 						$getmailIds .= $groupid.',';
@@ -529,48 +543,53 @@ class MailSendController extends Controller {
 						$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 						$mailformat = [$bodyrep];
 						$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
-					/*} else {
-						$customerid= $groups->customer_id;
-						$groupid = $groups->incharge_email_id;
-						$getmailIds .= $groupid.',';
-						if($customerid!=""){
-							$customerval = $customerid;
-							array_push($cus_array,$customerid);
-						}
-						$branchID = $groups->branch_name;
-						$inchargename = $groups->incharge_name;
-						$body = $databoth[0]->header."\n";
-						$body .= $databoth[0]->content;
-						$CustomerName = mailsend::getCustomerName($customerid);
-						$replace_contents = ['TTTT','CustomerName','InchargeName','DDDD','<password>'];
-						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,'mb',$pdfpassword];
-						$bodyrep = str_replace($replace_contents, $real_contents, $body);
-						$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
-						$mailformat = [$bodyrep];
-						$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
-					}*/
-				}
-				$groupAgentsends = mailsend::groupAgentsends($value[$i]);
+						/*} else {
+							$customerid= $groups->customer_id;
+							$groupid = $groups->incharge_email_id;
+							$getmailIds .= $groupid.',';
+							if($customerid!=""){
+								$customerval = $customerid;
+								array_push($cus_array,$customerid);
+							}
+							$branchID = $groups->branch_name;
+							$inchargename = $groups->incharge_name;
+							$body = $databoth[0]->header."\n";
+							$body .= $databoth[0]->content;
+							$CustomerName = mailsend::getCustomerName($customerid);
+							$replace_contents = ['TTTT','CustomerName','InchargeName','DDDD','<password>'];
+							$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,'mb',$pdfpassword];
+							$bodyrep = str_replace($replace_contents, $real_contents, $body);
+							$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
+							$mailformat = [$bodyrep];
+							$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
+						}*/
+					}
 
+				}
+				
+				$groupAgentsends = mailsend::groupAgentsends($value[$i]);
 				foreach ($groupAgentsends as $key => $agent) {
-					$agentMail = $agent->agent_email_id;
-					if ($agentMail  != "") {
-						if(trim($request->txt_content) == "") {
-							$dataAgent[0]->content = str_replace('Remark : RRRR','', $dataAgent[0]->content);
-						} else {
-							$dataAgent[0]->content = str_replace('RRRR',$request->txt_content, $dataAgent[0]->content);
+					if (!in_array($agent->agent_email_id,$inchGrpNameArr)) {
+						array_push($inchGrpNameArr,$agent->agent_email_id);
+						$agentMail = $agent->agent_email_id;
+						if ($agentMail  != "") {
+							if(trim($request->txt_content) == "") {
+								$dataAgent[0]->content = str_replace('Remark : RRRR','', $dataAgent[0]->content);
+							} else {
+								$dataAgent[0]->content = str_replace('RRRR',$request->txt_content, $dataAgent[0]->content);
+							}
+							$cusId = $agent->customer_id;
+							$getAgentmailIds .= $agentMail.',';
+							$agentName = $agent->agent_name;
+							$CustomerName = mailsend::getCustomerName($cusId);
+							$body1 = $dataAgent[0]->content;
+							$replace_contents1 = ['Admin','CustomerName','InchargeName','<password>'];
+							$real_contents1 = [$agentMail,$CustomerName[0]->customer_name,$agentName,$pdfpassword];
+							$bodyrep1 = str_replace($replace_contents1, $real_contents1, $body1);
+							$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
+							$mailformat1 = [$bodyrep1];
+								$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$ccemail,'','',$pdf_array);
 						}
-						$cusId = $agent->customer_id;
-						$getAgentmailIds .= $agentMail.',';
-						$agentName = $agent->agent_name;
-						$CustomerName = mailsend::getCustomerName($cusId);
-						$body1 = $dataAgent[0]->content;
-						$replace_contents1 = ['Admin','CustomerName','InchargeName','<password>'];
-						$real_contents1 = [$agentMail,$CustomerName[0]->customer_name,$agentName,$pdfpassword];
-						$bodyrep1 = str_replace($replace_contents1, $real_contents1, $body1);
-						$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
-						$mailformat1 = [$bodyrep1];
-							$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$ccemail,'','',$pdf_array);
 					}
 				}
 			}

@@ -227,6 +227,11 @@ class Agent extends Model {
 					->where('customer_id', $value)
 					->where('delFlg', 0)
 					->update(['agentId' => $request->agentId]);
+			}else{
+				$updateQuery = DB::table('mst_customerdetail')
+					->where('customer_id', $value)
+					->where('delFlg', 0)
+					->update(['agentId' =>""]);
 			}
 		}
 		$customerId = substr($customerId,0,-1);

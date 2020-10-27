@@ -479,6 +479,8 @@ body {
 									</li>
 								</ul>
 							</li>
+							@if(Auth::user()->userclassification == 1 || Auth::user()->userclassification == 2)
+						
 							<li @if(isset($request->mainmenu) && 
 									$request->mainmenu == "menu_setting" || $request->mainmenu == "menu_users" || $request->mainmenu == "menu_ourDetail") 
 									class="dropdown active" 
@@ -512,6 +514,7 @@ body {
 									</li> -->
 								</ul>
 							</li>
+							@endif
 							<li @if(isset($request->mainmenu) && 
 									$request->mainmenu == "menu_users1") 
 									class="active dropdown"
@@ -619,12 +622,14 @@ body {
 										{{ trans('messages.lbl_customer') }}
 									</a>
 								</li>
+								@if(Auth::user()->userclassification == 1 || Auth::user()->userclassification == 2)
 								<li class="btn_settings jop_btn">
 									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}"
 										style="text-decoration: none !important;">
 										{{ trans('messages.lbl_settings') }}
 									</a>
 								</li>
+								@endif
 							</ul>
 						</nav>
 					</div>
@@ -710,6 +715,7 @@ body {
 									{{ trans('messages.lbl_user') }}</a>
 								</div>
 							@endif
+						@if(Auth::user()->userclassification == 1 || Auth::user()->userclassification == 2)
 							@if(isset($request->mainmenu) && 
 								$request->mainmenu == "menu_setting" || $request->mainmenu == "menu_users" || $request->mainmenu == "menu_ourDetail")
 								<div id="setting_sub_1">
@@ -733,6 +739,7 @@ body {
 									{{ trans('messages.lbl_japanese_skills') }}</a>
 								</div> -->
 							@endif
+						@endif	
 						</div>
 					</div>
 				</div>

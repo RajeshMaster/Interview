@@ -109,46 +109,40 @@ class User extends Model {
 		$odr = "ASC";
 		$result= DB::table('dev_mstuser')
 						->SELECT('*');
-		if(Session::get('userclassification') != "4") {
+		/*if(Session::get('userclassification') != "4") {
 			$result = $result->where(function($joincont) use ($request) {
                       $joincont->where('userclassification', '!=', 4)
                       		   ->where('usercode', '=', Session::get('usercode'));
                       });
-		}
-		if($request->filterval == 1){
+		}*/
+		if($request->filterval == 3){
 			$result = $result->where(function($joincont) use ($request) {
-              $joincont->where('delflg', '!=', '');
+              $joincont->where('delflg', '=', 0);
               });
-		} else if($request->filterval==2){
-			$result = $result->where(function($joincont) use ($request) {
-                  $joincont->where('delflg', '=', 1)
-                  		   ->where('delchgflg', '=', 0);
-                  });
-		} else if($request->filterval==3){
+		}  else if($request->filterval==0){
 			$result = $result->where(function($joincont) use ($request) {
                   $joincont->where('delflg', '=', 0)
                   		   ->where('userclassification', '=', 0)
                   		   ->where('delchgflg', '=', 0);
                   });
-		} else if($request->filterval==4){
+		} else if($request->filterval==1){
 			$result = $result->where(function($joincont) use ($request) {
                   $joincont->where('delflg', '=', 0)
                   		   ->where('userclassification', '=', 1)
                   		   ->where('delchgflg', '=', 0);
                   });
-		} else if($request->filterval==5){
+		} else if($request->filterval==2){
 			$result = $result->where(function($joincont) use ($request) {
                   $joincont->where('delflg', '=', 0)
                   		   ->where('userclassification', '=', 2)
                   		   ->where('delchgflg', '=', 0);
                   });
-		} else if($request->filterval==6){
+		}else if($request->filterval==4){
 			$result = $result->where(function($joincont) use ($request) {
-                  $joincont->where('delflg', '=', 0)
-                  		   ->where('userclassification', '=', 3)
+                  $joincont->where('delflg', '=', 1)
                   		   ->where('delchgflg', '=', 0);
                   });
-		}
+		} 
 		if ($request->searchmethod == 1) {
 			$result = $result->where(function($joincont) use ($request) {
                     $joincont->where('usercode', 'LIKE', '%' . $request->singlesearch . '%')

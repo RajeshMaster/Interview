@@ -352,8 +352,7 @@ class CustomerController extends Controller {
 	}
  	public function getEmailExists(Request $request) {
 		$inchargeMailExist = Customer::fnGetEmailExistsCheck($request);
-		$countEmail = count($inchargeMailExist);
-		print_r($countEmail);exit();
+		print_r($inchargeMailExist);exit();
   	}
   	public function CustomerAddeditProcess(Request $request){
   		$groupIdList="";

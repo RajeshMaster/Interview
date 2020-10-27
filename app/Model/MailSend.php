@@ -200,13 +200,17 @@ class MailSend extends Model {
     	return $update;
 	}
 
+
+
+
+	
 	public static function groupsends($group) {
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('mst_customerdetail')
 		           ->select('mst_cus_inchargedetail.*')
 		           ->leftJoin('mst_cus_group','mst_cus_group.groupId','=','mst_customerdetail.groupId')
 		           ->leftJoin('mst_cus_inchargedetail','mst_customerdetail.customer_id','=','mst_cus_inchargedetail.customer_id')
-				   ->WHERE('mst_customerdetail.groupId', '=',$group)
+				   ->WHERE('mst_customerdetail.groupId',  'LIKE', '%' . $group . '%')
 					->get();
 		return $result;
 	}
@@ -238,7 +242,7 @@ class MailSend extends Model {
 		$result = $db->TABLE('mst_customerdetail')
 		           ->select('mst_agentdetail.*','mst_customerdetail.*')
 		           ->leftJoin('mst_agentdetail','mst_agentdetail.agent_id','=','mst_customerdetail.agentId')
-				   ->WHERE('mst_customerdetail.groupId', '=',$group)
+				   ->WHERE('mst_customerdetail.groupId', 'LIKE', '%' . $group . '%')
 					->get();
 		return $result;
 	}

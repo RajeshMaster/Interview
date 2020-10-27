@@ -145,8 +145,10 @@ $(document).ready(function() {
 					<th data-hide="phone" class="tac fs10">
 						{{ trans('messages.lbl_empdetails') }}
 					</th>
+					@if(Auth::user()->userclassification == 1 || Auth::user()->userclassification == 2)
 					<th data-hide="phone" class="tac fs10">
 					</th>
+					@endif
 					<th data-hide="phone" class="tac fs10">
 						{{ trans('messages.lbl_workEdate') }}
 					</th>
@@ -216,14 +218,17 @@ $(document).ready(function() {
 										</span>
 									</div>
 										<div class="CMN_display_block">
+											@if(Auth::user()->userclassification == 1 || Auth::user()->userclassification == 2)
 											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a> | 
 											<a style="color:blue;" href="javascript:uploadvideo('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}','{{ $empdetailsdet[$i]['KanaLastName'] }}');">{{ trans('messages.lbl_upVideo') }}</a> | 
-											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_skilladd') }}</a> |
-											<a style="color:blue;" href="javascript:resumeHistory('{{ $empdetailsdet[$i]['Emp_ID'] }}');">{{ trans('messages.lbl_cvHist') }}</a>
+											@endif
+											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_skilladd') }}</a> <!-- |
+											<a style="color:blue;" href="javascript:resumeHistory('{{ $empdetailsdet[$i]['Emp_ID'] }}');">{{ trans('messages.lbl_cvHist') }}</a> -->
 										</div>
 								</div>
 							</div>
 						</td>
+					@if(Auth::user()->userclassification == 1 || Auth::user()->userclassification == 2)
 						<td class="vam tac">
 							@if($empdetailsdet[$i]['youTubeUrl'] !="")
 							{{--*/ $src = $noimage . '/Video.png'; /*--}}
@@ -247,6 +252,7 @@ $(document).ready(function() {
 							@endif
 
 						</td>
+					@endif
 
 						<td class="tac">
 							<div class="45px">

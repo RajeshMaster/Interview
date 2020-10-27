@@ -299,5 +299,6 @@ return [
 	'lbl_othermail' => 'Other Mail',
 	'lbl_mailsend' => 'メール送信',
 	'lbl_inchargenameselect' => '担当者名選択',
+	'lbl_admin' => '管理者',
 	/* End Agent Module*/
 ];

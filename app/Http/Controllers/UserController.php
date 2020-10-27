@@ -21,30 +21,27 @@ class UserController extends Controller {
 		//Variable Declaration 
 		$disabledall="";
 		$disabledunused="";
-		$disabledstaff="";
-		$disabledcontract="";
-		$disabledsubcontract="";
-		$disabledprivate="";
+		$disabledadmin="";
+		$disabledsuperadmin="";
+		$disableduser="";
 		//Setting page limit
 		if ($request->plimit=="") {
 			$request->plimit = 50;
 		}
 		//Filter process
    		if (!isset($request->filterval) || $request->filterval == "") {
-        	$request->filterval = 1;
+        	$request->filterval = 3;
       	}
-    	if ($request->filterval == 1) {
+    	if ($request->filterval == 3) {
         	$disabledall="disabled fb";
+  		} elseif ($request->filterval == 0) {
+    		$disableduser="disabled fb";
+  		} elseif ($request->filterval == 1) {
+    		$disabledadmin="disabled fb";
   		} elseif ($request->filterval == 2) {
-    		$disabledunused="disabled fb";
-  		} elseif ($request->filterval == 3) {
-    		$disabledstaff="disabled fb";
+    		$disabledsuperadmin="disabled fb";
   		} elseif ($request->filterval == 4) {
-    		$disabledcontract="disabled fb";
-  		} elseif ($request->filterval == 5) {
-    		$disabledsubcontract="disabled fb";
-  		} elseif ($request->filterval == 6) {
-    		$disabledprivate="disabled fb";
+    		$disabledunused="disabled fb";
   		}
     	//SORTING PROCESS
 		if (!isset($request->usersort)) {
@@ -82,21 +79,18 @@ class UserController extends Controller {
             }
         }
     	//values for multisearch select box
-		$Classificationarray = array("0"=>trans('messages.lbl_staff'),
-									"1"=>trans('messages.lbl_conEmployee'),
-									"2"=>trans('messages.lbl_subEmployee'),
-									"3"=>trans('messages.lbl_pvtPerson'),
-									"4"=>trans('messages.lbl_superadmin'));
+		$Classificationarray = array("0"=>trans('messages.lbl_user'),
+									"1"=>trans('messages.lbl_admin'),
+									"2"=>trans('messages.lbl_superadmin'));
 		//Query to get data
 		$userdetails=User::getUserDetails($request);
 		//returning to view page
 		return view('user.index',['userdetails' => $userdetails,
 								  'disabledall' => $disabledall,
 								  'disabledunused' => $disabledunused,
-								  'disabledstaff' => $disabledstaff,
-								  'disabledcontract' => $disabledcontract,
-								  'disabledsubcontract' => $disabledsubcontract,
-								  'disabledprivate' => $disabledprivate,
+								  'disabledadmin' => $disabledadmin,
+								  'disabledsuperadmin' => $disabledsuperadmin,
+								  'disableduser' => $disableduser,
 								  'sortarray' => $sortarray,
 								  'Classificationarray'=>$Classificationarray,
 								  'sortMargin' => $sortMargin,
@@ -113,20 +107,20 @@ class UserController extends Controller {
 		$dob_year = Carbon\Carbon::createFromFormat('Y-m-d', date("Y-m-d"));
 		$dob_year   = $dob_year->subYears(18);
 		$dob_year = $dob_year->format('Y-m-d');
-		if (Session::get('userclassification') == "4") {
-			$Classificationarray = array("0"=>trans('messages.lbl_staff'),
-									"1"=>trans('messages.lbl_conEmployee'),
-									"2"=>trans('messages.lbl_subEmployee'),
-									"3"=>trans('messages.lbl_pvtPerson'),
-									"4"=>trans('messages.lbl_superadmin'),);
+		/*if (Session::get('userclassification') == "1" || Session::get('userclassification') == "2") {
+			$Classificationarray = array("0"=>trans('messages.lbl_user'),
+									"1"=>trans('messages.lbl_admin'),
+									"2"=>trans('messages.lbl_superadmin'),
+									);
 
 		} else {
-			$Classificationarray = array("0"=>trans('messages.lbl_staff'),
-									"1"=>trans('messages.lbl_conEmployee'),
-									"2"=>trans('messages.lbl_subEmployee'),
-									"3"=>trans('messages.lbl_pvtPerson'),);
-		}
-
+			$Classificationarray = array("0"=>trans('messages.lbl_user'),
+									);
+		}*/
+		$Classificationarray = array("0"=>trans('messages.lbl_user'),
+									"1"=>trans('messages.lbl_admin'),
+									"2"=>trans('messages.lbl_superadmin'),
+									);
 		return view('user.addedit',['Classificationarray' => $Classificationarray,
 									'userview' => $userview,
 									'request' => $request,
@@ -233,14 +227,10 @@ class UserController extends Controller {
 		}
 		// For User Classification
 		if ($userview[0]->userclassification == 0 && $userview[0]->delflg == 0) {
-			$userview[0]->userclassification = trans('messages.lbl_staff');
+			$userview[0]->userclassification = trans('messages.lbl_user');
 		} else if ($userview[0]->userclassification == 1 && $userview[0]->delflg == 0) {
-			$userview[0]->userclassification = trans('messages.lbl_conEmployee');
+			$userview[0]->userclassification = trans('messages.lbl_admin');
 		} else if ($userview[0]->userclassification == 2 && $userview[0]->delflg == 0) {
-			$userview[0]->userclassification = trans('messages.lbl_subEmployee');
-		} else if ($userview[0]->userclassification == 3 && $userview[0]->delflg == 0) {
-			$userview[0]->userclassification = trans('messages.lbl_pvtPerson');
-		} else if ($userview[0]->userclassification == 4 && $userview[0]->delflg == 0) {
 			$userview[0]->userclassification = trans('messages.lbl_superadmin');
 		} 
 		return view('user.view',['userview' => $userview,

@@ -115,45 +115,39 @@
 		<div class="pull-left input-group mt6 filtermail">
 			{{ Form::button(
 							trans('messages.lbl_all'),
-							array('class'=>'pageload btn btn-link '.$disabledall,
+							array('class'=>'pageload btn btn-link',
 							'type'=>'button',
-							'onclick' => 'javascript:return filter(1)')) 
+							'onclick' => 'javascript:return filter(3)',$disabledall)) 
+			}}
+			<span class = "filmail">|</span>
+			{{ Form::button(
+							trans('messages.lbl_admin'),
+							array('class'=>'pageload btn btn-link ',
+							'type'=>'button',
+							'onclick' => 'javascript:return filter(1)',$disabledadmin)) 
+			}}
+			<span class = "filmail">|</span>
+			{{ Form::button(
+							trans('messages.lbl_superadmin'),
+							array('class'=>'pageload btn btn-link ',
+							'type'=>'button',
+							'onclick' => 'javascript:return filter(2)',$disabledsuperadmin)) 
+			}}
+			<span class = "filmail">|</span>
+			{{ Form::button(
+							trans('messages.lbl_user'),
+							array('class'=>'pageload btn btn-link ',
+							'type'=>'button',
+							'onclick' => 'javascript:return filter(0)',$disableduser)) 
 			}}
 			<span class = "filmail">|</span>
 			{{ Form::button(
 							trans('messages.lbl_unused'),
-							array('class'=>'pageload btn btn-link '.$disabledunused,
+							array('class'=>'pageload btn btn-link ',
 							'type'=>'button',
-							'onclick' => 'javascript:return filter(2)')) 
+							'onclick' => 'javascript:return filter(4)',$disabledunused)) 
 			}}
-			<span class = "filmail">|</span>
-			{{ Form::button(
-							trans('messages.lbl_staff'),
-							array('class'=>'pageload btn btn-link '.$disabledstaff,
-							'type'=>'button',
-							'onclick' => 'javascript:return filter(3)')) 
-			}}
-			<span class = "filmail">|</span>
-			{{ Form::button(
-							trans('messages.lbl_conEmployee'),
-							array('class'=>'pageload btn btn-link '.$disabledcontract,
-							'type'=>'button',
-							'onclick' => 'javascript:return filter(4)')) 
-			}}
-			<span class = "filmail">|</span>
-			{{ Form::button(
-							trans('messages.lbl_subEmployee'),
-							array('class'=>'pageload btn btn-link '.$disabledsubcontract,
-							'type'=>'button',
-							'onclick' => 'javascript:return filter(5)')) 
-			}}
-			<span class = "filmail">|</span>
-			{{ Form::button(
-							trans('messages.lbl_pvtPerson'),
-							array('class'=>'pageload btn btn-link '.$disabledprivate,
-							'type'=>'button',
-							'onclick' => 'javascript:return filter(6)')) 
-			}}
+			
 		</div>
 	</div>
 	<div class="box100per tableShrink pt10 mnheight mb0">
@@ -190,14 +184,10 @@
 								<div>
 									<span class="estStatusDIV_New_1">
 										@if($data->userclassification==0 && $data->delflg==0)
-											{{trans('messages.lbl_staff')}} 
+											{{trans('messages.lbl_user')}} 
 										@elseif($data->userclassification==1 && $data->delflg==0)
-											{{trans('messages.lbl_conEmployee')}}
+											{{trans('messages.lbl_admin')}}
 										@elseif($data->userclassification==2 && $data->delflg==0)
-											{{trans('messages.lbl_subEmployee')}} 
-										@elseif($data->userclassification==3 && $data->delflg==0)
-											{{trans('messages.lbl_pvtPerson')}} 	
-										@elseif($data->userclassification==4 && $data->delflg==0)
 											{{trans('messages.lbl_superadmin')}} 
 										@else
 											{{trans('messages.lbl_unused')}} 
@@ -231,7 +221,7 @@
 								</div>
 								<div class="ml5 mb8 smallBlue CMN_display_block">
 									<div class="CMN_display_block ml3">
-										<a href="javascript:userview('{{ $data->id }}');" class="pageload">{{ trans('messages.lbl_Details') }}</a>&nbsp;@if(Session::get('userclassification') == "4")<span class="ml3">|</span>
+										<a href="javascript:userview('{{ $data->id }}');" class="pageload">{{ trans('messages.lbl_Details') }}</a>&nbsp;@if(Session::get('userclassification') == "1" || Session::get('userclassification') == "2")<span class="ml3">|</span>
 									</div>
 									<div class="CMN_display_block ml3">
 										@if($data->delflg==1)

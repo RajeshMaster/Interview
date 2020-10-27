@@ -58,7 +58,7 @@
 		$('span[id^="junk"]').remove();
 		$('.mailidLabel').find('br').remove();
 		
-		
+
 		var hidVal = $("#hidincharge").val();
 		if ($("[name='incharge[]']:checked").length <= 0 && hidVal == "") {
 			alert("Please select atleast one Incharge");
@@ -156,6 +156,7 @@
 								$("#existsChk_textbox2").removeClass("display_none");
 								return false;
                     		}else{
+                    			$("#existsChk_textbox2").addClass("display_none");
                     			if(hidEditId!=""){
                     				$.ajax({
                     					type: 'POST',
@@ -179,19 +180,21 @@
                     				});
                     			}else{
                     				$("#existsChk_textbox2").addClass("display_none");
-									$("<span id='tomail'>"+ textbox2 +"</span><br>").appendTo(".othermailidLabel");
-									var sel = $("#tomailDetails").val();
-									var toname = $("#tomailName").val();
-									if(sel.length>0 && toname.length>0){
-									document.getElementById("tomailDetails").value = sel + ";"+textbox2;
-									document.getElementById("tomailName").value = toname + ";"+textbox1;
-									}
-									else{
-									document.getElementById("tomailDetails").value = textbox2;
-									document.getElementById("tomailName").value = textbox1;
-									}
-									$('.selectinchargegroup').click();
-								/*	$('#customerSelect').empty();
+                    				if ($("[name='incharge[]']:checked").length > 0){
+										$("<span id='tomail'>"+ textbox2 +"</span><br>").appendTo(".othermailidLabel");
+										var sel = $("#tomailDetails").val();
+										var toname = $("#tomailName").val();
+										if(sel.length>0 && toname.length>0){
+										document.getElementById("tomailDetails").value = sel + ";"+textbox2;
+										document.getElementById("tomailName").value = toname + ";"+textbox1;
+										}
+										else{
+										document.getElementById("tomailDetails").value = textbox2;
+										document.getElementById("tomailName").value = textbox1;
+										}
+                    				}
+                    				$('.selectinchargegroup').click();
+									/*$('#customerSelect').empty();
 									$('#customerSelect').modal('toggle');*/
                     			}
                     			
@@ -237,6 +240,9 @@ function fneditdata(name,email,id){
 	$('#hidEditId').val(id);
 	$("#edit_hide").removeClass("dis_none");
 	$("#add_hide").addClass("dis_none");
+	$("#empty_textbox1").addClass("display_none");
+	$("#empty_textbox2").addClass("display_none");
+	$("#existsChk_textbox2").addClass("display_none");
 }	
 function fneditcleardata(){
 	$('#textbox2').val("");
@@ -244,6 +250,9 @@ function fneditcleardata(){
 	$('#hidEditId').val("");
 	$("#add_hide").removeClass("dis_none");
 	$("#edit_hide").addClass("dis_none");
+	$("#empty_textbox1").addClass("display_none");
+	$("#empty_textbox2").addClass("display_none");
+	$("#existsChk_textbox2").addClass("display_none");
 }
 </script>
 
