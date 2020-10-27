@@ -25,7 +25,6 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-
 		$("#data tr").click(function() {
 			var selected = $(this).hasClass("highlight");
 			$("#data tr").removeClass("highlight");
@@ -76,8 +75,9 @@
 	});
 
 	function check(){
+
 		var edit= $('#editFlg').val();
-		if(edit==1){
+		if(edit==1 && $('#skillList').val() != ""){
 			var sklist= $('#skillList').val();
 			var strarray = sklist.split(',');
 			for (var i = 0; i < strarray.length; i++) {
@@ -102,22 +102,42 @@ function fnSclkTrInc(grpid,grpname) {
 		'method' => 'POST')) }}
 {{ Form::hidden('mainmenu', $request->mainmenu, array('id' => 'mainmenu')) }}
 {{ Form::hidden('empId', $request->empId, array('id' => 'empId')) }}
+{{ Form::hidden('empname', $request->empname, array('id' => 'empname')) }}
+
 {{ Form::hidden('hidcheck', null, array('id' => 'hidcheck')) }}
 {{ Form::hidden('hidskillId', null, array('id' => 'hidskillId')) }}
 {{ Form::hidden('editFlg', $editFlg, array('id' => 'editFlg')) }}
+{{ Form::hidden('selectedskill','', array('id' => 'selectedskill')) }}
+{{ Form::hidden('fieldName',$skilTblNn, array('id' => 'fieldName')) }}
 @if($editFlg == "1")
-	{{ Form::hidden('skillList', $empSkill[0]->programming_lang, array('id' => 'skillList')) }}
+	@if($skilTblNn != "") 
+		{{ Form::hidden('skillList', $empSkill[0]->$skilTblNn, array('id' => 'skillList')) }}
+	@else
+		{{ Form::hidden('skillList','', array('id' => 'skillList')) }}
+	@endif
 @else
-	{{ Form::hidden('skillList', '', array('id' => 'skillList')) }}
+	{{ Form::hidden('skillList','', array('id' => 'skillList')) }}
 @endif
 
 <div class="popupstyle popupsize">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" style="color: red;" aria-hidden="true">&#10006;</button>
-			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_sysprogramlangtypes') }}</B></h3>
+			<h3 class="modal-title custom_align"><B>{{ trans('messages.lbl_skill') }}</B></h3>
 		</div>
 		<div>
+			<div style="display: inline-block;float: left;margin-top: 5px;width: 300px;">
+				<span style="float: left;width: 70px;">
+					{{ trans('messages.lbl_skill') }}
+				</span>
+					{{ Form::select('skills',[null=>'']+$getSkills,(isset($request->skillSel)) ? $request->skillSel : '', 
+					array('name' => 'skills',
+					'id'=>'skills',
+					'onchange'=>'fnGetskillsDetails();',
+					'data-label' => trans('messages.lbl_branchname'),
+					'class'=>'form-control  mlength',
+					'style'=>'width :70% !important;display :inline')) }}
+			</div>
 			<div style="display: inline-block;float: right;margin-top: 5px;">
 				{!! Form::text('staffsearch', $request->staffsearch, array('','class'=>' form-control box85per pull-left','style'=>'height:30px;','id'=>'staffsearch','placeholder'=>'Search')) !!}
 			</div>
@@ -137,25 +157,24 @@ function fnSclkTrInc(grpid,grpname) {
 				<thead class="CMN_tbltheadcolor" >
 					<th class="tac">{{ trans('messages.lbl_sno') }}</th>
 					<th class="tac"></th>
-					<th class="tac">{{ trans('messages.lbl_PLTypeNM') }}</th>
+					<th class="tac">{{ $field1lbl }}</th>
 				</thead>
 				<tbody id="search" class="staff">
 					<?php $i=0; ?>
 					@forelse($pgDetails as $key => $groupvalue)
-						<tr class="h25" onclick="fnSclkTrInc('<?php echo $groupvalue->id; ?>','<?php echo $groupvalue->ProgramLangTypeNM; ?>');">
+						<tr class="h25" onclick="fnSclkTrInc('<?php echo $groupvalue->$selectfiled['0']; ?>','<?php echo $groupvalue->$selectfiled['1']; ?>');">
 							<td class="tac"  >
 								{{ ++$key }}
 							</td>
 							<td class="tac">
-							<input type="checkbox" name="incharge[]" id="incharge[]"
-							class="<?php echo $groupvalue->id; ?>" 
-								value="<?php  echo $groupvalue->id; ?>"
-								onclick="fnSclkTrInc('<?php echo $groupvalue->id; ?>','<?php echo $groupvalue->ProgramLangTypeNM; ?>');">
+								<input type="checkbox" name="incharge[]" id="incharge[]"
+								class="<?php echo $groupvalue->$selectfiled['0']; ?>" 
+								value="<?php  echo $groupvalue->$selectfiled['0']; ?>"
+								onclick="fnSclkTrInc('<?php echo $groupvalue->$selectfiled['0']; ?>','<?php echo $groupvalue->$selectfiled['1']; ?>');">
 							</td>
 							<td class="pl5 tal">
-								@if($groupvalue->ProgramLangTypeNM  != "")
-								 {{ $groupvalue->ProgramLangTypeNM }}
-								@endif
+								{{ $groupvalue->$selectfiled['1'] }}		
+
 							</td>
 						</tr>
 					<?php $i++; ?>
@@ -168,25 +187,25 @@ function fnSclkTrInc(grpid,grpname) {
 				</tbody>
 			</table>
 		</div>
-		<fieldset class="h50 mr7 ml7">
-					<div class="dispinline col-md-12 mt10 mb5 ml50">
-						<div class="pull-left text-right clr_blue fwb mt5 labeltext ml40">
-							{{ trans('messages.lbl_japanese_skills') }}
-							<span style="color:red;"> * 
-							</span>
-						</div>
-						<div class="dispinline ml15 mb5 pull-left box30per">
-							{{ Form::select('japaneselevel',[null=>'Please select'] + $getJapaneseLevel,(isset($empSkill[0]->japanese_skill)) ? $empSkill[0]->japanese_skill : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
-								'style'=> 'width:200px;','id' =>'japaneselevel','data-label' => trans('messages.lbl_japanese_skills'),'name' => 'japaneselevel')) }}
-						</div>
-						<label id="empty_textbox1" class="display_none mt6 change">
-							This Field is required.
-						</label>
-						<label id="existsChk_textbox1" class="registernamecolor display_none mt6 change">
-							This Value is already exists.
-						</label>
-					</div>  
-				</fieldset>
+		<!-- <fieldset class="h50 mr7 ml7">
+			<div class="dispinline col-md-12 mt10 mb5 ml50">
+				<div class="pull-left text-right clr_blue fwb mt5 labeltext ml40">
+					{{ trans('messages.lbl_japanese_skills') }}
+					<span style="color:red;"> * 
+					</span>
+				</div>
+				<div class="dispinline ml15 mb5 pull-left box30per">
+					{{ Form::select('japaneselevel',[null=>'Please select'] + $getJapaneseLevel,(isset($empSkill[0]->japanese_skill)) ? $empSkill[0]->japanese_skill : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
+						'style'=> 'width:200px;','id' =>'japaneselevel','data-label' => trans('messages.lbl_japanese_skills'),'name' => 'japaneselevel')) }}
+				</div>
+				<label id="empty_textbox1" class="display_none mt6 change">
+					This Field is required.
+				</label>
+				<label id="existsChk_textbox1" class="registernamecolor display_none mt6 change">
+					This Value is already exists.
+				</label>
+			</div>  
+		</fieldset> -->
 	<div class="modal-footer bg-info mt10">
 	  <center>
 	  	@if($editFlg == "1")

@@ -222,8 +222,8 @@ $(document).ready(function() {
 											<a style="color:blue;" href="javascript:uploadResume('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_upResume') }}</a> | 
 											<a style="color:blue;" href="javascript:uploadvideo('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}','{{ $empdetailsdet[$i]['KanaLastName'] }}');">{{ trans('messages.lbl_upVideo') }}</a> | 
 											@endif
-											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}');">{{ trans('messages.lbl_skilladd') }}</a> <!-- |
-											<a style="color:blue;" href="javascript:resumeHistory('{{ $empdetailsdet[$i]['Emp_ID'] }}');">{{ trans('messages.lbl_cvHist') }}</a> -->
+											<a style="color:blue;" href="javascript:skillAdd('{{ $empdetailsdet[$i]['Emp_ID'] }}','{{ $empdetailsdet[$i]['LastName'] }}','');">{{ trans('messages.lbl_skilladd') }}</a> |
+											<a style="color:blue;" href="javascript:resumeHistory('{{ $empdetailsdet[$i]['Emp_ID'] }}');">{{ trans('messages.lbl_cvHist') }}</a>
 										</div>
 								</div>
 							</div>

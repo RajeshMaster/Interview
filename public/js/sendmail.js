@@ -442,11 +442,11 @@ function pdfview(filename) {
 }
 
 // Skill Add Screen View
-function skillAdd(empid,lastname){
+function skillAdd(empid,lastname ,skillSel){
 	$('#empId').val(empid);
 	$('#empname').val(lastname);
 	popupopenclose(1);
-	$('#uploadSkill').load('skillAdd?mainmenu='+mainmenu+'&time='+datetime+'&empId='+empid+'&lastname=1');
+	$('#uploadSkill').load('skillAdd?mainmenu='+mainmenu+'&time='+datetime+'&empId='+empid+'&lastname=1&skillSel='+skillSel);
 	$("#uploadSkill").modal({
 			backdrop: 'static',
 			keyboard: false
@@ -546,4 +546,14 @@ function fnAddExlfile() {
 		$('.excellbl').hide();
 		$('#xlfile').val('');
 	}
+}
+
+function fnGetskillsDetails() {
+	var empId = $('#empId').val();
+	var lastname = $('#empname').val();
+	var skillSel =  $('#skills').val();
+	$('#selectedskill').val(skillSel);
+
+	skillAdd(empId,lastname,skillSel);
+
 }
