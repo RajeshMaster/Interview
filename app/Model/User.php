@@ -189,5 +189,28 @@ class User extends Model {
 
     	return $update;
 	}
+	public static function fnCheckUserIdExist($request)
+	{
+		$existCheck = DB::TABLE('dev_mstuser')
+					->select('*')
+					->WHERE('userid','=', $request->userId);
+			if($request->editId != ""){
+				$existCheck	= $existCheck->WHERE('id','!=', $request->editId)->get();
+			} else {
+				$existCheck = $existCheck->get();
+			}
+			return $existCheck;
+	}
+	public static function fnCheckUserEmailExist($request){
+		$existCheck = DB::TABLE('dev_mstuser')
+					->select('*')
+					->WHERE('email','=', $request->mail);
+			if($request->editId != ""){
+				$existCheck	= $existCheck->WHERE('id','!=', $request->editId)->get();
+			} else {
+				$existCheck = $existCheck->get();
+			}
+			return $existCheck;
+	}
 
 }

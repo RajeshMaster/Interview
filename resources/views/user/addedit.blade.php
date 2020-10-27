@@ -161,6 +161,7 @@
 								'class'=>'lengthsetText form-control pl5 dispinline')) 
 					}}
 					<div class="MstuserUserID_err dispinline"></div>
+					<div id="errorSectiondisplay" align="center"></div>
 				</div>
 			</div>
 
@@ -375,6 +376,7 @@
 					}}
 					<span>&nbsp;(Ex: info@XXX.co.jp）</span>
 					<div class="Email_err dispinline"></div>
+					<div id="errorSectiondisplay1" align="center"></div>
 				</div>
 			</div>
 

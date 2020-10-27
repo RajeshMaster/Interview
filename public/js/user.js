@@ -25,37 +25,83 @@ $(document).ready(function() {
 			async: false, //blocks window close
 			success: function(resp) {
 				if(resp == true) {
-					if($('#frmuseraddedit #editid').val() == "") {
-						swal({
-						title: msg_register,
-						type: "warning",
-						showCancelButton: true,
-						confirmButtonClass: "btn-danger",
-						closeOnConfirm: true,
-						closeOnCancel: true
-						},
-						function(isConfirm) {
-							if (isConfirm) {
-								pageload();
-								$("#frmuseraddedit").submit();
+					var edit = $('#editid').val();
+					var user = $('#MstuserUserID').val();
+					var mail = $('#MstuserMailID').val();
+					$.ajax({
+						type: 'GET',
+                    	url: 'CheckUserIdExist',
+                    	data: {"userId": user,
+                    	"editId":edit, "mail" : mail },
+						success: function(respdata){
+							if(respdata > 0) {
+								document.getElementById('errorSectiondisplay').innerHTML = "";
+	                            err_invalidcer = "User Id Already Exists";
+	                            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invalidcer+'</label></div>';
+	                            document.getElementById('errorSectiondisplay').style.display = 'inline-block';
+	                            document.getElementById('errorSectiondisplay').innerHTML = error;
+	                            return false;
+							}else{
+								document.getElementById('errorSectiondisplay').innerHTML = "";
+								var edit = $('#editid').val();
+								var user = $('#MstuserUserID').val();
+								var mail = $('#MstuserMailID').val();
+								$.ajax({
+									type: 'GET',
+			                    	url: 'CheckUserEmailExist',
+			                    	data: {"userId": user,
+			                    	"editId":edit, "mail" : mail },
+			                    	success: function(dataresp){
+			                    		if(dataresp > 0) {
+		                    				document.getElementById('errorSectiondisplay1').innerHTML = "";
+				                            err_invalidcer = "Email Id Already Exists";
+				                            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invalidcer+'</label></div>';
+				                            document.getElementById('errorSectiondisplay1').style.display = 'inline-block';
+				                            document.getElementById('errorSectiondisplay1').innerHTML = error;
+				                            return false;
+			                    		}else{
+			                    			if($('#frmuseraddedit #editid').val() == "") {
+												swal({
+												title: msg_register,
+												type: "warning",
+												showCancelButton: true,
+												confirmButtonClass: "btn-danger",
+												closeOnConfirm: true,
+												closeOnCancel: true
+												},
+												function(isConfirm) {
+													if (isConfirm) {
+														pageload();
+														$("#frmuseraddedit").submit();
+													}
+												});
+											} else {
+												swal({
+												title: msg_update,
+												type: "warning",
+												showCancelButton: true,
+												confirmButtonClass: "btn-danger",
+												closeOnConfirm: true,
+												closeOnCancel: true
+												},
+												function(isConfirm) {
+													if (isConfirm) {
+														pageload();
+														$("#frmuseraddedit").submit();
+													} 
+												});
+											}
+			                    		}
+			                    	},error: function(dataresp) {
+
+									}
+								});
 							}
-						});
-					} else {
-						swal({
-						title: msg_update,
-						type: "warning",
-						showCancelButton: true,
-						confirmButtonClass: "btn-danger",
-						closeOnConfirm: true,
-						closeOnCancel: true
 						},
-						function(isConfirm) {
-							if (isConfirm) {
-								pageload();
-								$("#frmuseraddedit").submit();
-							} 
-						});
-					}
+						error: function(respdata) {
+						}
+					});
+					
 				} else{
 					$.each(resp, function(i, v) {
 						// alert(i + " => " + v); // view in console for error messages

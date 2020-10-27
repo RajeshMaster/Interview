@@ -287,4 +287,17 @@ class UserController extends Controller {
         }
 	}
 
+	public function CheckUserIdExist(Request $request)
+	{
+		$check = User::fnCheckUserIdExist($request);
+		$cnt = count($check);
+		print_r($cnt);exit();
+	}
+
+	public function CheckUserEmailExist(Request $request){
+		$checkMail = User::fnCheckUserEmailExist($request);
+		$cnt = count($checkMail);
+		print_r($cnt);exit();
+	}
+
 }

@@ -507,16 +507,7 @@ class MailSendController extends Controller {
 			}
 		}
 		$groupId = $request->groupvalue;
-		$value = explode(';', $groupId);
-		$groupIdArr =array();
-		for ($g=0; $g < count($value)-1 ; $g++) { 
-			$groupIdArr[$g] = $value[$g];
-		}
-
-		// print_r($groupIdArr);exit;
 		$inchGrpNameArr =array();
-		
-
 		if($groupId != "") {
 			$value = explode(';', $groupId);
 			for ($i=0; $i <count($value)-1 ; $i++) { 
