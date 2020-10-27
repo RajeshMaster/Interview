@@ -41,7 +41,7 @@ class Customer extends Model {
 				from mst_customerdetail) as tbl1"));
 			if ($request->filterval != 1) {
 				$query = $query->where(function($joincont) use ($request) {
-								$joincont->where('groupId', '=', $request->filterval);
+								$joincont->where('groupId', 'LIKE', '%' . $request->filterval . '%');
 								  });
 			} else {
 				$query = $query->where(function($joincont) use ($request) {
@@ -96,7 +96,7 @@ class Customer extends Model {
 		$db = DB::connection('mysql');
 		$query = $db->TABLE('mst_customerdetail')
 					->SELECT(DB::raw('COUNT(customer_id) AS cntCusId'))
-					->where('groupId', $groupId)
+					->where('groupId', 'LIKE', '%' . $groupId . '%')
 					// ->toSql();dd($query);
 					->get();
 		return $query;
@@ -123,7 +123,7 @@ class Customer extends Model {
 		$db = DB::connection('mysql');
 		$update = DB::TABLE('mst_customerdetail')
 			->WHERE('customer_id', $request->customerId)
-			->update(['groupId' => $request->grpId]);
+			->update(['groupId' => $request->groupId]);
 		return $update;
 	}
 	public static function getKendetails() {
@@ -147,9 +147,14 @@ class Customer extends Model {
 			} else {
 				$result = $result->get();
 			}
-		return $result;
+		$existOther = $db->TABLE('other_mail_list')
+				->select('*')
+				->WHERE('other_mailid','=', $request->mailId)
+				->get();
+		$retresult = count($result) + count($existOther);
+		return $retresult;
 	}
-	public static function InsertCustomerRec($request,$cus){
+	public static function InsertCustomerRec($request,$cus,$groupIdList){
 		$insert=DB::table('mst_customerdetail')->insert([
 			'customer_id' => $cus,
 			'customer_name' => $request->txt_custnamejp,
@@ -169,6 +174,7 @@ class Customer extends Model {
 			 'romaji'=> $request->txt_kananame,
 			 'delflg'=> 0,
 			 'nickname'=> $request->txt_repname,
+			 'groupId' => $groupIdList
 			]);
 		$id = DB::getPdo()->lastInsertId();;
 		return $id;
@@ -300,7 +306,8 @@ class Customer extends Model {
 							 'nickname As txt_repname',
 							 'cover_letter As coverletter',
 							 'mst_prefecture.prefecture_name_jp As prefNameJP',
-							 'mst_prefecture.prefecture_name_en As prefNameEN'
+							 'mst_prefecture.prefecture_name_en As prefNameEN',
+							 'groupId AS groupId'
 							 )
 				   	->leftJoin('mst_prefecture', 'mst_prefecture.id', '=', 'mst_customerdetail.kenmei')
 				   	->where('mst_customerdetail.id','=', $request->id)
@@ -330,7 +337,7 @@ class Customer extends Model {
 				   ->get();
 		return $query;
 	}
-	public static function updaterec($request) { 
+	public static function updaterec($request,$groupIdList) { 
 		$db = DB::connection('mysql');
 		$tbl_name = "mst_customerdetail";
 		$allupdatequery= $db->table($tbl_name)
@@ -351,7 +358,8 @@ class Customer extends Model {
 								'street_address'=>$request->txt_streetaddress,
 								'buildingname'=>$request->txt_buildingname,
 								'romaji'=> $request->txt_kananame,
-								'nickname'=> $request->txt_repname]);
+								'nickname'=> $request->txt_repname,
+								'groupId' => $groupIdList]);
 		  return $allupdatequery;
 	}
 	public static function updatebranchrec($request,$branchid) {

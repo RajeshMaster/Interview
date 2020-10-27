@@ -222,7 +222,7 @@ class MailSendController extends Controller {
 		$firstLastName = "";
 		$resuemPdf = "";
 		$langSkills = "";
-		$dateTime = date("YmdHis");
+		$dateTime = date("Ymd");
 		$url = "";
 		$tempdir = '../ResumeUpload/employeResume/temp';
 		$directory = '../ResumeUpload/employeResume';
@@ -493,7 +493,7 @@ class MailSendController extends Controller {
 			}
 			$pdfOldFile = $destinationPath.'/'. $selectedEmployeeResume[$key];
 			$pdfNewFile = $destinationPath.'/'.strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
-			$securename = '../ResumeUpload/employeResume/secure/'.strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.'.pdf';
+			$securename = '../ResumeUpload/employeResume/secure/'.strtoupper(substr($empName[0]->LastName, 0, 1)).strtoupper(substr($empName[0]->FirstName, 0, 1))."_".$dateTime.str_pad($key+1,2,"0",STR_PAD_LEFT).'.pdf';
 			$tochangesecure = $OlddestinationPath.'/'. $selectedEmployeeResume[$key];
 			if(file_exists($pdfOldFile)) {
 				 self::pdfEncrypts($tochangesecure,$pdfpassword,$securename,$request);
@@ -677,7 +677,55 @@ class MailSendController extends Controller {
 				}
 			}
 		}
-
+		$othermail=array();
+		if (isset($request->hidmailSelectedid) && $request->hidmailSelectedid!="") {
+			$otherselectid = explode(";", $request->hidmailSelectedid);
+			$getOthermailDt = mailsend::getOtherNameEmail($otherselectid);
+			foreach ($getOthermailDt as $key1 => $value1) {
+				$email = $value1->other_mailid;
+				$other_name = $value1->other_name;
+				$getmailId .= $email.',';
+				$name = "Testing";
+				$body = $data[0]->content;
+				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
+				$real_contents = [$email,$other_name,$other_name,$pdfpassword];
+				$bodyrep = str_replace($replace_contents, $real_contents, $body);
+				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
+				$mailformat = [$bodyrep];
+			   	$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
+			}
+		}
+      	if(isset($request->tomailDetails) && $request->tomailDetails!=""){
+         	$othermail1 = explode(";", $request->tomailDetails);
+         	$otherName =  explode(";", $request->tomailName);
+			$i=0;
+			$j=0;
+			foreach ($othermail1 as $key => $value) {
+			$othermail[$i]['others_mail'] = $value;
+			$i++;
+			}
+			foreach ($otherName as $key => $value1) {
+			$othermail[$j]['others_name']= $value1;
+			$j++;
+			}
+			$k=0;
+			for ($k = 0; $k < count($othermail); $k++){
+				$email = $othermail[$k]['others_mail'];
+				$other_name = $othermail[$k]['others_name'];
+				$insert = mailsend::regOtherMail($email,$other_name);
+				$getmailId .= $email.',';
+				$name = "Testing";
+				$body = $data[0]->content;
+				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
+				$real_contents = [$email,$other_name,$other_name,$pdfpassword];
+				$bodyrep = str_replace($replace_contents, $real_contents, $body);
+				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
+				$mailformat = [$bodyrep];
+				if(!in_array($customerId,$email_array)){
+				   $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
+				}
+			}
+		}
 		Session::flash('success','Post Mail Send sucessfully!'); 
 		Session::flash('type','alert-success'); 
 
@@ -707,8 +755,9 @@ class MailSendController extends Controller {
 
 	public function inchargenamepopup (Request $request){
 		$getdetails= Mailsend::getpopupincharge($request->branchid);
+		$othermail = MailSend::getOthermailDt();
 		return view('mailsend.inchargeSelPopup',['request' => $request,
-												'getdetails' => $getdetails]);
+												'getdetails' => $getdetails,'othermail'=>$othermail]);
 	}
 
 
@@ -831,6 +880,16 @@ class MailSendController extends Controller {
 		$url = str_replace("$","&lt;",$_REQUEST['embedlink']);
 		return view('mailsend.videoPlayPopup',['request' => $request,
 											'url'=>$url ]);
+	}
+
+	public static function getMailExistsCheck(Request $request)
+	{
+		$check = MailSend::fnExistsCheck($request);
+		print_r($check);exit();
+	}
+	public static function updateOtherMailProcess(Request $request){
+		$check = MailSend::fnupdateOtherMailDetail($request);
+		print_r($check);exit();
 	}
 
 }

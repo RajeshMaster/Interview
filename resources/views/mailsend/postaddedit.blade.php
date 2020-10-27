@@ -71,7 +71,7 @@
 				<label for="name">{{ trans('messages.lbl_skill')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
 			<div class="col-xs-7 mw">
-				<span  class="CMN_display_block box33per blue ml2">
+				<span  class="CMN_display_block blue ml2">
 					<?php $skills = explode(",", $langSkills); ?>
 					<?php for ($a = 0; $a < count($skills); $a++) { ?>
 						@if(isset($skills[$a]))
@@ -94,7 +94,7 @@
 					<?php $firstLastNamearr = explode(",", $firstLastName); ?>
 					<?php for ($i=0; $i < count($attachments); $i++) { ?>
 						@if(isset($firstLastNamearr[$i]))
-							{{ $firstLastNamearr[$i] }}_{{ $dateTime }}
+							{{ $firstLastNamearr[$i] }}_{{ $dateTime }}<?php echo str_pad($i+1,2,"0",STR_PAD_LEFT); ?>
  						@endif
 						{{--*/ $src = $noimage . '/pdf.png'; /*--}}
 						&nbsp;&nbsp;
@@ -113,7 +113,7 @@
 					<label for="name">{{ trans('messages.lbl_url')}}<span class="fr">&nbsp;&nbsp;</span></label>
 				</div>
 				<div class="col-xs-7 mw">
-					<span  class="CMN_display_block box38per ml2" style="word-wrap: break-word">
+					<span  class="CMN_display_block ml2" style="word-wrap: break-word">
 						<?php $url = explode(",", $url); ?>
 						<?php for ($i=0; $i < count($url); $i++) { ?>
 								{{ $url[$i] }}
@@ -269,8 +269,8 @@
 			<div class="col-xs-3 lb tar" >
 				<label for="name">{{ trans('messages.lbl_othermail')}}<span class="fr">&nbsp;&nbsp;</span></label>
 			</div>
-			<div class="col-xs-7 mw othermailidLabel" style="">
-
+			<div class="col-xs-7 mw " style="">
+			<div class="otherlabel">
 				{{ Form::hidden('tomailDetails','', 
 								array('name' => 'tomailDetails',
 									  'id'=>'tomailDetails',
@@ -278,8 +278,19 @@
 									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
 									  'style'=>'width :50% !important;display :inline')) }}
 				
-				<input type="hidden" name="hidinchargemail" id="hidinchargemail">
+				{{ Form::hidden('tomailName','', 
+								array('name' => 'tomailName',
+									  'id'=>'tomailName',
+									  'data-label' => trans('messages.lbl_inchargename'),
+									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
+									  'style'=>'width :50% !important;display :inline')) }}
+						<input type="hidden" name="tomailSelected" id="tomailSelected">
+						<input type="hidden" name="hidmailSelectedid" id="hidmailSelectedid">
 			</div>
+			<div class="othermailidLabel" style="">
+			</div>			  
+			</div>
+			
 		</div>
 
 		<div class="col-xs-12 mt8">
@@ -345,7 +356,7 @@
 			<div class="col-xs-12 buttondes" style="text-align: center;">
 				@if($request->editflg != "edit")
 					<button type="button" class="button button-green sendmailRegister">
-						<i class="fa fa-plus"></i>&nbsp;{{ trans('messages.lbl_register')}}
+						<i class="fa fa-send"></i>&nbsp;{{ trans('messages.lbl_mailsend')}}
 					</button>
 					&emsp;
 				@else

@@ -297,5 +297,7 @@ return [
 	'lbl_interview_candidate' => '面接候補者',
 	'lbl_addmail' => 'Add Mail',
 	'lbl_othermail' => 'Other Mail',
+	'lbl_mailsend' => 'メール送信',
+	'lbl_inchargenameselect' => '担当者名選択',
 	/* End Agent Module*/
 ];

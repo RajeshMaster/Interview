@@ -297,5 +297,7 @@ return [
 	'lbl_interview_candidate' => 'Interview Candidate',
 	'lbl_addmail' => 'Add Mail',
 	'lbl_othermail' => 'Other Mail',
+	'lbl_mailsend' => 'Mail Send',
+	'lbl_inchargenameselect' => 'Incharge Name Select',
 	/* End Agent Module*/
 ];

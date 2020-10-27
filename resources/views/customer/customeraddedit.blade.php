@@ -10,7 +10,17 @@
 	var datetime = '@php echo date("Ymdhis") @endphp';
 	$(document).ready(function() {
     	setDatePicker("txt_custagreement");
+    	check();
   	});
+  	function check(){
+		if ($('#hidgrp').val() != "") {
+			var grid = $('#hidgrp').val();
+	       	var strarray = grid.split(';');
+			for (var i = 0; i < strarray.length; i++) {
+				jQuery("."+strarray[i]).prop("checked", true);
+			}
+		}
+	}
 </script>
 <style type="text/css">
 	/*Start Mobile layout*/
@@ -190,8 +200,9 @@
 				<label> {{ trans('messages.lbl_kenmei') }}<span class="fr ml2 red"> * </span></label>
 			</div>
 			<div class="col-xs-9 mw">
-				{{ Form::select('kenmei',[null=>'Please select'] + $getKenname,(isset($getdetails[0]->kenmei)) ? $getdetails[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
-								'style'=> 'width:240px; background: white; cursor: default;', 'disabled' =>'disabled','id' =>'kenmei','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei')) }}
+				{{ Form::select('kenmei1',[null=>'Please select'] + $getKenname,(isset($getdetails[0]->kenmei)) ? $getdetails[0]->kenmei : '',array('class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-region-id',
+								'style'=> 'width:240px; background: white; cursor: default;', 'disabled' =>'disabled','id' =>'kenmei1','data-label' => trans('messages.lbl_kenmei'),'name' => 'kenmei1')) }}
+				<input type="hidden" name="kenmei" id="kenmei" class="p-region-id" value="{{ (isset($getdetails[0]->kenmei)) ? $getdetails[0]->kenmei : '' }}">	
 			</div>
 		</div>
 		<div class="col-xs-12 mt10">
@@ -199,12 +210,13 @@
 				<label>{{ trans('messages.lbl_shimei') }}<span class="fr ml2 red"> * </span></label>
 			</div>
 			<div class="col-xs-9 mw">
-				{{ Form::text('txt_shimei',(isset($getdetails[0]->shimei)) ? $getdetails[0]->shimei : '',array(
-                                        'id'=>'txt_shimei',
-                                        'name' => 'txt_shimei',
+				{{ Form::text('txt_shimei1',(isset($getdetails[0]->shimei)) ? $getdetails[0]->shimei : '',array(
+                                        'id'=>'txt_shimei1',
+                                        'name' => 'txt_shimei1',
                                         'class'=>'ime_mode_disable txt dispinline form-control firstname regdes p-locality',
 										'style'=> 'width:240px;', 'disabled' =>'disabled',
                                         'data-label' => trans('messages.lbl_shimei'))) }}
+                <input type="hidden" name="txt_shimei" id="txt_shimei" class="p-locality" value="{{ (isset($getdetails[0]->shimei)) ? $getdetails[0]->shimei : '' }}" >                       
 			</div>
 		</div>
 		<div class="col-xs-12 mt10">
@@ -336,12 +348,12 @@
 			</div>
 		</div>
 		@endif
-		<div class="col-xs-12 mt10 mb20">
+		<div class="col-xs-12 mt10">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>{{ trans('messages.lbl_remarks') }}<span class="fr ml2 red" style="visibility: hidden"> * </span></label>
 			</div>
 			<div class="col-xs-9 mw">
-				{{ Form::textarea('txt_address',(isset($getdetails)) ? $getdetails[0]->txt_address : '',array(
+				{{ Form::textarea('txt_address',(isset($getdetails[0]->txt_address)) ? $getdetails[0]->txt_address : '',array(
                                         'id'=>'txt_address',
                                         'name' => 'txt_address',
                                         'class'=>'ime_mode_disable txt dispinline form-control firstname regdes',
@@ -349,6 +361,29 @@
                                         'data-label' => trans('messages.lbl_address'))) }}
 			</div>
 		</div>
+		<div class="col-xs-12 mt10 mb20">
+			<div class="col-xs-3 lb text-right pm0">
+				<label>{{ trans('messages.lbl_group') }}<span class="fr ml2 red" style="visibility: hidden"> * </span></label>
+			</div>
+			<div class="col-xs-9 mw">
+				<?php 
+					if (count($group) != 0) {
+						foreach ($group as $key => $value) {
+							?><label><input type="checkbox" name="groupingID[]" id="groupingID[]" 
+							value="<?php echo $value->groupId; ?> " class="<?php echo $value->groupId; ?> "> <?php echo $value->groupName; ?></label> <?php
+						}
+					}
+				?>
+				<input type="hidden" name="hidgrp" id="hidgrp" value="<?php echo (isset($getdetails[0]->groupId)) ? $getdetails[0]->groupId : '' ?>  ">
+		
+			</div>
+		</div>
+		<!-- @if(count($group) != 0)
+			@foreach($group as $key => $value)
+				{{ $value->groupName }}
+			@endforeach
+		@endif -->
+		
 	</fieldset>
 		<div style="margin-top: -5px;">
             <fieldset class="mt10 footerbg pull-left box100per">
