@@ -4,6 +4,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Model\MailSend;
 use App\Model\Employee;
+use App\Http\Common\settingscommon;
 use App\Model\Common;
 use App\Model\SendingMail;
 use Redirect;
@@ -798,7 +799,13 @@ class MailSendController extends Controller {
 	}
 
 	public static function skillAdd(Request $request){
+
 		$empSkill = MailSend::getSkillDetail($request->empId);
+		$pgDetails =array();
+		$headinglbl ="";
+		$field1lbl ="";
+		$selectfiled =array();
+		$skilTblNn ="";
 		$getJapaneseLevel = array("N1レベル"=>"N1レベル",
 							"N2レベル"=>"N2レベル",
 							"N3レベル"=>"N3レベル", 
@@ -806,23 +813,47 @@ class MailSendController extends Controller {
 							"N5レベル"=>"N5レベル" 
 		);
 
-		$getSkills = array("operatingSys"=>"Operating System",
-							"programminLan"=>"Programming Language",
-							"dataBase"=>"DataBsae", 
-							"softwareTool"=>"Software Tools"
+		$getSkills = array("emp_sysostypes"=>"Operating System",
+							"emp_sysprogramlangtypes"=>"Programming Language",
+							"emp_sysdbtypes"=>"DataBsae", 
+							"emp_systooltypes"=>"Software Tools"
 		);
+		$getTableFields = settingscommon::getDbFieldsforProcess();
+		if ($request->skillSel != "" ) {
+
+			$pgDetails = MailSend::selectOnefieldDatas($getTableFields[$request->skillSel]['selectfields'],$getTableFields[$request->skillSel]['commitfields'][0],$request);
+
+			$headinglbl = $getTableFields[$request->skillSel]['labels']['heading'];
+			$field1lbl = $getTableFields[$request->skillSel]['labels']['field1lbl'];
+			$selectfiled  = $getTableFields[$request->skillSel]['selectfields'];
+
+			if ($request->skillSel == 'emp_sysostypes') {
+				$skilTblNn = 'os';
+			} elseif ($request->skillSel == 'emp_sysprogramlangtypes') {
+				$skilTblNn = 'programming_lang';
+			} elseif ($request->skillSel == 'emp_sysdbtypes') {
+				$skilTblNn = 'data_base';
+			} elseif ($request->skillSel == 'emp_systooltypes') {
+				$skilTblNn = 'tool';
+			}
+		}
 
 		if(!empty($empSkill)){
 			$editFlg = 1;
 		}else{
 			$editFlg = 0;
 		}
-		$pgDetails = MailSend::getProgramLanguage($request);
+// print_r($pgDetails);
+
 		return view('mailsend.skillSelPopup',['request' => $request,
 												'pgDetails' => $pgDetails,
 												'empSkill' => $empSkill,
 												'editFlg' => $editFlg,
 												'getSkills' => $getSkills,
+												'headinglbl'=>$headinglbl,
+												'field1lbl' => $field1lbl,
+												'selectfiled' => $selectfiled,
+												'skilTblNn' => $skilTblNn,
 												'getJapaneseLevel' => $getJapaneseLevel]);
 	}
 

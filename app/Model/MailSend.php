@@ -265,10 +265,33 @@ class MailSend extends Model {
 		return $result;
 	} 
 
+	/**  
+    *  Get Record From DataBase
+    *  @author Rajesh 
+    *  @param $fieldArray,$orderid,$request
+    *  Created At 2020/10/01
+    **/
+    public static function selectOnefieldDatas($fieldArray,$orderid,$request) {
+        $db = DB::connection('mysql');
+        $fieldNames="";
+        for ($i=0; $i < count($fieldArray); $i++) {
+            $fieldNames .= "".$fieldArray[$i].",";
+        }
+        $fieldNames = rtrim($fieldNames, ',');
+           $query = $db->table($request->skillSel)
+                ->select(DB::raw($fieldNames))
+                ->orderBy($orderid,'ASC')
+                ->get();
+
+        return $query;
+    }
+
+
+
 	public static function getSkillDetail($empid){
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('emp_mstskills')
-				->select('programming_lang','japanese_skill','youTubeUrl')
+				->select('programming_lang','japanese_skill','youTubeUrl','os','data_base','tool')
 				->WHERE('empId', $empid)
 				->WHERE('delFlg',0)
 				->get();
@@ -278,8 +301,8 @@ class MailSend extends Model {
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('emp_mstskills')
 				->WHERE('empId', $request->empId)
-				->update(['japanese_skill' => $request->japaneselevel,
-						'programming_lang' => $request->hidskillId,
+				->update([
+						$request->fieldName => $request->hidskillId,
 						'updatedDate' => date('Y-m-d'),
 						'updatedBy' => Auth::user()->username
 					]);
@@ -290,8 +313,7 @@ class MailSend extends Model {
 		$insert= $db->table('emp_mstskills')
 			->insert([
 				'empId'=> $request->empId,
-				'japanese_skill' => $request->japaneselevel,
-				'programming_lang' => $request->hidskillId,
+				$request->fieldName => $request->hidskillId,
 				'createdDate' => date('Y-m-d'),
 				'createdBy' => Auth::user()->username,
 				'delFlg' => 0
