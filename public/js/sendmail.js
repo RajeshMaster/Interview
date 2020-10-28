@@ -394,12 +394,14 @@ function fnUpload(){
 		if (pdf[pdf.length -1] != "pdf") {
 			alert(msg_fileformat);
 		} else {
-			if($("[name='addexcel']:checked").length > 0 && xlfile == "") {
-				alert("please select Excel File");
-				return false;
-			} else if(xlfile[xlfile.length -1] != "xls"){
-				alert("please select Excel File");
-				return false;
+			if($("[name='addexcel']:checked").length > 0) {
+				if($("[name='addexcel']:checked").length > 0 && xlfile == "") {
+					alert("please select Excel File");
+					return false;
+				} else if(xlfile[xlfile.length -1] != "xls"){
+					alert("please select Excel File");
+					return false;
+				}
 			}
 			swal({
 				title: msg_upload,
@@ -592,7 +594,6 @@ function fnGetskillsDetails() {
 	var lastname = $('#empname').val();
 	var skillSel =  $('#skills').val();
 	$('#selectedskill').val(skillSel);
-
 	skillAdd(empId,lastname,skillSel);
 
 }

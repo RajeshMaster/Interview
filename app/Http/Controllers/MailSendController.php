@@ -181,11 +181,46 @@ class MailSendController extends Controller {
 						$empdetailsdet[$i]['PgSkills'] = $singleSkill[0]->ProgramLangTypeNM;
 					} else {
 						$singleSkill = MailSend::getSkillsingle($value);
-						$empdetailsdet[$i]['PgSkills'] = $empdetailsdet[$i]['PgSkills'].';'.$singleSkill[0]->ProgramLangTypeNM;
+						$empdetailsdet[$i]['PgSkills'] = $empdetailsdet[$i]['PgSkills'].','.$singleSkill[0]->ProgramLangTypeNM;
 					}
 				}
 			}
-				
+			if (isset($skill[0]->os)) {
+				$osSkill = explode(',', $skill[0]->os);
+				foreach ($osSkill as $key => $value) {
+					if($key == 0) {
+						$OsSkill = MailSend::getOsName($value);
+						$empdetailsdet[$i]['OsSkills'] = $OsSkill[0]->OSTypeNM;
+					} else {
+						$OsSkill = MailSend::getOsName($value);
+						$empdetailsdet[$i]['OsSkills'] = $empdetailsdet[$i]['OsSkills'].','.$OsSkill[0]->OSTypeNM;
+					}
+				}
+			}
+			if (isset($skill[0]->data_base)) {
+				$databaseSkill = explode(',', $skill[0]->data_base);
+				foreach ($databaseSkill as $key => $value) {
+					if($key == 0) {
+						$databaseSkill = MailSend::getDataBaseName($value);
+						$empdetailsdet[$i]['DataBaseSkills'] = $databaseSkill[0]->DBType;
+					} else {
+						$databaseSkill = MailSend::getDataBaseName($value);
+						$empdetailsdet[$i]['DataBaseSkills'] = $empdetailsdet[$i]['DataBaseSkills'].','.$databaseSkill[0]->DBType;
+					}
+				}
+			}
+			if (isset($skill[0]->tool)) {
+				$softwaretool = explode(',', $skill[0]->tool);
+				foreach ($softwaretool as $key => $value) {
+					if($key == 0) {
+						$softwaretool = MailSend::getSoftWareToolName($value);
+						$empdetailsdet[$i]['SoftWareTool'] = $softwaretool[0]->ToolTypeNM;
+					} else {
+						$databaseSkill = MailSend::getSoftWareToolName($value);
+						$empdetailsdet[$i]['SoftWareTool'] = $empdetailsdet[$i]['SoftWareTool'].','.$softwaretool[0]->ToolTypeNM;
+					}
+				}
+			}	
 			/*$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
 			foreach($cusname as $key=>$value) {
 				$empdetailsdet[$i]['customer_name'] = $value->customer_name;
@@ -825,7 +860,8 @@ class MailSendController extends Controller {
 		$getSkills = array("emp_sysostypes"=>"Operating System",
 							"emp_sysprogramlangtypes"=>"Programming Language",
 							"emp_sysdbtypes"=>"DataBsae", 
-							"emp_systooltypes"=>"Software Tools"
+							"emp_systooltypes"=>"Software Tools",
+							"jplanguage_skill" => "Japanese Skill"
 		);
 		$getTableFields = settingscommon::getDbFieldsforProcess();
 		if ($request->skillSel != "" ) {

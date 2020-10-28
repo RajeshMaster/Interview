@@ -131,8 +131,8 @@ $(document).ready(function() {
 		<table class="table-striped table footable table-bordered mt10 mb10" >
 			<colgroup>
 				<col width="4%">
-				<col width="10%">
-				<col width="70%">
+				<col width="30%">
+				<col width="50%">
 			</colgroup>
 			<thead class="CMN_tbltheadcolor" >
 				<tr class="CMN_tbltheadcolor">
@@ -162,15 +162,40 @@ $(document).ready(function() {
 							<Input type = 'Checkbox' onchange="showbtn()" Name = "emp[]" id='<?php echo $empdetailsdet[$i]['Emp_ID']; ?>' value ='<?php echo $empdetailsdet[$i]['Emp_ID']; ?>'>
 						</td>
 						<td>
-							<div class="tac">
+							<div class="">
 								<!-- <label>{{ $empdetailsdet[$i]['Emp_ID'] }}</label> -->
+								<span class="f28 clr_blue">Prog Lang:</span> 
 								@if(isset($empdetailsdet[$i]['PgSkills']))
-									{{ $empdetailsdet[$i]['PgSkills'] }}
+									<span class="f12">
+											{{ $empdetailsdet[$i]['PgSkills'] }}
+									</span>
+									@else
+									<span class="f12">
+											Nill
+									</span>
 								@endif
 								@if(isset($empdetailsdet[$i]['JpSkills']) && $empdetailsdet[$i]['JpSkills'] != "")
-								<br/>	<span>Jpanese:</span> 
-									<span>
+								<br/><span class="f28 clr_blue">Japanese:</span> 
+									<span class="f12">
 											{{ $empdetailsdet[$i]['JpSkills'] }}
+									</span>
+								@endif
+								@if(isset($empdetailsdet[$i]['OsSkills']) && $empdetailsdet[$i]['OsSkills'] != "")
+								<br/>	<span class="f28 clr_blue">OS:</span> 
+									<span class="f12">
+											{{ $empdetailsdet[$i]['OsSkills'] }}
+									</span>
+								@endif
+								@if(isset($empdetailsdet[$i]['DataBaseSkills']) && $empdetailsdet[$i]['DataBaseSkills'] != "")
+								<br/>	<span class="f28 clr_blue">DB:</span> 
+									<span class="f12">
+											{{ $empdetailsdet[$i]['DataBaseSkills'] }}
+									</span>
+								@endif
+								@if(isset($empdetailsdet[$i]['SoftWareTool']) && $empdetailsdet[$i]['SoftWareTool'] != "")
+								<br/>	<span class="f28 clr_blue">Tool:</span> 
+									<span class="f12">
+											{{ $empdetailsdet[$i]['SoftWareTool'] }}
 									</span>
 								@endif
 							</div>

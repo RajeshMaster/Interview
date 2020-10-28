@@ -334,7 +334,33 @@ class MailSend extends Model {
 					->get();
 		return $result;
 	} 
-
+	public static function getOsName($id){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('emp_sysostypes')
+					->select('id','OSTypeCD','OSTypeNM')
+					->WHERE('DelFlg',0)
+					->WHERE('id',$id)
+					->get();
+		return $result;
+	}
+	public static function getDataBaseName($id){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('emp_sysdbtypes')
+					->select('id','DBTypeCD','DBType')
+					->WHERE('DelFlg',0)
+					->WHERE('id',$id)
+					->get();
+		return $result;
+	} 
+	public static function getSoftWareToolName($id){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('emp_systooltypes')
+					->select('id','ToolTypeCD','ToolTypeNM')
+					->WHERE('DelFlg',0)
+					->WHERE('id',$id)
+					->get();
+		return $result;
+	}
 	public static function updateVideo($request){
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('emp_mstskills')
