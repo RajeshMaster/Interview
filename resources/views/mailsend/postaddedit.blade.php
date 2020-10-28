@@ -303,7 +303,7 @@
 					{{ Form::text('ccemail','',array('id'=>'ccemail', 
 							'name' => 'ccemail',
 							'data-label' => trans('messages.lbl_CC'),
-							'class'=>'box100per form-control ',
+							'class'=>'box100per form-control ','readonly' => 'readonly',
 							'maxlength'=>'30')) }}
 					<input type="hidden" name="hidccid" id="hidccid">
 				</span>

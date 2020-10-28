@@ -171,9 +171,19 @@ class MailSendController extends Controller {
 				$empdetailsdet[$i]['youTubeUrl'] = "";
 			}
 			$pgSkil = array();
+			if (isset($skill[0]->japanese_skill)) {
+				$jpSkil =explode(',', $skill[0]->japanese_skill);
+				foreach ($jpSkil as $key => $value) {
+					if($key == 0) {
+						$jpSkil = MailSend::getJpSkill($value);
+						$empdetailsdet[$i]['JpSkills'] = $jpSkil[0]->skillName;
+					} else {
+						$jpSkil = MailSend::getJpSkill($value);
+						$empdetailsdet[$i]['JpSkills'] = $empdetailsdet[$i]['JpSkills'].','.$jpSkil[0]->skillName;
+					}
+				}
+			}
 			if (isset($skill[0]->programming_lang)) {
-				$empdetailsdet[$i]['JpSkills'] = $skill[0]->japanese_skill;
-
 				$pgSkil =explode(',', $skill[0]->programming_lang);
 				foreach ($pgSkil as $key => $value) {
 					if($key == 0) {
@@ -221,10 +231,6 @@ class MailSendController extends Controller {
 					}
 				}
 			}	
-			/*$cusname=Employee::fnGetcusname($request,$empdetailsdet[$i]['Emp_ID']);
-			foreach($cusname as $key=>$value) {
-				$empdetailsdet[$i]['customer_name'] = $value->customer_name;
-			}*/
 			$i++;
 		}
 			
@@ -951,6 +957,8 @@ class MailSendController extends Controller {
 				$skilTblNn = 'data_base';
 			} elseif ($request->skillSel == 'emp_systooltypes') {
 				$skilTblNn = 'tool';
+			}elseif ($request->skillSel == 'jplanguage_skill') {
+				$skilTblNn = 'japanese_skill';
 			}
 		}
 

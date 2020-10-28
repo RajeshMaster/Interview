@@ -324,7 +324,15 @@ class MailSend extends Model {
 				]);
 		return $insert;
 	}
-
+	public static function getJpSkill($id){
+		$db = DB::connection('mysql');
+		$result = $db->TABLE('jplanguage_skill')
+					->select('id','skillName')
+					->WHERE('DelFlg',0)
+					->WHERE('id',$id)
+					->get();
+		return $result;
+	}
 	public static function getSkillsingle($id){
 		$db = DB::connection('mysql');
 		$result = $db->TABLE('emp_sysprogramlangtypes')
