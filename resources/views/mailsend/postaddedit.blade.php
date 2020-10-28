@@ -305,7 +305,17 @@
 							'data-label' => trans('messages.lbl_CC'),
 							'class'=>'box100per form-control ',
 							'maxlength'=>'30')) }}
+					<input type="hidden" name="hidccid" id="hidccid">
 				</span>
+				<button data-toggle="modal" type="button" class="btn btn-success add" 
+						style="width: 100px;height: 30px;margin-top: 5px;" 
+						onclick="return customerCCSelectPopup();">
+					<i class="fa fa-plus vat">{{ trans('messages.lbl_browse') }}</i>
+				</button>
+				<a class="btn btn-danger box67 p4" href="javascript:fncusCCclear();"
+					style="height:30px;width: 70px; margin-top: 5px;">
+						{{ trans('messages.lbl_clear') }}</a>
+				<div class="customerName_err dispinline"></div>
 			</div>
 		</div>
 
@@ -402,7 +412,7 @@
 </article>
 </div>
 
-<div id="customerSelect" class="modal fade" style="width: 775px;">
+<div id="customerSelect" class="modal fade" style="width: 775px; overflow: auto;">
 	<div id="login-overlay">
 		<div class="modal-content">
 		<!-- Popup will be loaded here -->

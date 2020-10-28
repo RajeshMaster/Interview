@@ -230,6 +230,16 @@ function customerSelectPopup() {
 		});
 	$('#customerSelect').modal('show');
 }
+function customerCCSelectPopup(){
+	var customerId = $('#customerId').val();
+	popupopenclose(1);
+	$('#customerSelect').load('customerCCSelectPopup?mainmenu='+mainmenu+'&time='+datetime+'&customerId='+customerId);
+	$("#customerSelect").modal({
+			backdrop: 'static',
+			keyboard: false
+		});
+	$('#customerSelect').modal('show');
+}
 // Double Click on popup Select tr
 function fndbclick(cusid,cusname,name) {
 	document.getElementById("inchargeDetails").value = "";
@@ -286,7 +296,31 @@ function fnselect() {
 		$('#customerSelect').modal('toggle');
 	}
 }
-
+function fnCCselect() {
+	if ($('input[name="cusId[]"]:checked').length == 0) {
+		document.getElementById("ccemail").value = "";
+		document.getElementById("hidccid").value = "";
+		alert("Please select atleast one Customer");
+		return false;
+	}else{ 
+		document.getElementById("ccemail").value = "";
+		document.getElementById("hidccid").value = "";
+		$("[name='cusId[]']:checked").each(function(){
+			var res = $(this).val().split("$");
+			var cchid = $("#hidccid").val();
+			if (cchid.length > 0) {
+				$('#hidccid').val(cchid + ";" + res[0]);
+				$('#ccemail').val($("#ccemail").val() + ";" + res[1]);
+			}else{
+				$('#hidccid').val(cchid + res[0]);
+				$('#ccemail').val($("#ccemail").val() + res[1]);
+			}
+		});
+		$("body div").removeClass("modalOverlay");
+		$('#customerSelect').empty();
+		$('#customerSelect').modal('toggle');
+	}
+}
 // Incharge Name get popup
 function inchargename(){
 	var branchid = document.getElementById("branchId").value;
@@ -325,11 +359,16 @@ function fncusclear(){
 	document.getElementById("inchargeDetails").value = "";
 	document.getElementById("hidincharge").value = "";
 	document.getElementById("inchargemailDetails").value = "";
+	document.getElementById("customerId").value = "";
 	$('span[id^="junk"]').remove();
 	$('.mailidLabel').find('br').remove();
 	$(".incadd").css("display", "none");
 	$(".btnclr").css("display", "none");
 	fninchclear();
+}
+function fncusCCclear(){
+	document.getElementById("hidccid").value = "";
+	document.getElementById("ccemail").value = "";
 }
 
 // Resume Upload Screen View

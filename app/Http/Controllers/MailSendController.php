@@ -601,7 +601,6 @@ class MailSendController extends Controller {
 						}
 						$mailSendList = mailsend::mailPostSendList($allmailIds,$subject,$value,$customerID,$branchID,$selectedEmployeeResume[$key]);
 					}
-			
 				}
 			}
 		}
@@ -933,4 +932,8 @@ class MailSendController extends Controller {
 		print_r($check);exit();
 	}
 
+	public function customerCCSelectPopup(Request $request) {
+		$custDtl = Employee::selectcustomer();
+		return view('mailsend.customerCCSelPopup',['custDtl' => $custDtl,'request' => $request]);
+	}
 }

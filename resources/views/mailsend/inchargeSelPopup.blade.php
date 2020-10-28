@@ -234,6 +234,14 @@ function fnSclkTrInc(grpid,grpname) {
 		$("."+grpid).prop("checked", true);
 	}
 }
+// Single Click in Other Mail tr
+function fnSclkTrOtherMail(grpid) {
+	if ($('.' + grpid).is(':checked')) {
+		$("."+grpid).prop("checked", false);
+	} else {
+		$("."+grpid).prop("checked", true);
+	}
+}
 function fneditdata(name,email,id){
 	$('#textbox2').val(email);
 	$('#textbox1').val(name);
@@ -348,13 +356,13 @@ function fneditcleardata(){
 				<tbody id="search" class="staff">
 					<?php $i=0; ?>
 					@forelse($othermail as $key => $otherlist)
-						<tr>
+						<tr onclick="fnSclkTrOtherMail('<?php echo $otherlist->id.'selid'; ?>');">
 							<td class="tac"  >
 								{{ ++$key }}
 							</td>
 							<td class="tac" id="<?php echo $otherlist->id.'checkChange'; ?>">
 							<input type="checkbox" name="other[]" id="other[]" class=" <?php echo $otherlist->id.'selid'; ?>"
-								value="<?php  echo $otherlist->other_name."$".$otherlist->id."$".$otherlist->other_mailid; ?>"
+								value="<?php  echo $otherlist->other_name."$".$otherlist->id."$".$otherlist->other_mailid; ?>"  onclick="fnSclkTrOtherMail('<?php echo $otherlist->id.'selid'; ?>');"
 								>
 							</td>
 							<td class="pl5 tal" id="<?php echo $otherlist->id.'othername'; ?>">

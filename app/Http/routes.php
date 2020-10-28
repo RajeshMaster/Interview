@@ -133,6 +133,7 @@ Route::group(['prefix' => 'MailSend','middleware' => 'auth'], function(){
 	Route::any('videoPlayPopup','MailSendController@videoPlayPopup');
 	Route::any('getMailExistsCheck','MailSendController@getMailExistsCheck');
 	Route::any('updateOtherMailProcess','MailSendController@updateOtherMailProcess');
+	Route::any('customerCCSelectPopup','MailSendController@customerCCSelectPopup');
 });
 
 // Setting

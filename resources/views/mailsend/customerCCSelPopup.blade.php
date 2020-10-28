@@ -53,8 +53,8 @@
 	function checkradio(){
 		if($('#customerId').val() !=""){
 			var getcusId = $('#customerId').val();
-			jQuery("#"+getcusId).prop("checked", true);
-			/*jQuery("#"+getcusId+"cus").addClass("block");*/
+			jQuery("#"+getcusId).prop("checked", false);
+			jQuery("#"+getcusId+"cus").addClass("block");
 		}
 		if ($('#cusId').val() != "") {
 			var getcusId = $('#cusId').val();
@@ -64,7 +64,7 @@
 			var getcusId = $('#hidccid').val();
 			var strarray = getcusId.split(';');
 			for (var i = 0; i < strarray.length; i++) {
-				jQuery("#"+strarray[i]+"cus").addClass("block");
+				jQuery("#"+strarray[i]).prop("checked", true);
 			}
 		}
 	}
@@ -108,10 +108,10 @@
 				<tbody id="search" class="staff">
 					<?php $i=0; ?>
 					@forelse($custDtl as $key => $value)
-						<tr id="<?php echo $value->customer_id."cus"; ?>" ondblclick="fndbclick('<?php echo $value->customer_id; ?>','<?php echo $value->customer_name; ?>','<?php echo $value->romaji; ?>');"onclick="fnSclkTr('<?php echo $value->customer_id; ?>','<?php echo $value->customer_name; ?>','<?php echo $value->romaji; ?>');" 
-						>
+						<tr id="<?php echo $value->customer_id."cus"; ?>">
 							<td align="center">
-							<input  type="radio" id="<?php echo $value->customer_id; ?>" name="cusId">
+							<input  type="checkbox" id="<?php echo $value->customer_id; ?>" name="cusId[]" value="<?php echo $value->customer_id."$".$value->customer_name; ?>">
+							
 							</td>
 							<td align="center">
 								{{ $i + 1 }}
@@ -138,7 +138,7 @@
 		</div>
    <div class="modal-footer bg-info mt10">
 	  <center>
-		 <button id="add" onclick="javascript:fnselect();" class="btn btn-success CMN_display_block box100">
+		 <button id="add" onclick="fnCCselect();" class="btn btn-success CMN_display_block box100">
 			<i class="fa fa-plus" aria-hidden="true"></i>
 			   {{ trans('messages.lbl_select') }}
 		 </button>
