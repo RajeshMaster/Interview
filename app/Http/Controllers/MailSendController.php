@@ -439,6 +439,7 @@ class MailSendController extends Controller {
 	*
 	*/
 	public function sendMailpostProcess(Request $request) {
+		// print_r($request->all());exit();
 		$customerId = $request->customerId;
 		$branchId = $request->branchId;
 		$inchargeId = $request->hidincharge;
@@ -448,7 +449,11 @@ class MailSendController extends Controller {
 		} else {
 			$ccemail = NULL;
 		}
-
+		if($request->hidccid != "") {
+			$hidccid = $request->hidccid;
+		} else {
+			$hidccid = "";
+		}
 		$selectedEmployeeResume = $request->selectedEmployeeResume;
 		$pdf_array = array();
 		$email_array = array();
@@ -569,7 +574,18 @@ class MailSendController extends Controller {
 						$bodyrep = str_replace($replace_contents, $real_contents, $body);
 						$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 						$mailformat = [$bodyrep];
-						$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
+						if ($hidccid != "") {
+							$cusIdCC = explode(",", $hidccid);
+							foreach ($cusIdCC as $keyCC => $valueCC) {
+								$inchargeCC = mailsend::fnGetmail($valueCC);
+								$inchargeCC = rtrim($inchargeCC,",");
+								$inchargeCC = explode(",", $inchargeCC);
+								$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$inchargeCC,'','',$pdf_array);
+							}
+						} else {
+							$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,'','','',$pdf_array);
+						}
+						// $sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
 						/*} else {
 							$customerid= $groups->customer_id;
 							$groupid = $groups->incharge_email_id;
@@ -615,7 +631,18 @@ class MailSendController extends Controller {
 							$bodyrep1 = str_replace($replace_contents1, $real_contents1, $body1);
 							$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 							$mailformat1 = [$bodyrep1];
-								$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$ccemail,'','',$pdf_array);
+							if ($hidccid != "") {
+								$cusIdCC = explode(",", $hidccid);
+								foreach ($cusIdCC as $keyCC => $valueCC) {
+									$inchargeCC = mailsend::fnGetmail($valueCC);
+									$inchargeCC = rtrim($inchargeCC,",");
+									$inchargeCC = explode(",", $inchargeCC);
+									$sendmail = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$inchargeCC,'','',$pdf_array);
+								}
+							} else {
+								$sendmail = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,'','','',$pdf_array);
+							}
+							// $sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$ccemail,'','',$pdf_array);
 						}
 					}
 				}
@@ -662,7 +689,18 @@ class MailSendController extends Controller {
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 				$mailformat = [$bodyrep];
 				if(!in_array($customerId,$email_array)){
-					$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
+					if ($hidccid != "") {
+						$cusIdCC = explode(",", $hidccid);
+						foreach ($cusIdCC as $keyCC => $valueCC) {
+							$inchargeCC = mailsend::fnGetmail($valueCC);
+							$inchargeCC = rtrim($inchargeCC,",");
+							$inchargeCC = explode(",", $inchargeCC);
+							$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$inchargeCC,'','',$pdf_array);
+						}
+					} else {
+						$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,'','','',$pdf_array);
+					}
+					// $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
 				}
 					
 			// } else {
@@ -702,7 +740,18 @@ class MailSendController extends Controller {
 			$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 			$mailformat1 = [$bodyrep1];
 			if(!in_array($customerId,$email_array)){
-				$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,$ccemail,'','',$pdf_array);
+				if ($hidccid != "") {
+					$cusIdCC = explode(",", $hidccid);
+					foreach ($cusIdCC as $keyCC => $valueCC) {
+						$inchargeCC = mailsend::fnGetmail($valueCC);
+						$inchargeCC = rtrim($inchargeCC,",");
+						$inchargeCC = explode(",", $inchargeCC);
+						$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,$inchargeCC,'','',$pdf_array);
+					}
+				} else {
+					$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,'','','',$pdf_array);
+				}
+				// $sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,$ccemail,'','',$pdf_array);
 			} 
 		}
 
@@ -737,7 +786,18 @@ class MailSendController extends Controller {
 				$bodyrep = str_replace($replace_contents, $real_contents, $body);
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 				$mailformat = [$bodyrep];
-			   	$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
+				if ($hidccid != "") {
+					$cusIdCC = explode(",", $hidccid);
+					foreach ($cusIdCC as $keyCC => $valueCC) {
+						$inchargeCC = mailsend::fnGetmail($valueCC);
+						$inchargeCC = rtrim($inchargeCC,",");
+						$inchargeCC = explode(",", $inchargeCC);
+						$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$inchargeCC,'','',$pdf_array);
+					}
+				} else {
+					$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,'','','',$pdf_array);
+				}
+			   	// $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
 			}
 		}
       	if(isset($request->tomailDetails) && $request->tomailDetails!=""){
@@ -767,7 +827,18 @@ class MailSendController extends Controller {
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 				$mailformat = [$bodyrep];
 				if(!in_array($customerId,$email_array)){
-				   $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
+					if ($hidccid != "") {
+						$cusIdCC = explode(",", $hidccid);
+						foreach ($cusIdCC as $keyCC => $valueCC) {
+							$inchargeCC = mailsend::fnGetmail($valueCC);
+							$inchargeCC = rtrim($inchargeCC,",");
+							$inchargeCC = explode(",", $inchargeCC);
+							$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$inchargeCC,'','',$pdf_array);
+						}
+					} else {
+						$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,'','','',$pdf_array);
+					}
+					// $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
 				}
 			}
 		}
