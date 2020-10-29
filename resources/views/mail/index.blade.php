@@ -87,16 +87,16 @@
 						{{ trans('messages.lbl_sno') }}
 					</th>
 					<th class="tac fs10">
-						{{ trans('messages.lbl_contractDate') }}
+						{{ trans('messages.lbl_mailid') }}
 					</th>
 					<th data-hide="phone" class="tac fs10">
-						{{ trans('messages.lbl_name') }}
+						{{ trans('messages.lbl_mailname') }}
 					</th>
 					<th data-hide="phone" class="tac fs10">
-						{{ trans('messages.lbl_address') }}
+						{{ trans('messages.lbl_mailsubject') }}
 					</th>
 					<th data-hide="phone" class="tac fs10">
-						{{ trans('messages.lbl_branchName') }}
+						<!-- {{ trans('messages.lbl_branchName') }} -->
 					</th>
 				</tr>
 			</thead>
