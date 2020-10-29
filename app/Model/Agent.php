@@ -126,7 +126,20 @@ class Agent extends Model {
 			} else {
 				$result = $result->get();
 			}
-		return $result;
+		$existOther = $db->TABLE('other_mail_list')
+			->select('*')
+			->WHERE('other_mailid','=', $request->mailId)
+			->get();
+		$existUser = $db->TABLE('dev_mstuser')
+				->select('*')
+				->WHERE('email','=', $request->mailId)
+				->get();
+		$existIncharge = $db->TABLE('mst_cus_inchargedetail')
+					->select('*')
+					->WHERE('incharge_email_id','=', $request->mailId)
+					->get();
+		$retresult = count($result) + count($existOther) + count($existUser) + count($existIncharge);
+		return $retresult;
 	}
 	// Update
 	public static function updateAgentRec($request) { 

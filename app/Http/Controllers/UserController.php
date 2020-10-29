@@ -296,8 +296,8 @@ class UserController extends Controller {
 
 	public function CheckUserEmailExist(Request $request){
 		$checkMail = User::fnCheckUserEmailExist($request);
-		$cnt = count($checkMail);
-		print_r($cnt);exit();
+		/*$cnt = count($checkMail);*/
+		print_r($checkMail);exit();
 	}
 
 }

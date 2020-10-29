@@ -361,6 +361,7 @@
                                         'data-label' => trans('messages.lbl_address'))) }}
 			</div>
 		</div>
+		@if(count($group))
 		<div class="col-xs-12 mt10 mb20">
 			<div class="col-xs-3 lb text-right pm0">
 				<label>{{ trans('messages.lbl_group') }}<span class="fr ml2 red" style="visibility: hidden"> * </span></label>
@@ -378,6 +379,7 @@
 		
 			</div>
 		</div>
+		@endif
 		<!-- @if(count($group) != 0)
 			@foreach($group as $key => $value)
 				{{ $value->groupName }}

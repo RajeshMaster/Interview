@@ -176,12 +176,11 @@ class User extends Model {
 	}
 
 	public static function passwordchange($request) {
-
 		$update=DB::table('dev_mstuser')
 			->where('id', $request->id)
 			->update(
-				['password' => md5($request->password),
-				'conpassword' => md5($request->confirmpassword),
+				['password' => md5($request->MstuserPassword),
+				'conpassword' => md5($request->MstuserConPassword),
 				'Up_DT' => date('Y-m-d'),
 				'UP_TM' => date('h:i:s'),
 				'UpdatedBy' => Auth::user()->username]
@@ -202,7 +201,8 @@ class User extends Model {
 			return $existCheck;
 	}
 	public static function fnCheckUserEmailExist($request){
-		$existCheck = DB::TABLE('dev_mstuser')
+		$db = DB::connection('mysql');
+		$existCheck = $db->TABLE('dev_mstuser')
 					->select('*')
 					->WHERE('email','=', $request->mail);
 			if($request->editId != ""){
@@ -210,7 +210,20 @@ class User extends Model {
 			} else {
 				$existCheck = $existCheck->get();
 			}
-			return $existCheck;
+		$existOther = $db->TABLE('other_mail_list')
+			->select('*')
+			->WHERE('other_mailid','=', $request->mail)
+			->get();
+		$existIncharge = $db->TABLE('mst_cus_inchargedetail')
+					->select('*')
+					->WHERE('incharge_email_id','=', $request->mail)
+					->get();
+		$exitAgent = $db->TABLE('mst_agentdetail')
+					->select('*')
+					->WHERE('agent_email_id','=', $request->mail)
+					->get();
+		$retresult = count($existCheck) + count($existOther) + count($exitAgent) + count($existIncharge);										
+		return $retresult;
 	}
 
 }

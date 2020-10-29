@@ -151,8 +151,15 @@ class Customer extends Model {
 				->select('*')
 				->WHERE('other_mailid','=', $request->mailId)
 				->get();
-		$retresult = count($result) + count($existOther);
-		return $retresult;
+		$exitAgent = $db->TABLE('mst_agentdetail')
+					->select('*')
+					->WHERE('agent_email_id','=', $request->mailId)
+					->get();
+		$existUser = $db->TABLE('dev_mstuser')
+				->select('*')
+				->WHERE('email','=', $request->mailId)
+				->get();
+		$retresult = count($result) + count($existOther) + count($existUser) + count($exitAgent);	return $retresult;
 	}
 	public static function InsertCustomerRec($request,$cus,$groupIdList){
 		$insert=DB::table('mst_customerdetail')->insert([

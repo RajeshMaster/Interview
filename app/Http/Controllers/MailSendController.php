@@ -226,7 +226,7 @@ class MailSendController extends Controller {
 						$softwaretool = MailSend::getSoftWareToolName($value);
 						$empdetailsdet[$i]['SoftWareTool'] = $softwaretool[0]->ToolTypeNM;
 					} else {
-						$softwaretool = MailSend::getSoftWareToolName($value);
+						$databaseSkill = MailSend::getSoftWareToolName($value);
 						$empdetailsdet[$i]['SoftWareTool'] = $empdetailsdet[$i]['SoftWareTool'].','.$softwaretool[0]->ToolTypeNM;
 					}
 				}
@@ -264,11 +264,6 @@ class MailSendController extends Controller {
 		$firstLastName = "";
 		$resuemPdf = "";
 		$langSkills = "";
-		$japaneseSkill ="";
-		$pgmLangSkills ="";
-		$OsSkills ="";
-		$databaseSkills ="";
-		$softwaretools ="";
 		$dateTime = date("Ymd");
 		$url = "";
 		$tempdir = '../ResumeUpload/employeResume/temp';
@@ -302,7 +297,7 @@ class MailSendController extends Controller {
 			}
 
 			if ($langSkills == "") {
-				if (isset($empSkillDtls[0]->programming_lang)) {
+				if (isset($empSkillDtls[0]->japanese_skill) && isset($empSkillDtls[0]->programming_lang)) {
 					$pgmLang = explode(',', $empSkillDtls[0]->programming_lang);
 					foreach ($pgmLang as $keyskill => $skillVal) {
 						if($keyskill == 0) {
@@ -310,63 +305,15 @@ class MailSendController extends Controller {
 							$pgmLangSkills = $singleSkill[0]->ProgramLangTypeNM;
 						} else {
 							$singleSkill = MailSend::getSkillsingle($skillVal);
-							$pgmLangSkills = $pgmLangSkills.','.$singleSkill[0]->ProgramLangTypeNM;
+							$pgmLangSkills = $pgmLangSkills.' ; '.$singleSkill[0]->ProgramLangTypeNM;
 						}
 					}
+					$langSkills = $employeDetail[0]->FirstName." -> ".
+						trans('messages.lbl_skillname')." : ".$pgmLangSkills." | ".
+						trans('messages.lbl_japanese_skills')." : ".$empSkillDtls[0]->japanese_skill;
 				}
-				if (isset($empSkillDtls[0]->japanese_skill)) {
-					$jpSkil =explode(',', $empSkillDtls[0]->japanese_skill);
-					foreach ($jpSkil as $key => $value) {
-						if($key == 0) {
-							$jpSkil = MailSend::getJpSkill($value);
-							$japaneseSkill = $jpSkil[0]->skillName;
-						} else {
-							$jpSkil = MailSend::getJpSkill($value);
-							$japaneseSkill = $japaneseSkill.','.$jpSkil[0]->skillName;
-						}
-					}
-				}
-				if (isset($empSkillDtls[0]->os)) {
-					$osSkill = explode(',', $empSkillDtls[0]->os);
-					foreach ($osSkill as $key => $value) {
-						if($key == 0) {
-							$OsSkill = MailSend::getOsName($value);
-							$OsSkills = $OsSkill[0]->OSTypeNM;
-						} else {
-							$OsSkill = MailSend::getOsName($value);
-							$OsSkills = $OsSkills.','.$OsSkill[0]->OSTypeNM;
-						}
-					}
-				}
-				if (isset($empSkillDtls[0]->data_base)) {
-					$databaseSkill = explode(',', $empSkillDtls[0]->data_base);
-					foreach ($databaseSkill as $key => $value) {
-						if($key == 0) {
-							$databaseSkill = MailSend::getDataBaseName($value);
-							$databaseSkills = $databaseSkill[0]->DBType;
-						} else {
-							$databaseSkill = MailSend::getDataBaseName($value);
-							$databaseSkills = $databaseSkills.','.$databaseSkill[0]->DBType;
-						}
-					}
-				}
-				if (isset($empSkillDtls[0]->tool)) {
-					$softwaretool = explode(',', $empSkillDtls[0]->tool);
-					foreach ($softwaretool as $key => $value) {
-						if($key == 0) {
-							$softwaretool = MailSend::getSoftWareToolName($value);
-							$softwaretools = $softwaretool[0]->ToolTypeNM;
-						} else {
-							$softwaretool = MailSend::getSoftWareToolName($value);
-							$softwaretools = $softwaretools.','.$softwaretool[0]->ToolTypeNM;
-						}
-					}
-				}	
-				$langSkills = $employeDetail[0]->FirstName." -> ".
-						trans('messages.lbl_skillname').": ".$pgmLangSkills." | ".
-						trans('messages.lbl_japanese_skills').": ".$japaneseSkill ." | "."OS: ".$OsSkills ." | "."DB: ".$databaseSkills." | "."Tool: ".$softwaretools;
 			} else {
-				if (isset($empSkillDtls[0]->programming_lang)) {
+				if (isset($empSkillDtls[0]->japanese_skill) && isset($empSkillDtls[0]->programming_lang)) {
 					$pgmLang = explode(',', $empSkillDtls[0]->programming_lang);
 					foreach ($pgmLang as $keyskill => $skillVal) {
 						if($keyskill == 0) {
@@ -374,61 +321,13 @@ class MailSendController extends Controller {
 							$pgmLangSkills = $singleSkill[0]->ProgramLangTypeNM;
 						} else {
 							$singleSkill = MailSend::getSkillsingle($skillVal);
-							$pgmLangSkills = $pgmLangSkills.','.$singleSkill[0]->ProgramLangTypeNM;
+							$pgmLangSkills = $pgmLangSkills.' ; '.$singleSkill[0]->ProgramLangTypeNM;
 						}
 					}
+					$langSkills = $langSkills.",".$employeDetail[0]->FirstName." -> ".
+						trans('messages.lbl_skillname')." : ".$pgmLangSkills." | ".
+						trans('messages.lbl_japanese_skills')." : ".$empSkillDtls[0]->japanese_skill;
 				}
-				if (isset($empSkillDtls[0]->japanese_skill)) {
-					$jpSkil =explode(',', $empSkillDtls[0]->japanese_skill);
-					foreach ($jpSkil as $key => $value) {
-						if($key == 0) {
-							$jpSkil = MailSend::getJpSkill($value);
-							$japaneseSkill = $jpSkil[0]->skillName;
-						} else {
-							$jpSkil = MailSend::getJpSkill($value);
-							$japaneseSkill = $japaneseSkill.','.$jpSkil[0]->skillName;
-						}
-					}
-				}
-				if (isset($empSkillDtls[0]->os)) {
-					$osSkill = explode(',', $empSkillDtls[0]->os);
-					foreach ($osSkill as $key => $value) {
-						if($key == 0) {
-							$OsSkill = MailSend::getOsName($value);
-							$OsSkills = $OsSkill[0]->OSTypeNM;
-						} else {
-							$OsSkill = MailSend::getOsName($value);
-							$OsSkills = $OsSkills.','.$OsSkill[0]->OSTypeNM;
-						}
-					}
-				}
-				if (isset($empSkillDtls[0]->data_base)) {
-					$databaseSkill = explode(',', $empSkillDtls[0]->data_base);
-					foreach ($databaseSkill as $key => $value) {
-						if($key == 0) {
-							$databaseSkill = MailSend::getDataBaseName($value);
-							$databaseSkills = $databaseSkill[0]->DBType;
-						} else {
-							$databaseSkill = MailSend::getDataBaseName($value);
-							$databaseSkills = $databaseSkills.','.$databaseSkill[0]->DBType;
-						}
-					}
-				}
-				if (isset($empSkillDtls[0]->tool)) {
-					$softwaretool = explode(',', $empSkillDtls[0]->tool);
-					foreach ($softwaretool as $key => $value) {
-						if($key == 0) {
-							$softwaretool = MailSend::getSoftWareToolName($value);
-							$softwaretools = $softwaretool[0]->ToolTypeNM;
-						} else {
-							$softwaretool = MailSend::getSoftWareToolName($value);
-							$softwaretools = $softwaretools.','.$softwaretool[0]->ToolTypeNM;
-						}
-					}
-				}	
-				$langSkills = $langSkills.";".$employeDetail[0]->FirstName." -> ".
-						trans('messages.lbl_skillname').": ".$pgmLangSkills." | ".
-						trans('messages.lbl_japanese_skills').": ".$japaneseSkill." | "."OS: ".$OsSkills ." | "."DB: ".$databaseSkills." | "."Tool: ".$softwaretools;
 			}
 
 			if ($recentResumeNm == "") {

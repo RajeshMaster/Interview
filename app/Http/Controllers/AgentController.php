@@ -166,8 +166,8 @@ class AgentController extends Controller {
 	}
 	public function getEmailExists(Request $request) {
 		$mailExist = Agent::fnGetEmailExistsCheck($request);
-		$countEmail = count($mailExist);
-		print_r($countEmail);exit();
+		/*$countEmail = count($mailExist);*/
+		print_r($mailExist);exit();
   	}
   	public function AgentAddeditProcess(Request $request){
   		if($request->editflg == "edit") {

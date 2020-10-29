@@ -429,7 +429,15 @@ class MailSend extends Model {
 			} else {
 				$existOther = $existOther->get();
 			}
-		$result = count($exist)+ count($existOther);			
+		$existUser = $db->TABLE('dev_mstuser')
+				->select('*')
+				->WHERE('email','=', $request->mailId)
+				->get();
+		$exitAgent = $db->TABLE('mst_agentdetail')
+					->select('*')
+					->WHERE('agent_email_id','=', $request->mailId)
+					->get();
+		$result = count($exist) + count($existOther) + count($existUser) + count($exitAgent);			
 		return $result;
 	}
 	public static function fnupdateOtherMailDetail($request)
