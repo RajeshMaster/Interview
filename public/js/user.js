@@ -736,6 +736,13 @@ function gotoprofilepage(mainmenu) {
 
 }
 
+function cancelpasswordprofile(mainmenu) {
+
+	$('#profilefrmpasswordchange').attr('action', 'profileView?mainmenu='+mainmenu+'&time='+datetime);
+	$("#profilefrmpasswordchange").submit();
+
+}
+
 function profilepasswordchange(mainmenu,id) {
 	pageload();
 	$('#id').val(id);
