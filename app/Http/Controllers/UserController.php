@@ -267,17 +267,25 @@ class UserController extends Controller {
 	function PasswordValidation (Request $request) {
 		$commonrules=array();
 		$commonrules1=array();
+		$oldPasswordCheck = array();
 		$commonrules = array(
-			'MstuserPassword' => 'required',
+			'MstuserPassword' => 'required|different:MstuserOldPassword',
 			'MstuserConPassword' => 'required|same:MstuserPassword',
 		);
 
 		$customizedNames = array(
            'MstuserPassword' => 'Password',
            'MstuserConPassword' => 'Confirm Password',
+           'MstuserOldPassword' => 'Old Password',
         );
-
-		$rules = $commonrules+$commonrules1;
+        if (Session::get('usercode') == $request->hidusercode) {
+        	$oldPasswordCheck = array(
+				'MstuserOldPassword' => 'required',
+				/*'MstuserPassword' => 'required|different:MstuserOldPassword',*/
+			);
+        }
+		
+		$rules = $commonrules+$commonrules1+$oldPasswordCheck;
         $validator = Validator::make($request->all(), $rules);
         $validator->setAttributeNames($customizedNames);
         if ($validator->fails()) {
@@ -299,6 +307,15 @@ class UserController extends Controller {
 		$checkMail = User::fnCheckUserEmailExist($request);
 		/*$cnt = count($checkMail);*/
 		print_r($checkMail);exit();
+	}
+	public function PasswordCheckValidation(Request $request){
+		$mdpass = md5($request->MstuserOldPassword);
+		if ($mdpass == $request->hidpassword) {
+			$count = 1;
+		}else{
+			$count = 2;
+		}
+		print_r($count);exit();
 	}
 
 

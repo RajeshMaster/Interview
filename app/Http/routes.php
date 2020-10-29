@@ -166,7 +166,7 @@ Route::group(['prefix'=>'user', 'middleware' => 'auth'], function() {
 	Route::any('passwordchangeprocess', 'UserController@passwordchangeprocess');
 	Route::any('CheckUserIdExist','UserController@CheckUserIdExist');
 	Route::any('CheckUserEmailExist','UserController@CheckUserEmailExist');
-	Route::any('profileView', 'UserController@profileView');
+	Route::any('PasswordCheckValidation','UserController@PasswordCheckValidation');
 });
 
 // Our Detail
