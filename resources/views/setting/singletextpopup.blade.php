@@ -187,7 +187,7 @@
 								</td>
 								<td class="text-center vam">{{ $i++ }}</td>
 								<td class="pl5 vam" id="dataname{{$data->$selectfiled['0']}}">
-									{{ $data->$selectfiled['1'] }}		
+									{{ $data->$selectfiled['1'] }}
 								</td>
 								<td class="tac vam">
 									<a href="javascript:useNotuse('{{ $data->$selectfiled['0'] }}','{{$i}}');" 

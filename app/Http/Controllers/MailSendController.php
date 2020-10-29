@@ -264,6 +264,11 @@ class MailSendController extends Controller {
 		$firstLastName = "";
 		$resuemPdf = "";
 		$langSkills = "";
+		$japaneseSkill ="";
+		$pgmLangSkills ="";
+		$OsSkills ="";
+		$databaseSkills ="";
+		$softwaretools ="";
 		$dateTime = date("Ymd");
 		$url = "";
 		$tempdir = '../ResumeUpload/employeResume/temp';

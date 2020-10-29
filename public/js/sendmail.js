@@ -232,8 +232,9 @@ function customerSelectPopup() {
 }
 function customerCCSelectPopup(){
 	var customerId = $('#customerId').val();
+	var grpId = $('#groupvalue').val();
 	popupopenclose(1);
-	$('#customerSelect').load('customerCCSelectPopup?mainmenu='+mainmenu+'&time='+datetime+'&customerId='+customerId);
+	$('#customerSelect').load('customerCCSelectPopup?mainmenu='+mainmenu+'&time='+datetime+'&customerId='+customerId+'&grpId='+grpId);
 	$("#customerSelect").modal({
 			backdrop: 'static',
 			keyboard: false
