@@ -295,9 +295,11 @@ class MailSendController extends Controller {
 				$firstLastName =  $firstLastName.','.strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 				$resuemPdf = $resuemPdf.','.$recentResumeNm;
 			}
-
+			if (isset($empSkillDtls[0]->programming_lang) || $empSkillDtls[0]->programming_lang!="" || isset($empSkillDtls[0]->japanese_skill) || $empSkillDtls[0]->japanese_skill!="" ) {
+				$langSkills = $employeDetail[0]->FirstName." -> ";
+			}
 			if ($langSkills == "") {
-				if (isset($empSkillDtls[0]->japanese_skill) && isset($empSkillDtls[0]->programming_lang)) {
+				if (isset($empSkillDtls[0]->programming_lang)) {
 					$pgmLang = explode(',', $empSkillDtls[0]->programming_lang);
 					foreach ($pgmLang as $keyskill => $skillVal) {
 						if($keyskill == 0) {
@@ -305,15 +307,28 @@ class MailSendController extends Controller {
 							$pgmLangSkills = $singleSkill[0]->ProgramLangTypeNM;
 						} else {
 							$singleSkill = MailSend::getSkillsingle($skillVal);
-							$pgmLangSkills = $pgmLangSkills.' ; '.$singleSkill[0]->ProgramLangTypeNM;
+							$pgmLangSkills = $pgmLangSkills.';'.$singleSkill[0]->ProgramLangTypeNM;
 						}
 					}
-					$langSkills = $employeDetail[0]->FirstName." -> ".
-						trans('messages.lbl_skillname')." : ".$pgmLangSkills." | ".
-						trans('messages.lbl_japanese_skills')." : ".$empSkillDtls[0]->japanese_skill;
+					$langSkills = $langSkills.trans('messages.lbl_skillname')." : ".$pgmLangSkills;
+						/*trans('messages.lbl_skillname')." : ".$pgmLangSkills." | ".
+						trans('messages.lbl_japanese_skills')." : ".$empSkillDtls[0]->japanese_skill;*/
+				}
+				if (isset($empSkillDtls[0]->japanese_skill)){
+					$jpskill = explode(',', $empSkillDtls[0]->japanese_skill);
+					foreach ($jpskill as $keyskill => $jpVal) {
+						if($keyskill == 0) {
+							$jpskill = MailSend::getJpSkill($jpVal);
+							$jpSkills = $jpskill[0]->skillName;
+						} else {
+							$jpskill = MailSend::getJpSkill($jpVal);
+							$jpSkills = $jpSkills.';'.$jpskill[0]->skillName;
+						}
+					}
+					$langSkills = $langSkills." ".trans('messages.lbl_japanese_skills')." : ".$jpSkills;
 				}
 			} else {
-				if (isset($empSkillDtls[0]->japanese_skill) && isset($empSkillDtls[0]->programming_lang)) {
+				if (isset($empSkillDtls[0]->programming_lang)) {
 					$pgmLang = explode(',', $empSkillDtls[0]->programming_lang);
 					foreach ($pgmLang as $keyskill => $skillVal) {
 						if($keyskill == 0) {
@@ -321,12 +336,23 @@ class MailSendController extends Controller {
 							$pgmLangSkills = $singleSkill[0]->ProgramLangTypeNM;
 						} else {
 							$singleSkill = MailSend::getSkillsingle($skillVal);
-							$pgmLangSkills = $pgmLangSkills.' ; '.$singleSkill[0]->ProgramLangTypeNM;
+							$pgmLangSkills = $pgmLangSkills.';'.$singleSkill[0]->ProgramLangTypeNM;
 						}
 					}
-					$langSkills = $langSkills.",".$employeDetail[0]->FirstName." -> ".
-						trans('messages.lbl_skillname')." : ".$pgmLangSkills." | ".
-						trans('messages.lbl_japanese_skills')." : ".$empSkillDtls[0]->japanese_skill;
+					$langSkills = $langSkills.trans('messages.lbl_skillname')." : ".$pgmLangSkills;
+				}
+				if (isset($empSkillDtls[0]->japanese_skill)){
+					$jpskill = explode(',', $empSkillDtls[0]->japanese_skill);
+					foreach ($jpskill as $keyskill => $jpVal) {
+						if($keyskill == 0) {
+							$jpskill = MailSend::getJpSkill($jpVal);
+							$jpSkills = $jpskill[0]->skillName;
+						} else {
+							$jpskill = MailSend::getJpSkill($jpVal);
+							$jpSkills = $jpSkills.' ; '.$jpskill[0]->skillName;
+						}
+					}
+					$langSkills = $langSkills." ".trans('messages.lbl_japanese_skills')." : ".$jpSkills;
 				}
 			}
 

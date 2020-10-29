@@ -31,12 +31,12 @@ class Employee extends Model
 		if ($request->searchmethod == 1) {
 			$query = $query->where(function($joincont) use ($request) {
 									$joincont->where('Emp_ID', 'LIKE', '%' . $request->singlesearch . '%')
-											 ->orwhere('nickname', 'LIKE', '%' . $request->singlesearch . '%');
+											 ->orwhere('LastName', 'LIKE', '%' . $request->singlesearch . '%');
 							});
 		} elseif ($request->searchmethod == 2) {
 			$query = $query->where(function($joincont) use ($request) {
 								$joincont->where([['Emp_ID', 'LIKE', '%' . $request->employeeno . '%'],
-												 ['nickname', 'LIKE', '%' . $request->employeename . '%']]);
+												 ['LastName', 'LIKE', '%' . $request->employeename . '%']]);
 							});
 		}
 

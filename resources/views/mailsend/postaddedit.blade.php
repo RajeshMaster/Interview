@@ -72,7 +72,7 @@
 			</div>
 			<div class="col-xs-7 mw">
 				<span  class="CMN_display_block blue ml2">
-					<?php $skills = explode(";", $langSkills); ?>
+					<?php $skills = explode(",", $langSkills); ?>
 					<?php for ($a = 0; $a < count($skills); $a++) { ?>
 						@if(isset($skills[$a]))
 							{{ $skills[$a] }}
