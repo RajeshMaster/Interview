@@ -166,6 +166,7 @@ Route::group(['prefix'=>'user', 'middleware' => 'auth'], function() {
 	Route::any('passwordchangeprocess', 'UserController@passwordchangeprocess');
 	Route::any('CheckUserIdExist','UserController@CheckUserIdExist');
 	Route::any('CheckUserEmailExist','UserController@CheckUserEmailExist');
+	Route::any('profileView', 'UserController@profileView');
 });
 
 // Our Detail
@@ -234,6 +235,17 @@ Route::group(['prefix'=>'Agent','middleware' => 'auth'], function(){
 	Route::any('cusaddeditprocess', 'AgentController@cusaddeditprocess');
 	Route::any('selectCustomerName','AgentController@selectCustomerName');
 	Route::any('RemoveProcess','AgentController@RemoveProcess');
+});
+
+// User
+Route::group(['prefix'=>'profile', 'middleware' => 'auth'], function() {
+	Route::any('profileView', 'UserController@profileView');
+	Route::any('addeditprofile', 'UserController@addeditprofile');
+	Route::get('changelanguage', 'AjaxController@index');
+	Route::any('UserRegValidation', 'UserController@UserRegValidation');
+	Route::any('CheckUserIdExist','UserController@CheckUserIdExist');
+	Route::any('CheckUserEmailExist','UserController@CheckUserEmailExist');
+	Route::any('addeditprocessprofile','UserController@addeditprocessprofile');
 });
 
 ?>

@@ -300,5 +300,6 @@ return [
 	'lbl_mailsend' => 'Mail Send',
 	'lbl_inchargenameselect' => 'Incharge Name Select',
 	'lbl_admin' => 'Admin',
+	'lbl_profile' => 'Profile',
 	/* End Agent Module*/
 ];

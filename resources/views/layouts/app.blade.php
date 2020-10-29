@@ -581,6 +581,20 @@ body {
 								<li class="mob_underline pull-right" 
 									style = "text-align: right !important;text-decoration: none !important;">
 									<a class = "btn btn-default mob_line pageload" 
+										href = "{{ url('profile/profileView?mainmenu=menu_profile&time='.date('Ymdhis')) }}">
+									   {{ trans('messages.lbl_profile') }}
+									</a>
+								</li>
+								<li class="mob_underline pull-right" 
+									style = "text-align: right !important;text-decoration: none !important;">
+									<a class = "btn btn-default mob_line pageload" 
+										href = "{{ url('profile/profileView?mainmenu=menu_profile&time='.date('Ymdhis')) }}">
+									   {{ trans('messages.lbl_passwordchange') }}
+									</a>
+								</li>
+								<li class="mob_underline pull-right" 
+									style = "text-align: right !important;text-decoration: none !important;">
+									<a class = "btn btn-default mob_line pageload" 
 										href = "{{ url('logout') }}">
 									   {{ trans('messages.lbl_logout') }}
 									</a>
@@ -622,6 +636,14 @@ body {
 										{{ trans('messages.lbl_customer') }}
 									</a>
 								</li>
+
+								<li class="btn_profile jop_btn">
+									<a class="pageload" href="{{ url('profile/profileView?mainmenu=menu_profile&time='.date('Ymdhis')) }}"
+										style="text-decoration: none !important;">
+										{{ trans('messages.lbl_profile') }}
+									</a>
+								</li>
+
 								@if(Auth::user()->userclassification == 1 || Auth::user()->userclassification == 2)
 								<li class="btn_settings jop_btn">
 									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}"
@@ -630,6 +652,7 @@ body {
 									</a>
 								</li>
 								@endif
+								
 							</ul>
 						</nav>
 					</div>
@@ -739,7 +762,22 @@ body {
 									{{ trans('messages.lbl_japanese_skills') }}</a>
 								</div> -->
 							@endif
-						@endif	
+						@endif
+
+							@if(isset($request->mainmenu) && 
+								$request->mainmenu == "menu_profile" )
+	
+								<div id="profile_sub_1">
+									<a class="pageload" href="{{ url('profile/profileView?mainmenu=menu_profile&time='.date('Ymdhis')) }}" 
+										style="text-decoration: none !important;">
+									{{ trans('messages.lbl_profile') }}</a>
+								</div>
+								<!-- <div id="setting_sub_1">
+									<a class="pageload" href="{{ url('setting/index?mainmenu=menu_setting&time='.date('Ymdhis')) }}" 
+										style="text-decoration: none !important;">
+									{{ trans('messages.lbl_japanese_skills') }}</a>
+								</div> -->
+							@endif
 						</div>
 					</div>
 				</div>

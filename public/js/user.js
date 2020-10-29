@@ -123,6 +123,127 @@ $(document).ready(function() {
 	});
 
 
+
+		$('.addeditprocessprofile').click(function () {
+		resetErrors();
+		var url ='UserRegValidation';
+		$.each($('form input, form select, form radio, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+				if (v.type == 'radio') {
+					var val = $('input[name='+v.name+']:checked').val();
+					data[v.name] = val;
+				}
+			}
+		});
+
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				if(resp == true) {
+					var edit = $('#editid').val();
+					var user = $('#MstuserUserID').val();
+					var mail = $('#MstuserMailID').val();
+					$.ajax({
+						type: 'GET',
+                    	url: 'CheckUserIdExist',
+                    	data: {"userId": user,
+                    	"editId":edit, "mail" : mail },
+						success: function(respdata){
+							if(respdata > 0) {
+								document.getElementById('errorSectiondisplay').innerHTML = "";
+	                            err_invalidcer = "User Id Already Exists";
+	                            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invalidcer+'</label></div>';
+	                            document.getElementById('errorSectiondisplay').style.display = 'inline-block';
+	                            document.getElementById('errorSectiondisplay').innerHTML = error;
+	                            return false;
+							}else{
+								document.getElementById('errorSectiondisplay').innerHTML = "";
+								var edit = $('#editid').val();
+								var user = $('#MstuserUserID').val();
+								var mail = $('#MstuserMailID').val();
+								$.ajax({
+									type: 'GET',
+			                    	url: 'CheckUserEmailExist',
+			                    	data: {"userId": user,
+			                    	"editId":edit, "mail" : mail },
+			                    	success: function(dataresp){
+			                    		if(dataresp > 0) {
+		                    				document.getElementById('errorSectiondisplay1').innerHTML = "";
+				                            err_invalidcer = "Email Id Already Exists";
+				                            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invalidcer+'</label></div>';
+				                            document.getElementById('errorSectiondisplay1').style.display = 'inline-block';
+				                            document.getElementById('errorSectiondisplay1').innerHTML = error;
+				                            return false;
+			                    		}else{
+			                    			if($('#frmuseraddeditpro #editid').val() == "") {
+												swal({
+												title: msg_register,
+												type: "warning",
+												showCancelButton: true,
+												confirmButtonClass: "btn-danger",
+												closeOnConfirm: true,
+												closeOnCancel: true
+												},
+												function(isConfirm) {
+													if (isConfirm) {
+														pageload();
+														$("#frmuseraddeditpro").submit();
+													}
+												});
+											} else {
+												swal({
+												title: msg_update,
+												type: "warning",
+												showCancelButton: true,
+												confirmButtonClass: "btn-danger",
+												closeOnConfirm: true,
+												closeOnCancel: true
+												},
+												function(isConfirm) {
+													if (isConfirm) {
+														pageload();
+														$("#frmuseraddeditpro").submit();
+													} 
+												});
+											}
+			                    		}
+			                    	},error: function(dataresp) {
+
+									}
+								});
+							}
+						},
+						error: function(respdata) {
+						}
+					});
+					
+				} else{
+					$.each(resp, function(i, v) {
+						// alert(i + " => " + v); // view in console for error messages
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"], radio[name="' + i + '"]').addClass('inputTxtError').after(msg);
+					});
+					var keys = Object.keys(resp);
+					$('#'+keys[0]).focus();
+					$('select[name="'+keys[0]+'"]').focus();
+					$('textarea[name="'+keys[0]+'"]').focus();
+					$('input[name="'+keys[0]+'"]').focus();
+					$('radio[name="'+keys[0]+'"]').focus();
+					$('checkbox[name="'+keys[0]+'"]').focus();
+					}
+			},
+			error: function(data) {
+			}
+		}); 
+	});
+
+
+
 	$('.frmpasswordchange').click(function () {
 		resetErrors();
 		var url ='PasswordValidation';
@@ -262,6 +383,13 @@ function addeditview(type,id) {
 	$('#editflg').val(type);
 	$('#editid').val(id);
 	$('#frmuserview').attr('action', 'addedit?mainmenu='+mainmenu+'&time='+datetime);
+	$("#frmuserview").submit();
+}
+
+function addeditprofile(type,id) {
+	$('#editflg').val(type);
+	$('#editid').val(id);
+	$('#frmuserview').attr('action', 'addeditprofile?mainmenu='+mainmenu+'&time='+datetime);
 	$("#frmuserview").submit();
 }
 
@@ -423,11 +551,15 @@ function fnchangeflag(userid,delflg) {
 
 function nextfield(input1,input2,length,event){
 	var event = event.keyCode || event.charCode;
-	if(event!=8){
+	if (event == 9 && input2 == 'MstuserTelNO1') {
+		document.getElementById('MstuserTelNO1').focus();
+		return false;
+	}else if(event!=8){
 		if(document.getElementById(input1).value.length == length) {
 			document.getElementById(input2).focus();
+			return false;
 		}
-	}
+	} 
 }
 
 function passwordchange(mainmenu,id) {
@@ -470,4 +602,11 @@ function resetErrors() {
 	$('form input, form select, form radio, form textarea').css("border-color", "");
 	$('form input').removeClass('inputTxtError');
 	$('label.error').remove();
+}
+
+function gotoprofilepage(mainmenu) {
+
+	$('#frmuseraddeditcancel').attr('action', 'profileView?mainmenu='+mainmenu+'&time='+datetime);
+	$("#frmuseraddeditcancel").submit();
+
 }

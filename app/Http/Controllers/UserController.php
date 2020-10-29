@@ -8,6 +8,7 @@ use Input;
 use Redirect;
 use Session;
 use Carbon;
+use Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller {
@@ -298,6 +299,93 @@ class UserController extends Controller {
 		$checkMail = User::fnCheckUserEmailExist($request);
 		/*$cnt = count($checkMail);*/
 		print_r($checkMail);exit();
+	}
+
+
+	/**  
+    *  Single View Page
+    *  @author Rajesh 
+    *  @param $request
+    *  Created At 2020/10/29
+    **/
+	function profileView(Request $request) {
+	
+		$userview = User::viewdetails(Auth::user()->id);
+		// For Gender
+		if ($userview[0]->gender == 1) {
+			$userview[0]->gender = "Male";
+		} else if ($userview[0]->gender == 2) {
+			$userview[0]->gender = "Female";
+		}
+		// For User Classification
+		if ($userview[0]->userclassification == 0 && $userview[0]->delflg == 0) {
+			$userview[0]->userclassification = trans('messages.lbl_user');
+		} else if ($userview[0]->userclassification == 1 && $userview[0]->delflg == 0) {
+			$userview[0]->userclassification = trans('messages.lbl_admin');
+		} else if ($userview[0]->userclassification == 2 && $userview[0]->delflg == 0) {
+			$userview[0]->userclassification = trans('messages.lbl_superadmin');
+		} 
+		return view('profile.view',['userview' => $userview,
+								'request' => $request]);
+	}
+
+	function addeditprofile(Request $request) {
+
+		if(!isset($request->editflg)){
+			return $this->index($request);
+		}
+
+		$userview = User::viewdetails($request->editid);
+		$dob_year = Carbon\Carbon::createFromFormat('Y-m-d', date("Y-m-d"));
+		$dob_year   = $dob_year->subYears(18);
+		$dob_year = $dob_year->format('Y-m-d');
+		/*if (Session::get('userclassification') == "1" || Session::get('userclassification') == "2") {
+			$Classificationarray = array("0"=>trans('messages.lbl_user'),
+									"1"=>trans('messages.lbl_admin'),
+									"2"=>trans('messages.lbl_superadmin'),
+									);
+
+		} else {
+			$Classificationarray = array("0"=>trans('messages.lbl_user'),
+									);
+		}*/
+		$Classificationarray = array("0"=>trans('messages.lbl_user'),
+									"1"=>trans('messages.lbl_admin'),
+									"2"=>trans('messages.lbl_superadmin'),
+									);
+		return view('profile.addedit',['Classificationarray' => $Classificationarray,
+									'userview' => $userview,
+									'request' => $request,
+									'dob_year' => $dob_year]);
+
+	}
+
+	function addeditprocessprofile(Request $request) {
+		if($request->editid !="") {
+			$update = User::UpdateReg($request);
+	        Session::flash('viewid', $request->editid); 
+			if($update) {
+				Session::flash('success', 'Updated Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('type', 'Updated Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		} else {
+
+			$autoincId=User::getautoincrement();
+			$Usercode="MBINV".(str_pad($autoincId,'3','0',STR_PAD_LEFT));
+			$insert = User::insertRec($request,$Usercode);
+	        Session::flash('viewid', $autoincId); 
+			if($insert) {
+				Session::flash('success', 'Inserted Sucessfully!'); 
+				Session::flash('type', 'alert-success'); 
+			} else {
+				Session::flash('danger', 'Inserted Unsucessfully!'); 
+				Session::flash('type', 'alert-danger'); 
+			}
+		}
+		return Redirect::to('profile/profileView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 	}
 
 }
