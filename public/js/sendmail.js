@@ -465,6 +465,7 @@ function slectType(type) {
 		$('.mailidLabel').find('br').remove();
 		$('#branchId').find('option').not(':first').remove();
 		fninchclear();
+		fncusCCclear();
 	}  else {
 		$(".grpdiv").css("display", "none");
 		document.getElementById("groupvalue").value = "";
