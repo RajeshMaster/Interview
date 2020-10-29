@@ -144,20 +144,62 @@ $(document).ready(function() {
 			async: false, //blocks window close
 			success: function(resp) {
 				if(resp == true) {
-					swal({
-					title: msg_update,
-					type: "warning",
-					showCancelButton: true,
-					confirmButtonClass: "btn-danger",
-					closeOnConfirm: true,
-					closeOnCancel: true
-					},
-					function(isConfirm) {
-						if (isConfirm) {
-							pageload();
-							$("#frmpasswordchange").submit();
-						} 
-					});
+					if ($("#MstuserOldPassword").val()!="" ) {
+						$.ajax({
+							dataType: 'json',
+							type: 'POST',
+							url: 'PasswordCheckValidation',
+							data: data,
+							async: false, //blocks window close
+							success: function(resp) {
+								if (resp == 1) {
+									swal({
+									title: msg_update,
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonClass: "btn-danger",
+									closeOnConfirm: true,
+									closeOnCancel: true
+									},
+									function(isConfirm) {
+										if (isConfirm) {
+											pageload();
+											$("#frmpasswordchange").submit();
+										} 
+									});
+									
+								}else{
+									document.getElementById('errorSectiondisplay').innerHTML = "";
+		                            err_invalidcer = "Old Password is Incorrect";
+		                            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invalidcer+'</label></div>';
+		                            document.getElementById('errorSectiondisplay').style.display = 'inline-block';
+		                            document.getElementById('errorSectiondisplay').innerHTML = error;
+		                            return false;
+								}
+								
+
+							},error: function(data) {
+
+							}
+						});
+					}else{
+						swal({
+									title: msg_update,
+									type: "warning",
+									showCancelButton: true,
+									confirmButtonClass: "btn-danger",
+									closeOnConfirm: true,
+									closeOnCancel: true
+									},
+									function(isConfirm) {
+										if (isConfirm) {
+											pageload();
+											$("#frmpasswordchange").submit();
+										} 
+									});
+					}
+					
+					
 				} else{
 					$.each(resp, function(i, v) {
 						// alert(i + " => " + v); // view in console for error messages

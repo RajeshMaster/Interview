@@ -231,6 +231,7 @@ return [
 	'lbl_unamesurname' => '(English):Surname',
 	'lbl_mobilenumber' => 'Mobile Number',
 	'lbl_passwordchange' => 'Password Change',
+	'lbl_oldpassword' => 'Old Password',
 	/* End User Module */
 
 	/* Start Customer Module */

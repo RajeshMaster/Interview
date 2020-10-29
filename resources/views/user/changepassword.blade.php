@@ -116,9 +116,32 @@
 				</div>
 				<div class="col-xs-7 mw">
 					{{ $view[0]->usercode }}
+					<input type="hidden" name="hidusercode" id="hidusercode" value="{{$view[0]->usercode}}"><input type="hidden" name="hidpassword" id="hidpassword" value="{{$view[0]->password}}">
 				</div>
 			</div>
-
+			@if(Session::get('usercode') == $view[0]->usercode)
+			<div class="col-xs-12 mt10">
+				<div class="col-xs-3 lb tar" >
+					<label>{{ trans('messages.lbl_oldpassword') }}<span class="fr ml10 red">&nbsp;&#42;</span></label>
+				</div>
+				<div class="col-xs-7 mw">
+					{{ Form::password('MstuserOldPassword',array('id'=>'MstuserOldPassword',
+															'name' => 'MstuserOldPassword',
+															'data-label' => trans('messages.lbl_oldpassword'),
+															'class'=>'lengthsetText form-control pl5 dispinline')) 
+					}}
+					<div class="MstuserOldPassword dispinline"></div>
+					<div id="errorSectiondisplay" align="center"></div>
+				</div>
+			</div>
+			@else
+				{{ Form::hidden('MstuserOldPassword','', 
+								array('name' => 'MstuserOldPassword',
+									  'id'=>'MstuserOldPassword',
+									  'data-label' => trans('messages.lbl_inchargename'),
+									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
+									  'style'=>'width :50% !important;display :inline')) }}
+			@endif
 			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb tar" >
 					<label>{{ trans('messages.lbl_password') }}<span class="fr ml10 red">&nbsp;&#42;</span></label>
