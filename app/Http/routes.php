@@ -246,6 +246,13 @@ Route::group(['prefix'=>'profile', 'middleware' => 'auth'], function() {
 	Route::any('CheckUserIdExist','UserController@CheckUserIdExist');
 	Route::any('CheckUserEmailExist','UserController@CheckUserEmailExist');
 	Route::any('addeditprocessprofile','UserController@addeditprocessprofile');
+	Route::any('profilechangepassword','UserController@profilechangepassword');
+	Route::any('PasswordValidation', 'UserController@PasswordValidation');
+	Route::any('PasswordCheckValidation','UserController@PasswordCheckValidation');
+	Route::any('profilepasswordchangeprocess','UserController@profilepasswordchangeprocess');
+	
+
+
 });
 
 ?>

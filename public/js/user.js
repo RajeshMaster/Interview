@@ -305,6 +305,75 @@ $(document).ready(function() {
 						});
 					}else{
 						swal({
+						title: msg_update,
+						type: "warning",
+						showCancelButton: true,
+						confirmButtonClass: "btn-danger",
+						closeOnConfirm: true,
+						closeOnCancel: true
+						},
+						function(isConfirm) {
+							if (isConfirm) {
+								pageload();
+								$("#frmpasswordchange").submit();
+							} 
+						});
+					}
+					
+				} else{
+					$.each(resp, function(i, v) {
+						// alert(i + " => " + v); // view in console for error messages
+						var msg = '<label class="error pl5 mt5 tal" style="color:#9C0000;" for="'+i+'">'+v+'</label>';
+						$('input[name="' + i + '"], select[name="' + i + '"],textarea[name="' + i + '"], radio[name="' + i + '"]').addClass('inputTxtError').after(msg);
+					});
+					var keys = Object.keys(resp);
+					$('#'+keys[0]).focus();
+					$('select[name="'+keys[0]+'"]').focus();
+					$('textarea[name="'+keys[0]+'"]').focus();
+					$('input[name="'+keys[0]+'"]').focus();
+					$('radio[name="'+keys[0]+'"]').focus();
+					$('checkbox[name="'+keys[0]+'"]').focus();
+					}
+			},
+				error: function(data) {
+			}
+		}); 
+	});
+
+
+
+
+	$('.profilefrmpasswordchange').click(function () {
+		resetErrors();
+		var url ='PasswordValidation';
+		$.each($('form input, form select, form radio, form textarea'), function(i, v) {  
+			if (v.type !== "submit") {
+				data[v.name] = v.value;
+				if (v.type == 'radio') {
+					var val = $('input[name='+v.name+']:checked').val();
+					data[v.name] = val;
+				}
+			}
+		});
+
+		$.ajax({
+			dataType: 'json',
+			type: 'POST',
+			url: url,
+			data: data,
+			async: false, //blocks window close
+			success: function(resp) {
+				if(resp == true) {
+					if ($("#MstuserOldPassword").val()!="" ) {
+						$.ajax({
+							dataType: 'json',
+							type: 'POST',
+							url: 'PasswordCheckValidation',
+							data: data,
+							async: false, //blocks window close
+							success: function(resp) {
+								if (resp == 1) {
+									swal({
 									title: msg_update,
 									type: "warning",
 									showCancelButton: true,
@@ -315,11 +384,25 @@ $(document).ready(function() {
 									function(isConfirm) {
 										if (isConfirm) {
 											pageload();
-											$("#frmpasswordchange").submit();
+											$("#profilefrmpasswordchange").submit();
 										} 
 									});
-					}
-					
+									
+								}else{
+									document.getElementById('errorSectiondisplay').innerHTML = "";
+		                            err_invalidcer = "Old Password is Incorrect";
+		                            var error='<div align="center"><label class="error pl5 mt5 tal" style="color:#9C0000;" for="txt_mailid">'+err_invalidcer+'</label></div>';
+		                            document.getElementById('errorSectiondisplay').style.display = 'inline-block';
+		                            document.getElementById('errorSectiondisplay').innerHTML = error;
+		                            return false;
+								}
+								
+
+							},error: function(data) {
+
+							}
+						});
+					} 
 					
 				} else{
 					$.each(resp, function(i, v) {
@@ -651,4 +734,13 @@ function gotoprofilepage(mainmenu) {
 	$('#frmuseraddeditcancel').attr('action', 'profileView?mainmenu='+mainmenu+'&time='+datetime);
 	$("#frmuseraddeditcancel").submit();
 
+}
+
+function profilepasswordchange(mainmenu,id) {
+	pageload();
+	$('#id').val(id);
+	$('#viewid').val(id);
+	$('#editid').val(id);
+	$('#frmuserview').attr('action', 'profilechangepassword?mainmenu='+mainmenu+'&time='+datetime);
+	$("#frmuserview").submit();
 }

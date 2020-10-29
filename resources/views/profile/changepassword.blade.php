@@ -93,7 +93,7 @@
 </style>
 	<div class="" id="main_contents">
 	<!-- article to select the main&sub menu -->
-	<article id="settings" class="DEC_flex_wrapper" data-category="settings setting_sub_2">
+	<article id="profile" class="DEC_flex_wrapper" data-category="profile profile_sub_1">
 		<fieldset class="mt20">
 			<div class="header">
 				<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/passwordchange.png')  }}">
@@ -101,10 +101,10 @@
 			</div>
 		</fieldset>
 
-		{{ Form::open(array('name'=>'frmpasswordchange','id'=>'frmpasswordchange', 'url' => 'user/passwordchangeprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'files'=>true,'method' => 'POST')) }}
+		{{ Form::open(array('name'=>'profilefrmpasswordchange','id'=>'profilefrmpasswordchange', 'url' => 'profile/profilepasswordchangeprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),'files'=>true,'method' => 'POST')) }}
 
 		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
-		{{ Form::hidden('id', $request->id , array('id' => 'id')) }}
+		{{ Form::hidden('id', Auth::user()->id , array('id' => 'id')) }}
 		{{ Form::hidden('viewid', $request->id , array('id' => 'viewid')) }}
 		{{ Form::hidden('editid', $request->id , array('id' => 'editid')) }}
 
@@ -116,9 +116,32 @@
 				</div>
 				<div class="col-xs-7 mw">
 					{{ $view[0]->usercode }}
+					<input type="hidden" name="hidusercode" id="hidusercode" value="{{$view[0]->usercode}}"><input type="hidden" name="hidpassword" id="hidpassword" value="{{$view[0]->password}}">
 				</div>
 			</div>
-
+			@if(Session::get('usercode') == $view[0]->usercode)
+			<div class="col-xs-12 mt10">
+				<div class="col-xs-3 lb tar" >
+					<label>{{ trans('messages.lbl_oldpassword') }}<span class="fr ml10 red">&nbsp;&#42;</span></label>
+				</div>
+				<div class="col-xs-7 mw">
+					{{ Form::password('MstuserOldPassword',array('id'=>'MstuserOldPassword',
+															'name' => 'MstuserOldPassword',
+															'data-label' => trans('messages.lbl_oldpassword'),
+															'class'=>'lengthsetText form-control pl5 dispinline')) 
+					}}
+					<div class="MstuserOldPassword dispinline"></div>
+					<div id="errorSectiondisplay" align="center"></div>
+				</div>
+			</div>
+			@else
+				{{ Form::hidden('MstuserOldPassword','', 
+								array('name' => 'MstuserOldPassword',
+									  'id'=>'MstuserOldPassword',
+									  'data-label' => trans('messages.lbl_inchargename'),
+									  'class'=>'form-control pl5mlength','readonly' => 'readonly',
+									  'style'=>'width :50% !important;display :inline')) }}
+			@endif
 			<div class="col-xs-12 mt10">
 				<div class="col-xs-3 lb tar" >
 					<label>{{ trans('messages.lbl_password') }}<span class="fr ml10 red">&nbsp;&#42;</span></label>
@@ -152,11 +175,11 @@
 		<fieldset class="mt10 mb10">
 			<div class="col-xs-12 mb10 mt10">
 				<div class="col-xs-12 buttondes" style="text-align: center;">
-					<button type="button" class="btn btn-success add box100 frmpasswordchange" >
+					<button type="button" class="btn btn-success add box100 profilefrmpasswordchange" >
 						<i class="fa fa-key"></i>{{ trans('messages.lbl_register') }}
 					</button>
 
-					<a onclick="javascript:cancelpassword('view','{{ $request->mainmenu }}');" class="pageload btn btn-danger white"><span class="fa fa-times"></span> {{trans('messages.lbl_cancel')}}
+					<a onclick="javascript:cancelpasswordprofile('view','{{ $request->mainmenu }}');" class="pageload btn btn-danger white"><span class="fa fa-times"></span> {{trans('messages.lbl_cancel')}}
 					</a>
 				</div>
 			</div>

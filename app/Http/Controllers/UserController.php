@@ -405,4 +405,26 @@ class UserController extends Controller {
 		return Redirect::to('profile/profileView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 	}
 
+	function profilechangepassword(Request $request) {
+
+		$view = User::viewdetails(Auth::user()->id);
+		return view('profile.changepassword',['view' => $view,'request' => $request]);
+
+	}
+
+	function profilepasswordchangeprocess(Request $request) {
+		$update = User::passwordchange($request);
+		if($update) {
+			Session::flash('message', 'Password Updated Sucessfully!'); 
+			Session::flash('type', 'alert-success'); 
+		} else {
+			Session::flash('type', 'Password Updated Unsucessfully!'); 
+			Session::flash('type', 'alert-danger'); 
+		}
+
+		Session::flash('viewid', $request->id);
+		Session::flash('id', $request->id); 
+		return Redirect::to('/');
+	}
+
 }

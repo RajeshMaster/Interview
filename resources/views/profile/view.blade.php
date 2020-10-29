@@ -39,7 +39,7 @@
 			style="text-decoration: none !important;">
 			<span class="fa fa-edit"></span> {{ trans('messages.lbl_edit') }}
 		</a>
-		<a href="javascript:passwordchange('{{ $request->mainmenu }}','{{ $userview[0]->id }}');" 
+		<a href="javascript:profilepasswordchange('{{ $request->mainmenu }}','{{ $userview[0]->id }}');" 
 			class="button button-blue textDecNone  pull-right "
 			style="text-decoration: none !important;">
 			<span class="fa fa-key"></span> {{ trans('messages.lbl_passwordchange') }}

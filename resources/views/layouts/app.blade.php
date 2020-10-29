@@ -588,7 +588,7 @@ body {
 								<li class="mob_underline pull-right" 
 									style = "text-align: right !important;text-decoration: none !important;">
 									<a class = "btn btn-default mob_line pageload" 
-										href = "{{ url('profile/profileView?mainmenu=menu_profile&time='.date('Ymdhis')) }}">
+										href = "{{ url('profile/profilechangepassword?mainmenu=menu_profile&time='.date('Ymdhis')) }}">
 									   {{ trans('messages.lbl_passwordchange') }}
 									</a>
 								</li>
