@@ -71,52 +71,54 @@
 			}}
 		</div>
 	</div>
-	<div class="container bbgrey pm0">
-		<ul class="list-group pm0 rowlist">
-			@forelse ($mailcontent as $count => $content)
-				<li class="list-group-item  col-xs-12" style="">
-					<div class="inb col-xs-12 pm0 mt10 ml10">
-						<div class="inb col-xs-12 pm0">
-							<h4 class="">
-								<a href="javascript:fncontentview('{{ $content->mailId }}');" 
+	<div class="box100per tableShrink pt10 mnheight mb0">
+		<table class="table-striped table footable table-bordered mt10 mb10" >
+			<colgroup>
+				<col width="5%">
+				<col width="25%">
+				<col width="30%">
+				<col width="30%">
+				<col width="10%">
+				<col>
+			</colgroup>
+			<thead class="CMN_tbltheadcolor">
+				<tr class="CMN_tbltheadcolor">
+					<th class="tac fs10 sno">
+						{{ trans('messages.lbl_sno') }}
+					</th>
+					<th class="tac fs10">
+						{{ trans('messages.lbl_contractDate') }}
+					</th>
+					<th data-hide="phone" class="tac fs10">
+						{{ trans('messages.lbl_name') }}
+					</th>
+					<th data-hide="phone" class="tac fs10">
+						{{ trans('messages.lbl_address') }}
+					</th>
+					<th data-hide="phone" class="tac fs10">
+						{{ trans('messages.lbl_branchName') }}
+					</th>
+				</tr>
+			</thead>
+			<tbody class="tablealternateclr">
+				@forelse ($mailcontent as $count => $content)
+					<tr>
+						<td class="text-center">
+							{{ ($mailcontent->currentpage()-1) * $mailcontent->perpage() + $count + 1 }}
+						</td>
+						<td class="text-center">
+							<a href="javascript:fncontentview('{{ $content->mailId }}');" 
 									class="fwb">{{ $content->mailId }}</a>
-							</h4>
-						</div>
-					</div>
-					
-					<div class="pull-left col-xs-12 pm0">
-						<div class="inb col-xs-9 pm0 ml10">
-							<span class="pm0">
-								<span class="vam fwb">Name :</span>
-								<span class="pm0">
-									{{ $content->typeName }}
-								</span>
-							</span>
-						</div>
-					</div>
-					<br>
-					<div class="pull-left col-xs-12 pm0">
-						<div class="inb col-xs-9 pm0 ml10">
-							<span class="pm0">
-								<span class="vam fwb">{{ trans('messages.lbl_mailtype') }} :</span>
-								<span class="pm0">
-									{{ $content->typeName }}
-								</span>
-							</span>
-						</div>
-					</div>
-					<div class="pull-left col-xs-12 pm0">
-						<div class="inb col-xs-9 pm0 ml10">
-							<span class="pm0">
-								<span class="vam fwb">{{ trans('messages.lbl_subject') }} :</span>
-								<span class="pm0">
-									{{ $content->subject }}
-								</span>
-							</span>
-						</div>
-						<div class="inb col-xs-3 pm0 mb10" style="float: right;padding-right:1%;">
-							<span style="float: right;" class="inb pm0">
-								@if($content->delFlg == 0)
+						</td>
+						<td class="text-left">
+							{{ $content->typeName }}
+						</td>
+						<td class="text-left">
+							{{ $content->subject }}
+						</td>
+						
+						<td class="text-left">
+							@if($content->delFlg == 0)
 								<span class="pm0">
 									<a href="javascript:fndelflg('{{ '1' }}','{{ $content->mailId }}');" class="fwb">{{ trans('messages.lbl_use') }}</a>
 								</span>
@@ -125,15 +127,23 @@
 									<a href="javascript:fndelflg('{{ '0' }}','{{ $content->mailId }}');" class="fwb ftclr" id="notuse" style="color: red;">
 									{{ trans('messages.lbl_notuse') }}</a>
 								</span>
-								@endif
-							</span>
-						</div>
-					</div>
-				</li>
-			@empty
-				<span class="col-xs-12 fr" id="nodatafound" style="text-align : center">{{ trans('messages.lbl_nodatafound')}}</span>
-			@endforelse
-		</ul>
+							@endif
+						</td>
+					</tr>
+				@empty
+					<tr class="nodata">
+						<th class="text-center red nodatades" colspan="2">
+							{{ trans('messages.lbl_nodatafound') }}
+						</th>
+					</tr>
+					<tr class="nodata">
+						<td class="text-center red nodatades1" colspan="5">
+							{{ trans('messages.lbl_nodatafound') }}
+						</td>
+					</tr>
+				@endforelse
+			</tbody>
+		</table>
 	</div>
 	@if($mailcontent->total())
 		<div class="text-center col-xs-12 pm0 pagealign">
