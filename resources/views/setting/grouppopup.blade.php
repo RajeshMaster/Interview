@@ -106,7 +106,6 @@
 					<col class="sno" width="10%">
 					<col class="category" width="25%">
 					<col class="category" width="20%">
-					<col class="category" width="20%">
 					<col class="use" width="18%">
 				</colgroup>
 				<thead class="CMN_tbltheadcolor" >
@@ -122,9 +121,6 @@
 						</th>
 						<th class="fs14 pb3 CMN_tbltheadcolor">
 							{{ trans('messages.lbl_groupName') }}
-						</th>
-						<th class="fs14 pb3 CMN_tbltheadcolor">
-							{{ trans('messages.lbl_custname') }}
 						</th>
 						<th class="fs14 pb3  CMN_tbltheadcolor">
 							{{ trans('messages.lbl_use') }}/{{ trans('messages.lbl_notuse') }}
@@ -145,7 +141,6 @@
 						<col class="sno" width="10%">
 						<col class="category" width="25%">
 						<col class="category" width="20%">
-						<col class="category" width="20%">
 						<col class="use" width="18%">
 					</colgroup>
 					<tbody class="box100per setcolor">
@@ -162,13 +157,7 @@
 								<td class="">{{ $Selgroupname[$i]['groupId'] }}</td>
 								<td class="" id="datavar<?php echo $Selgroupname[$i]['id']; ?>">
 									{{ $Selgroupname[$i]['groupName'] }}</td>
-								<td class="pl5 pt7" id="">
-									@if(isset($Selgroupname[$i]['customer']))
-									@foreach($Selgroupname[$i]['customer'] as $key => $value)
-										{{ $value['cusName'] }}<br>
-									@endforeach
-									@endif
-								</td>
+							
 								<td class="tac pt7" title="Use/Not Use">
 									<a href="javascript:useNotuses('{{$i}}');" class="btn-link anchorstyle" style="color:blue;cursor: pointer;">
 										@if ($Selgroupname[$i]['delFlg'] != 1) 
