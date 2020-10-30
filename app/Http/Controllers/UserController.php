@@ -261,7 +261,11 @@ class UserController extends Controller {
 
 		Session::flash('viewid', $request->id);
 		Session::flash('id', $request->id); 
-		return Redirect::to('user/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		if (Session::get('usercode') == $request->hidusercode) {
+			return Redirect::to('/');
+		}else{
+			return Redirect::to('user/view?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
 	}
 
 	function PasswordValidation (Request $request) {

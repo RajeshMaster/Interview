@@ -226,7 +226,7 @@ class MailSendController extends Controller {
 						$softwaretool = MailSend::getSoftWareToolName($value);
 						$empdetailsdet[$i]['SoftWareTool'] = $softwaretool[0]->ToolTypeNM;
 					} else {
-						$databaseSkill = MailSend::getSoftWareToolName($value);
+						$softwaretool = MailSend::getSoftWareToolName($value);
 						$empdetailsdet[$i]['SoftWareTool'] = $empdetailsdet[$i]['SoftWareTool'].','.$softwaretool[0]->ToolTypeNM;
 					}
 				}
@@ -264,6 +264,12 @@ class MailSendController extends Controller {
 		$firstLastName = "";
 		$resuemPdf = "";
 		$langSkills = "";
+		$pSkill="";
+		$lSkill="";
+		$jSkill="";
+		$OSkill="";
+		$dbSkill="";
+		$tSkill="";
 		$dateTime = date("Ymd");
 		$url = "";
 		$tempdir = '../ResumeUpload/employeResume/temp';
@@ -295,11 +301,8 @@ class MailSendController extends Controller {
 				$firstLastName =  $firstLastName.','.strtoupper(substr($employeDetail[0]->LastName, 0, 1)).strtoupper(substr($employeDetail[0]->FirstName, 0, 1));
 				$resuemPdf = $resuemPdf.','.$recentResumeNm;
 			}
-			if (isset($empSkillDtls[0]->programming_lang) || $empSkillDtls[0]->programming_lang!="" || isset($empSkillDtls[0]->japanese_skill) || $empSkillDtls[0]->japanese_skill!="" ) {
-				$langSkills = $employeDetail[0]->FirstName." -> ";
-			}
-			if ($langSkills == "") {
-				if (isset($empSkillDtls[0]->programming_lang)) {
+			// Skill Setting Process
+			if (isset($empSkillDtls[0]->programming_lang)) {
 					$pgmLang = explode(',', $empSkillDtls[0]->programming_lang);
 					foreach ($pgmLang as $keyskill => $skillVal) {
 						if($keyskill == 0) {
@@ -307,55 +310,84 @@ class MailSendController extends Controller {
 							$pgmLangSkills = $singleSkill[0]->ProgramLangTypeNM;
 						} else {
 							$singleSkill = MailSend::getSkillsingle($skillVal);
-							$pgmLangSkills = $pgmLangSkills.';'.$singleSkill[0]->ProgramLangTypeNM;
+							$pgmLangSkills = $pgmLangSkills.','.$singleSkill[0]->ProgramLangTypeNM;
 						}
 					}
-					$langSkills = $langSkills.trans('messages.lbl_skillname')." : ".$pgmLangSkills;
-						/*trans('messages.lbl_skillname')." : ".$pgmLangSkills." | ".
-						trans('messages.lbl_japanese_skills')." : ".$empSkillDtls[0]->japanese_skill;*/
-				}
-				if (isset($empSkillDtls[0]->japanese_skill)){
-					$jpskill = explode(',', $empSkillDtls[0]->japanese_skill);
-					foreach ($jpskill as $keyskill => $jpVal) {
-						if($keyskill == 0) {
-							$jpskill = MailSend::getJpSkill($jpVal);
-							$jpSkills = $jpskill[0]->skillName;
-						} else {
-							$jpskill = MailSend::getJpSkill($jpVal);
-							$jpSkills = $jpSkills.';'.$jpskill[0]->skillName;
-						}
-					}
-					$langSkills = $langSkills." ".trans('messages.lbl_japanese_skills')." : ".$jpSkills;
-				}
-			} else {
-				if (isset($empSkillDtls[0]->programming_lang)) {
-					$pgmLang = explode(',', $empSkillDtls[0]->programming_lang);
-					foreach ($pgmLang as $keyskill => $skillVal) {
-						if($keyskill == 0) {
-							$singleSkill = MailSend::getSkillsingle($skillVal);
-							$pgmLangSkills = $singleSkill[0]->ProgramLangTypeNM;
-						} else {
-							$singleSkill = MailSend::getSkillsingle($skillVal);
-							$pgmLangSkills = $pgmLangSkills.';'.$singleSkill[0]->ProgramLangTypeNM;
-						}
-					}
-					$langSkills = $langSkills.trans('messages.lbl_skillname')." : ".$pgmLangSkills;
-				}
-				if (isset($empSkillDtls[0]->japanese_skill)){
-					$jpskill = explode(',', $empSkillDtls[0]->japanese_skill);
-					foreach ($jpskill as $keyskill => $jpVal) {
-						if($keyskill == 0) {
-							$jpskill = MailSend::getJpSkill($jpVal);
-							$jpSkills = $jpskill[0]->skillName;
-						} else {
-							$jpskill = MailSend::getJpSkill($jpVal);
-							$jpSkills = $jpSkills.' ; '.$jpskill[0]->skillName;
-						}
-					}
-					$langSkills = $langSkills." ".trans('messages.lbl_japanese_skills')." : ".$jpSkills;
-				}
-			}
 
+					$pSkill = trans('messages.lbl_skillname')." : ".$pgmLangSkills;
+			}else{
+				$pSkill="";
+			}
+			if (isset($empSkillDtls[0]->japanese_skill)){
+					$jpskill = explode(',', $empSkillDtls[0]->japanese_skill);
+					foreach ($jpskill as $keyskill => $jpVal) {
+						if($keyskill == 0) {
+							$jpskill = MailSend::getJpSkill($jpVal);
+							$jpSkills = $jpskill[0]->skillName;
+						} else {
+							$jpskill = MailSend::getJpSkill($jpVal);
+							$jpSkills = $jpSkills.','.$jpskill[0]->skillName;
+						}
+					}
+					$jSkill = " ".trans('messages.lbl_japanese_skills')." : ".$jpSkills;
+			}else{
+				$jSkill="";
+			}
+			if (isset($empSkillDtls[0]->os)){
+					$osskill = explode(',', $empSkillDtls[0]->os);
+					foreach ($osskill as $keyskill => $osVal) {
+						if($keyskill == 0) {
+							$osskill = MailSend::getOsName($osVal);
+							$osskills = $osskill[0]->OSTypeNM;
+						} else {
+							$osskill = MailSend::getOsName($osVal);
+							$osskills = $osskills.','.$osskill[0]->OSTypeNM;
+						}
+					}
+					$OSkill = " OS: ".$osskills;
+			}else{
+				$OSkill ="";
+			}
+			if (isset($empSkillDtls[0]->data_base)){
+					$data_baseskill = explode(',', $empSkillDtls[0]->data_base);
+					foreach ($data_baseskill as $keyskill => $dbVal) {
+						if($keyskill == 0) {
+							$dbskill = MailSend::getDataBaseName($dbVal);
+							$dbskills = $dbskill[0]->DBType;
+						} else {
+							$dbskill = MailSend::getDataBaseName($dbVal);
+							$dbskills = $dbskills.','.$dbskill[0]->DBType;
+						}
+					}
+					$dbSkill = " DB: ".$dbskills;
+			}else{
+				$dbSkill="";
+			}
+			if (isset($empSkillDtls[0]->tool)) {
+				$softwaretool = explode(',', $empSkillDtls[0]->tool);
+				foreach ($softwaretool as $key => $value) {
+					if($key == 0) {
+						$softwaretool = MailSend::getSoftWareToolName($value);
+						$softwaretools = $softwaretool[0]->ToolTypeNM;
+					} else {
+						$softwaretool = MailSend::getSoftWareToolName($value);
+						$softwaretools = $softwaretools.','.$softwaretool[0]->ToolTypeNM;
+					}
+				}
+				$tSkill =" Tool: ".$softwaretools;
+			}else{
+				$tSkill ="";
+			}	
+			if ($langSkills == ""){
+				if ($pSkill!="" || $jSkill!="" ||  $OSkill!="" ||  $dbSkill!="" || $tSkill!="") {
+					$langSkills = $employeDetail[0]->FirstName." -> ".$pSkill.$jSkill.$OSkill.$dbSkill.$tSkill;
+				}
+			}else{
+				if ($pSkill!="" || $jSkill!="" ||  $OSkill!="" ||  $dbSkill!="" || $tSkill!="") {
+					$langSkills = $langSkills.';'.$employeDetail[0]->FirstName." -> ".$pSkill.$jSkill.$OSkill.$dbSkill.$tSkill;
+				}
+			}
+			
 			if ($recentResumeNm == "") {
 				Session::flash('danger','Add Cv to all Selected Employee!'); 
 				Session::flash('type','alert-danger');
@@ -404,6 +436,7 @@ class MailSendController extends Controller {
 		foreach ($details as $key => $value) {
 			$customerarray[$value->customer_id] = $value->customer_name;
 		}
+		
 		$noimage = "../public/images";
 		return view('mailsend.postaddedit',['request' => $request,
 										'customerarray' => $customerarray,
