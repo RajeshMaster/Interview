@@ -96,6 +96,12 @@ class SettingController extends Controller {
 		$orderidval = Setting::Orderidgenerate($tbl_name);
  		$orderidarray['orderid'] = $orderidval;
  		$ins_query = Setting::insertquery($tbl_name,$request,$orderidval);
+ 		$actualId = "";
+		$actualVal = Setting::selectOrderId($request);
+		foreach ($actualVal as $key => $value) {
+			$actualId .=  $value->orderId.",";
+		}
+		$orderidarray['actualid'] = rtrim($actualId, ",");
  		$location = "";
  		$orderidval = Setting::Orderidgenerateforbranchtotal($location,$tbl_name);
  		$orderidarray['totalid'] = $orderidval;

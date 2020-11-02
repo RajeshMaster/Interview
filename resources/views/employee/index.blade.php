@@ -57,7 +57,7 @@
 		{{ Form::hidden('hdnempname', '$request->hdnempname', array('id' => 'hdnempname')) }}
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_2">
+<article id="employee" class="DEC_flex_wrapper" data-category="employee emp_sub_2">
 	<!-- Start Heading -->
 	<fieldset class="pm0 mt20">
 		<div class="header">
@@ -335,14 +335,22 @@
 						</td>
 
 						<td>
-							@if($empdetailsdet[$i]['presentResume'] == 1 )
+							@if($empdetailsdet[$i]['recentResume'] != "")
 								{{--*/ $src = $noimage . '/pdf.png'; /*--}}
-								<a href="javascript:downloadResume()" ><img class="pull-left box30 mr5  ml20" src="{{ $src }}" width="30" height = "30"></img>
-
+								<a href="javascript:downloadResume('{{ $empdetailsdet[$i]['recentResume'] }}')" ><img class="box30" src="{{ $src }}" width="30" height = "30"></img>
 								</a>
 							@else
 								{{--*/ $src = $noimage . '/nopdf.png'; /*--}}
-								<img class="pull-left box30 mr5  ml20" src="{{ $src }}" width="30" height = "30"></img>
+								<img class=" box30 " src="{{ $src }}" width="30" height = "30"></img>
+							@endif
+							@if($empdetailsdet[$i]['recentxlResume'] != "")
+								{{--*/ $src = $noimage . '/excel_a.png'; /*--}}
+								<a href="javascript:downloadResume('{{ $empdetailsdet[$i]['recentxlResume'] }}')" ><img class="box30" src="	{{ $src }}" width="32" height = "36"></img>
+								</a>
+							@else
+								{{--*/ $src = $noimage . '/excel_ia.png'; /*--}}
+								<img class="box30" src="	{{ $src }}" width="32" height = "36"></img>
+								</a>
 							@endif
 
 						</td>
@@ -389,6 +397,16 @@
 			</div>
 		</div>
 	@endif 
+	{{ Form::close() }}
+
+	{{ Form::open(array('name'=>'formpdfdwnld',
+							'id'=>'formpdfdwnld',
+							'url' => 'employee/exceldownloadprocess?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'),
+							'files'=>true,
+							'method' => 'POST')) }}
+		{{ Form::hidden('filenamePdf', '' , array('id' => 'filenamePdf')) }}
+		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+		{{ Form::hidden('empId', $request->empId , array('id' => 'empId')) }}
 	{{ Form::close() }}
 
 	<script>

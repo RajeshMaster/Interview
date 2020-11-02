@@ -87,7 +87,7 @@ $(document).ready(function() {
 	{{ Form::hidden('filenamePdf', '' , array('id' => 'filenamePdf')) }}
 
 <div class="" id="main_contents">
-	<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
+	<article id="employee" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
 		<!-- Start Heading -->
 		<fieldset class="pm0 mt20">
 			<div class="header">
@@ -266,7 +266,7 @@ $(document).ready(function() {
 								{{--*/ $src = $noimage . '/pdf.png'; /*--}}
 								<a href="javascript:downloadResume('{{ $empdetailsdet[$i]['recentResume'] }}')" ><img class="box30" src="{{ $src }}" width="30" height = "30"></img>
 								</a>
-								@if($empdetailsdet[$i]['recentxlResume'])
+								@if($empdetailsdet[$i]['recentxlResume'] != "")
 									{{--*/ $src = $noimage . '/excel_a.png'; /*--}}
 									<a href="javascript:downloadResume('{{ $empdetailsdet[$i]['recentxlResume'] }}')" ><img class="box30" src="	{{ $src }}" width="30" height = "30"></img>
 									</a>

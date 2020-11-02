@@ -144,9 +144,11 @@ class EmployeeController extends Controller
 			if(isset($recentResume->resume)) {
 				$empdetailsdet[$i]['recentResume'] = $recentResume->resume;
 				$empdetailsdet[$i]['resumeInsDate'] = $recentResume->createdDate;
+				$empdetailsdet[$i]['recentxlResume'] = $recentResume->xlResume;
 			} else {
 				$empdetailsdet[$i]['recentResume'] = "";
 				$empdetailsdet[$i]['resumeInsDate'] = "";
+				$empdetailsdet[$i]['recentxlResume'] = "";
 			}
 
 			if ($empdetailsdet[$i]['clientEndDate'] != "" && $empdetailsdet[$i]['resumeInsDate'] != "") {
@@ -156,7 +158,7 @@ class EmployeeController extends Controller
 					$empdetailsdet[$i]['presentResume'] = 0;
 				}
 			} else {
-				$empdetailsdet[$i]['presentResume'] =0;
+				$empdetailsdet[$i]['presentResume'] = 0;
 			}
 			$i++;
 		}

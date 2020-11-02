@@ -147,8 +147,8 @@ class MailSendController extends Controller {
 			$recentResume =Employee::fnGetResume($empdetailsdet[$i]['Emp_ID']);
 			if(isset($recentResume->resume)) {
 				$empdetailsdet[$i]['recentResume'] = $recentResume->resume;
-				$empdetailsdet[$i]['recentxlResume'] = $recentResume->xlResume;
 				$empdetailsdet[$i]['resumeInsDate'] = $recentResume->createdDate;
+				$empdetailsdet[$i]['recentxlResume'] = $recentResume->xlResume;
 			} else {
 				$empdetailsdet[$i]['recentResume'] = "";
 				$empdetailsdet[$i]['resumeInsDate'] = "";

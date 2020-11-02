@@ -351,9 +351,9 @@ class UserController extends Controller {
 	}
 
 	function addeditprofile(Request $request) {
-
+		
 		if(!isset($request->editflg)){
-			return $this->index($request);
+			return Redirect::to('profile/profileView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
 
 		$userview = User::viewdetails($request->editid);

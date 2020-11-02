@@ -16,7 +16,7 @@
 
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
+<article id="employee" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
 
 	<fieldset class="mt20">
 

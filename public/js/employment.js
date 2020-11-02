@@ -291,20 +291,32 @@ function uploadResume(empid,lastname){
 }
 
 function fnUpload(){
-	var pdf = $('#pdffile').val()
+	var pdf = $('#pdffile').val();
+	var xlfile = $('#xlfile').val();
+	var pdfsize = document.getElementById("pdffile").files[0];
+	var excelsize = document.getElementById("xlfile").files[0];
 	if (pdf != "") {
 		pdf = pdf.split(".");
+		xlfile = xlfile.split(".");
 		if (pdf[pdf.length -1] != "pdf") {
 			alert(msg_fileformat);
+			return;
+		} else if(pdfsize.size > 2097152) {
+			alert("Pdf size must less than 2mb!");
+			return;
 		} else {
-			if($("[name='addexcel']:checked").length > 0 && xlfile == "") {
-				alert("please select Excel File");
-				return false;
-			} else if(xlfile[xlfile.length -1] != "xls"){
-				alert("please select Excel File");
-				return false;
+			if($("[name='addexcel']:checked").length > 0) {
+				if($("[name='addexcel']:checked").length > 0 && xlfile == "") {
+					alert("please select Excel File");
+					return;
+				} else if(xlfile[xlfile.length -1] != "xls" && xlfile[xlfile.length -1] != "xlsx"){
+					alert("Please select the correct format");
+					return;
+				} else if(excelsize.size > 2097152) {
+					alert("Excel size must less than 2mb!");
+					return;
+				}
 			}
-			
 			swal({
 				title: msg_upload,
 				type: "warning",
@@ -324,7 +336,7 @@ function fnUpload(){
 		alert(msg_fileEmpty);
 	}
 }
-// Bakc to Employee Index
+// Back to Employee Index
 function fnredirectemployee(){
 	$('#employeeView').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
 	$("#employeeView").submit();

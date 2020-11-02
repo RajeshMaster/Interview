@@ -41,7 +41,7 @@
 	{{ Form::hidden('empname', $request->empname ,array('id' => 'empname')) }}
 <div class="" id="main_contents">
 <!-- article to select the main&sub menu -->
-<article id="mail" class="DEC_flex_wrapper" data-category="employee emp_sub_1">
+<article id="employee" class="DEC_flex_wrapper" data-category="employee emp_sub_2">
 	<!-- Start Heading -->
 	<fieldset class="pm0 mt20">
 		<div class="header">
