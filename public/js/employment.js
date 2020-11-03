@@ -231,6 +231,8 @@ function fnSingleSearch() {
 		$('#plimit').val('');
 		$('#page').val('');
 		$('#searchmethod').val(1);
+		$('#employeeno').val('');
+		$('#employeename').val('');
 		$('#employeefrm').attr('action', '../Employee/index?mainmenu='+mainmenu+'&time='+datetime);
 		$("#employeefrm").submit();
 	}
@@ -248,6 +250,7 @@ function fnMultiSearch() {
 		$("#searchmethod").val(2);
 		$('#plimit').val('');
 		$('#page').val('');
+		$('#singlesearch').val('');
 		$('#employeefrm').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
 		$("#employeefrm").submit();
 	}

@@ -106,7 +106,7 @@ class AgentController extends Controller {
 			$request->agentId = Session::get('agentId');
 		}
 		if(!isset($request->agentId)){
-			return $this->index($request);
+			return Redirect::to('Agent/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
 		$allcustomer = "";
 		$allcustomernames ="";
@@ -129,7 +129,7 @@ class AgentController extends Controller {
 
 	public function AgentAddedit(Request $request){
 		if(!isset($request->editflg)){
-			return $this->index($request);
+			return Redirect::to('Agent/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
 		$getKenname = array();
 		$getKenname = Agent::getKendetails();
@@ -201,7 +201,7 @@ class AgentController extends Controller {
   	}
   	public function addeditCustomer(Request $request) {
 		if(!isset($request->cuseditflg)){
-			return $this->index($request);
+			return Redirect::to('Agent/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
 		$customerUnSelectedMembers = "";
 		$Agent = "";
@@ -246,7 +246,7 @@ class AgentController extends Controller {
 	}
 	public static function cusaddeditprocess(Request $request) {
 		if (!isset($request->agentId)) {
-			return $this->index($request);
+			return Redirect::to('Agent/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
 		$updatedtls = Agent::updCusDtls($request);
 		if ($updatedtls) {
@@ -262,7 +262,7 @@ class AgentController extends Controller {
 	
 	public static function selectCustomerName(Request $request) {
 		if(!isset($request->cuseditflg)){
-			return $this->index($request);
+			return Redirect::to('Agent/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
 		$customerUnSelectedMembers = "";
 		$Agent = "";

@@ -174,7 +174,7 @@ class CustomerController extends Controller {
 			$request->id = Session::get('id');
      	}
      	if(!isset($request->id)){
-	        return $this->index($request);
+	       return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 	    }
 	    $customer_id = substr($request->custid, 3,5);
 		$cus = $customer_id+1;
@@ -410,18 +410,26 @@ class CustomerController extends Controller {
   		}
   		return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
   	}
+
   	public function Branchaddedit(Request $request){
-  		$kenmeiarray=Customer::getKendetails();
-  		$bdetails = array();
-  		if(isset($request->flg) && $request->flg !="") {
-  			$bid=$request->branchid;
-			$bdetails=Customer::getBranchdt($request,$bid);
-  		}
-  		return view('customer.branchaddedit',['request' => $request,
-											'kenmeiarray'=>$kenmeiarray,
-											'bdetails' => $bdetails
-											]);
-  	}
+		$kenmeiarray = Customer::getKendetails();
+		$bdetails = array();
+		if(isset($request->flg) && $request->flg !="") {
+			$bid = $request->branchid;
+			$bdetails = Customer::getBranchdt($request,$bid);
+			return view('customer.branchaddedit',['request' => $request,
+													'kenmeiarray'=>$kenmeiarray,
+													'bdetails' => $bdetails
+												]);
+		} else if(isset($request->flg) && $request->flg == ""){
+			return view('customer.branchaddedit',['request' => $request,
+													'kenmeiarray'=> $kenmeiarray
+												]);
+		} else {
+			return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
+	}
+
   	public function BranchRegValidation(Request $request){
   		$commonrules1 = array();
   		$commonrules = array(
@@ -454,7 +462,7 @@ class CustomerController extends Controller {
 				$request->custid = Session::get('custid');
 			}
 			if(!isset($request->id)){
-				return $this->index($request);
+				return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 			}
 			$maxbranchid = Customer::getMaxBranchId($request);
 			if(empty($maxbranchid)) {
@@ -543,7 +551,7 @@ class CustomerController extends Controller {
 	          $request->custid = Session::get('custid');
 	     	}
 			if(!isset($request->id)){
-		        return $this->index($request);
+		        return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		    }
 			$custid =$request->custid;
 			$insert = Customer::insertInchargeRecord($request,$custid);
@@ -661,6 +669,9 @@ class CustomerController extends Controller {
 		return Redirect::to('Customer/CustomerView?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 	}
 	public function Onsitehistory(Request $request){
+		if($request->hdnempid == "") {
+			return Redirect::to('Customer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
 		$customerhistory = array();
 		if ($request->plimit=="") {
 			$request->plimit = 50;

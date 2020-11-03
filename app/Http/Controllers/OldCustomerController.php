@@ -144,7 +144,7 @@ class OldCustomerController extends Controller {
 			$request->id = Session::get('id');
 		}
 		if(!isset($request->id)){
-			return $this->index($request);
+			return Redirect::to('OldCustomer/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
 		}
 		$customer_id = substr($request->custid, 3,5);
 		$cus = $customer_id+1;
