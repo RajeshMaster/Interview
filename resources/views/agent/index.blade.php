@@ -34,10 +34,10 @@
 	}
 	function mulclick(divid){
 		if($('#'+divid).css('display') == 'block'){
-		document.getElementById(divid).style.display = 'none';
-		document.getElementById(divid).style.height= "220px";
+			document.getElementById(divid).style.display = 'none';
+			document.getElementById(divid).style.height = "210px";
 		}else {
-		document.getElementById(divid).style.display = 'block';
+			document.getElementById(divid).style.display = 'block';
 		}
 	}
 </script>
@@ -107,7 +107,13 @@
 					'name' => 'agentsort'))
 				}}
 		</div>
-		<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" id="styleSelector">
+		<div style="margin-top:17.5%;position: fixed;" 
+			@if($request->singlesearchtxt != ""  || $request->searchmethod == 2) 
+				class="open CMN_fixed mt242" 
+			@else 
+				class="CMN_fixed mt242" 
+			@endif
+			id="styleSelector">
 			<div class="selector-toggle">
 				<a id="sidedesignselector" href="javascript:void(0)"></a>
 			</div>
@@ -120,7 +126,7 @@
 
 				<li class="theme-option ml6">
 					<div class="box100per mt5"  onKeyPress="return checkSubmitsingle(event)">
-						{!! Form::text('singlesearchtxt', $request->singlesearchtxt,
+						{!! Form::text('singlesearchtxt',  trim($request->singlesearchtxt),
 						array('','class'=>' form-control box80per pull-left','style'=>'height:30px;','id'=>'singlesearchtxt')) !!}
 
 						{{ Form::button('<i class="fa fa-search" aria-hidden="true"></i>', 
@@ -134,20 +140,21 @@
 				</li>
 			</ul>
 			<div class="mt5 ml10 pull-left mb5">
-				<a href="#demo" onclick="mulclick('demo');" class="" style="font-family: arial, verdana;" data-toggle="collapse">
+				<a href="#demo" onclick="mulclick('demo');" style="font-family: arial, verdana;">
 	              	  {{ trans('messages.lbl_multi_search') }}
 	              </a>
 			</div>
 			<div id="multisearch">
-				<ul id="demo" @if ($request->searchmethod == 2) class="collapse in ml5 pull-left" 
-						@else class="collapse ml5 pull-left"  @endif>
+				<ul id="demo" 
+					@if ($request->searchmethod == 2) class="collapse in ml5 pull-left" 
+					@else class="collapse ml5 pull-left"  @endif>
 					<li class="theme-option"  onKeyPress="return checkSubmitmulti(event)">
 						<div class="mt5">
 							<span class="pt3" style="font-family: arial, verdana;">
 								{{ trans('messages.lbl_name') }}
 							</span>
 							<div class="mt5 box88per" style="display: inline-block!important;">
-								{!! Form::text('name', $request->name,
+								{!! Form::text('name', trim($request->name),
 									array('','class'=>' form-control box95per pull-left','style'=>'height:30px;','id'=>'name')) !!}
 							</div>
 						</div>
@@ -156,7 +163,7 @@
 	                 			{{ trans('messages.lbl_address') }}
 	                 		</span>
 	                 		<div class="mt5 box88per" style="display: inline-block!important;">
-	                 			{!! Form::text('address', $request->address,
+	                 			{!! Form::text('address', trim($request->address),
 		                         array('','id' => 'address','style'=>'height:30px;','class'=>'form-control box95per pull-left 
 		                         ')) !!}
 	                 		</div>

@@ -195,6 +195,8 @@ function clearsearch() {
     $('#sorting').val('');
     $('#agentsort').val('');
     $('#name').val('');
+    $('#address').val('');
+    $('#searchmethod').val('');
     $("#agentindexform").submit();
 }
 function agentView(id,agentId) {
@@ -400,4 +402,15 @@ function fnRemove(custid){
     pageload();
     $('#agentviewform').attr('action','RemoveProcess?mainmenu='+mainmenu+'&time='+datetime);
     $("#agentviewform").submit();
+}
+// Enter ker Search process 
+function checkSubmitsingle(e) {
+    if(e && e.keyCode == 13) {
+        fnSingleSearch();
+    }
+}
+function checkSubmitmulti(e) {
+    if(e && e.keyCode == 13) {
+        umultiplesearch();
+    }
 }

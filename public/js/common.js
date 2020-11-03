@@ -21,6 +21,15 @@ $(document).ready(function(){
 			$('#back2Top').fadeOut();
 		}
 	});
+	// For triming empty space in front of text box
+	$("form").on('submit',function(e){
+		$('form input, textarea').each(function(i, v){
+			if(v.type != 'file'){
+				$(this).val(jQuery.trim($(this).val()));
+			}
+		});
+	});
+	// end of trim function
 
 	$(document).ready(function() {
 		$("#back2Top").click(function(event) {

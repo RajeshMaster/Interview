@@ -348,10 +348,17 @@ function clearsearch() {
 	$('#enddate').val('');
 	$('#name').val('');
 	$('#address').val('');
+	$('#searchmethod').val('');
 	$("#Oldcustomerindexform").submit();
 }
 
-// Enter Key event
+// Enter ker Search process 
+function checkSubmitsingle(e) {
+	if(e && e.keyCode == 13) {
+		fnSingleSearch();
+	}
+}
+
 function checkSubmitmulti(e) {
 	if(e && e.keyCode == 13) {
 		umultiplesearch();

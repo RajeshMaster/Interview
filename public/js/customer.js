@@ -426,6 +426,7 @@ function clearsearch() {
 	$('#enddate').val('');
 	$('#name').val('');
 	$('#address').val('');
+	$('#searchmethod').val('');
 	$("#customerindexform").submit();
 }
 function sortingfun() {
@@ -467,6 +468,13 @@ function fnSingleSearch() {
 		$('#address').val('');
 		$('#customerindexform').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime);
 		$("#customerindexform").submit();
+	}
+}
+
+// Enter ker Search process 
+function checkSubmitsingle(e) {
+	if(e && e.keyCode == 13) {
+		fnSingleSearch();
 	}
 }
 

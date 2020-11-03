@@ -22,24 +22,24 @@ class Agent extends Model {
 			}
 			if (!empty($request->singlesearchtxt)) {
 				$query = $query->where(function($joincont) use ($request) {
-								$joincont->where('agent_name', 'LIKE', '%' . $request->singlesearchtxt . '%')
-								->orWhere('agent_address', 'LIKE', '%' . $request->singlesearchtxt . '%');
+								$joincont->where('agent_name', 'LIKE', '%' . trim($request->singlesearchtxt) . '%')
+								->orWhere('agent_address', 'LIKE', '%' . trim($request->singlesearchtxt) . '%');
 								});
 			}
 			if (!empty($request->name)) {
 				$query = $query->where(function($joincont) use ($request) {
-								$joincont->where('agent_name', 'LIKE', '%' . $request->name . '%');
+								$joincont->where('agent_name', 'LIKE', '%' . trim($request->name) . '%');
 								});
 			}
 			if (!empty($request->address)) {
 				$query = $query->where(function($joincont) use ($request) {
-								$joincont->where('agent_address', 'LIKE', '%' . $request->address . '%');
+								$joincont->where('agent_address', 'LIKE', '%' . trim($request->address) . '%');
 								});
 			}
 			if (!empty($request->name && $request->address)) {
 				$query = $query->where(function($joincont) use ($request) {
-								$joincont->where('agent_name', 'LIKE', '%' . $request->name . '%')
-								->orWhere('agent_address', 'LIKE', '%' . $request->address . '%');
+								$joincont->where('agent_name', 'LIKE', '%' . trim($request->name) . '%')
+								->orWhere('agent_address', 'LIKE', '%' . trim($request->address) . '%');
 								});
 			}
 			if($request->oldfilter == $request->filterval){

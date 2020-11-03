@@ -213,6 +213,9 @@ function clearsearch() {
 	$('#sortOptn').val('');
 	$('#sortOrder').val('asc'); 
 	$('#singlesearch').val('');
+	$('#employeeno').val('');
+	$('#employeename').val('');
+	$('#searchmethod').val('');
 	$("#employeefrm").submit();
 }
 
@@ -582,5 +585,16 @@ function fnAddExlfile() {
 	} else {
 		$('.excellbl').hide();
 		$('#xlfile').val('');
+	}
+}
+// Enter ker Search process 
+function checkSubmitsingle(e) {
+	if(e && e.keyCode == 13) {
+		fnSingleSearch();
+	}
+}
+function checkSubmitmulti(e) {
+	if(e && e.keyCode == 13) {
+		fnMultiSearch();
 	}
 }

@@ -32,27 +32,27 @@ class OldCustomer extends Model {
 		
 			if (!empty($request->singlesearchtxt)) {
 					$query = $query->where(function($joincont) use ($request) {
-									$joincont->where('customer_name', 'LIKE', '%' . $request->singlesearchtxt . '%')
-									->orWhere('customer_address', 'LIKE', '%' . $request->singlesearchtxt . '%');
+									$joincont->where('customer_name', 'LIKE', '%' . trim($request->singlesearchtxt) . '%')
+									->orWhere('customer_address', 'LIKE', '%' . trim($request->singlesearchtxt) . '%');
 									});
 				}
 			
 				if (!empty($request->name)) {
 					$query = $query->where(function($joincont) use ($request) {
-									$joincont->where('customer_name', 'LIKE', '%' . $request->name . '%');
-								   // ->orWhere('customer_address', 'LIKE', '%' . $request->address . '%');
+									$joincont->where('customer_name', 'LIKE', '%' . trim($request->name) . '%');
+								   // ->orWhere('customer_address', 'LIKE', '%' . trim($request->address) . '%');
 									});
 				}
 				if (!empty($request->address)) {
 					$query = $query->where(function($joincont) use ($request) {
-									$joincont->where('customer_address', 'LIKE', '%' . $request->address . '%');
-								   // ->orWhere('customer_address', 'LIKE', '%' . $request->address . '%');
+									$joincont->where('customer_address', 'LIKE', '%' . trim($request->address) . '%');
+								   // ->orWhere('customer_address', 'LIKE', '%' . trim($request->address) . '%');
 									});
 				}
 				if (!empty($request->name && $request->address)) {
 					$query = $query->where(function($joincont) use ($request) {
-									$joincont->where('customer_name', 'LIKE', '%' . $request->name . '%')
-									->orWhere('customer_address', 'LIKE', '%' . $request->address . '%');
+									$joincont->where('customer_name', 'LIKE', '%' . trim($request->name) . '%')
+									->orWhere('customer_address', 'LIKE', '%' . trim($request->address) . '%');
 									});
 				}
 				if (!empty($request->startdate) && !empty($request->enddate)) {

@@ -28,10 +28,10 @@
 	}
 	function mulclick(divid){
 		if($('#'+divid).css('display') == 'block'){
-		document.getElementById(divid).style.display = 'none';
-		document.getElementById(divid).style.height= "220px";
-		}else {
-		document.getElementById(divid).style.display = 'block';
+			document.getElementById(divid).style.display = 'none';
+			document.getElementById(divid).style.height = "210px";
+		} else {
+			document.getElementById(divid).style.display = 'block';
 		}
 	}
 </script>
@@ -116,8 +116,13 @@
 		}}
 	</div>
 
-	<div class="col-xs-12 pm0 pull-left searchpos" style="margin-top:17.5%;position: fixed;" 
-	 id="styleSelector">
+	<div style="margin-top:13.5%;position: fixed;" 
+		@if($request->singlesearch != ""  || $request->searchmethod == 2) 
+			class="open CMN_fixed mt242" 
+		@else 
+			class="CMN_fixed mt242" 
+		@endif
+		 	id="styleSelector">
 		<div class="selector-toggle">
 			<a id="sidedesignselector" href="javascript:void(0)"></a>
 		</div>
@@ -130,7 +135,7 @@
 
 			<li class="theme-option ml6">
 				<div class="box100per mt5"  onKeyPress="return checkSubmitsingle(event)">
-					{!! Form::text('singlesearch', $request->singlesearch,
+					{!! Form::text('singlesearch', trim($request->singlesearch),
 					array('','class'=>' form-control box80per pull-left','style'=>'height:30px;','id'=>'singlesearch')) !!}
 
 					{{ Form::button('<i class="fa fa-search" aria-hidden="true"></i>', 
@@ -158,7 +163,7 @@
 							{{ trans('messages.lbl_empid') }}
 						</span>
 						<div class="mt5 box88per" style="display: inline-block!important;">
-							{!! Form::text('employeeno', $request->employeeno,
+							{!! Form::text('employeeno', trim($request->employeeno),
 								array('','class'=>' form-control box95per pull-left','style'=>'height:30px;','id'=>'employeeno')) !!}
 						</div>
 					</div>
@@ -168,7 +173,7 @@
 							{{ trans('messages.lbl_empName') }}
 						</span>
 						<div class="mt5 box88per" style="display: inline-block!important;">
-							{!! Form::text('employeename', $request->employeename,
+							{!! Form::text('employeename', trim($request->employeename),
 								array('','class'=>' form-control box95per pull-left','style'=>'height:30px;','id'=>'employeename')) !!}
 						</div>
 					</div>

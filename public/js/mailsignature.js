@@ -221,8 +221,39 @@ function fnselect() {
 	});
 	$('#mailsignaturepopup').modal('toggle');
 }
-function fngotoback(){
-	pageload();
-	$('#mailSignatureReg').attr('action', 'mailSignatureView?mainmenu='+mainmenu+'&time='+datetime);
-	$("#mailSignatureReg").submit();
+function fngotoback() {
+	var editflg = $('#editflg').val();
+	if (cancel_check == false) {
+		swal({
+			title: msg_cancel,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonClass: "btn-danger",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+				pageload();
+				if ($('#editflg').val() == "1") {
+					$('#mailSignatureReg').attr('action', 'mailSignatureView?mainmenu='+mainmenu+'&time='+datetime); 
+					$("#mailSignatureReg").submit();
+				} else {
+					$('#mailSignatureReg').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime); 
+					$("#mailSignatureReg").submit();
+				}
+			} else {
+				return false;
+			}
+		});
+	} else {
+		pageload();
+		if ($('#editflg').val() == "1") {
+			$('#mailSignatureReg').attr('action', 'mailSignatureView?mainmenu='+mainmenu+'&time='+datetime); 
+			$("#mailSignatureReg").submit();
+		} else {
+			$('#mailSignatureReg').attr('action', 'index?mainmenu='+mainmenu+'&time='+datetime); 
+			$("#mailSignatureReg").submit();
+		}
+	}
 }
