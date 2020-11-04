@@ -431,4 +431,40 @@ class UserController extends Controller {
 		return Redirect::to('/');
 	}
 
+	/** Verify Mail check process
+	*  @author sastha 
+	*  @param $request
+	*  Created At 2020/08/24
+	*/
+	public function verifyMailCheck(Request $request) {
+		// $verifyFlg = User::updVerifyFlg($request);
+		// Session::flash('message', 'Email Verified Sucessfully!');
+		// Session::flash('type', 'alert-success');
+		$i = 0;
+		$mailView = array();
+		$empDtls = array();
+		$customerId = substr($request->customerId,0,2);
+		if ($request->customerId == "OtherMail") {
+		} else {
+			$mailView =  User::mailViewdtls($request);
+			foreach ($mailView as $mailkey => $mailvalue) {
+				$toMail = explode(",", $mailvalue->toMail);
+				if (in_array($request->mailId, $toMail)) {
+					$employeeDtls =  User::getempDtls($mailvalue->empId);
+					if (isset($employeeDtls[0])) {
+						$empDtls[$i][$mailvalue->empId]['Emp_ID'] = $employeeDtls[0]->Emp_ID;
+						$empDtls[$i][$mailvalue->empId]['FirstName'] = $employeeDtls[0]->FirstName;
+						$empDtls[$i][$mailvalue->empId]['LastName'] = $employeeDtls[0]->LastName;
+					}
+					$i++;
+				}
+			}
+		}
+		return view('user.employeeview',['request' => $request, 
+											'mailView' => $mailView, 
+											'empDtls' => $empDtls
+										]);
+		// return Redirect::to('/');
+	}
+
 }

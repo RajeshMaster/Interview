@@ -622,6 +622,9 @@ class EmployeeController extends Controller
 	*
 	*/
 	public function Onsitehistory(Request $request) {
+		if (!isset($request->empid) || $request->empid == "") {
+			return Redirect::to('Employee/index?mainmenu='.$request->mainmenu.'&time='.date('YmdHis'));
+		}
 		$customerhistory = array();
 		if ($request->plimit=="") {
 			$request->plimit = 50;

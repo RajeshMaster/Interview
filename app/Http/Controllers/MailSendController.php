@@ -17,6 +17,7 @@ use Storage;
 use View;
 use Illuminate\Support\Facades\Validator;
 use FPDI_Protection;
+use Mail;
 
 
 /*Class: MailController
@@ -504,11 +505,13 @@ class MailSendController extends Controller {
 	*
 	*/
 	public function sendMailpostProcess(Request $request) {
+		$ProjectLink = "http://localhost/Interview/";
 		// print_r($request->all());exit();
 		$customerId = $request->customerId;
 		$branchId = $request->branchId;
 		$inchargeId = $request->hidincharge;
 		$selectedEmp = $request->selectedEmployee;
+		$currentDateTime = date('YmdHis');
 		if ($request->ccemail != "") {
 			$ccemail = $request->ccemail;
 		} else {
@@ -586,7 +589,6 @@ class MailSendController extends Controller {
 		foreach ($selectedEmp as $key => $value) {
 			$getDateTime = Common::getSystemDateTime();
 			$currentDate = $getDateTime[0]->CURRENT_TIMESTAMP;
-
 			// $updIntDateTime = Interview::updIntDateTime($value,$currentDate);
 			$empName = Common::fnGetEmployeeInfo($value);
 			$getmailId = "";
@@ -633,23 +635,39 @@ class MailSendController extends Controller {
 						$branchID = $groups->branch_name;
 						$inchargename = $groups->incharge_name;
 						$CustomerName = mailsend::getCustomerName($customerid);
+						$mailId = $groupid;
+						$customerIdCom = $customerid;
+						$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
+						$data[0]->content = str_replace('URL', $ProjectFolder, $data[0]->content);
 						$body = $data[0]->content;
 						$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
 						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,$pdfpassword];
 						$bodyrep = str_replace($replace_contents, $real_contents, $body);
 						$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 						$mailformat = [$bodyrep];
-						if ($hidccid != "") {
-							$cusIdCC = explode(",", $hidccid);
-							foreach ($cusIdCC as $keyCC => $valueCC) {
-								$inchargeCC = mailsend::fnGetmail($valueCC);
-								$inchargeCC = rtrim($inchargeCC,",");
-								$inchargeCC = explode(",", $inchargeCC);
-								$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$inchargeCC,'','',$pdf_array);
+						/*$mailId = $groupid;
+						$customerIdCom = $customerid;
+						$sendmail = Mail::send('commontemplate/mail',compact('mailformat','mailId','customerIdCom','currentDateTime'), 
+						function($message) use ($request,$groupid,$pdf_array,$hidccid) {	
+							$message->from('staff@microbit.co.jp','MICROBIT');
+							$message->to($groupid)
+									->subject($request->subject);
+							if ($pdf_array != array()) {
+								$message->attach($pdf_array);
+							}*/
+							if ($hidccid != "") {
+								$cusIdCC = explode(",", $hidccid);
+								foreach ($cusIdCC as $keyCC => $valueCC) {
+									$inchargeCC = mailsend::fnGetmail($valueCC);
+									$inchargeCC = rtrim($inchargeCC,",");
+									$inchargeCC = explode(",", $inchargeCC);
+									// $message->cc($inchargeCC);
+									$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$inchargeCC,'','',$pdf_array);
+								}
+							} else {
+								$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,'','','',$pdf_array);
 							}
-						} else {
-							$sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,'','','',$pdf_array);
-						}
+						// });
 						// $sendmail = SendingMail::sendIntimationMail($mailformat,$groupid,$subject,$ccemail,'','',$pdf_array);
 						/*} else {
 							$customerid= $groups->customer_id;
@@ -690,30 +708,46 @@ class MailSendController extends Controller {
 							$getAgentmailIds .= $agentMail.',';
 							$agentName = $agent->agent_name;
 							$CustomerName = mailsend::getCustomerName($cusId);
+							$mailId = $agentMail;
+							$customerIdCom = $cusId;
+							$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
+							$dataAgent[0]->content = str_replace('URL', $ProjectFolder, $dataAgent[0]->content);
 							$body1 = $dataAgent[0]->content;
 							$replace_contents1 = ['Admin','CustomerName','InchargeName','<password>'];
 							$real_contents1 = [$agentMail,$CustomerName[0]->customer_name,$agentName,$pdfpassword];
 							$bodyrep1 = str_replace($replace_contents1, $real_contents1, $body1);
 							$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 							$mailformat1 = [$bodyrep1];
-							if ($hidccid != "") {
-								$cusIdCC = explode(",", $hidccid);
-								foreach ($cusIdCC as $keyCC => $valueCC) {
-									$inchargeCC = mailsend::fnGetmail($valueCC);
-									$inchargeCC = rtrim($inchargeCC,",");
-									$inchargeCC = explode(",", $inchargeCC);
-									$sendmail = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$inchargeCC,'','',$pdf_array);
+							/*$mailId = $agentMail;
+							$customerIdCom = $cusId;
+							$sendmail1 = Mail::send('commontemplate/mail',compact('mailformat1','mailId','customerIdCom','currentDateTime'), 
+							function($message) use ($request,$subject1,$agentMail,$pdf_array,$hidccid) {	
+								$message->from('staff@microbit.co.jp','MICROBIT');
+								$message->to($agentMail)
+										->subject($subject1);
+								if ($pdf_array != array()) {
+									$message->attach($pdf_array);
+								}*/
+								if ($hidccid != "") {
+									$cusIdCC = explode(",", $hidccid);
+									foreach ($cusIdCC as $keyCC => $valueCC) {
+										$inchargeCC = mailsend::fnGetmail($valueCC);
+										$inchargeCC = rtrim($inchargeCC,",");
+										$inchargeCC = explode(",", $inchargeCC);
+										// $message->cc($inchargeCC);
+										$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$inchargeCC,'','',$pdf_array);
+									}
+								} else {
+									$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,'','','',$pdf_array);
 								}
-							} else {
-								$sendmail = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,'','','',$pdf_array);
-							}
+							// });
 							// $sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail,$subject1,$ccemail,'','',$pdf_array);
 						}
 					}
 				}
 			}
 		}
-		if ($sendmail != "") {
+		if ($groupId != "" &&  $sendmail != "") {
 			$email_array = array_unique($cus_array);
 			foreach ($selectedEmp as $key => $value) {
 				if($sendmail) {
@@ -726,7 +760,7 @@ class MailSendController extends Controller {
 						} else {
 							$allmailIds = substr($getmail,0,-1);
 						}
-						$mailSendList = mailsend::mailPostSendList($allmailIds,$subject,$value,$customerID,$branchID,$selectedEmployeeResume[$key]);
+						$mailSendList = mailsend::mailPostSendList($allmailIds,$subject,$value,$customerID,$branchID,$selectedEmployeeResume[$key],$currentDateTime);
 					}
 				}
 			}
@@ -741,32 +775,48 @@ class MailSendController extends Controller {
 		$getInchargeDetails = mailsend::fngetInchargeDetails($request,$customerId,$branchId,$inchargeId);
 		foreach ($getInchargeDetails as $key1 => $value1) {
 			// if ($value1->sendpasswrodFlg == 1) {
-				$email = $value1->incharge_email_id;
-				$getmailId .= $email.',';
-				$custID= $value1->customer_id;
-				$BranchId= $value1->branch_name;
-				$name = $value1->incharge_name;
-				$body = $data[0]->content;
-				$CustomerName = mailsend::getCustomerName($custID);
-				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
-				$real_contents = [$email,$CustomerName[0]->customer_name,$name,$pdfpassword];
-				$bodyrep = str_replace($replace_contents, $real_contents, $body);
-				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
-				$mailformat = [$bodyrep];
-				if(!in_array($customerId,$email_array)){
+			$email = $value1->incharge_email_id;
+			$getmailId .= $email.',';
+			$custID= $value1->customer_id;
+			$BranchId= $value1->branch_name;
+			$name = $value1->incharge_name;
+			$mailId = $email;
+			$customerIdCom = $custID;
+			$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
+			$data[0]->content = str_replace('URL','URL:'.$ProjectFolder, $data[0]->content);
+			$body = $data[0]->content;
+			$CustomerName = mailsend::getCustomerName($custID);
+			$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
+			$real_contents = [$email,$CustomerName[0]->customer_name,$name,$pdfpassword];
+			$bodyrep = str_replace($replace_contents, $real_contents, $body);
+			$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
+			$mailformat = [$bodyrep];
+			if(!in_array($customerId,$email_array)){
+				/*$mailId = $email;
+				$customerIdCom = $custID;
+				$sendmail = Mail::send('commontemplate/mail',compact('mailformat','mailId','customerIdCom','currentDateTime'), 
+				function($message) use ($request,$subject,$email,$pdf_array,$hidccid) {
+					$message->from('staff@microbit.co.jp','MICROBIT');
+					$message->to($email)
+							->subject($subject);
+					if ($pdf_array != array()) {
+						$message->attach($pdf_array);
+					}*/
 					if ($hidccid != "") {
 						$cusIdCC = explode(",", $hidccid);
 						foreach ($cusIdCC as $keyCC => $valueCC) {
 							$inchargeCC = mailsend::fnGetmail($valueCC);
 							$inchargeCC = rtrim($inchargeCC,",");
 							$inchargeCC = explode(",", $inchargeCC);
+							// $message->cc($inchargeCC);
 							$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$inchargeCC,'','',$pdf_array);
 						}
 					} else {
 						$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,'','','',$pdf_array);
 					}
-					// $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
-				}
+				// });
+				// $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
+			}
 					
 			// } else {
 			// 	$email = $value1->incharge_email_id;
@@ -792,12 +842,16 @@ class MailSendController extends Controller {
 		/*if($getmailId != ""){
 			$allmailId = substr($getmailId,0,-1);
 			if($sendmail){
-				$mailSendList = mailsend::mailPostSendList($allmailId,$subject,$request->selectedEmployee,$custID,$BranchId,$request->selectedEmployeeResume);
+				$mailSendList = mailsend::mailPostSendList($allmailId,$subject,$request->selectedEmployee,$custID,$BranchId,$request->selectedEmployeeResume,$currentDateTime);
 			}
 		}*/
 		$agentMail = mailsend::getAgentMail($customerId);
 		$CustomerName = mailsend::getCustomerName($customerId);
 		if (isset($agentMail[0]->agent_email_id) && $agentMail[0]->agent_email_id != "") {
+			$mailId = $agentMail[0]->agent_email_id;
+			$customerIdCom = $customerId;
+			$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
+			$dataAgent[0]->content = str_replace('URL', $ProjectFolder, $dataAgent[0]->content);
 			$body1 = $dataAgent[0]->content;
 			$replace_contents1 = ['Admin','CustomerName','InchargeName','<password>'];
 			$real_contents1 = [$agentMail[0]->agent_email_id,$CustomerName[0]->customer_name,$agentMail[0]->agent_name,$pdfpassword];
@@ -805,22 +859,34 @@ class MailSendController extends Controller {
 			$subject1 = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 			$mailformat1 = [$bodyrep1];
 			if(!in_array($customerId,$email_array)){
-				if ($hidccid != "") {
-					$cusIdCC = explode(",", $hidccid);
-					foreach ($cusIdCC as $keyCC => $valueCC) {
-						$inchargeCC = mailsend::fnGetmail($valueCC);
-						$inchargeCC = rtrim($inchargeCC,",");
-						$inchargeCC = explode(",", $inchargeCC);
-						$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,$inchargeCC,'','',$pdf_array);
+				/*$mailId = $agentMail[0]->agent_email_id;
+				$customerIdCom = $customerId;
+				$sendmail1 = Mail::send('commontemplate/mail',compact('mailformat','mailId','customerIdCom','currentDateTime'), 
+				function($message) use ($request,$subject1,$agentMail,$pdf_array,$hidccid) {	
+					$message->from('staff@microbit.co.jp','MICROBIT');
+					$message->to($agentMail[0]->agent_email_id)
+							->subject($subject1);
+					if ($pdf_array != array()) {
+						$message->attach($pdf_array);
+					}*/
+					if ($hidccid != "") {
+						$cusIdCC = explode(",", $hidccid);
+						foreach ($cusIdCC as $keyCC => $valueCC) {
+							$inchargeCC = mailsend::fnGetmail($valueCC);
+							$inchargeCC = rtrim($inchargeCC,",");
+							$inchargeCC = explode(",", $inchargeCC);
+							// $message->cc($inchargeCC);
+							$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,$inchargeCC,'','',$pdf_array);
+						}
+					} else {
+						$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,'','','',$pdf_array);
 					}
-				} else {
-					$sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,'','','',$pdf_array);
-				}
+				// });
 				// $sendmail1 = SendingMail::sendIntimationMail($mailformat1,$agentMail[0]->agent_email_id,$subject1,$ccemail,'','',$pdf_array);
 			} 
 		}
 
-		if($customerId != "") {
+		if($request->hidincharge != "" && $customerId != "") {
 			foreach ($selectedEmp as $key => $value) {
 				if($sendmail) {
 					$getAgentMail = mailsend::getAgentMail($customerId);
@@ -831,12 +897,12 @@ class MailSendController extends Controller {
 					}
 					$subject = $request->subject;
 					if(!in_array($customerId,$email_array)){
-						$mailSendList = mailsend::mailPostSendList($allmailId,$subject,$value,$custID,$BranchId,$selectedEmployeeResume[$key]);
+						$mailSendList = mailsend::mailPostSendList($allmailId,$subject,$value,$custID,$BranchId,$selectedEmployeeResume[$key],$currentDateTime);
 					}
 				}
 			}
 		}
-		$othermail=array();
+		$othermail = array();
 		if (isset($request->hidmailSelectedid) && $request->hidmailSelectedid!="") {
 			$otherselectid = explode(";", $request->hidmailSelectedid);
 			$getOthermailDt = mailsend::getOtherNameEmail($otherselectid);
@@ -845,46 +911,66 @@ class MailSendController extends Controller {
 				$other_name = $value1->other_name;
 				$getmailId .= $email.',';
 				$name = "Testing";
+				$mailId = $email;
+				$customerIdCom = "OtherMail";
+				$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
+				$data[0]->content = str_replace('URL', $ProjectFolder, $data[0]->content);
 				$body = $data[0]->content;
 				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
 				$real_contents = [$email,$other_name,$other_name,$pdfpassword];
 				$bodyrep = str_replace($replace_contents, $real_contents, $body);
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 				$mailformat = [$bodyrep];
-				if ($hidccid != "") {
-					$cusIdCC = explode(",", $hidccid);
-					foreach ($cusIdCC as $keyCC => $valueCC) {
-						$inchargeCC = mailsend::fnGetmail($valueCC);
-						$inchargeCC = rtrim($inchargeCC,",");
-						$inchargeCC = explode(",", $inchargeCC);
-						$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$inchargeCC,'','',$pdf_array);
+				/*$mailId = $email;
+				$customerIdCom = "OtherMail";
+				$sendmail = Mail::send('commontemplate/mail',compact('mailformat','mailId','customerIdCom','currentDateTime'), 
+				function($message) use ($request,$subject,$email,$pdf_array,$hidccid) {	
+					$message->from('staff@microbit.co.jp','MICROBIT');
+					$message->to($email)
+							->subject($subject);
+					if ($pdf_array != array()) {
+						$message->attach($pdf_array);
+					}*/
+					if ($hidccid != "") {
+						$cusIdCC = explode(",", $hidccid);
+						foreach ($cusIdCC as $keyCC => $valueCC) {
+							$inchargeCC = mailsend::fnGetmail($valueCC);
+							$inchargeCC = rtrim($inchargeCC,",");
+							$inchargeCC = explode(",", $inchargeCC);
+							// $message->cc($inchargeCC);
+							$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$inchargeCC,'','',$pdf_array);
+						}
+					} else {
+						$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,'','','',$pdf_array);
 					}
-				} else {
-					$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,'','','',$pdf_array);
-				}
+				// });
 			   	// $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
 			}
 		}
-      	if(isset($request->tomailDetails) && $request->tomailDetails!=""){
-         	$othermail1 = explode(";", $request->tomailDetails);
-         	$otherName =  explode(";", $request->tomailName);
-			$i=0;
-			$j=0;
+		if(isset($request->tomailDetails) && $request->tomailDetails != ""){
+			$othermail1 = explode(";", $request->tomailDetails);
+			$otherName =  explode(";", $request->tomailName);
+			$i = 0;
+			$j = 0;
 			foreach ($othermail1 as $key => $value) {
-			$othermail[$i]['others_mail'] = $value;
-			$i++;
+				$othermail[$i]['others_mail'] = $value;
+				$i++;
 			}
 			foreach ($otherName as $key => $value1) {
-			$othermail[$j]['others_name']= $value1;
-			$j++;
+				$othermail[$j]['others_name']= $value1;
+				$j++;
 			}
-			$k=0;
+			$k = 0;
 			for ($k = 0; $k < count($othermail); $k++){
 				$email = $othermail[$k]['others_mail'];
 				$other_name = $othermail[$k]['others_name'];
 				$insert = mailsend::regOtherMail($email,$other_name);
 				$getmailId .= $email.',';
 				$name = "Testing";
+				$mailId = $email;
+				$customerIdCom = "OtherMail";
+				$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
+				$data[0]->content = str_replace('URL', $ProjectFolder, $data[0]->content);
 				$body = $data[0]->content;
 				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
 				$real_contents = [$email,$other_name,$other_name,$pdfpassword];
@@ -892,17 +978,29 @@ class MailSendController extends Controller {
 				$subject = str_replace('XXXX', 'Post Mail Successfully', $request->subject);
 				$mailformat = [$bodyrep];
 				if(!in_array($customerId,$email_array)){
-					if ($hidccid != "") {
-						$cusIdCC = explode(",", $hidccid);
-						foreach ($cusIdCC as $keyCC => $valueCC) {
-							$inchargeCC = mailsend::fnGetmail($valueCC);
-							$inchargeCC = rtrim($inchargeCC,",");
-							$inchargeCC = explode(",", $inchargeCC);
-							$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$inchargeCC,'','',$pdf_array);
+					/*$mailId = $email;
+					$customerIdCom = "OtherMail";
+					$sendmail = Mail::send('commontemplate/mail',compact('mailformat','mailId','customerIdCom','currentDateTime'), 
+					function($message) use ($request,$subject,$email,$pdf_array,$hidccid) {	
+						$message->from('staff@microbit.co.jp','MICROBIT');
+						$message->to($email)
+								->subject($subject);
+						if ($pdf_array != array()) {
+							$message->attach($pdf_array);
+						}*/
+						if ($hidccid != "") {
+							$cusIdCC = explode(",", $hidccid);
+							foreach ($cusIdCC as $keyCC => $valueCC) {
+								$inchargeCC = mailsend::fnGetmail($valueCC);
+								$inchargeCC = rtrim($inchargeCC,",");
+								$inchargeCC = explode(",", $inchargeCC);
+								// $message->cc($inchargeCC);
+								$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$inchargeCC,'','',$pdf_array);
+							}
+						} else {
+							$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,'','','',$pdf_array);
 						}
-					} else {
-						$sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,'','','',$pdf_array);
-					}
+					// });
 					// $sendmail = SendingMail::sendIntimationMail($mailformat,$email,$subject,$ccemail,'','',$pdf_array);
 				}
 			}

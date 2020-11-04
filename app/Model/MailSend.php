@@ -119,7 +119,7 @@ class MailSend extends Model {
 	*  @param $mailId,$subject,$empid,$CustId,$BranchId,$pdfFile
 	*  Created At 2020/10/01
 	**/
-	public static function mailPostSendList($mailId,$subject,$empid,$CustId,$BranchId,$pdfFile) {
+	public static function mailPostSendList($mailId,$subject,$empid,$CustId,$BranchId,$pdfFile,$dateTime) {
 		$db = DB::connection('mysql');
 		$result = DB::TABLE('mailstatus')
 					->insert([	
@@ -131,6 +131,7 @@ class MailSend extends Model {
 						'sendFlg' => 1,
 						'pdfNames' => $pdfFile,
 						'attachCount' => 1,
+						'dateTime' => $dateTime,
 						'createdBy' => Auth::user()->username,
 						'updatedBy' => Auth::user()->username 
 					]);

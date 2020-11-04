@@ -21,13 +21,13 @@ Route::post('login', 'LoginController@authenticate');
 Route::get('Login/forgetpassword', 'Auth\PasswordController@showLinkRequestForm');
 Route::post('Login/forgetprocess', 'Auth\PasswordController@sendResetLinkEmail');
 
-/*Route::get('User/changelanguage','AjaxController@index');
+// Route::get('User/changelanguage','AjaxController@index');
 
-// Login Verify
-Route::any('User/verifyLogin', 'UserController@verifyLoginCheck');
+// Mail Verify
+Route::any('User/verifyLogin', 'UserController@verifyMailCheck');
 
 //User Index
-Route::any('User/index', 'UserController@userindex');*/
+// Route::any('User/index', 'UserController@userindex');
 
 // Home
 Route::group(['prefix'=>'menu', 'middleware' => 'auth'], function() {
@@ -219,7 +219,6 @@ Route::group(['prefix'=>'OldCustomer','middleware' => 'auth'], function(){
 	Route::any('importpopup', 'OldCustomerController@importpopup');
 	Route::any('importprocess', 'OldCustomerController@importprocess');
 	Route::any('deleteCustomer','OldCustomerController@deleteCustomer');
-	
 });
 
 //Agent
@@ -250,9 +249,6 @@ Route::group(['prefix'=>'profile', 'middleware' => 'auth'], function() {
 	Route::any('PasswordValidation', 'UserController@PasswordValidation');
 	Route::any('PasswordCheckValidation','UserController@PasswordCheckValidation');
 	Route::any('profilepasswordchangeprocess','UserController@profilepasswordchangeprocess');
-	
-
-
 });
 
 ?>

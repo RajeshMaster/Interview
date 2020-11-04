@@ -226,4 +226,61 @@ class User extends Model {
 		return $retresult;
 	}
 
+	/** Verify login check process
+	*  @author sastha 
+	*  @param $request
+	*  Created At 2020/08/24
+	*/
+	public static function updVerifyFlg($request) {
+		$customerId = substr($request->customerId,0,2);
+		if ($customerId == "AG") {
+			$update = DB::table('mst_agentdetail')
+					->where('agent_id', $request->customerId)
+					->where('agent_email_id', $request->mailId)
+					->update(['verifyFlg' => 1]);
+		} elseif ($request->customerId == "OtherMail") {
+			$update = DB::table('other_mail_list')
+					->where('other_mailid', $request->mailId)
+					->update(['verifyFlg' => 1]);
+		} else {
+			$update = DB::table('mst_cus_inchargedetail')
+					->where('customer_id', $request->customerId)
+					->where('incharge_email_id', $request->mailId)
+					->update(['verifyFlg' => 1]);
+		}
+		
+		return $update;
+	}
+
+	/**  
+	*  Mail View Fetch Using MailId
+	*  @author Easa 
+	*  @param $id
+	*  Created At 2020/10/02
+	**/
+	public static function mailViewdtls($request) {
+		$mailView = DB::table('mailstatus')
+						->SELECT('*')
+						->WHERE('companyId', '=', $request->customerId)
+						->WHERE('dateTime', '=', $request->dateTime)
+						// ->WHEREIN('toMail',array($request->mailId))
+						->get();
+		return $mailView;
+	}
+
+	/**  
+    *  Employee View Fetch Using EmpId
+    *  @author Easa 
+    *  @param $id
+    *  Created At 2020/10/02
+    **/
+	public static function getempDtls($empId) {
+		$db = DB::connection('mysql_mbstaff');
+		$empView = $db->table('emp_mstemployees')
+						->SELECT('*')
+						->WHERE('Emp_ID', '=', $empId)
+						->get();
+		return $empView;
+	}
+
 }
