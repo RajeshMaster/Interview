@@ -751,3 +751,21 @@ function profilepasswordchange(mainmenu,id) {
 	$('#frmuserview').attr('action', 'profilechangepassword?mainmenu='+mainmenu+'&time='+datetime);
 	$("#frmuserview").submit();
 }
+
+function downloadResume(resumename) {
+	swal({
+		title: msg_download,
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: "btn-danger",
+		closeOnConfirm: true,
+		closeOnCancel: true
+	},
+	function(isConfirm) {
+		if(isConfirm) {
+			$('#employeeview #filenamePdf').val(resumename);
+			$('#employeeview').attr('action', '../Employee/downloadprocess?mainmenu='+mainmenu+'&time='+datetime);
+			$("#employeeview").submit();
+		}
+	});
+}

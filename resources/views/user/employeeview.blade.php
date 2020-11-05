@@ -22,45 +22,21 @@
 								'method' => 'POST',
 								'files'=>true)) }}
 		{{ Form::hidden('mainmenu', $request->mainmenu , array('id' => 'mainmenu')) }}
+		{{ Form::hidden('filenamePdf', '' , array('id' => 'filenamePdf')) }}
 		<div class="header">
 			<img class="headerimg box40 imgviewheight" src="{{ URL::asset('public/images/list.png')  }}">
 			<h2 class="h2cnt">
-				{{ trans('messages.lbl_userlistview')}}
+				{{ trans('messages.lbl_empdetails') }}
 			</h2>
-		</div>
-	</fieldset>
-	<fieldset class="bordernone">
-		<div class="col-xs-12 mt5 mb5 mwhead" style="padding: 0px !important;">
-			<div class="col-xs-12 pull-left mt10 mb10" style="padding: 0px !important;">
-				<a href="javascript:fnredirectback();" class="button button-blue textDecNone">
-					<span class="fa fa-arrow-left"></span> {{ trans('messages.lbl_back') }}
-				</a>
-			</div>
-			<div class="col-xs-9 pull-left pm0" style="padding: 0px !important;">
-				@if (session('danger'))
-					<div class="alert1" align="center">
-						<div>
-							<span class="alert-danger ml250">{{ session('danger') }}</span>
-						</div>
-					</div>
-				@endif
-				@if (session('message'))
-					<div class="alert1" align="center">
-						<div >
-							<span class="alert-success ml250">{{ session('message') }}</span>
-						</div>
-					</div>
-				@endif
-			</div>
 		</div>
 	</fieldset>
 	@php $i = 0; @endphp
 	@foreach($mailView as $mailkey => $mailvalue)
-	<fieldset class="mb5">
+	<fieldset class="mt10 mb10">
 		<div class="col-xs-9 mt10">
 			<div class="col-xs-4 lb text-right">
 				<label class="clr_blue">
-					{{ trans('messages.lbl_userid')}}
+					{{ trans('messages.lbl_empid') }}
 				</label>
 			</div>
 			<div class="col-xs-8 mw clr_black">
@@ -73,23 +49,32 @@
 		</div>
 		<div class="col-xs-9 mt10">
 			<div class="col-xs-4 lb text-right pm0">
-				<label class="clr_blue">{{ trans('messages.lbl_surname')}}</label>
+				<label class="clr_blue">{{ trans('messages.lbl_empName')}}</label>
 			</div>
-			<div class="col-xs-8 mw clr_black">
+			<div class="col-xs-8 mw pm0 clr_black">
 				@if(isset($empDtls[$i][$mailvalue->empId]['FirstName']))
-					{{ empnamelength($empDtls[$i][$mailvalue->empId]['FirstName'],30) }}
+					{{ strtoupper(substr($empDtls[$i][$mailvalue->empId]['FirstName'], 0, 1)) }}
+				@else
+					{{ trans('messages.lbl_nil') }}
+				@endif
+				@if(isset($empDtls[$i][$mailvalue->empId]['LastName']))
+					{{ strtoupper(substr($empDtls[$i][$mailvalue->empId]['LastName'], 0, 1)) }}
 				@else
 					{{ trans('messages.lbl_nil') }}
 				@endif
 			</div>
 		</div>
-		<div class="col-xs-9 mt10">
+		<div class="col-xs-9 mt10 mb10">
 			<div class="col-xs-4 lb text-right pm0">
-				<label class="clr_blue">{{ trans('messages.lbl_givenname')}}</label>
+				<label class="clr_blue">{{ trans('messages.lbl_pdffile')}}</label>
 			</div>
-			<div class="col-xs-8 mw pm0 clr_black">
-				@if(isset($empDtls[$i][$mailvalue->empId]['LastName']))
-					{{ empnamelength($empDtls[$i][$mailvalue->empId]['LastName'],30) }}
+			<div class="col-xs-8 mw clr_black">
+				@if(isset($mailvalue->pdfNames))
+					<!-- {{ $mailvalue->pdfNames }} -->
+					{{--*/ $src = '../public/images/pdf.png'; /*--}}
+					<a href="javascript:downloadResume('{{ $mailvalue->pdfNames }}')">
+						<img class="box30" src="{{ $src }}" width="30" height = "30"></img>
+					</a>
 				@else
 					{{ trans('messages.lbl_nil') }}
 				@endif

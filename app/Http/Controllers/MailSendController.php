@@ -638,7 +638,7 @@ class MailSendController extends Controller {
 						$mailId = $groupid;
 						$customerIdCom = $customerid;
 						$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
-						$data[0]->content = str_replace('URL', $ProjectFolder, $data[0]->content);
+						$data[0]->content = str_replace('EMPURL', 'URL:'.$ProjectFolder, $data[0]->content);
 						$body = $data[0]->content;
 						$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
 						$real_contents = [$groupid,$CustomerName[0]->customer_name,$inchargename,$pdfpassword];
@@ -711,7 +711,7 @@ class MailSendController extends Controller {
 							$mailId = $agentMail;
 							$customerIdCom = $cusId;
 							$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
-							$dataAgent[0]->content = str_replace('URL', $ProjectFolder, $dataAgent[0]->content);
+							$dataAgent[0]->content = str_replace('EMPURL', 'URL:'.$ProjectFolder, $dataAgent[0]->content);
 							$body1 = $dataAgent[0]->content;
 							$replace_contents1 = ['Admin','CustomerName','InchargeName','<password>'];
 							$real_contents1 = [$agentMail,$CustomerName[0]->customer_name,$agentName,$pdfpassword];
@@ -783,7 +783,7 @@ class MailSendController extends Controller {
 			$mailId = $email;
 			$customerIdCom = $custID;
 			$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
-			$data[0]->content = str_replace('URL','URL:'.$ProjectFolder, $data[0]->content);
+			$data[0]->content = str_replace('EMPURL','URL:'.$ProjectFolder, $data[0]->content);
 			$body = $data[0]->content;
 			$CustomerName = mailsend::getCustomerName($custID);
 			$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
@@ -851,7 +851,7 @@ class MailSendController extends Controller {
 			$mailId = $agentMail[0]->agent_email_id;
 			$customerIdCom = $customerId;
 			$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
-			$dataAgent[0]->content = str_replace('URL', $ProjectFolder, $dataAgent[0]->content);
+			$dataAgent[0]->content = str_replace('EMPURL', 'URL:'.$ProjectFolder, $dataAgent[0]->content);
 			$body1 = $dataAgent[0]->content;
 			$replace_contents1 = ['Admin','CustomerName','InchargeName','<password>'];
 			$real_contents1 = [$agentMail[0]->agent_email_id,$CustomerName[0]->customer_name,$agentMail[0]->agent_name,$pdfpassword];
@@ -914,7 +914,7 @@ class MailSendController extends Controller {
 				$mailId = $email;
 				$customerIdCom = "OtherMail";
 				$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
-				$data[0]->content = str_replace('URL', $ProjectFolder, $data[0]->content);
+				$data[0]->content = str_replace('EMPURL', 'URL:'.$ProjectFolder, $data[0]->content);
 				$body = $data[0]->content;
 				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
 				$real_contents = [$email,$other_name,$other_name,$pdfpassword];
@@ -970,7 +970,7 @@ class MailSendController extends Controller {
 				$mailId = $email;
 				$customerIdCom = "OtherMail";
 				$ProjectFolder = $ProjectLink.'User/verifyLogin?customerId='.$customerIdCom.'&mailId='.$mailId.'&dateTime='.$currentDateTime;
-				$data[0]->content = str_replace('URL', $ProjectFolder, $data[0]->content);
+				$data[0]->content = str_replace('EMPURL', 'URL:'.$ProjectFolder, $data[0]->content);
 				$body = $data[0]->content;
 				$replace_contents = ['Admin','CustomerName','InchargeName','<password>'];
 				$real_contents = [$email,$other_name,$other_name,$pdfpassword];
